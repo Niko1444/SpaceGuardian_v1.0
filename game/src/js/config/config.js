@@ -2,10 +2,8 @@ const rem =
   (parseFloat(getComputedStyle(document.documentElement).fontSize) * 62.5) /
   100;
 
-console.log("rem: ", rem);
-
 const gameWidth = 40 * rem;
-const gameHeight = 57 * rem;
+const gameHeight = 70 * rem;
 
 var gameSettings = {
   playerSpeed: 200,

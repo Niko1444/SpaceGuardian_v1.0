@@ -12,7 +12,7 @@ class Scene1 extends Phaser.Scene {
     // Load Player Spritesheet
     this.load.spritesheet({
       key: "player",
-      url: "assets/spritesheets/player.png",
+      url: "assets/spritesheets/players/kopter_ship.png",
       frameConfig: {
         frameWidth: 96,
         frameHeight: 96,
@@ -24,7 +24,7 @@ class Scene1 extends Phaser.Scene {
     // Load Enemy Spritesheet
     this.load.spritesheet({
       key: "enemy_1",
-      url: "assets/spritesheets/enemy_1.png",
+      url: "assets/spritesheets/enemies/enemy_1.png",
       frameConfig: {
         frameWidth: 48,
         frameHeight: 48,
@@ -35,7 +35,7 @@ class Scene1 extends Phaser.Scene {
 
     this.load.spritesheet({
       key: "enemy_2",
-      url: "assets/spritesheets/enemy_2.png",
+      url: "assets/spritesheets/enemies/enemy_2.png",
       frameConfig: {
         frameWidth: 48,
         frameHeight: 48,
@@ -70,12 +70,6 @@ class Scene1 extends Phaser.Scene {
   }
 
   create() {
-    this.add.text(100, 100, "LOADING GAME...", { fontSize: 20 });
-
-    this.time.delayedCall(1000, () => {
-      this.scene.start("playGame");
-    });
-
     // Create player animations
     this.anims.create({
       key: "player_anim",
@@ -111,6 +105,12 @@ class Scene1 extends Phaser.Scene {
       frameRate: 20,
       repeat: 0,
       hideOnComplete: true,
+    });
+
+    this.add.text(100, 100, "LOADING GAME...", { fontSize: 20 });
+
+    this.time.delayedCall(1000, () => {
+      this.scene.start("playGame");
     });
   }
 }
