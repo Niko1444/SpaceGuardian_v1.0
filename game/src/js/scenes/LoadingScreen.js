@@ -1,6 +1,6 @@
-class Scene1 extends Phaser.Scene {
+class LoadingScreen extends Phaser.Scene {
   constructor() {
-    super("bootGame");
+    super("loadingScreen");
   }
 
   preload() {
@@ -47,7 +47,7 @@ class Scene1 extends Phaser.Scene {
     // Load Bullet Spritesheet
     this.load.spritesheet({
       key: "bullet",
-      url: "assets/spritesheets/bullet.png",
+      url: "assets/spritesheets/vfx/bullet.png",
       frameConfig: {
         frameWidth: 9,
         frameHeight: 34,
@@ -59,7 +59,7 @@ class Scene1 extends Phaser.Scene {
     // Load Effect Spritesheets
     this.load.spritesheet({
       key: "explosion",
-      url: "assets/spritesheets/explosion.png",
+      url: "assets/spritesheets/vfx/explosion.png",
       frameConfig: {
         frameWidth: 48,
         frameHeight: 48,

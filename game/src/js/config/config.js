@@ -16,7 +16,7 @@ var config = {
   width: gameWidth,
   height: gameHeight,
   backgroundColor: 0x000000,
-  scene: [Scene1, Scene2, GameOver, PauseScreen],
+  scene: [TitleScreen, LoadingScreen, Scene2, GameOver, PauseScreen],
   pixelArt: true,
   physics: {
     default: "arcade",
