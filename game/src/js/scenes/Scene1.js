@@ -4,7 +4,10 @@ class Scene1 extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image("background", "assets/images/background.png");
+    this.load.image(
+      "background",
+      "assets/images/backgrounds/purple/nebula_1.png"
+    );
 
     // Load Player Spritesheet
     this.load.spritesheet({
