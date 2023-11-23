@@ -107,7 +107,13 @@ class LoadingScreen extends Phaser.Scene {
       hideOnComplete: true,
     });
 
-    this.add.text(100, 100, "LOADING GAME...", { fontSize: 20 });
+    const loadingText = this.add.text(
+      config.width / 2,
+      config.height / 2 - 50,
+      "LOADING",
+      { fontSize: "32px", fill: "#fff" }
+    );
+    loadingText.setOrigin(0.5);
 
     this.time.delayedCall(1000, () => {
       this.scene.start("playGame");

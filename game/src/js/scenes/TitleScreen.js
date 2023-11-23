@@ -53,7 +53,7 @@ class TitleScreen extends Phaser.Scene {
       {
         fontFamily: "Pixelify Sans",
         fontSize: "64px",
-        color: "#ff0000", // Set the color for "SPACE"
+        color: "#FF454D", // Set the color for "SPACE"
         align: "center",
       }
     );
@@ -66,23 +66,12 @@ class TitleScreen extends Phaser.Scene {
       "GUARDIAN",
       {
         fontFamily: "Pixelify Sans",
-        color: "#ff0000",
+        color: "#FF454D",
         fontSize: "64px",
         align: "center",
       }
     );
     guardianText.setOrigin(0.5);
-
-    // Define colors for each letter
-    const letterColors = [
-      "#ff0000",
-      "#ff7f00",
-      "#ffff00",
-      "#00ff00",
-      "#0000ff",
-      "#4b0082",
-      "#8b00ff",
-    ];
 
     // Tween animation for the rainbow effect on "GUARDIAN"
     this.tweens.add({
@@ -107,7 +96,7 @@ class TitleScreen extends Phaser.Scene {
     // Create Play Button
     this.button_play = this.add.sprite(
       config.width / 2,
-      config.height / 2 + 100,
+      config.height / 2 + 60,
       "button_play"
     );
     this.button_play.setInteractive();

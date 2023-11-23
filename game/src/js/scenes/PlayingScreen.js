@@ -17,7 +17,7 @@ class Bullet extends Phaser.GameObjects.Sprite {
   }
 }
 
-class Scene2 extends Phaser.Scene {
+class PlayingScreen extends Phaser.Scene {
   constructor() {
     super("playGame");
   }
@@ -178,11 +178,17 @@ class Scene2 extends Phaser.Scene {
   }
 
   playerHitEnemy(player, enemy) {
-    this.explosion = this.add.sprite(player.x, player.y, "explosion");
+    this.explosion = this.add.sprite(player.x - 10, player.y - 10, "explosion");
     this.explosion.play("explosion");
-    this.gameOver();
+    this.explosion.on("animationcomplete", () => {
+      this.explosion.destroy();
+    });
 
-    this.time.delayedCall(5000, this.gameOver, [], this);
+    // Disable physics for both player and enemy
+    player.disableBody(true, true);
+    enemy.disableBody(true, true);
+
+    this.time.delayedCall(1000, this.gameOver, [], this);
   }
 
   gameOver() {
