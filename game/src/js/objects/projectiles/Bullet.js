@@ -1,3 +1,4 @@
+import Entity from "../Entity.js";
 class Bullet extends Entity {
   constructor(scene) {
     super(scene, scene.player.x, scene.player.y - 10, "bullet");

@@ -1,3 +1,5 @@
+import Phaser from "phaser";
+import Bullet from "../objects/projectiles/Bullet";
 class PlayingScreen extends Phaser.Scene {
   constructor() {
     super("playGame");

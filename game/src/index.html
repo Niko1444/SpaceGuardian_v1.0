@@ -8,26 +8,25 @@
 
     <link rel="icon" type="image/x-icon" href="assets/images/favicon-32x32.png">
     <link rel="stylesheet" type="text/css" href="css/game.css">
-
-    <!-- Phaser -->
-    <script src="./js/phaser.min.js"></script>
-
 </head>
 
 <body>
+    <!-- Phaser library -->
+    <script type="module" src="/game/src/node_modules/phaser/dist/phaser.js"></script>
+
     <!-- Objects -->
-    <script src="./js/objects/Entity.js"></script>
-    <script src="./js/objects/projectiles/Bullet.js"></script>
+    <script type="module" src="../src/js/objects/Entity.js"></script>
+    <script type="module" src="./js/objects/projectiles/Bullet.js"></script>
 
     <!-- Scenes -->
-    <script src="./js/scenes/TitleScreen.js"></script>
-    <script src="./js/scenes/LoadingScreen.js"></script>
-    <script src="./js/scenes/PlayingScreen.js"></script>
-    <script src="./js/scenes/GameOver.js"></script>
-    <script src="./js/scenes/PauseScreen.js"></script>
+    <script type="module" src="./js/scenes/TitleScreen.js"></script>
+    <script type="module" src="./js/scenes/LoadingScreen.js"></script>
+    <script type="module" src="./js/scenes/PlayingScreen.js"></script>
+    <script type="module" src="./js/scenes/GameOver.js"></script>
+    <script type="module" src="./js/scenes/PauseScreen.js"></script>
 
     <!-- Configuration -->
-    <script src="./js/config/config.js"></script>
+    <script type="module" src="./js/config/config.js"></script>
 </body>
 
 </html>

@@ -1,3 +1,5 @@
+import Phaser from "/game/src/node_modules/phaser/dist/phaser.js";
+
 const rem =
   (parseFloat(getComputedStyle(document.documentElement).fontSize) * 62.5) /
   100;
