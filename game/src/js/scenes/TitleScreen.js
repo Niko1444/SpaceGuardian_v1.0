@@ -1,3 +1,4 @@
+import Phaser from "phaser";
 class TitleScreen extends Phaser.Scene {
   constructor() {
     super("bootGame");
@@ -111,3 +112,4 @@ class TitleScreen extends Phaser.Scene {
     });
   }
 }
+export default TitleScreen;

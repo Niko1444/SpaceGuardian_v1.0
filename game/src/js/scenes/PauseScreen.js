@@ -1,3 +1,4 @@
+import Phaser from "phaser";
 class PauseScreen extends Phaser.Scene {
   constructor() {
     super("pauseScreen");
@@ -53,3 +54,4 @@ class PauseScreen extends Phaser.Scene {
     });
   }
 }
+export default PauseScreen;

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Demo Game</title>
+    <title>Space Guardian 1.0</title>
 
     <link rel="icon" type="image/x-icon" href="assets/images/favicon-32x32.png">
     <link rel="stylesheet" type="text/css" href="css/game.css">
@@ -12,7 +12,10 @@
 
 <body>
     <!-- Phaser library -->
-    <script type="module" src="/game/src/node_modules/phaser/dist/phaser.js"></script>
+    <script type="module" src="./node_modules/phaser/dist/phaser.js"></script>
+
+    <!-- Configuration -->
+    <script type="module" src="./js/config/config.js"></script>
 
     <!-- Objects -->
     <script type="module" src="../src/js/objects/Entity.js"></script>
@@ -25,8 +28,9 @@
     <script type="module" src="./js/scenes/GameOver.js"></script>
     <script type="module" src="./js/scenes/PauseScreen.js"></script>
 
-    <!-- Configuration -->
-    <script type="module" src="./js/config/config.js"></script>
+    <!-- Game Initialization -->
+    <script type="module" src="./js/game.js"></script>
+
 </body>
 
 </html>

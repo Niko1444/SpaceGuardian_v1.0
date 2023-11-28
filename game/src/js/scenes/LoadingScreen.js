@@ -1,3 +1,4 @@
+import Phaser from "phaser";
 class LoadingScreen extends Phaser.Scene {
   constructor() {
     super("loadingScreen");
@@ -120,3 +121,4 @@ class LoadingScreen extends Phaser.Scene {
     });
   }
 }
+export default LoadingScreen;

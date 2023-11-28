@@ -177,3 +177,4 @@ class PlayingScreen extends Phaser.Scene {
     this.scene.start("gameOver");
   }
 }
+export default PlayingScreen;
