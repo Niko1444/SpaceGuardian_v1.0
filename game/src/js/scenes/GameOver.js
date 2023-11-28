@@ -1,3 +1,5 @@
+import Phaser from "phaser";
+import config from "../config/config.js";
 class GameOver extends Phaser.Scene {
   constructor() {
     super("gameOver");
@@ -6,8 +8,8 @@ class GameOver extends Phaser.Scene {
   create() {
     // Add a game over message
     const gameOverText = this.add.text(
-      config.width / 2,
-      config.height / 2 - 50,
+      config.gameWidth / 2,
+      config.gameHeight / 2 - 50,
       "Game Over",
       { fontSize: "32px", fill: "#fff" }
     );
@@ -15,8 +17,8 @@ class GameOver extends Phaser.Scene {
 
     // Add instructions to restart the game
     const restartText = this.add.text(
-      config.width / 2,
-      config.height / 2,
+      config.gameWidth / 2,
+      config.gameHeight / 2,
       "Press R to Restart",
       { fontSize: "24px", fill: "#fff" }
     );
@@ -24,8 +26,8 @@ class GameOver extends Phaser.Scene {
 
     // Add instructions to back to the title screen
     const backToTitleText = this.add.text(
-      config.width / 2,
-      config.height / 2 + 30,
+      config.gameWidth / 2,
+      config.gameHeight / 2 + 30,
       "Press T to TitleScreen",
       { fontSize: "24px", fill: "#fff" }
     );
@@ -52,3 +54,4 @@ class GameOver extends Phaser.Scene {
     });
   }
 }
+export default GameOver;

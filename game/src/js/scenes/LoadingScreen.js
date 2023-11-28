@@ -1,3 +1,5 @@
+import Phaser from "phaser";
+import config from "../config/config.js";
 class LoadingScreen extends Phaser.Scene {
   constructor() {
     super("loadingScreen");
@@ -108,8 +110,8 @@ class LoadingScreen extends Phaser.Scene {
     });
 
     const loadingText = this.add.text(
-      config.width / 2,
-      config.height / 2 - 50,
+      config.gameWidth / 2,
+      config.gameHeight / 2 - 50,
       "LOADING",
       { fontSize: "32px", fill: "#fff" }
     );
@@ -120,3 +122,4 @@ class LoadingScreen extends Phaser.Scene {
     });
   }
 }
+export default LoadingScreen;
