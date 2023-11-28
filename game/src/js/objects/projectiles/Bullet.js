@@ -17,3 +17,5 @@ class Bullet extends Entity {
     }
   }
 }
+
+export default Bullet;

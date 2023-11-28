@@ -1,5 +1,7 @@
 import Phaser from "phaser";
 import Bullet from "../objects/projectiles/Bullet";
+import gameSettings from "../config/gameSettings";
+import config from "../config/config";
 class PlayingScreen extends Phaser.Scene {
   constructor() {
     super("playGame");
@@ -9,8 +11,8 @@ class PlayingScreen extends Phaser.Scene {
     this.background = this.add.tileSprite(
       0,
       0,
-      config.width,
-      config.height,
+      config.gameWidth,
+      config.gameHeight,
       "background"
     );
     this.background.setOrigin(0, 0);
@@ -18,8 +20,8 @@ class PlayingScreen extends Phaser.Scene {
     // Spawn objects
     // Spawn the Player
     this.player = this.physics.add.sprite(
-      config.width / 2,
-      config.height / 2 + 180,
+      config.gameWidth / 2,
+      config.gameHeight / 2 + 180,
       "player"
     );
     this.player.setDepth(2);
@@ -130,14 +132,14 @@ class PlayingScreen extends Phaser.Scene {
   }
 
   moveEnemyManagement() {
-    if (this.enemy_1.y >= config.height) {
+    if (this.enemy_1.y >= config.gameHeight) {
       this.enemy_1.y = 0;
-      this.enemy_1.x = Phaser.Math.Between(0, config.width - 48);
+      this.enemy_1.x = Phaser.Math.Between(0, config.gameWidth - 48);
     }
 
-    if (this.enemy_2.y >= config.height) {
+    if (this.enemy_2.y >= config.gameHeight) {
       this.enemy_2.y = 0;
-      this.enemy_2.x = Phaser.Math.Between(0, config.width - 48);
+      this.enemy_2.x = Phaser.Math.Between(0, config.gameWidth - 48);
     }
 
     this.enemy_1.setVelocityY(gameSettings.enemySpeed);
@@ -155,7 +157,7 @@ class PlayingScreen extends Phaser.Scene {
     this.explosion.on("animationcomplete", () => {
       this.explosion.destroy();
     });
-    enemy.x = Phaser.Math.Between(0, config.width - 48);
+    enemy.x = Phaser.Math.Between(0, config.gameWidth - 48);
     enemy.y = -50;
   }
 

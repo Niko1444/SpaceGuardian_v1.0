@@ -5,11 +5,7 @@ const path = require("path");
 // Here, you write different options and tell Webpack what to do
 module.exports = {
   // Path to your entry point. From this file Webpack will begin its work
-  entry: "./js/game.js",
-
-  externals: {
-    phaser: "Phaser",
-  },
+  entry: "/game.js",
 
   // Path and filename of your result bundle.
   // Webpack will bundle all JavaScript into this file
