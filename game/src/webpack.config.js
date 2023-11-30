@@ -11,14 +11,12 @@ module.exports = {
   // Webpack will bundle all JavaScript into this file
   output: {
     path: path.resolve(__dirname, "dist"),
-    publicPath: "/",
+    publicPath: "./",
     filename: "bundle.js",
   },
 
   devServer: {
-    static: {
-      directory: path.join(__dirname, "dist"),
-    },
+    static: path.resolve(__dirname, "dist"),
     hot: true,
   },
 
@@ -28,7 +26,10 @@ module.exports = {
         test: /\.js$/,
         exclude: /node_modules/,
         use: {
-          loader: "babel-loader",
+          loader: "expose-loader",
+          options: {
+            exposes: ["Phaser"],
+          },
         },
       },
       {

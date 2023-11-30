@@ -8,8 +8,8 @@ const rem =
   (parseFloat(getComputedStyle(document.documentElement).fontSize) * 62.5) /
   100;
 
-const gameWidth = 40 * rem;
-const gameHeight = 70 * rem;
+const gameWidth = 10 * rem;
+const gameHeight = 10 * rem;
 
 const config = {
   pauseGame: false,
