@@ -13,7 +13,7 @@ class LoadingScreen extends Phaser.Scene {
 
     // Load Player Spritesheet
     this.load.spritesheet({
-      key: "player",
+      key: "player_texture",
       url: "assets/spritesheets/players/kopter_ship.png",
       frameConfig: {
         frameWidth: 96,
@@ -86,7 +86,7 @@ class LoadingScreen extends Phaser.Scene {
     // Create player animations
     this.anims.create({
       key: "player_anim",
-      frames: this.anims.generateFrameNumbers("player", { start: 0, end: 3 }),
+      frames: this.anims.generateFrameNumbers("player_texture", { start: 0, end: 3 }),
       frameRate: 20,
       repeat: -1,
     });

@@ -7,6 +7,9 @@ import Bullet from "../objects/projectiles/Bullet";
 import Bug3 from "../objects/enemies/Bug3";
 
 import EnemyManager from "../manager/enemyManager";
+
+import PlayerManagement from "../manager/playerManager";
+
 class PlayingScreen extends Phaser.Scene {
   constructor() {
     super("playGame");
@@ -31,6 +34,8 @@ class PlayingScreen extends Phaser.Scene {
     );
     this.player.setDepth(2);
 
+    this.playerManagement = new PlayerManagement(this,this.player);
+
     // Spawn the Enemies
     this.enemy_1 = this.physics.add.sprite(100, 100, "enemy_1");
     this.enemy_2 = this.physics.add.sprite(300, 200, "enemy_2");
@@ -50,7 +55,6 @@ class PlayingScreen extends Phaser.Scene {
     this.enemy_2.setInteractive();
 
     // Create keyboard inputs
-    this.cursorKeys = this.input.keyboard.createCursorKeys();
     this.spacebar = this.input.keyboard.addKey(
       Phaser.Input.Keyboard.KeyCodes.SPACE
     );
@@ -116,7 +120,7 @@ class PlayingScreen extends Phaser.Scene {
     this.background.tilePositionY -= 0.5;
 
     // Move the player and enemies
-    this.movePlayerManagement();
+    this.playerManagement.movePlayerManagement();
     this.enemyManager.moveEnemies();
 
     if (Phaser.Input.Keyboard.JustDown(this.spacebar)) {
@@ -126,24 +130,6 @@ class PlayingScreen extends Phaser.Scene {
     this.projectiles.children.iterate((bullet) => {
       bullet.update();
     });
-  }
-
-  movePlayerManagement() {
-    if (this.cursorKeys.up.isDown) {
-      this.player.setVelocityY(-gameSettings.playerSpeed);
-    } else if (this.cursorKeys.down.isDown) {
-      this.player.setVelocityY(gameSettings.playerSpeed);
-    } else {
-      this.player.setVelocityY(0);
-    }
-
-    if (this.cursorKeys.left.isDown) {
-      this.player.setVelocityX(-gameSettings.playerSpeed);
-    } else if (this.cursorKeys.right.isDown) {
-      this.player.setVelocityX(gameSettings.playerSpeed);
-    } else {
-      this.player.setVelocityX(0);
-    }
   }
 
   shootBullet() {
