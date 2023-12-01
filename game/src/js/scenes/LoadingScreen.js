@@ -46,9 +46,20 @@ class LoadingScreen extends Phaser.Scene {
       },
     });
 
+    this.load.spritesheet({
+      key: "bug3_texture",
+      url: "assets/spritesheets/enemies/bug_3.png",
+      frameConfig: {
+        frameWidth: 64,
+        frameHeight: 64,
+        startFrame: 0,
+        endFrame: 5,
+      },
+    });
+
     // Load Bullet Spritesheet
     this.load.spritesheet({
-      key: "bullet",
+      key: "bullet_texture",
       url: "assets/spritesheets/vfx/bullet.png",
       frameConfig: {
         frameWidth: 9,

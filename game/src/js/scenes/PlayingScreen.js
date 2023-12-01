@@ -1,7 +1,12 @@
 import Phaser from "phaser";
-import Bullet from "../objects/projectiles/Bullet";
+
 import gameSettings from "../config/gameSettings";
 import config from "../config/config";
+
+import Bullet from "../objects/projectiles/Bullet";
+import Bug3 from "../objects/enemies/Bug3";
+
+import EnemyManager from "../manager/enemyManager";
 class PlayingScreen extends Phaser.Scene {
   constructor() {
     super("playGame");
@@ -29,6 +34,15 @@ class PlayingScreen extends Phaser.Scene {
     // Spawn the Enemies
     this.enemy_1 = this.physics.add.sprite(100, 100, "enemy_1");
     this.enemy_2 = this.physics.add.sprite(300, 200, "enemy_2");
+    this.bug3 = new Bug3(this, 500, 100);
+
+    // Create managers
+    this.enemyManager = new EnemyManager(
+      this,
+      this.enemy_1,
+      this.enemy_2,
+      this.bug3
+    );
 
     // Set interactive objects
     this.player.setInteractive();
@@ -102,7 +116,7 @@ class PlayingScreen extends Phaser.Scene {
 
     // Move the player and enemies
     this.movePlayerManagement();
-    this.moveEnemyManagement();
+    this.enemyManager.moveEnemies();
 
     if (Phaser.Input.Keyboard.JustDown(this.spacebar)) {
       this.shootBullet();
@@ -129,21 +143,6 @@ class PlayingScreen extends Phaser.Scene {
     } else {
       this.player.setVelocityX(0);
     }
-  }
-
-  moveEnemyManagement() {
-    if (this.enemy_1.y >= config.gameHeight) {
-      this.enemy_1.y = 0;
-      this.enemy_1.x = Phaser.Math.Between(0, config.gameWidth - 48);
-    }
-
-    if (this.enemy_2.y >= config.gameHeight) {
-      this.enemy_2.y = 0;
-      this.enemy_2.x = Phaser.Math.Between(0, config.gameWidth - 48);
-    }
-
-    this.enemy_1.setVelocityY(gameSettings.enemySpeed);
-    this.enemy_2.setVelocityY(gameSettings.enemySpeed);
   }
 
   shootBullet() {

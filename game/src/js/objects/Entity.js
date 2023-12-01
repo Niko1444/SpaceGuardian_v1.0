@@ -49,6 +49,14 @@ class Entity extends Phaser.GameObjects.Sprite {
       this.setData("isDead", true);
     }
   }
+
+  setVelocityY(velocity) {
+    this.body.setVelocityY(velocity);
+  }
+
+  setVelocityX(velocity) {
+    this.body.setVelocityX(velocity);
+  }
 }
 
 export default Entity;
