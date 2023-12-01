@@ -65,7 +65,7 @@ class TitleScreen extends Phaser.Scene {
     const guardianText = this.add.text(
       config.gameWidth / 2,
       config.gameHeight / 2 - 30,
-      "GUARDIAN",
+      "Guardian",
       {
         fontFamily: "Pixelify Sans",
         color: "#FF454D",
