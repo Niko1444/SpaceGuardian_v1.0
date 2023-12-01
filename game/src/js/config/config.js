@@ -9,7 +9,7 @@ const rem =
   100;
 
 const gameWidth = 40 * rem;
-const gameHeight = 70 * rem;
+const gameHeight = 75 * rem;
 
 const config = {
   pauseGame: false,
