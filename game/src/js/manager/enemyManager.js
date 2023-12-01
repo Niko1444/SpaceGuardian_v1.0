@@ -13,10 +13,8 @@ class EnemyManager {
     // Move bug3
     if (this.bug3.y >= config.height) {
       this.bug3.y = 0;
-      this.bug3.x = Phaser.Math.Between(0, config.gameWidth - 48);
+      this.bug3.x = Phaser.Math.Between(0, config.width - 48);
     }
-
-    this.bug3.setVelocityY(gameSettings.enemySpeed);
   }
 }
 

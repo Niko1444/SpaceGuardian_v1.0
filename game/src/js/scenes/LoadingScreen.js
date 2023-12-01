@@ -83,8 +83,6 @@ class LoadingScreen extends Phaser.Scene {
       repeat: -1,
     });
 
-    // Create bullet animations (because now bullet has only one frame)
-
     // Create explosion animations
     this.anims.create({
       key: "explosion_anim",

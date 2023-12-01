@@ -3,12 +3,12 @@ import config from "../config/config.js";
 import gameSettings from "../config/gameSettings.js";
 
 class Entity extends Phaser.GameObjects.Sprite {
-  constructor(scene, x, y, key, type, health) {
+  constructor(scene, x, y, key, texture, health) {
     super(scene, x, y, key);
     this.scene = scene;
     this.scene.add.existing(this);
     this.scene.physics.world.enableBody(this, 0);
-    this.setData("type", type);
+    this.setData("texture", texture);
     this.setData("isDead", false);
     this.setData("health", health);
   }

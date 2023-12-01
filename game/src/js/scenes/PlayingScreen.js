@@ -33,7 +33,7 @@ class PlayingScreen extends Phaser.Scene {
     this.player.play("player_anim");
 
     // Spawn the Enemies
-    this.bug3 = new Bug3(this, 500, 100, 100);
+    this.bug3 = new Bug3(this, 100, 100, 100);
     this.bug3.play("bug3_anim");
 
     // Create managers
