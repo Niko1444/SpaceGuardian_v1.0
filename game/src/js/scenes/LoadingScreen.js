@@ -106,6 +106,16 @@ class LoadingScreen extends Phaser.Scene {
       repeat: -1,
     });
 
+    this.anims.create({
+      key: "bug3_anim",
+      frames: this.anims.generateFrameNumbers("bug3_texture", {
+        start: 0,
+        end: 5,
+      }),
+      frameRate: 20,
+      repeat: -1,
+    });
+
     // Create bullet animations (because now bullet has only one frame)
 
     // Create explosion animations

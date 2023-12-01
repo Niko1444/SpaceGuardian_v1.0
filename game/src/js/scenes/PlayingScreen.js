@@ -62,6 +62,7 @@ class PlayingScreen extends Phaser.Scene {
     this.player.play("player_anim");
     this.enemy_1.play("enemy_1_anim");
     this.enemy_2.play("enemy_2_anim");
+    this.bug3.play("bug3_anim");
 
     // Create a group to manage bullets
     this.projectiles = this.physics.add.group({
