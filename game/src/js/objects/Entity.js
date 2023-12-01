@@ -1,4 +1,6 @@
 import Phaser from "phaser";
+import config from "../config/config.js";
+import gameSettings from "../config/gameSettings.js";
 
 class Entity extends Phaser.GameObjects.Sprite {
   constructor(scene, x, y, key, type) {
