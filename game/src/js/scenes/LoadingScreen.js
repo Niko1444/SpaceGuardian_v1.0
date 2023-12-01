@@ -7,13 +7,13 @@ class LoadingScreen extends Phaser.Scene {
 
   preload() {
     this.load.image(
-      "background",
+      "background_texture",
       "assets/images/backgrounds/purple/nebula_1.png"
     );
 
     // Load Player Spritesheet
     this.load.spritesheet({
-      key: "player",
+      key: "player_texture",
       url: "assets/spritesheets/players/kopter_ship.png",
       frameConfig: {
         frameWidth: 96,
@@ -23,29 +23,7 @@ class LoadingScreen extends Phaser.Scene {
       },
     });
 
-    // Load Enemy Spritesheet
-    this.load.spritesheet({
-      key: "enemy_1",
-      url: "assets/spritesheets/enemies/enemy_1.png",
-      frameConfig: {
-        frameWidth: 48,
-        frameHeight: 48,
-        startFrame: 0,
-        endFrame: 2,
-      },
-    });
-
-    this.load.spritesheet({
-      key: "enemy_2",
-      url: "assets/spritesheets/enemies/enemy_2.png",
-      frameConfig: {
-        frameWidth: 48,
-        frameHeight: 48,
-        startFrame: 0,
-        endFrame: 2,
-      },
-    });
-
+    // Load Enemy Spritesheets
     this.load.spritesheet({
       key: "bug3_texture",
       url: "assets/spritesheets/enemies/bug_3.png",
@@ -71,7 +49,7 @@ class LoadingScreen extends Phaser.Scene {
 
     // Load Effect Spritesheets
     this.load.spritesheet({
-      key: "explosion",
+      key: "explosion_texture",
       url: "assets/spritesheets/vfx/explosion.png",
       frameConfig: {
         frameWidth: 48,
@@ -86,26 +64,15 @@ class LoadingScreen extends Phaser.Scene {
     // Create player animations
     this.anims.create({
       key: "player_anim",
-      frames: this.anims.generateFrameNumbers("player", { start: 0, end: 3 }),
+      frames: this.anims.generateFrameNumbers("player_texture", {
+        start: 0,
+        end: 3,
+      }),
       frameRate: 20,
       repeat: -1,
     });
 
-    // Create enemies animations
-    this.anims.create({
-      key: "enemy_1_anim",
-      frames: this.anims.generateFrameNumbers("enemy_1", { start: 0, end: 2 }),
-      frameRate: 20,
-      repeat: -1,
-    });
-
-    this.anims.create({
-      key: "enemy_2_anim",
-      frames: this.anims.generateFrameNumbers("enemy_2", { start: 0, end: 2 }),
-      frameRate: 20,
-      repeat: -1,
-    });
-
+    // Create enemy animations
     this.anims.create({
       key: "bug3_anim",
       frames: this.anims.generateFrameNumbers("bug3_texture", {
@@ -120,8 +87,8 @@ class LoadingScreen extends Phaser.Scene {
 
     // Create explosion animations
     this.anims.create({
-      key: "explosion",
-      frames: this.anims.generateFrameNumbers("explosion", {
+      key: "explosion_anim",
+      frames: this.anims.generateFrameNumbers("explosion_texture", {
         start: 0,
         end: 7,
       }),
