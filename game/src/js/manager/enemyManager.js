@@ -13,7 +13,7 @@ class EnemyManager {
 
   moveEnemies() {
     // Move enemy_1
-    if (this.enemy_1.y >= config.gameHeight) {
+    if (this.enemy_1.y >= config.height) {
       this.enemy_1.y = 0;
       this.enemy_1.x = Phaser.Math.Between(0, config.gameWidth - 48);
     }
@@ -21,7 +21,7 @@ class EnemyManager {
     this.enemy_1.setVelocityY(gameSettings.enemySpeed);
 
     // Move enemy_2
-    if (this.enemy_2.y >= config.gameHeight) {
+    if (this.enemy_2.y >= config.height) {
       this.enemy_2.y = 0;
       this.enemy_2.x = Phaser.Math.Between(0, config.gameWidth - 48);
     }
@@ -29,7 +29,7 @@ class EnemyManager {
     this.enemy_2.setVelocityY(gameSettings.enemySpeed);
 
     // Move bug3
-    if (this.bug3.y >= config.gameHeight) {
+    if (this.bug3.y >= config.height) {
       this.bug3.y = 0;
       this.bug3.x = Phaser.Math.Between(0, config.gameWidth - 48);
     }

@@ -131,8 +131,8 @@ class LoadingScreen extends Phaser.Scene {
     });
 
     const loadingText = this.add.text(
-      config.gameWidth / 2,
-      config.gameHeight / 2 - 50,
+      config.width / 2,
+      config.height / 2 - 50,
       "LOADING",
       { fontSize: "32px", fill: "#fff" }
     );

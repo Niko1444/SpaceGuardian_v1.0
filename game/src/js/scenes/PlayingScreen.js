@@ -16,8 +16,8 @@ class PlayingScreen extends Phaser.Scene {
     this.background = this.add.tileSprite(
       0,
       0,
-      config.gameWidth,
-      config.gameHeight,
+      config.width,
+      config.height,
       "background"
     );
     this.background.setOrigin(0, 0);
@@ -25,8 +25,8 @@ class PlayingScreen extends Phaser.Scene {
     // Spawn objects
     // Spawn the Player
     this.player = this.physics.add.sprite(
-      config.gameWidth / 2,
-      config.gameHeight / 2 + 180,
+      config.width / 2,
+      config.height / 2 + 180,
       "player"
     );
     this.player.setDepth(2);
@@ -157,7 +157,7 @@ class PlayingScreen extends Phaser.Scene {
     this.explosion.on("animationcomplete", () => {
       this.explosion.destroy();
     });
-    enemy.x = Phaser.Math.Between(0, config.gameWidth - 48);
+    enemy.x = Phaser.Math.Between(0, config.width - 48);
     enemy.y = -50;
   }
 

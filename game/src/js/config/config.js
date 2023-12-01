@@ -13,8 +13,8 @@ const gameHeight = 70 * rem;
 
 const config = {
   pauseGame: false,
-  gameWidth: gameWidth,
-  gameHeight: gameHeight,
+  width: gameWidth,
+  height: gameHeight,
   backgroundColor: 0x000000,
   scene: [TitleScreen, LoadingScreen, PlayingScreen, GameOver, PauseScreen],
   pixelArt: true,

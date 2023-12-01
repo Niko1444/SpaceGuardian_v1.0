@@ -39,8 +39,8 @@ class TitleScreen extends Phaser.Scene {
     this.background = this.add.tileSprite(
       0,
       0,
-      config.gameWidth,
-      config.gameHeight,
+      config.width,
+      config.height,
       "background"
     );
     this.background.setOrigin(0, 0);
@@ -49,8 +49,8 @@ class TitleScreen extends Phaser.Scene {
 
     // Create "SPACE" text
     const spaceText = this.add.text(
-      config.gameWidth / 2,
-      config.gameHeight / 2 - 100,
+      config.width / 2,
+      config.height / 2 - 100,
       "SPACE",
       {
         fontFamily: "Pixelify Sans",
@@ -63,8 +63,8 @@ class TitleScreen extends Phaser.Scene {
 
     // Create "GUARDIAN" text with each letter in a different color
     const guardianText = this.add.text(
-      config.gameWidth / 2,
-      config.gameHeight / 2 - 30,
+      config.width / 2,
+      config.height / 2 - 30,
       "Guardian",
       {
         fontFamily: "Pixelify Sans",
@@ -97,8 +97,8 @@ class TitleScreen extends Phaser.Scene {
 
     // Create Play Button
     this.button_play = this.add.sprite(
-      config.gameWidth / 2,
-      config.gameHeight / 2 + 60,
+      config.width / 2,
+      config.height / 2 + 60,
       "button_play"
     );
     this.button_play.setInteractive();
