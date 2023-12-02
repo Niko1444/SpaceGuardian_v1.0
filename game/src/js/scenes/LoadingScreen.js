@@ -90,7 +90,27 @@ class LoadingScreen extends Phaser.Scene {
         start: 0,
         end: 3,
       }),
-      frameRate: 20,
+      frameRate: 30,
+      repeat: -1,
+    });
+
+    this.anims.create({
+      key: "player_anim_left",
+      frames: this.anims.generateFrameNumbers("player_texture", {
+        start: 4,
+        end: 11,
+      }),
+      frameRate: 30,
+      repeat: -1,
+    });
+
+    this.anims.create({
+      key: "player_anim_right",
+      frames: this.anims.generateFrameNumbers("player_texture", {
+        start: 12,
+        end: 19,
+      }),
+      frameRate: 30,
       repeat: -1,
     });
 
