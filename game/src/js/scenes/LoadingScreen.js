@@ -14,7 +14,7 @@ class LoadingScreen extends Phaser.Scene {
     // Load Player Spritesheet
     this.load.spritesheet({
       key: "player_texture",
-      url: "assets/spritesheets/players/kopter_ship.png",
+      url: "assets/spritesheets/players/planes_08A.png",
       frameConfig: {
         frameWidth: 96,
         frameHeight: 96,
@@ -24,6 +24,17 @@ class LoadingScreen extends Phaser.Scene {
     });
 
     // Load Enemy Spritesheets
+    this.load.spritesheet({
+      key: "bug1_texture",
+      url: "assets/spritesheets/enemies/bug_1.png",
+      frameConfig: {
+        frameWidth: 64,
+        frameHeight: 64,
+        startFrame: 0,
+        endFrame: 5,
+      },
+    });
+
     this.load.spritesheet({
       key: "bug3_texture",
       url: "assets/spritesheets/enemies/bug_3.png",
@@ -84,6 +95,16 @@ class LoadingScreen extends Phaser.Scene {
     });
 
     // Create enemy animations
+    this.anims.create({
+      key: "bug1_anim",
+      frames: this.anims.generateFrameNumbers("bug1_texture", {
+        start: 0,
+        end: 5,
+      }),
+      frameRate: 20,
+      repeat: -1,
+    });
+
     this.anims.create({
       key: "bug3_anim",
       frames: this.anims.generateFrameNumbers("bug3_texture", {

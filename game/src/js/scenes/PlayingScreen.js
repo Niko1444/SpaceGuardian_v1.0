@@ -2,6 +2,7 @@ import Phaser from "phaser";
 import gameSettings from "../config/gameSettings";
 import config from "../config/config";
 import Bullet from "../objects/projectiles/Bullet";
+import Bug1 from "../objects/enemies/Bug1";
 import Bug3 from "../objects/enemies/Bug3";
 import Bug5 from "../objects/enemies/Bug5";
 import EnemyManager from "../manager/enemyManager";
@@ -33,20 +34,25 @@ class PlayingScreen extends Phaser.Scene {
     this.player.play("player_anim");
 
     // Spawn the Enemies
-    this.bug3 = new Bug3(this, 100, 100, 100);
-    this.bug3.play("bug3_anim");
-    this.bug5 = new Bug5(this, 300, 100, 100);
+    this.bug3_1 = new Bug3(this, 150, 200, 100);
+    this.bug3_1.play("bug3_anim");
+    this.bug3_2 = new Bug3(this, 100, 100, 100);
+    this.bug3_2.play("bug3_anim");
+
+    this.bug5 = new Bug5(this, 300, 80, 100);
     this.bug5.play("bug5_anim");
 
+    this.bug1 = new Bug1(this, 200, 180, 100);
+    this.bug1.play("bug1_anim");
     // Create managers
     this.enemyManager = new EnemyManager(this);
-    this.enemyManager.addEnemy(this.bug3);
+    this.enemyManager.addEnemy(this.bug3_1);
+    this.enemyManager.addEnemy(this.bug3_2);
     this.enemyManager.addEnemy(this.bug5);
+    this.enemyManager.addEnemy(this.bug1);
 
-    // Set interactive objects
+    // Set interactive
     this.setInteractiveObjects(this.player);
-    this.setInteractiveObjects(this.bug3);
-    this.setInteractiveObjects(this.bug5);
 
     // Create keyboard inputs
     this.cursorKeys = this.input.keyboard.createCursorKeys();

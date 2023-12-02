@@ -11,6 +11,8 @@ class Entity extends Phaser.GameObjects.Sprite {
     this.setData("texture", texture);
     this.setData("isDead", false);
     this.setData("health", health);
+
+    this.setInteractiveEntity();
   }
 
   takeDamage(amount) {
@@ -60,6 +62,10 @@ class Entity extends Phaser.GameObjects.Sprite {
       );
       this.setData("isDead", true);
     }
+  }
+
+  setInteractiveEntity() {
+    this.setInteractive();
   }
 
   setVelocityY(velocity) {

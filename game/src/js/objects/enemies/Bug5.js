@@ -6,6 +6,8 @@ class Bug5 extends Entity {
     super(scene, x, y, "bug5", "bug5_texture", health);
     this.body.velocity.y = gameSettings.enemySpeed;
     this.health = health;
+
+    this.setInteractiveEntity();
   }
 
   onDestroy() {
@@ -22,6 +24,10 @@ class Bug5 extends Entity {
 
   setVelocityX(velocity) {
     super.setVelocityX(velocity);
+  }
+
+  setInteractiveEntity() {
+    super.setInteractiveEntity();
   }
 }
 
