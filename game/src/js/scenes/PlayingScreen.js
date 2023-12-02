@@ -6,6 +6,8 @@ import Bug1 from "../objects/enemies/Bug1";
 import Bug3 from "../objects/enemies/Bug3";
 import Bug5 from "../objects/enemies/Bug5";
 import EnemyManager from "../manager/enemyManager";
+
+import PlayerManagement from "../manager/playerManager";
 import CollideManager from "../manager/collideManager";
 
 const BACKGROUND_SCROLL_SPEED = 0.5;
@@ -33,6 +35,8 @@ class PlayingScreen extends Phaser.Scene {
     this.player.setDepth(2);
     this.player.play("player_anim");
 
+    this.playerManagement = new PlayerManagement(this, this.player);
+
     // Spawn the Enemies
     this.bug3_1 = new Bug3(this, 150, 200, 100);
     this.bug3_1.play("bug3_anim");
@@ -51,11 +55,7 @@ class PlayingScreen extends Phaser.Scene {
     this.enemyManager.addEnemy(this.bug5);
     this.enemyManager.addEnemy(this.bug1);
 
-    // Set interactive
-    this.setInteractiveObjects(this.player);
-
     // Create keyboard inputs
-    this.cursorKeys = this.input.keyboard.createCursorKeys();
     this.spacebar = this.input.keyboard.addKey(
       Phaser.Input.Keyboard.KeyCodes.SPACE
     );
@@ -84,7 +84,7 @@ class PlayingScreen extends Phaser.Scene {
     this.background.tilePositionY -= BACKGROUND_SCROLL_SPEED;
 
     // Move the player and enemies
-    this.movePlayerManagement();
+    this.playerManagement.movePlayerManagement();
     this.enemyManager.moveEnemies();
 
     if (Phaser.Input.Keyboard.JustDown(this.spacebar)) {
@@ -94,28 +94,6 @@ class PlayingScreen extends Phaser.Scene {
     this.projectiles.children.iterate((bullet) => {
       bullet.update();
     });
-  }
-
-  setInteractiveObjects(gameObject) {
-    gameObject.setInteractive();
-  }
-
-  movePlayerManagement() {
-    if (this.cursorKeys.up.isDown) {
-      this.player.setVelocityY(-gameSettings.playerSpeed);
-    } else if (this.cursorKeys.down.isDown) {
-      this.player.setVelocityY(gameSettings.playerSpeed);
-    } else {
-      this.player.setVelocityY(0);
-    }
-
-    if (this.cursorKeys.left.isDown) {
-      this.player.setVelocityX(-gameSettings.playerSpeed);
-    } else if (this.cursorKeys.right.isDown) {
-      this.player.setVelocityX(gameSettings.playerSpeed);
-    } else {
-      this.player.setVelocityX(0);
-    }
   }
 
   shootBullet() {
