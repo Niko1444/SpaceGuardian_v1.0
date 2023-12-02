@@ -14,7 +14,7 @@ class LoadingScreen extends Phaser.Scene {
     // Load Player Spritesheet
     this.load.spritesheet({
       key: "player_texture",
-      url: "assets/spritesheets/players/planes_08A.png",
+      url: "assets/spritesheets/players/planes_03A.png",
       frameConfig: {
         frameWidth: 96,
         frameHeight: 96,
