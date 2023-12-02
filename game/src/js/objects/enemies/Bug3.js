@@ -3,7 +3,7 @@ import gameSettings from "../../config/gameSettings";
 
 class Bug3 extends Entity {
   constructor(scene, x, y, health) {
-    super(scene, x, y, "bug3", "bug3_texture", health);
+    super(scene, x, y, "bug3_texture", health);
     this.body.velocity.y = gameSettings.enemySpeed;
     this.health = health;
 
