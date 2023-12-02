@@ -3,6 +3,7 @@ import gameSettings from "../config/gameSettings";
 import config from "../config/config";
 import Bullet from "../objects/projectiles/Bullet";
 import Bug3 from "../objects/enemies/Bug3";
+import Bug5 from "../objects/enemies/Bug5";
 import EnemyManager from "../manager/enemyManager";
 import CollideManager from "../manager/collideManager";
 
@@ -22,7 +23,6 @@ class PlayingScreen extends Phaser.Scene {
     );
     this.background.setOrigin(0, 0);
 
-    // Spawn objects
     // Spawn the Player
     this.player = this.physics.add.sprite(
       config.width / 2,
@@ -35,13 +35,18 @@ class PlayingScreen extends Phaser.Scene {
     // Spawn the Enemies
     this.bug3 = new Bug3(this, 100, 100, 100);
     this.bug3.play("bug3_anim");
+    this.bug5 = new Bug5(this, 300, 100, 100);
+    this.bug5.play("bug5_anim");
 
     // Create managers
-    this.enemyManager = new EnemyManager(this, this.bug3);
+    this.enemyManager = new EnemyManager(this);
+    this.enemyManager.addEnemy(this.bug3);
+    this.enemyManager.addEnemy(this.bug5);
 
     // Set interactive objects
-    this.player.setInteractive();
-    this.bug3.setInteractive();
+    this.setInteractiveObjects(this.player);
+    this.setInteractiveObjects(this.bug3);
+    this.setInteractiveObjects(this.bug5);
 
     // Create keyboard inputs
     this.cursorKeys = this.input.keyboard.createCursorKeys();
@@ -57,9 +62,6 @@ class PlayingScreen extends Phaser.Scene {
       classType: Bullet,
       runChildUpdate: true,
     });
-
-    // Collider detection
-    this.collideManager = new CollideManager(this, this.player, [this.bug3]);
   }
 
   update() {
@@ -86,6 +88,10 @@ class PlayingScreen extends Phaser.Scene {
     this.projectiles.children.iterate((bullet) => {
       bullet.update();
     });
+  }
+
+  setInteractiveObjects(gameObject) {
+    gameObject.setInteractive();
   }
 
   movePlayerManagement() {

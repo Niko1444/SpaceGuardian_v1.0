@@ -1,20 +1,25 @@
 // EnemyManager.js
 import Phaser from "phaser";
-import gameSettings from "../config/gameSettings";
 import config from "../config/config";
 
 class EnemyManager {
-  constructor(scene, bug3) {
+  constructor(scene) {
     this.scene = scene;
-    this.bug3 = bug3;
+    this.enemies = [];
   }
 
   moveEnemies() {
-    // Move bug3
-    if (this.bug3.y >= config.height) {
-      this.bug3.y = 0;
-      this.bug3.x = Phaser.Math.Between(0, config.width - 48);
-    }
+    // Move enemies
+    this.enemies.forEach((enemy) => {
+      if (enemy.y >= config.height) {
+        enemy.y = 0;
+        enemy.x = Phaser.Math.Between(0, config.width - 48);
+      }
+    });
+  }
+
+  addEnemy(enemy) {
+    this.enemies.push(enemy);
   }
 }
 

@@ -4,11 +4,8 @@ import gameSettings from "../../config/gameSettings";
 class Bug3 extends Entity {
   constructor(scene, x, y, health) {
     super(scene, x, y, "bug3", "bug3_texture", health);
-
-    this.body.velocity.y = Phaser.Math.Between(
-      gameSettings.enemySpeed / 2,
-      gameSettings.enemySpeed
-    );
+    this.body.velocity.y = gameSettings.enemySpeed;
+    this.health = health;
   }
 
   onDestroy() {

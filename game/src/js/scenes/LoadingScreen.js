@@ -35,6 +35,17 @@ class LoadingScreen extends Phaser.Scene {
       },
     });
 
+    this.load.spritesheet({
+      key: "bug5_texture",
+      url: "assets/spritesheets/enemies/bug_5.png",
+      frameConfig: {
+        frameWidth: 64,
+        frameHeight: 64,
+        startFrame: 0,
+        endFrame: 5,
+      },
+    });
+
     // Load Bullet Spritesheet
     this.load.spritesheet({
       key: "bullet_texture",
@@ -76,6 +87,16 @@ class LoadingScreen extends Phaser.Scene {
     this.anims.create({
       key: "bug3_anim",
       frames: this.anims.generateFrameNumbers("bug3_texture", {
+        start: 0,
+        end: 5,
+      }),
+      frameRate: 20,
+      repeat: -1,
+    });
+
+    this.anims.create({
+      key: "bug5_anim",
+      frames: this.anims.generateFrameNumbers("bug5_texture", {
         start: 0,
         end: 5,
       }),
