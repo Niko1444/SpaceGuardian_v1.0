@@ -3,12 +3,8 @@ import gameSettings from "../../config/gameSettings";
 
 class Player extends Entity {
   constructor(scene, x, y, health) {
-    super(scene, x, y, "player", health);
-    this.body.velocity.y = Phaser.Math.Between(
-      gameSettings.playerSpeed / 2,
-      gameSettings.playerSpeed
-    );
-
+    super(scene, x, y, "player_texture", health);
+    this.body.velocity.y = gameSettings.playerSpeed;
     this.health = health;
     this.setInteractiveEntity();
   }

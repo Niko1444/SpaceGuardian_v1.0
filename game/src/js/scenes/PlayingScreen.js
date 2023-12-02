@@ -2,6 +2,7 @@ import Phaser from "phaser";
 import gameSettings from "../config/gameSettings";
 import config from "../config/config";
 import Bullet from "../objects/projectiles/Bullet";
+import Player from "../objects/players/Player";
 import Bug1 from "../objects/enemies/Bug1";
 import Bug3 from "../objects/enemies/Bug3";
 import Bug5 from "../objects/enemies/Bug5";
@@ -27,15 +28,8 @@ class PlayingScreen extends Phaser.Scene {
     this.background.setOrigin(0, 0);
 
     // Spawn the Player
-    this.player = this.physics.add.sprite(
-      config.width / 2,
-      config.height / 2 + 180,
-      "player_texture"
-    );
-    this.player.setDepth(2);
+    this.player = new Player(this, config.width / 2, config.height - 100, 100);
     this.player.play("player_anim");
-
-    this.playerManagement = new PlayerManagement(this, this.player);
 
     // Spawn the Enemies
     this.bug3_1 = new Bug3(this, 150, 200, 100);
@@ -49,6 +43,7 @@ class PlayingScreen extends Phaser.Scene {
     this.bug1 = new Bug1(this, 200, 180, 100);
     this.bug1.play("bug1_anim");
     // Create managers
+    this.playerManagement = new PlayerManagement(this, this.player);
     this.enemyManager = new EnemyManager(this);
     this.enemyManager.addEnemy(this.bug3_1);
     this.enemyManager.addEnemy(this.bug3_2);
@@ -60,8 +55,6 @@ class PlayingScreen extends Phaser.Scene {
       Phaser.Input.Keyboard.KeyCodes.SPACE
     );
     this.P = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.P);
-
-    this.player.setCollideWorldBounds(true);
 
     // Create a group to manage bullets
     this.projectiles = this.physics.add.group({
