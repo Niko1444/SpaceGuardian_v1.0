@@ -55,9 +55,6 @@ class PlayingScreen extends Phaser.Scene {
     this.enemyManager.addEnemy(this.bug5);
     this.enemyManager.addEnemy(this.bug1);
 
-    // Set interactive
-    this.setInteractiveObjects(this.player);
-
     // Create keyboard inputs
     this.spacebar = this.input.keyboard.addKey(
       Phaser.Input.Keyboard.KeyCodes.SPACE

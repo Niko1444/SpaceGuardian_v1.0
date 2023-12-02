@@ -8,6 +8,8 @@ class Player extends Entity {
           gameSettings.playerSpeed / 2,
           gameSettings.playerSpeed
         );
+
+        this.setInteractiveEntity();
     }
 
     setVelocityY(velocity) {
@@ -20,6 +22,10 @@ class Player extends Entity {
 
     explode(canDestroy){
         super.explode(canDestroy);
+    }
+
+    setInteractiveEntity() {
+        super.setInteractiveEntity();
     }
 }
 
