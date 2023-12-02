@@ -7,8 +7,8 @@ class PauseScreen extends Phaser.Scene {
 
   create() {
     const pauseText = this.add.text(
-      config.gameWidth / 2,
-      config.gameHeight / 2 - 50,
+      config.width / 2,
+      config.height / 2 - 50,
       "Pause",
       { fontSize: "32px", fill: "#fff" }
     );
@@ -16,8 +16,8 @@ class PauseScreen extends Phaser.Scene {
 
     // Add instructions to restart the game
     const unpauseText = this.add.text(
-      config.gameWidth / 2,
-      config.gameHeight / 2,
+      config.width / 2,
+      config.height / 2,
       "Press P to Unpause",
       { fontSize: "24px", fill: "#fff" }
     );
@@ -25,8 +25,8 @@ class PauseScreen extends Phaser.Scene {
 
     // Add instructions to back to the title screen
     const backToTitleText = this.add.text(
-      config.gameWidth / 2,
-      config.gameHeight / 2 + 30,
+      config.width / 2,
+      config.height / 2 + 30,
       "Press T to TitleScreen",
       { fontSize: "24px", fill: "#fff" }
     );

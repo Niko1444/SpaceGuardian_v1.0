@@ -7,14 +7,14 @@ class LoadingScreen extends Phaser.Scene {
 
   preload() {
     this.load.image(
-      "background",
+      "background_texture",
       "assets/images/backgrounds/purple/nebula_1.png"
     );
 
     // Load Player Spritesheet
     this.load.spritesheet({
-      key: "player",
-      url: "assets/spritesheets/players/kopter_ship.png",
+      key: "player_texture",
+      url: "assets/spritesheets/players/planes_08A.png",
       frameConfig: {
         frameWidth: 96,
         frameHeight: 96,
@@ -23,32 +23,43 @@ class LoadingScreen extends Phaser.Scene {
       },
     });
 
-    // Load Enemy Spritesheet
+    // Load Enemy Spritesheets
     this.load.spritesheet({
-      key: "enemy_1",
-      url: "assets/spritesheets/enemies/enemy_1.png",
+      key: "bug1_texture",
+      url: "assets/spritesheets/enemies/bug_1.png",
       frameConfig: {
-        frameWidth: 48,
-        frameHeight: 48,
+        frameWidth: 64,
+        frameHeight: 64,
         startFrame: 0,
-        endFrame: 2,
+        endFrame: 5,
       },
     });
 
     this.load.spritesheet({
-      key: "enemy_2",
-      url: "assets/spritesheets/enemies/enemy_2.png",
+      key: "bug3_texture",
+      url: "assets/spritesheets/enemies/bug_3.png",
       frameConfig: {
-        frameWidth: 48,
-        frameHeight: 48,
+        frameWidth: 64,
+        frameHeight: 64,
         startFrame: 0,
-        endFrame: 2,
+        endFrame: 5,
+      },
+    });
+
+    this.load.spritesheet({
+      key: "bug5_texture",
+      url: "assets/spritesheets/enemies/bug_5.png",
+      frameConfig: {
+        frameWidth: 64,
+        frameHeight: 64,
+        startFrame: 0,
+        endFrame: 5,
       },
     });
 
     // Load Bullet Spritesheet
     this.load.spritesheet({
-      key: "bullet",
+      key: "bullet_texture",
       url: "assets/spritesheets/vfx/bullet.png",
       frameConfig: {
         frameWidth: 9,
@@ -60,7 +71,7 @@ class LoadingScreen extends Phaser.Scene {
 
     // Load Effect Spritesheets
     this.load.spritesheet({
-      key: "explosion",
+      key: "explosion_texture",
       url: "assets/spritesheets/vfx/explosion.png",
       frameConfig: {
         frameWidth: 48,
@@ -75,32 +86,49 @@ class LoadingScreen extends Phaser.Scene {
     // Create player animations
     this.anims.create({
       key: "player_anim",
-      frames: this.anims.generateFrameNumbers("player", { start: 0, end: 3 }),
+      frames: this.anims.generateFrameNumbers("player_texture", {
+        start: 0,
+        end: 3,
+      }),
       frameRate: 20,
       repeat: -1,
     });
 
-    // Create enemies animations
+    // Create enemy animations
     this.anims.create({
-      key: "enemy_1_anim",
-      frames: this.anims.generateFrameNumbers("enemy_1", { start: 0, end: 2 }),
+      key: "bug1_anim",
+      frames: this.anims.generateFrameNumbers("bug1_texture", {
+        start: 0,
+        end: 5,
+      }),
       frameRate: 20,
       repeat: -1,
     });
 
     this.anims.create({
-      key: "enemy_2_anim",
-      frames: this.anims.generateFrameNumbers("enemy_2", { start: 0, end: 2 }),
+      key: "bug3_anim",
+      frames: this.anims.generateFrameNumbers("bug3_texture", {
+        start: 0,
+        end: 5,
+      }),
       frameRate: 20,
       repeat: -1,
     });
 
-    // Create bullet animations (because now bullet has only one frame)
+    this.anims.create({
+      key: "bug5_anim",
+      frames: this.anims.generateFrameNumbers("bug5_texture", {
+        start: 0,
+        end: 5,
+      }),
+      frameRate: 20,
+      repeat: -1,
+    });
 
     // Create explosion animations
     this.anims.create({
-      key: "explosion",
-      frames: this.anims.generateFrameNumbers("explosion", {
+      key: "explosion_anim",
+      frames: this.anims.generateFrameNumbers("explosion_texture", {
         start: 0,
         end: 7,
       }),
@@ -110,8 +138,8 @@ class LoadingScreen extends Phaser.Scene {
     });
 
     const loadingText = this.add.text(
-      config.gameWidth / 2,
-      config.gameHeight / 2 - 50,
+      config.width / 2,
+      config.height / 2 - 50,
       "LOADING",
       { fontSize: "32px", fill: "#fff" }
     );
