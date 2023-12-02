@@ -1,15 +1,16 @@
 import Phaser from "phaser";
-
 import gameSettings from "../config/gameSettings";
 import config from "../config/config";
-
 import Bullet from "../objects/projectiles/Bullet";
+import Bug1 from "../objects/enemies/Bug1";
 import Bug3 from "../objects/enemies/Bug3";
-
+import Bug5 from "../objects/enemies/Bug5";
 import EnemyManager from "../manager/enemyManager";
 
 import PlayerManagement from "../manager/playerManager";
+import CollideManager from "../manager/collideManager";
 
+const BACKGROUND_SCROLL_SPEED = 0.5;
 class PlayingScreen extends Phaser.Scene {
   constructor() {
     super("playGame");
@@ -21,38 +22,41 @@ class PlayingScreen extends Phaser.Scene {
       0,
       config.width,
       config.height,
-      "background"
+      "background_texture"
     );
     this.background.setOrigin(0, 0);
 
-    // Spawn objects
     // Spawn the Player
     this.player = this.physics.add.sprite(
       config.width / 2,
       config.height / 2 + 180,
-      "player"
+      "player_texture"
     );
     this.player.setDepth(2);
+    this.player.play("player_anim");
 
-    this.playerManagement = new PlayerManagement(this,this.player);
+    this.playerManagement = new PlayerManagement(this, this.player);
 
     // Spawn the Enemies
-    this.enemy_1 = this.physics.add.sprite(100, 100, "enemy_1");
-    this.enemy_2 = this.physics.add.sprite(300, 200, "enemy_2");
-    this.bug3 = new Bug3(this, 500, 100);
+    this.bug3_1 = new Bug3(this, 150, 200, 100);
+    this.bug3_1.play("bug3_anim");
+    this.bug3_2 = new Bug3(this, 100, 100, 100);
+    this.bug3_2.play("bug3_anim");
 
+    this.bug5 = new Bug5(this, 300, 80, 100);
+    this.bug5.play("bug5_anim");
+
+    this.bug1 = new Bug1(this, 200, 180, 100);
+    this.bug1.play("bug1_anim");
     // Create managers
-    this.enemyManager = new EnemyManager(
-      this,
-      this.enemy_1,
-      this.enemy_2,
-      this.bug3
-    );
+    this.enemyManager = new EnemyManager(this);
+    this.enemyManager.addEnemy(this.bug3_1);
+    this.enemyManager.addEnemy(this.bug3_2);
+    this.enemyManager.addEnemy(this.bug5);
+    this.enemyManager.addEnemy(this.bug1);
 
-    // Set interactive objects
-    this.player.setInteractive();
-    this.enemy_1.setInteractive();
-    this.enemy_2.setInteractive();
+    // Set interactive
+    this.setInteractiveObjects(this.player);
 
     // Create keyboard inputs
     this.spacebar = this.input.keyboard.addKey(
@@ -62,48 +66,11 @@ class PlayingScreen extends Phaser.Scene {
 
     this.player.setCollideWorldBounds(true);
 
-    // Play animations
-    this.player.play("player_anim");
-    this.enemy_1.play("enemy_1_anim");
-    this.enemy_2.play("enemy_2_anim");
-    this.bug3.play("bug3_anim");
-
     // Create a group to manage bullets
     this.projectiles = this.physics.add.group({
       classType: Bullet,
       runChildUpdate: true,
     });
-
-    // Collider detection
-    this.physics.add.collider(
-      this.projectiles,
-      this.enemy_1,
-      this.bulletHitEnemy,
-      null,
-      this
-    );
-    this.physics.add.collider(
-      this.projectiles,
-      this.enemy_2,
-      this.bulletHitEnemy,
-      null,
-      this
-    );
-
-    this.physics.add.collider(
-      this.player,
-      this.enemy_1,
-      this.playerHitEnemy,
-      null,
-      this
-    );
-    this.physics.add.collider(
-      this.player,
-      this.enemy_2,
-      this.playerHitEnemy,
-      null,
-      this
-    );
   }
 
   update() {
@@ -117,7 +84,7 @@ class PlayingScreen extends Phaser.Scene {
     }
 
     // Move the background
-    this.background.tilePositionY -= 0.5;
+    this.background.tilePositionY -= BACKGROUND_SCROLL_SPEED;
 
     // Move the player and enemies
     this.playerManagement.movePlayerManagement();
@@ -134,31 +101,6 @@ class PlayingScreen extends Phaser.Scene {
 
   shootBullet() {
     const bullet = new Bullet(this);
-  }
-
-  bulletHitEnemy(enemy, bullet) {
-    bullet.destroy();
-    this.explosion = this.add.sprite(enemy.x, enemy.y, "explosion");
-    this.explosion.play("explosion");
-    this.explosion.on("animationcomplete", () => {
-      this.explosion.destroy();
-    });
-    enemy.x = Phaser.Math.Between(0, config.width - 48);
-    enemy.y = -50;
-  }
-
-  playerHitEnemy(player, enemy) {
-    this.explosion = this.add.sprite(player.x - 10, player.y - 10, "explosion");
-    this.explosion.play("explosion");
-    this.explosion.on("animationcomplete", () => {
-      this.explosion.destroy();
-    });
-
-    // Disable physics for both player and enemy
-    player.disableBody(true, true);
-    enemy.disableBody(true, true);
-
-    this.time.delayedCall(1000, this.gameOver, [], this);
   }
 
   gameOver() {

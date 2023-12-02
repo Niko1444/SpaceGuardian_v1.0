@@ -2,8 +2,14 @@ import Entity from "../Entity.js";
 import gameSettings from "../../config/gameSettings.js";
 class Bullet extends Entity {
   constructor(scene) {
-    super(scene, scene.player.x, scene.player.y - 10, "bullet_texture");
-
+    super(
+      scene,
+      scene.player.x,
+      scene.player.y - 10,
+      "bullet_texture",
+      "bullet",
+      1
+    );
     scene.add.existing(this);
     scene.physics.world.enableBody(this);
     scene.projectiles.add(this);

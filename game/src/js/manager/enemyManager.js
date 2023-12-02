@@ -1,40 +1,47 @@
-// EnemyManager.js
 import Phaser from "phaser";
-import gameSettings from "../config/gameSettings";
 import config from "../config/config";
 
 class EnemyManager {
-  constructor(scene, enemy1, enemy2, bug3) {
+  constructor(scene) {
     this.scene = scene;
-    this.enemy_1 = enemy1;
-    this.enemy_2 = enemy2;
-    this.bug3 = bug3;
+    this.enemies = [];
+    this.respawnDelays = []; // Array to store individual respawn delays
+    this.lastRespawnTimes = []; // Array to store individual last respawn times
+
+    // Set initial random delays and times for each enemy
+    for (let i = 0; i < this.enemies.length; i++) {
+      this.respawnDelays[i] = Phaser.Math.Between(2000, 5000);
+      this.lastRespawnTimes[i] = 0;
+    }
   }
 
-  moveEnemies() {
-    // Move enemy_1
-    if (this.enemy_1.y >= config.height) {
-      this.enemy_1.y = 0;
-      this.enemy_1.x = Phaser.Math.Between(0, config.gameWidth - 48);
-    }
+  moveEnemies(time) {
+    // Move enemies
+    this.enemies.forEach((enemy, index) => {
+      if (enemy.y >= config.height) {
+        const currentTime = this.scene.time.now;
 
-    this.enemy_1.setVelocityY(gameSettings.enemySpeed);
+        // Check if enough time has passed for the next respawn for this specific enemy
+        if (
+          currentTime - this.lastRespawnTimes[index] >=
+          this.respawnDelays[index]
+        ) {
+          enemy.y = 0;
+          enemy.x = Phaser.Math.Between(0, config.width - 48);
 
-    // Move enemy_2
-    if (this.enemy_2.y >= config.height) {
-      this.enemy_2.y = 0;
-      this.enemy_2.x = Phaser.Math.Between(0, config.gameWidth - 48);
-    }
+          // Set a new random delay for the next respawn for this specific enemy
+          this.respawnDelays[index] = Phaser.Math.Between(5000, 7000);
+          this.lastRespawnTimes[index] = currentTime;
+        }
+      }
+    });
+  }
 
-    this.enemy_2.setVelocityY(gameSettings.enemySpeed);
-
-    // Move bug3
-    if (this.bug3.y >= config.height) {
-      this.bug3.y = 0;
-      this.bug3.x = Phaser.Math.Between(0, config.gameWidth - 48);
-    }
-
-    this.bug3.setVelocityY(gameSettings.enemySpeed);
+  addEnemy(enemy) {
+    // When adding a new enemy, initialize its random delay and last respawn time
+    this.enemies.push(enemy);
+    this.respawnDelays.push(Phaser.Math.Between(5000, 7000));
+    this.lastRespawnTimes.push(0);
   }
 }
 
