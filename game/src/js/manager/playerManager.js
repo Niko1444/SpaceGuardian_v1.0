@@ -7,8 +7,6 @@ class PlayerManagement {
     this.scene = scene;
     this.player = player;
     this.cursorKeys = scene.input.keyboard.createCursorKeys();
-    this.lastKeyPressedTime = null;
-    this.delay = 0;
   }
 
   movePlayerManagement() {
@@ -70,8 +68,6 @@ class PlayerManagement {
     if (this.player.anims.currentAnim.key !== animationKey) {
       this.player.play(animationKey);
     }
-
-    this.lastKeyPressedTime = currentTime;
   }
 }
 
