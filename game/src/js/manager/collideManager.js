@@ -24,40 +24,13 @@ class CollideManager {
   }
 
   bulletHitEnemy(enemy, bullet) {
-    // Handle bullet hit logic here
     bullet.destroy();
-
-    // Assuming that enemies have a method `takeDamage` to handle damage
-    if (enemy.takeDamage) {
-      enemy.takeDamage(10); // Adjust the damage amount as needed
-    }
-
-    // Example: Check if the enemy's health is zero or below, then destroy
-    if (enemy.getData("health") <= 0) {
-      enemy.destroy();
-      // Optionally play an explosion animation, etc.
-    }
+    enemy.explode(true);
   }
 
   playerHitEnemy(player, enemy) {
-    // Handle player hit logic here
-
-    // Assuming that both player and enemy have a method `takeDamage` to handle damage
-    if (player.takeDamage && enemy.takeDamage) {
-      player.takeDamage(20); // Adjust the damage amount as needed
-      enemy.takeDamage(10); // Adjust the damage amount as needed
-    }
-
-    // Example: Check if the player's health is zero or below, then trigger game over
-    if (player.getData("health") <= 0) {
-      this.scene.gameOver();
-    }
-
-    // Example: Check if the enemy's health is zero or below, then destroy
-    if (enemy.getData("health") <= 0) {
-      enemy.destroy();
-      // Optionally play an explosion animation, etc.
-    }
+    enemy.explode(true);
+    player.explode(true);
   }
 }
 

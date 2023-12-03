@@ -61,6 +61,13 @@ class PlayingScreen extends Phaser.Scene {
       classType: Bullet,
       runChildUpdate: true,
     });
+
+    // Create a manager to handle collisions
+    this.collideManager = new CollideManager(
+      this,
+      this.player,
+      this.enemyManager.enemies
+    );
   }
 
   update() {
@@ -81,16 +88,12 @@ class PlayingScreen extends Phaser.Scene {
     this.enemyManager.moveEnemies();
 
     if (Phaser.Input.Keyboard.JustDown(this.spacebar)) {
-      this.shootBullet();
+      this.player.shootBullet();
     }
 
     this.projectiles.children.iterate((bullet) => {
       bullet.update();
     });
-  }
-
-  shootBullet() {
-    const bullet = new Bullet(this);
   }
 
   gameOver() {
