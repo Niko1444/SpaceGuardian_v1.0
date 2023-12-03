@@ -14,30 +14,10 @@ class Entity extends Phaser.GameObjects.Sprite {
     this.setInteractiveEntity();
   }
 
-  takeDamage(amount) {
-    // Reduce health by the specified amount
-    const currentHealth = this.getData("health");
-    const newHealth = Math.max(0, currentHealth - amount);
-    this.setData("health", newHealth);
-
-    // Check if the entity is still alive
-    if (newHealth <= 0) {
-      this.explode(true);
-    }
-  }
-
-  onDestroy() {
-    if (this.shootTimer !== undefined) {
-      if (this.shootTimer) {
-        this.shootTimer.remove(false);
-      }
-    }
-  }
-
   explode(canDestroy) {
     if (!this.getData("isDead")) {
-      this.setTexture("explosion");
-      this.play("explosion");
+      this.setTexture("explosion_texture");
+      this.play("explosion_anim");
 
       if (this.shootTimer !== undefined) {
         if (this.shootTimer) {

@@ -61,6 +61,13 @@ class PlayingScreen extends Phaser.Scene {
       classType: Bullet,
       runChildUpdate: true,
     });
+
+    // Create a manager to handle collisions
+    this.collideManager = new CollideManager(
+      this,
+      this.player,
+      this.enemyManager.enemies
+    );
   }
 
   update() {
