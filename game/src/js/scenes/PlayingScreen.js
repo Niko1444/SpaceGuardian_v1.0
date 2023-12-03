@@ -9,7 +9,7 @@ import Bug5 from "../objects/enemies/Bug5";
 import EnemyManager from "../manager/enemyManager";
 
 import KeyboardManager from "../manager/KeyboardManager";
-import PlayerManagement from "../manager/playerManager";
+import PlayerManager from "../manager/playerManager";
 import CollideManager from "../manager/collideManager";
 
 const BACKGROUND_SCROLL_SPEED = 0.5;
@@ -45,7 +45,7 @@ class PlayingScreen extends Phaser.Scene {
     this.bug1.play("bug1_anim");
     // Create managers
     this.keyboardManager = new KeyboardManager(this);
-    this.playerManagement = new PlayerManagement(this, this.player);
+    this.playerManager = new PlayerManager(this, this.player);
     this.enemyManager = new EnemyManager(this);
     this.enemyManager.addEnemy(this.bug3_1);
     this.enemyManager.addEnemy(this.bug3_2);
@@ -62,6 +62,13 @@ class PlayingScreen extends Phaser.Scene {
       classType: Bullet,
       runChildUpdate: true,
     });
+
+    // Create a manager to handle collisions
+    this.collideManager = new CollideManager(
+      this,
+      this.player,
+      this.enemyManager.enemies
+    );
   }
 
   update() {
@@ -72,20 +79,16 @@ class PlayingScreen extends Phaser.Scene {
     this.background.tilePositionY -= BACKGROUND_SCROLL_SPEED;
 
     // Move the player and enemies
-    this.playerManagement.movePlayerManagement();
+    this.playerManager.movePlayer();
     this.enemyManager.moveEnemies();
 
     if (Phaser.Input.Keyboard.JustDown(this.spacebar)) {
-      this.shootBullet();
+      this.player.shootBullet();
     }
 
     this.projectiles.children.iterate((bullet) => {
       bullet.update();
     });
-  }
-
-  shootBullet() {
-    const bullet = new Bullet(this);
   }
 
   gameOver() {

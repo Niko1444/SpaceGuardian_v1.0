@@ -2,14 +2,14 @@ import Phaser from "phaser";
 import gameSettings from "../config/gameSettings";
 import config from "../config/config";
 
-class PlayerManagement {
+class PlayerManager {
   constructor(scene, player) {
     this.scene = scene;
     this.player = player;
     this.cursorKeys = scene.input.keyboard.createCursorKeys();
   }
 
-  movePlayerManagement() {
+  movePlayer() {
     const currentTime = this.scene.time.now;
 
     let xVelocity = 0;
@@ -71,4 +71,4 @@ class PlayerManagement {
   }
 }
 
-export default PlayerManagement;
+export default PlayerManager;

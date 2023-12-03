@@ -5,7 +5,7 @@ const path = require("path");
 // Here, you write different options and tell Webpack what to do
 module.exports = {
   // Path to your entry point. From this file Webpack will begin its work
-  entry: "/game.js",
+  entry: "./game.js", // Corrected the entry path
 
   // Path and filename of your result bundle.
   externals: {
@@ -14,8 +14,39 @@ module.exports = {
   // Webpack will bundle all JavaScript into this file
   output: {
     path: path.resolve(__dirname, "dist"),
-    publicPath: "",
+    publicPath: "./",
     filename: "bundle.js",
+  },
+
+  devServer: {
+    static: path.resolve(__dirname, "dist"),
+    hot: true,
+  },
+
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: {
+          loader: "expose-loader",
+          options: {
+            exposes: ["Phaser"],
+          },
+        },
+      },
+      {
+        test: /\.(png|jpg|gif|svg|mp3|ogg|wav|flac|fnt|json)$/i,
+        type: "asset/resource",
+      },
+      {
+        test: /phaser\.js$/,
+        loader: "expose-loader",
+        options: {
+          exposes: ["Phaser"],
+        },
+      },
+    ],
   },
 
   // Default mode for Webpack is production.
