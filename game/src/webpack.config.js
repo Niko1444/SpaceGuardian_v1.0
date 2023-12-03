@@ -8,6 +8,9 @@ module.exports = {
   entry: "./game.js", // Corrected the entry path
 
   // Path and filename of your result bundle.
+  externals: {
+    phaser: "Phaser",
+  },
   // Webpack will bundle all JavaScript into this file
   output: {
     path: path.resolve(__dirname, "dist"),

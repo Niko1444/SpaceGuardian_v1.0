@@ -8,20 +8,20 @@ const rem =
   (parseFloat(getComputedStyle(document.documentElement).fontSize) * 62.5) /
   100;
 
-const gameWidth = 10 * rem;
-const gameHeight = 10 * rem;
+const gameWidth = 40 * rem;
+const gameHeight = 75 * rem;
 
 const config = {
   pauseGame: false,
-  gameWidth: gameWidth,
-  gameHeight: gameHeight,
+  width: gameWidth,
+  height: gameHeight,
   backgroundColor: 0x000000,
   scene: [TitleScreen, LoadingScreen, PlayingScreen, GameOver, PauseScreen],
   pixelArt: true,
   physics: {
     default: "arcade",
     arcade: {
-      debug: false,
+      debug: true,
     },
   },
 };

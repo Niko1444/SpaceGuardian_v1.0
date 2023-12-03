@@ -3,3 +3,11 @@
 * {
   font-family: "Pixelify Sans", sans-serif;
 }
+
+body {
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #000;
+}
