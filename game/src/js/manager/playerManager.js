@@ -7,42 +7,66 @@ class PlayerManagement {
     this.scene = scene;
     this.player = player;
     this.cursorKeys = scene.input.keyboard.createCursorKeys();
-    this.lastKeyPressedTime = null;
-    this.lastKeyPressedKey = null;
-    this.delay = 150; // 500 milliseconds delay
   }
 
   movePlayerManagement() {
     const currentTime = this.scene.time.now;
 
+    let xVelocity = 0;
+    let yVelocity = 0;
+    let animationKey = "player_anim";
+
     if (this.cursorKeys.up.isDown) {
-      this.handlePlayerMovement("player_anim", -gameSettings.playerSpeed, currentTime);
+      yVelocity = -gameSettings.playerSpeed;
     } else if (this.cursorKeys.down.isDown) {
-      this.handlePlayerMovement("player_anim", gameSettings.playerSpeed, currentTime);
-    } else {
-      this.player.setVelocityY(0);
+      yVelocity = gameSettings.playerSpeed;
     }
 
     if (this.cursorKeys.left.isDown) {
-      this.handlePlayerMovement("player_anim_left", -gameSettings.playerSpeed, currentTime);
+      xVelocity = -gameSettings.playerSpeed;
+      animationKey = "player_anim_left";
     } else if (this.cursorKeys.right.isDown) {
-      this.handlePlayerMovement("player_anim_right", gameSettings.playerSpeed, currentTime);
-    } else {
-      this.player.setVelocityX(0);
+      xVelocity = gameSettings.playerSpeed;
+      animationKey = "player_anim_right";
     }
-  }
 
-  handlePlayerMovement(animationKey, velocity, currentTime) {
-    if (currentTime - this.lastKeyPressedTime > this.delay) {
-      this.player.play(animationKey);
-      this.player.setVelocityY(0); // Reset velocityY to avoid diagonal movement issues
-      this.player.setVelocityX(0); // Reset velocityX to avoid diagonal movement issues
-      if (animationKey.includes("left") || animationKey.includes("right")) {
-        this.player.setVelocityX(velocity);
-      } else {
-        this.player.setVelocityY(velocity);
+    // Diagonal movement
+    if (this.cursorKeys.up.isDown) {
+      if (this.cursorKeys.left.isDown) {
+        // Diagonal movement: up + left
+        xVelocity = -gameSettings.playerSpeed * 0.7071;
+        yVelocity = -gameSettings.playerSpeed * 0.7071;
+        animationKey = "player_anim_left_diagonal";
+      } else if (this.cursorKeys.right.isDown) {
+        // Diagonal movement: up + right
+        xVelocity = gameSettings.playerSpeed * 0.7071;
+        yVelocity = -gameSettings.playerSpeed * 0.7071;
+        animationKey = "player_anim_right_diagonal";
       }
-      this.lastKeyPressedTime = currentTime;
+    }
+
+    // Diagonal movement
+    if (this.cursorKeys.down.isDown) {
+      if (this.cursorKeys.left.isDown) {
+        // Diagonal movement: down + left
+        xVelocity = -gameSettings.playerSpeed * 0.7071;
+        yVelocity = gameSettings.playerSpeed * 0.7071;
+        animationKey = "player_anim_left_diagonal";
+      } else if (this.cursorKeys.right.isDown) {
+        // Diagonal movement: down + right
+        xVelocity = gameSettings.playerSpeed * 0.7071;
+        yVelocity = gameSettings.playerSpeed * 0.7071;
+        animationKey = "player_anim_right_diagonal";
+      }
+    }
+
+    // Set velocities
+    this.player.setVelocityX(xVelocity);
+    this.player.setVelocityY(yVelocity);
+
+    // Play animation based on the velocities
+    if (this.player.anims.currentAnim.key !== animationKey) {
+      this.player.play(animationKey);
     }
   }
 }
