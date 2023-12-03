@@ -1,4 +1,5 @@
 import Entity from "../Entity";
+import Bullet from "../projectiles/Bullet";
 import gameSettings from "../../config/gameSettings";
 
 class Player extends Entity {
@@ -23,6 +24,10 @@ class Player extends Entity {
 
   setInteractiveEntity() {
     super.setInteractiveEntity();
+  }
+
+  shootBullet() {
+    const bullet = new Bullet(this.scene, this.x, this.y);
   }
 }
 
