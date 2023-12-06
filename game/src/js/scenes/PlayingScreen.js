@@ -7,7 +7,7 @@ import Bug1 from "../objects/enemies/Bug1";
 import Bug3 from "../objects/enemies/Bug3";
 import Bug5 from "../objects/enemies/Bug5";
 import EnemyManager from "../manager/enemyManager";
-
+import KeyboardManager from "../manager/KeyboardManager";
 import PlayerManager from "../manager/playerManager";
 import CollideManager from "../manager/collideManager";
 
@@ -43,6 +43,7 @@ class PlayingScreen extends Phaser.Scene {
     this.bug1 = new Bug1(this, 200, 180, 100);
     this.bug1.play("bug1_anim");
     // Create managers
+    this.keyboardManager = new KeyboardManager(this);
     this.playerManager = new PlayerManager(this, this.player);
     this.enemyManager = new EnemyManager(this);
     this.enemyManager.addEnemy(this.bug3_1);
@@ -54,7 +55,6 @@ class PlayingScreen extends Phaser.Scene {
     this.spacebar = this.input.keyboard.addKey(
       Phaser.Input.Keyboard.KeyCodes.SPACE
     );
-    this.P = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.P);
 
     // Create a group to manage bullets
     this.projectiles = this.physics.add.group({
@@ -72,13 +72,7 @@ class PlayingScreen extends Phaser.Scene {
 
   update() {
     // Pause the game
-    if (Phaser.Input.Keyboard.JustDown(this.P)) {
-      config.pauseGame = !config.pauseGame;
-      if (config.pauseGame === true) {
-        this.scene.launch("pauseScreen");
-        this.scene.pause();
-      }
-    }
+    this.keyboardManager.pauseGame();
 
     // Move the background
     this.background.tilePositionY -= BACKGROUND_SCROLL_SPEED;

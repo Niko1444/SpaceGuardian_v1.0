@@ -1,11 +1,14 @@
 import Phaser from "phaser";
 import config from "../config/config";
+import KeyboardManager from "../manager/KeyboardManager";
 class PauseScreen extends Phaser.Scene {
   constructor() {
     super("pauseScreen");
   }
 
   create() {
+    this.keyboardManager = new KeyboardManager(this);
+
     const pauseText = this.add.text(
       config.width / 2,
       config.height / 2 - 50,
@@ -32,27 +35,9 @@ class PauseScreen extends Phaser.Scene {
     );
     backToTitleText.setOrigin(0.5);
 
-    // Define the "P" key to unpause the game
-    const unpauseKey = this.input.keyboard.addKey(
-      Phaser.Input.Keyboard.KeyCodes.P
-    );
+    this.keyboardManager.unpauseGame();
 
-    // Define the "T" key to back to the title screen
-    const backToTitleKey = this.input.keyboard.addKey(
-      Phaser.Input.Keyboard.KeyCodes.T
-    );
-
-    unpauseKey.on("down", () => {
-      config.pauseGame = false;
-      this.scene.resume("playGame");
-      this.scene.stop();
-    });
-
-    backToTitleKey.on("down", () => {
-      this.scene.start("bootGame");
-      this.scene.stop("playGame");
-      this.scene.stop("pauseScreen");
-    });
+    this.keyboardManager.titleScreen();
   }
 }
 export default PauseScreen;
