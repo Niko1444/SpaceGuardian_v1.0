@@ -10,6 +10,7 @@ import EnemyManager from "../manager/enemyManager";
 import KeyboardManager from "../manager/KeyboardManager";
 import PlayerManager from "../manager/playerManager";
 import CollideManager from "../manager/collideManager";
+import GuiManager from "../manager/uiManager";
 
 const BACKGROUND_SCROLL_SPEED = 0.5;
 class PlayingScreen extends Phaser.Scene {
@@ -18,15 +19,9 @@ class PlayingScreen extends Phaser.Scene {
   }
 
   create() {
-    this.background = this.add.tileSprite(
-      0,
-      0,
-      config.width,
-      config.height,
-      "background_texture"
-    );
-    this.background.setOrigin(0, 0);
-
+    // Creat GUI for PlayingScreen ( Changes in BG except Player and Enemy )
+    this.guiManager = new GuiManager(this);
+    
     // Spawn the Player
     this.player = new Player(this, config.width / 2, config.height - 100, 100);
     this.player.play("player_anim");
@@ -50,6 +45,7 @@ class PlayingScreen extends Phaser.Scene {
     this.enemyManager.addEnemy(this.bug3_2);
     this.enemyManager.addEnemy(this.bug5);
     this.enemyManager.addEnemy(this.bug1);
+    
 
     // Create keyboard inputs
     this.spacebar = this.input.keyboard.addKey(
@@ -62,12 +58,12 @@ class PlayingScreen extends Phaser.Scene {
       runChildUpdate: true,
     });
 
-    // Create a manager to handle collisions
     this.collideManager = new CollideManager(
       this,
       this.player,
       this.enemyManager.enemies
     );
+
   }
 
   update() {
