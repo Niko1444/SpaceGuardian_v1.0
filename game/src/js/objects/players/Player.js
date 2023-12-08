@@ -8,6 +8,8 @@ class Player extends Entity {
     this.body.velocity.y = gameSettings.playerSpeed;
     this.health = health;
     this.setInteractiveEntity();
+    this.setPhysics(scene);
+    this.body.setSize(48, 48);
   }
 
   setVelocityY(velocity) {
@@ -28,6 +30,10 @@ class Player extends Entity {
 
   shootBullet() {
     const bullet = new Bullet(this.scene, this.x, this.y);
+  }
+
+  setPhysics(scene) {
+    super.setPhysics(scene);
   }
 }
 

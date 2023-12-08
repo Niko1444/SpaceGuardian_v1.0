@@ -10,8 +10,6 @@ class Entity extends Phaser.GameObjects.Sprite {
     this.scene.physics.world.enableBody(this, 0);
     this.setData("isDead", false);
     this.setData("health", health);
-
-    this.setInteractiveEntity();
   }
 
   explode(canDestroy) {
@@ -53,6 +51,12 @@ class Entity extends Phaser.GameObjects.Sprite {
 
   setVelocityX(velocity) {
     this.body.setVelocityX(velocity);
+  }
+
+  setPhysics(scene) {
+    scene.add.existing(this);
+    scene.physics.world.enableBody(this);
+    this.body.setCollideWorldBounds(true);
   }
 }
 
