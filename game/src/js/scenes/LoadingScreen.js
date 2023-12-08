@@ -1,8 +1,11 @@
 import Phaser from "phaser";
 import config from "../config/config.js";
+import GuiManager from "../manager/uiManager.js";
 class LoadingScreen extends Phaser.Scene {
   constructor() {
     super("loadingScreen");
+
+    this.guiManager = new GuiManager(this);
   }
 
   preload() {
