@@ -1,5 +1,5 @@
 const gameSettings = {
-  playerSpeed: 300,
+  playerSpeed: 250,
   enemySpeed: 200,
   bulletSpeed: 400,
 };

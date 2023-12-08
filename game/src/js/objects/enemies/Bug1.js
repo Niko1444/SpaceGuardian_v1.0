@@ -6,16 +6,12 @@ class Bug1 extends Entity {
     super(scene, x, y, "bug1_texture", health);
     this.body.velocity.y = gameSettings.enemySpeed;
     this.health = health;
-
+    this.damage = 100;
     this.setInteractiveEntity();
   }
 
   onDestroy() {
     super.onDestroy();
-  }
-
-  takeDamage(amount) {
-    super.takeDamage(amount);
   }
 
   setVelocityY(velocity) {

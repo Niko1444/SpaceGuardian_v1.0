@@ -27,15 +27,15 @@ class PlayingScreen extends Phaser.Scene {
     this.player.play("player_anim");
 
     // Spawn the Enemies
-    this.bug3_1 = new Bug3(this, 150, 200, 100);
+    this.bug3_1 = new Bug3(this, 150, 200, 30);
     this.bug3_1.play("bug3_anim");
-    this.bug3_2 = new Bug3(this, 100, 100, 100);
+    this.bug3_2 = new Bug3(this, 100, 100, 30);
     this.bug3_2.play("bug3_anim");
 
-    this.bug5 = new Bug5(this, 300, 80, 100);
+    this.bug5 = new Bug5(this, 300, 80, 30);
     this.bug5.play("bug5_anim");
 
-    this.bug1 = new Bug1(this, 200, 180, 100);
+    this.bug1 = new Bug1(this, 200, 180, 30);
     this.bug1.play("bug1_anim");
     // Create managers
     this.keyboardManager = new KeyboardManager(this);
@@ -82,6 +82,10 @@ class PlayingScreen extends Phaser.Scene {
     this.projectiles.children.iterate((bullet) => {
       bullet.update();
     });
+
+    if (this.player.health <= 0) {
+      this.gameOver();
+    }
   }
 
   gameOver() {
