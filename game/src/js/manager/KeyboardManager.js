@@ -57,8 +57,8 @@ class KeyboardManager {
 
   restartGame(){
     this.keys.R.on("down", () => {
-      this.scene.start("playGame");
-      this.scene.stop("gameOver");
+      this.scene.scene.start("playGame");
+      this.scene.scene.stop("gameOver");
     });
   }
 }
