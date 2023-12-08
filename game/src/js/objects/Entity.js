@@ -58,6 +58,13 @@ class Entity extends Phaser.GameObjects.Sprite {
     scene.physics.world.enableBody(this);
     this.body.setCollideWorldBounds(true);
   }
+
+  takeDamage(damage) {
+    this.health -= damage;
+    if (this.health <= 0) {
+      this.explode(true);
+    }
+  }
 }
 
 export default Entity;
