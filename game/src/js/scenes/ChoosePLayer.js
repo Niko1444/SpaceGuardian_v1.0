@@ -33,7 +33,10 @@ class ChoosePLayer extends Phaser.Scene{
               startFrame: 3,
               endFrame: 3,
             },
-          });
+        });
+
+        this.load.image("under_player", "assets/gui/under_player.png");
+        this.load.image("under_player_hover", "assets/gui/under_player_hover.png");
 
         for (let i = 1; i <= 9; i++) {
             this.load.spritesheet({
@@ -74,29 +77,43 @@ class ChoosePLayer extends Phaser.Scene{
         )
         chooseText.setOrigin(0.5);
             
-        this.button_play = this.add.sprite(
+        this.button_continue = this.add.sprite(
             config.width / 2,
             config.height*4/5 + 60,
             "button_continue"
           );
-          this.button_play.setInteractive();
-          this.button_play.on("pointerdown", () => {
+          this.button_continue.setInteractive();
+          this.button_continue.on("pointerdown", () => {
               this.scene.start("loadingScreen");
           });
-          this.button_play.on("pointerover", () => {
-            this.button_play.setTexture("button_continue_hover");
+          this.button_continue.on("pointerover", () => {
+            this.button_continue.setTexture("button_continue_hover");
           });
-          this.button_play.on("pointerout", () => {
-            this.button_play.setTexture("button_continue");
+          this.button_continue.on("pointerout", () => {
+            this.button_continue.setTexture("button_continue");
           });
+
+
         
         let count = 1; 
 
         for(let i = 1 ; i <= 3; i++){
             for(let j = 1 ; j <= 3 ; j++){
+                const under_player = this.add.image(config.width*j/3 - config.width/6, config.height*i/4 + 12, "under_player_hover");
+                under_player.setVisible(false);
+
                 const playerImage = this.add.image(config.width*j/3 -config.width/6, config.height*i/4 , `player_texture_${count}`, 0);
                 count = count + 1;
                 playerImage.setOrigin(0.5);
+                playerImage.setInteractive();
+
+                playerImage.on("pointerover", () => {
+                    under_player.setVisible(true);
+                });
+
+                playerImage.on("pointerout", () => {
+                    under_player.setVisible(false);
+                });
             }
         }
 
