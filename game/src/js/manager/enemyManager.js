@@ -24,7 +24,7 @@ class EnemyManager {
       const bugX = centerX + radius * Math.cos(angle);
       const bugY = centerY + radius * Math.sin(angle);
 
-      // Create a new bug (you'll need to implement this part)
+      // Create a new bug
       const newBug = new Bug1(this.scene, bugX, -20, 100); // Initialize at the top
       this.addEnemy(newBug); // Add the bug to the array
 
