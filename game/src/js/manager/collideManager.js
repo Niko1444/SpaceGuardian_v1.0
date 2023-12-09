@@ -1,3 +1,5 @@
+import Phaser from "phaser";
+
 class CollideManager {
   constructor(scene, player, enemies) {
     this.scene = scene;
@@ -24,8 +26,6 @@ class CollideManager {
   }
 
   bulletHitEnemy(enemy, bullet) {
-    console.log("Bullet hit enemy");
-
     // Enemy takes damage
     enemy.takeDamage(bullet.damage);
 
