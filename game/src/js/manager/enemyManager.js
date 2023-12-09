@@ -1,5 +1,6 @@
 import Phaser from "phaser";
 import config from "../config/config";
+import Bug1 from "../objects/enemies/Bug1";
 
 class EnemyManager {
   constructor(scene) {
@@ -12,6 +13,32 @@ class EnemyManager {
     for (let i = 0; i < this.enemies.length; i++) {
       this.respawnDelays[i] = Phaser.Math.Between(2000, 5000);
       this.lastRespawnTimes[i] = 0;
+    }
+  }
+
+  spawnCircleOfBugs(centerX, centerY, radius, numBugs) {
+    const angleIncrement = (2 * Math.PI) / numBugs;
+
+    for (let i = 0; i < numBugs; i++) {
+      const angle = i * angleIncrement;
+      const bugX = centerX + radius * Math.cos(angle);
+      const bugY = centerY + radius * Math.sin(angle);
+
+      // Create a new bug (you'll need to implement this part)
+      const newBug = new Bug1(this.scene, bugX, -20, 100); // Initialize at the top
+      this.addEnemy(newBug); // Add the bug to the array
+
+      // Add a tween to move the bug downward
+      this.scene.tweens.add({
+        targets: newBug,
+        y: bugY, // Final Y position (centerY)
+        duration: 10000, // Duration of the drop (in milliseconds)
+        ease: "Linear", // Linear easing for constant speed
+        onComplete: () => {
+          // Bug has reached its final position
+          // You can add any additional logic here if needed
+        },
+      });
     }
   }
 
