@@ -9,7 +9,7 @@ class LoadingScreen extends Phaser.Scene {
   }
 
   init(data) {
-    this.selectedPlayerIndex = data.value;
+    this.selectedPlayerIndex = data.number;
   }  
 
   preload() {
@@ -20,7 +20,7 @@ class LoadingScreen extends Phaser.Scene {
 
     // Load Player Spritesheet
     this.load.spritesheet({
-      key: "player_texture",
+      key: `player_texture_${this.selectedPlayerIndex}`,
       url: `assets/spritesheets/players/planes_0${this.selectedPlayerIndex}A.png`,
       frameConfig: {
         frameWidth: 96,
@@ -93,7 +93,7 @@ class LoadingScreen extends Phaser.Scene {
     // Create player animations
     this.anims.create({
       key: "player_anim",
-      frames: this.anims.generateFrameNumbers("player_texture", {
+      frames: this.anims.generateFrameNumbers(`player_texture_${this.selectedPlayerIndex}`, {
         start: 0,
         end: 3,
       }),
@@ -103,7 +103,7 @@ class LoadingScreen extends Phaser.Scene {
 
     this.anims.create({
       key: "player_anim_left",
-      frames: this.anims.generateFrameNumbers("player_texture", {
+      frames: this.anims.generateFrameNumbers(`player_texture_${this.selectedPlayerIndex}`, {
         start: 4,
         end: 7,
       }),
@@ -113,7 +113,7 @@ class LoadingScreen extends Phaser.Scene {
 
     this.anims.create({
       key: "player_anim_left_diagonal",
-      frames: this.anims.generateFrameNumbers("player_texture", {
+      frames: this.anims.generateFrameNumbers(`player_texture_${this.selectedPlayerIndex}`, {
         start: 8,
         end: 11,
       }),
@@ -123,7 +123,7 @@ class LoadingScreen extends Phaser.Scene {
 
     this.anims.create({
       key: "player_anim_right",
-      frames: this.anims.generateFrameNumbers("player_texture", {
+      frames: this.anims.generateFrameNumbers(`player_texture_${this.selectedPlayerIndex}`, {
         start: 12,
         end: 15,
       }),
@@ -133,7 +133,7 @@ class LoadingScreen extends Phaser.Scene {
 
     this.anims.create({
       key: "player_anim_right_diagonal",
-      frames: this.anims.generateFrameNumbers("player_texture", {
+      frames: this.anims.generateFrameNumbers(`player_texture_${this.selectedPlayerIndex}`, {
         start: 16,
         end: 19,
       }),
@@ -193,7 +193,8 @@ class LoadingScreen extends Phaser.Scene {
     loadingText.setOrigin(0.5);
 
     this.time.delayedCall(1000, () => {
-      this.scene.start("playGame");
+      let value = this.selectedPlayerIndex;
+      this.scene.start("playGame", {number : value});
     });
   }
 }

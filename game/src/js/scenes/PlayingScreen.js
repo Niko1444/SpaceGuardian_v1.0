@@ -18,12 +18,16 @@ class PlayingScreen extends Phaser.Scene {
     super("playGame");
   }
 
+  init(data) {
+    this.selectedPlayerIndex = data.number;
+  }
+
   create() {
     // Creat GUI for PlayingScreen ( Changes in BG except Player and Enemy )
     this.guiManager = new GuiManager(this);
 
     // Spawn the Player
-    this.player = new Player(this, config.width / 2, config.height - 100, 100);
+    this.player = new Player(this, config.width / 2, config.height - 100, `player_texture_${this.selectedPlayerIndex}`, 100);
     this.player.play("player_anim");
 
     // Spawn the Enemies

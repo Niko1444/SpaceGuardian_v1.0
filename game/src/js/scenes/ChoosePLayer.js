@@ -169,19 +169,47 @@ class ChoosePLayer extends Phaser.Scene{
     }
 
     enterPlayer(){
-        this.selectedPlayerIndex = this.getPlayerIndexByPosition(this.under_player.x, this.under_player.y);
-       
-        let value = this.selectedPlayerIndex;
+        let value = this.getPlayerIndexByPosition(this.under_player.x, this.under_player.y);
 
-        this.scene.start("loadingScreen", {value});
+        console.log(value);
+
+        this.scene.start("loadingScreen", {number : value});
     }
 
     getPlayerIndexByPosition(x, y) {
-        let count = 1;
-        const playerWidth = config.width / 3;
-        const playerHeight = config.height / 3;
-    
-        return 2;
+        if(y == config.height/4 + 12){
+            if(x < config.width*2/3){
+                return 1;
+            }
+            else if(x == config.width*2/3 - config.width/6){
+                return 2;
+            }
+            else{
+                return 3;
+            }
+        }
+        else if( y == config.height*2/4 + 12){
+            if(x < config.width*2/3 ){
+                return 4;
+            }
+            else if(x == config.width*2/3 - config.width/6){
+                return 5;
+            }
+            else{
+                return 6;
+            }
+        }
+        else{
+            if(x < config.width*2/3 ){
+                return 7;
+            }
+            else if(x == config.width*2/3 - config.width/6){
+                return 8;
+            }
+            else{
+                return 9;
+            }
+        }
     }
     
 }
