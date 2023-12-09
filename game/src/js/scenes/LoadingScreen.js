@@ -8,6 +8,10 @@ class LoadingScreen extends Phaser.Scene {
     this.guiManager = new GuiManager(this);
   }
 
+  init(data) {
+    this.selectedPlayerIndex = data.value;
+  }  
+
   preload() {
     this.load.image(
       "background_texture",
@@ -17,7 +21,7 @@ class LoadingScreen extends Phaser.Scene {
     // Load Player Spritesheet
     this.load.spritesheet({
       key: "player_texture",
-      url: "assets/spritesheets/players/planes_03A.png",
+      url: `assets/spritesheets/players/planes_0${this.selectedPlayerIndex}A.png`,
       frameConfig: {
         frameWidth: 96,
         frameHeight: 96,
