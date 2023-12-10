@@ -74,7 +74,12 @@ class PlayingScreen extends Phaser.Scene {
 
     // Move the player and enemies
     this.playerManager.movePlayer();
+    this.player.updateHealthBarPosition();
+
     this.enemyManager.moveEnemies();
+    this.enemyManager.enemies.forEach((enemy) => {
+      enemy.updateHealthBarPosition();
+    });
 
     if (Phaser.Input.Keyboard.JustDown(this.spacebar)) {
       this.player.shootBullet();
@@ -82,10 +87,6 @@ class PlayingScreen extends Phaser.Scene {
 
     this.projectiles.children.iterate((bullet) => {
       bullet.update();
-    });
-
-    this.enemyManager.enemies.forEach((enemy) => {
-      enemy.updateHealthBarPosition();
     });
 
     if (this.player.health <= 0) {
