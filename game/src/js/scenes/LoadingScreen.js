@@ -57,15 +57,27 @@ class LoadingScreen extends Phaser.Scene {
       },
     });
 
-    // Load Bullet Spritesheet
+    // Load health pack Spritesheet
     this.load.spritesheet({
-      key: "bullet_texture",
-      url: "assets/spritesheets/vfx/bullet.png",
+      key: "healthPack_texture",
+      url: "assets/spritesheets/vfx/healthPack.png",
       frameConfig: {
-        frameWidth: 9,
-        frameHeight: 34,
+        frameWidth: 12,
+        frameHeight: 12,
         startFrame: 0,
         endFrame: 0,
+      },
+    });
+
+    // Load second Bullet Spritesheet
+    this.load.spritesheet({
+      key: "bullet1_texture",
+      url: "assets/spritesheets/vfx/bullet1.png",
+      frameConfig: {
+        frameWidth: 12,
+        frameHeight: 26,
+        startFrame: 0,
+        endFrame: 2,
       },
     });
 
@@ -84,6 +96,16 @@ class LoadingScreen extends Phaser.Scene {
 
   create() {
     // Create player animations
+    this.anims.create({
+      key: "bullet1_anim",
+      frames: this.anims.generateFrameNumbers("bullet1_texture",{
+        start: 0,
+        end: 2, 
+       }),
+      frameRate: 12,
+      repeat: -1,
+    });
+
     this.anims.create({
       key: "player_anim",
       frames: this.anims.generateFrameNumbers("player_texture", {

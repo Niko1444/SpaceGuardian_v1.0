@@ -6,10 +6,11 @@ import Player from "../objects/players/Player";
 import Bug1 from "../objects/enemies/Bug1";
 import Bug3 from "../objects/enemies/Bug3";
 import Bug5 from "../objects/enemies/Bug5";
+import HealthPack from "../objects/utilities/healthPack";
 import EnemyManager from "../manager/enemyManager";
-
 import PlayerManager from "../manager/playerManager";
 import CollideManager from "../manager/collideManager";
+import HealthPackManager from "../manager/healthPackManager";
 
 const BACKGROUND_SCROLL_SPEED = 0.5;
 class PlayingScreen extends Phaser.Scene {
@@ -50,6 +51,14 @@ class PlayingScreen extends Phaser.Scene {
     this.enemyManager.addEnemy(this.bug5);
     this.enemyManager.addEnemy(this.bug1);
 
+    this.healthPack1 = new HealthPack(this, 100, 100);
+    // spawn the utility
+    this.healthPackManager = new HealthPackManager(this);
+    // Call createHealthPack to spawn initial health packs
+    this.healthPackManager.createHealthPack();
+    // Start dropping health packs at random intervals
+    this.healthPackManager.startDroppingHealthPacks();
+
     // Create keyboard inputs
     this.spacebar = this.input.keyboard.addKey(
       Phaser.Input.Keyboard.KeyCodes.SPACE
@@ -68,6 +77,7 @@ class PlayingScreen extends Phaser.Scene {
       this.player,
       this.enemyManager.enemies
     );
+    
   }
 
   update() {

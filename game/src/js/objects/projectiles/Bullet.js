@@ -6,8 +6,8 @@ class Bullet extends Entity {
       scene,
       scene.player.x,
       scene.player.y - 10,
-      "bullet_texture",
-      "bullet",
+      "bullet1_texture",
+      "bullet1",
       1
     );
     scene.add.existing(this);
@@ -16,7 +16,10 @@ class Bullet extends Entity {
     this.body.velocity.y = -gameSettings.bulletSpeed;
 
     this.setDepth(1);
+
+  
   }
+
 
   update() {
     if (this.y < 20) {

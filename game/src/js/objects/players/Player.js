@@ -28,7 +28,9 @@ class Player extends Entity {
 
   shootBullet() {
     const bullet = new Bullet(this.scene, this.x, this.y);
-  }
+    bullet.play("bullet1_anim");
+    }
 }
+
 
 export default Player;
