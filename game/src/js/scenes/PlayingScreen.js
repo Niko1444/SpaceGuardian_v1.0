@@ -11,6 +11,7 @@ import KeyboardManager from "../manager/KeyboardManager";
 import PlayerManager from "../manager/playerManager";
 import CollideManager from "../manager/collideManager";
 import GuiManager from "../manager/uiManager";
+import HPBar from "../objects/ui/HPBar";
 
 const BACKGROUND_SCROLL_SPEED = 0.5;
 class PlayingScreen extends Phaser.Scene {
@@ -143,7 +144,12 @@ class PlayingScreen extends Phaser.Scene {
 
     // Move the player and enemies
     this.playerManager.movePlayer();
+    this.player.updateHealthBarPosition();
+
     this.enemyManager.moveEnemies();
+    this.enemyManager.enemies.forEach((enemy) => {
+      enemy.updateHealthBarPosition();
+    });
 
     if (Phaser.Input.Keyboard.JustDown(this.spacebar)) {
       this.player.shootBullet();
