@@ -2,7 +2,6 @@ import Phaser from "phaser";
 import config from "../config/config.js";
 import gameSettings from "../config/gameSettings.js";
 import DamageNumber from "./ui/DamageNumber.js";
-
 class Entity extends Phaser.GameObjects.Sprite {
   constructor(scene, x, y, key, health) {
     super(scene, x, y, key);
@@ -11,6 +10,7 @@ class Entity extends Phaser.GameObjects.Sprite {
     this.scene.physics.world.enableBody(this, 0);
     this.setData("isDead", false);
     this.setData("health", health);
+    this.setData("maxHealth", health);
   }
 
   explode(canDestroy) {
@@ -62,7 +62,6 @@ class Entity extends Phaser.GameObjects.Sprite {
 
   takeDamage(damage) {
     this.health -= damage;
-
     new DamageNumber(this.scene, this.x, this.y, damage);
 
     if (this.health <= 0) {
