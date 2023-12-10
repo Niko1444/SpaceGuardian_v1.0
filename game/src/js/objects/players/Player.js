@@ -4,8 +4,8 @@ import gameSettings from "../../config/gameSettings";
 import HPBar from "../ui/HPBar";
 
 class Player extends Entity {
-  constructor(scene, x, y, health) {
-    super(scene, x, y, "player_texture", health);
+  constructor(scene, x, y, key, health) {
+    super(scene, x, y, key, health);
     this.body.velocity.y = gameSettings.playerSpeed;
     this.health = health;
     this.maxHealth = health;
@@ -27,6 +27,7 @@ class Player extends Entity {
       this.maxHealth
     );
     this.scene.add.existing(this.hpBar);
+    this.key = key;
   }
 
   setVelocityY(velocity) {

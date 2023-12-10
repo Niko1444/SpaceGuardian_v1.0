@@ -6,6 +6,9 @@ class KeyboardManager {
   constructor(scene) {
     this.scene = scene;
 
+    // Create A,W,S,D key
+    this.cursorKeys = scene.input.keyboard.createCursorKeys();
+
     // Store the keys in a property
     this.keys = this.scene.input.keyboard.addKeys({
       spacebar: Phaser.Input.Keyboard.KeyCodes.SPACE,
@@ -14,16 +17,10 @@ class KeyboardManager {
       R: Phaser.Input.Keyboard.KeyCodes.R
       // Add more keys as needed
     });
+  }
 
-    // Ensure the keys are initialized
-    // this.scene.input.keyboard.removeKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
-    // this.scene.input.keyboard.removeKey(Phaser.Input.Keyboard.KeyCodes.P);
-    // this.keys.spacebar = this.scene.input.keyboard.addKey(
-    //   Phaser.Input.Keyboard.KeyCodes.SPACE
-    // );
-    // this.keys.P = this.scene.input.keyboard.addKey(
-    //   Phaser.Input.Keyboard.KeyCodes.P
-    // );
+  controlGame(){
+    
   }
 
   pauseGame() {
@@ -61,6 +58,7 @@ class KeyboardManager {
       this.scene.scene.stop("gameOver");
     });
   }
+
 }
 
 export default KeyboardManager;
