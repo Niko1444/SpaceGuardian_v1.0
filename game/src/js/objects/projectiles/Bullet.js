@@ -14,14 +14,19 @@ class Bullet extends Entity {
     scene.physics.world.enableBody(this);
     scene.projectiles.add(this);
     this.body.velocity.y = -gameSettings.bulletSpeed;
-
+    this.damage = 10;
     this.setDepth(1);
   }
 
   update() {
-    if (this.y < 20) {
+    if (this.y < 20 || !this.active) {
       this.destroy();
     }
+  }
+
+  destroy() {
+    // Call the parent destroy method if needed
+    super.destroy();
   }
 }
 

@@ -11,18 +11,19 @@ class KeyboardManager {
       spacebar: Phaser.Input.Keyboard.KeyCodes.SPACE,
       P: Phaser.Input.Keyboard.KeyCodes.P,
       T: Phaser.Input.Keyboard.KeyCodes.T,
+      R: Phaser.Input.Keyboard.KeyCodes.R
       // Add more keys as needed
     });
 
     // Ensure the keys are initialized
-    this.scene.input.keyboard.removeKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
-    this.scene.input.keyboard.removeKey(Phaser.Input.Keyboard.KeyCodes.P);
-    this.keys.spacebar = this.scene.input.keyboard.addKey(
-      Phaser.Input.Keyboard.KeyCodes.SPACE
-    );
-    this.keys.P = this.scene.input.keyboard.addKey(
-      Phaser.Input.Keyboard.KeyCodes.P
-    );
+    // this.scene.input.keyboard.removeKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+    // this.scene.input.keyboard.removeKey(Phaser.Input.Keyboard.KeyCodes.P);
+    // this.keys.spacebar = this.scene.input.keyboard.addKey(
+    //   Phaser.Input.Keyboard.KeyCodes.SPACE
+    // );
+    // this.keys.P = this.scene.input.keyboard.addKey(
+    //   Phaser.Input.Keyboard.KeyCodes.P
+    // );
   }
 
   pauseGame() {
@@ -51,6 +52,13 @@ class KeyboardManager {
       this.scene.scene.start("bootGame");
       this.scene.scene.stop("playGame");
       this.scene.scene.stop("pauseScreen");
+    });
+  }
+
+  restartGame(){
+    this.keys.R.on("down", () => {
+      this.scene.scene.start("playGame");
+      this.scene.scene.stop("gameOver");
     });
   }
 }

@@ -1,6 +1,7 @@
 import Phaser from "phaser";
 import config from "../config/config.js";
 import gameSettings from "../config/gameSettings.js";
+import DamageNumber from "./ui/DamageNumber.js";
 
 class Entity extends Phaser.GameObjects.Sprite {
   constructor(scene, x, y, key, health) {
@@ -10,8 +11,6 @@ class Entity extends Phaser.GameObjects.Sprite {
     this.scene.physics.world.enableBody(this, 0);
     this.setData("isDead", false);
     this.setData("health", health);
-
-    this.setInteractiveEntity();
   }
 
   explode(canDestroy) {
@@ -53,6 +52,22 @@ class Entity extends Phaser.GameObjects.Sprite {
 
   setVelocityX(velocity) {
     this.body.setVelocityX(velocity);
+  }
+
+  setPhysics(scene) {
+    scene.add.existing(this);
+    scene.physics.world.enableBody(this);
+    this.body.setCollideWorldBounds(true);
+  }
+
+  takeDamage(damage) {
+    this.health -= damage;
+
+    new DamageNumber(this.scene, this.x, this.y, damage);
+
+    if (this.health <= 0) {
+      this.explode(true);
+    }
   }
 }
 

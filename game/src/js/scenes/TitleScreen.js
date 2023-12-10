@@ -1,5 +1,6 @@
 import Phaser from "phaser";
 import config from "../config/config.js";
+import GuiManager from "../manager/uiManager.js";
 class TitleScreen extends Phaser.Scene {
   constructor() {
     super("bootGame");
@@ -103,7 +104,7 @@ class TitleScreen extends Phaser.Scene {
     );
     this.button_play.setInteractive();
     this.button_play.on("pointerdown", () => {
-      this.scene.start("loadingScreen");
+        this.scene.start("choosePlayer");
     });
     this.button_play.on("pointerover", () => {
       this.button_play.setTexture("button_hover");

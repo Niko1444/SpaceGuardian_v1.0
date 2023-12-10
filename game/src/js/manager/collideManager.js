@@ -1,36 +1,42 @@
+import Phaser from "phaser";
+
 class CollideManager {
   constructor(scene, player, enemies) {
     this.scene = scene;
     this.player = player;
     this.enemies = enemies;
 
-    // Add collision between bullets and enemies
-    this.scene.physics.add.collider(
+    // Add overlap between bullets and enemies
+    this.scene.physics.add.overlap(
       this.scene.projectiles,
       this.enemies,
       this.bulletHitEnemy,
       null,
-      this.scene
+      this
     );
 
-    // Add collision between player and enemies
-    this.scene.physics.add.collider(
+    // Add overlap between player and enemies
+    this.scene.physics.add.overlap(
       this.player,
       this.enemies,
       this.playerHitEnemy,
       null,
-      this.scene
+      this
     );
   }
 
   bulletHitEnemy(enemy, bullet) {
+    // Enemy takes damage
+    enemy.takeDamage(bullet.damage);
+
+    // Destroy the bullet
     bullet.destroy();
-    enemy.explode(true);
   }
 
   playerHitEnemy(player, enemy) {
-    enemy.explode(true);
-    player.explode(true);
+    // Player takes damage
+    player.takeDamage(enemy.damage);
+    enemy.takeDamage(player.damage);
   }
 }
 
