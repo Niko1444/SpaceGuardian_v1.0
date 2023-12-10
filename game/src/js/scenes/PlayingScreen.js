@@ -84,6 +84,10 @@ class PlayingScreen extends Phaser.Scene {
       bullet.update();
     });
 
+    this.enemyManager.enemies.forEach((enemy) => {
+      enemy.updateHealthBarPosition();
+    });
+
     if (this.player.health <= 0) {
       this.gameOver();
     }
