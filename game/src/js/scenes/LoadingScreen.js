@@ -17,19 +17,7 @@ class LoadingScreen extends Phaser.Scene {
       "background_texture",
       "assets/images/backgrounds/purple/nebula_1.png"
     );
-
-    // Load Player Spritesheet
-    this.load.spritesheet({
-      key: `player_texture_${this.selectedPlayerIndex}`,
-      url: `assets/spritesheets/players/planes_0${this.selectedPlayerIndex}A.png`,
-      frameConfig: {
-        frameWidth: 96,
-        frameHeight: 96,
-        startFrame: 0,
-        endFrame: 19,
-      },
-    });
-
+    
     // Load Enemy Spritesheets
     this.load.spritesheet({
       key: "bug1_texture",
@@ -90,57 +78,7 @@ class LoadingScreen extends Phaser.Scene {
   }
 
   create() {
-    // Create player animations
-    this.anims.create({
-      key: "player_anim",
-      frames: this.anims.generateFrameNumbers(`player_texture_${this.selectedPlayerIndex}`, {
-        start: 0,
-        end: 3,
-      }),
-      frameRate: 30,
-      repeat: -1,
-    });
-
-    this.anims.create({
-      key: "player_anim_left",
-      frames: this.anims.generateFrameNumbers(`player_texture_${this.selectedPlayerIndex}`, {
-        start: 4,
-        end: 7,
-      }),
-      frameRate: 30,
-      repeat: -1,
-    });
-
-    this.anims.create({
-      key: "player_anim_left_diagonal",
-      frames: this.anims.generateFrameNumbers(`player_texture_${this.selectedPlayerIndex}`, {
-        start: 8,
-        end: 11,
-      }),
-      frameRate: 30,
-      repeat: -1,
-    });
-
-    this.anims.create({
-      key: "player_anim_right",
-      frames: this.anims.generateFrameNumbers(`player_texture_${this.selectedPlayerIndex}`, {
-        start: 12,
-        end: 15,
-      }),
-      frameRate: 30,
-      repeat: -1,
-    });
-
-    this.anims.create({
-      key: "player_anim_right_diagonal",
-      frames: this.anims.generateFrameNumbers(`player_texture_${this.selectedPlayerIndex}`, {
-        start: 16,
-        end: 19,
-      }),
-      frameRate: 30,
-      repeat: -1,
-    });
-
+    
     // Create enemy animations
     this.anims.create({
       key: "bug1_anim",
@@ -197,5 +135,6 @@ class LoadingScreen extends Phaser.Scene {
       this.scene.start("playGame", {number : value});
     });
   }
+
 }
 export default LoadingScreen;

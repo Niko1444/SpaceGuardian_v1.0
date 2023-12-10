@@ -122,6 +122,8 @@ class ChoosePLayer extends Phaser.Scene{
                 this.enterPlayer();
             }
         }, this);
+
+        // this.events.on('shutdown', this.shutdown, this);
     }
 
     update(){
@@ -171,14 +173,12 @@ class ChoosePLayer extends Phaser.Scene{
     enterPlayer(){
         let value = this.getPlayerIndexByPosition(this.under_player.x, this.under_player.y);
 
-        console.log(value);
-
         this.scene.start("loadingScreen", {number : value});
     }
 
     getPlayerIndexByPosition(x, y) {
         if(y == config.height/4 + 12){
-            if(x < config.width*2/3){
+            if(x < config.width*2/3 - config.width/6){
                 return 1;
             }
             else if(x == config.width*2/3 - config.width/6){
@@ -189,7 +189,7 @@ class ChoosePLayer extends Phaser.Scene{
             }
         }
         else if( y == config.height*2/4 + 12){
-            if(x < config.width*2/3 ){
+            if(x < config.width*2/3 - config.width/6 ){
                 return 4;
             }
             else if(x == config.width*2/3 - config.width/6){
@@ -200,7 +200,7 @@ class ChoosePLayer extends Phaser.Scene{
             }
         }
         else{
-            if(x < config.width*2/3 ){
+            if(x < config.width*2/3 - config.width/6 ){
                 return 7;
             }
             else if(x == config.width*2/3 - config.width/6){
@@ -211,6 +211,12 @@ class ChoosePLayer extends Phaser.Scene{
             }
         }
     }
+
+    // shutdown(){
+    //     for(let i = 1 ; i <= 9; i++){
+    //         this.textures.remove(`player_texture_${i}`);
+    //     }
+    // }
     
 }
 

@@ -11,6 +11,7 @@ class Player extends Entity {
     this.setInteractiveEntity();
     this.setPhysics(scene);
     this.body.setSize(48, 48);
+    this.key = key;
   }
 
   setVelocityY(velocity) {
