@@ -115,6 +115,13 @@ class PlayingScreen extends Phaser.Scene {
     this.enemyManager.addEnemy(this.bug5);
     this.enemyManager.addEnemy(this.bug1);
 
+    const centerX = config.width / 2;
+    const centerY = config.height / 2; // You can adjust this as needed
+    const radius = 150; // Adjust the radius as needed
+    const numBugs = 8; // Number of bugs in the circle
+
+    this.enemyManager.spawnCircleOfBugs(centerX, centerY, radius, numBugs);
+
     // Create keyboard inputs
     this.spacebar = this.input.keyboard.addKey(
       Phaser.Input.Keyboard.KeyCodes.SPACE
