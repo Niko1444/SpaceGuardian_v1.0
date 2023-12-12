@@ -13,6 +13,7 @@ class Player extends Entity {
     this.hpBarWidth = 50;
     this.hpBarHeight = 5;
 
+    this.shield = null; 
     this.setInteractiveEntity();
     this.setPhysics(scene);
     this.body.setSize(48, 48);
@@ -48,11 +49,15 @@ class Player extends Entity {
 
   shootBullet() {
     const bullet = new Bullet(this.scene, this.x, this.y);
-  }
+    bullet.play("bullet1_anim");
+    }
 
   setPhysics(scene) {
     super.setPhysics(scene);
   }
+
+
 }
+
 
 export default Player;

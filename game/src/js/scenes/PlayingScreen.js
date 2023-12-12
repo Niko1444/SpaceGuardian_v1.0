@@ -6,12 +6,16 @@ import Player from "../objects/players/Player";
 import Bug1 from "../objects/enemies/Bug1";
 import Bug3 from "../objects/enemies/Bug3";
 import Bug5 from "../objects/enemies/Bug5";
+import HealthPack from "../objects/utilities/healthPack";
+import ShieldPack from "../objects/utilities/ShieldPack";
+import Shield from "../objects/utilities/Shield";
 import EnemyManager from "../manager/enemyManager";
 import KeyboardManager from "../manager/KeyboardManager";
 import PlayerManager from "../manager/playerManager";
 import CollideManager from "../manager/collideManager";
 import GuiManager from "../manager/uiManager";
 import HPBar from "../objects/ui/HPBar";
+import UtilitiesManager from "../manager/UtilitiesManager";
 
 const BACKGROUND_SCROLL_SPEED = 0.5;
 class PlayingScreen extends Phaser.Scene {
@@ -101,6 +105,14 @@ class PlayingScreen extends Phaser.Scene {
     this.bug3_2 = new Bug3(this, 100, 100, 30);
     this.bug3_2.play("bug3_anim");
 
+    this.shield = new Shield(this, this.player);
+    this.shield.play("shield_anim");
+
+
+    this.shield = new Shield(this, this.player);
+    this.shield.play("shield_anim");
+
+
     this.bug5 = new Bug5(this, 300, 80, 30);
     this.bug5.play("bug5_anim");
 
@@ -114,6 +126,26 @@ class PlayingScreen extends Phaser.Scene {
     this.enemyManager.addEnemy(this.bug3_2);
     this.enemyManager.addEnemy(this.bug5);
     this.enemyManager.addEnemy(this.bug1);
+
+    this.healthPack1 = new HealthPack(this, 401, 250);
+    this.healthPack1.play("healthPack_anim");
+    this.healthPack2 = new HealthPack(this, 140, 450);
+    this.healthPack2.play("healthPack_anim");
+
+    this.shieldPack2 = new ShieldPack(this, 40, 450);
+    this.shieldPack2.play("shieldPack_anim");
+    this.shieldPack3 = new ShieldPack(this, 50, 50);
+    this.shieldPack3.play("shieldPack_anim");
+
+    
+
+    this.UtilitiesManager = new UtilitiesManager(this);
+    this.UtilitiesManager.addHealthPack(this.healthPack1);
+    this.UtilitiesManager.addHealthPack(this.healthPack2);
+    this.UtilitiesManager.addShieldPack(this.shieldPack2);
+    this.UtilitiesManager.addShieldPack(this.shieldPack3);
+
+    
 
     const centerX = config.width / 2;
     const centerY = config.height / 2; // You can adjust this as needed
@@ -136,7 +168,9 @@ class PlayingScreen extends Phaser.Scene {
     this.collideManager = new CollideManager(
       this,
       this.player,
-      this.enemyManager.enemies
+      this.enemyManager.enemies,
+      this.UtilitiesManager.healthPacks,
+      this.UtilitiesManager.shieldPacks
     );
 
     this.events.once('shutdown', this.shutdown, this);
@@ -169,6 +203,10 @@ class PlayingScreen extends Phaser.Scene {
     if (this.player.health <= 0) {
       this.gameOver();
     }
+
+    
+    this.shield.updatePosition(this.player);
+
   }
 
   gameOver() {
