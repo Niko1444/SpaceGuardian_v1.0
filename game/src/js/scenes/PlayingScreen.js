@@ -10,8 +10,11 @@ import HealthPack from "../objects/utilities/healthPack";
 import ShieldPack from "../objects/utilities/ShieldPack";
 import Shield from "../objects/utilities/Shield";
 import EnemyManager from "../manager/enemyManager";
+import KeyboardManager from "../manager/KeyboardManager";
 import PlayerManager from "../manager/playerManager";
 import CollideManager from "../manager/collideManager";
+import GuiManager from "../manager/uiManager";
+import HPBar from "../objects/ui/HPBar";
 import UtilitiesManager from "../manager/UtilitiesManager";
 
 const BACKGROUND_SCROLL_SPEED = 0.5;
@@ -20,37 +23,104 @@ class PlayingScreen extends Phaser.Scene {
     super("playGame");
   }
 
+  init(data) {
+    this.selectedPlayerIndex = data.number;
+  }
+
+  preload(){
+    // Load Player Spritesheet
+    this.load.spritesheet({
+      key: `player_texture_${this.selectedPlayerIndex}`,
+      url: `assets/spritesheets/players/planes_0${this.selectedPlayerIndex}A.png`,
+      frameConfig: {
+        frameWidth: 96,
+        frameHeight: 96,
+        startFrame: 0,
+        endFrame: 19,
+      },
+    });
+  }
+
   create() {
-    this.background = this.add.tileSprite(
-      0,
-      0,
-      config.width,
-      config.height,
-      "background_texture"
-    );
-    this.background.setOrigin(0, 0);
+    this.anims.create({
+      key: "player_anim",
+      frames: this.anims.generateFrameNumbers(`player_texture_${this.selectedPlayerIndex}`, {
+        start: 0,
+        end: 3,
+      }),
+      frameRate: 30,
+      repeat: -1,
+    });
+
+    this.anims.create({
+      key: "player_anim_left",
+      frames: this.anims.generateFrameNumbers(`player_texture_${this.selectedPlayerIndex}`, {
+        start: 4,
+        end: 7,
+      }),
+      frameRate: 30,
+      repeat: -1,
+    });
+
+    this.anims.create({
+      key: "player_anim_left_diagonal",
+      frames: this.anims.generateFrameNumbers(`player_texture_${this.selectedPlayerIndex}`, {
+        start: 8,
+        end: 11,
+      }),
+      frameRate: 30,
+      repeat: -1,
+    });
+
+    this.anims.create({
+      key: "player_anim_right",
+      frames: this.anims.generateFrameNumbers(`player_texture_${this.selectedPlayerIndex}`, {
+        start: 12,
+        end: 15,
+      }),
+      frameRate: 30,
+      repeat: -1,
+    });
+
+    this.anims.create({
+      key: "player_anim_right_diagonal",
+      frames: this.anims.generateFrameNumbers(`player_texture_${this.selectedPlayerIndex}`, {
+        start: 16,
+        end: 19,
+      }),
+      frameRate: 30,
+      repeat: -1,
+    });
+
+    // Creat GUI for PlayingScreen ( Changes in BG except Player and Enemy )
+    this.guiManager = new GuiManager(this);
 
     // Spawn the Player
-    this.player = new Player(this, config.width / 2, config.height - 100, 100);
+    this.player = new Player(this, config.width / 2, config.height - 100, `player_texture_${this.selectedPlayerIndex}`, 100);
     this.player.play("player_anim");
 
     // Spawn the Enemies
-    this.bug3_1 = new Bug3(this, 150, 200, 100);
+    this.bug3_1 = new Bug3(this, 150, 200, 30);
     this.bug3_1.play("bug3_anim");
-    this.bug3_2 = new Bug3(this, 100, 100, 100);
+    this.bug3_2 = new Bug3(this, 100, 100, 30);
     this.bug3_2.play("bug3_anim");
 
     this.shield = new Shield(this, this.player);
     this.shield.play("shield_anim");
 
 
-    this.bug5 = new Bug5(this, 300, 80, 100);
+    this.shield = new Shield(this, this.player);
+    this.shield.play("shield_anim");
+
+
+    this.bug5 = new Bug5(this, 300, 80, 30);
     this.bug5.play("bug5_anim");
 
-    this.bug1 = new Bug1(this, 200, 180, 100);
+    this.bug1 = new Bug1(this, 200, 180, 30);
     this.bug1.play("bug1_anim");
     // Create managers
-    this.playerManager = new PlayerManager(this, this.player);
+    this.keyboardManager = new KeyboardManager(this);
+    this.playerManager = new PlayerManager(this, this.player, this.selectedPlayerIndex);
     this.enemyManager = new EnemyManager(this);
     this.enemyManager.addEnemy(this.bug3_1);
     this.enemyManager.addEnemy(this.bug3_2);
@@ -81,7 +151,6 @@ class PlayingScreen extends Phaser.Scene {
     this.spacebar = this.input.keyboard.addKey(
       Phaser.Input.Keyboard.KeyCodes.SPACE
     );
-    this.P = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.P);
 
     // Create a group to manage bullets
     this.projectiles = this.physics.add.group({
@@ -89,7 +158,6 @@ class PlayingScreen extends Phaser.Scene {
       runChildUpdate: true,
     });
 
-    // Create a manager to handle collisions
     this.collideManager = new CollideManager(
       this,
       this.player,
@@ -97,24 +165,25 @@ class PlayingScreen extends Phaser.Scene {
       this.UtilitiesManager.healthPacks,
       this.UtilitiesManager.shieldPacks
     );
+
+    this.events.once('shutdown', this.shutdown, this);
   }
 
   update() {
     // Pause the game
-    if (Phaser.Input.Keyboard.JustDown(this.P)) {
-      config.pauseGame = !config.pauseGame;
-      if (config.pauseGame === true) {
-        this.scene.launch("pauseScreen");
-        this.scene.pause();
-      }
-    }
+    this.keyboardManager.pauseGame();
 
     // Move the background
     this.background.tilePositionY -= BACKGROUND_SCROLL_SPEED;
 
     // Move the player and enemies
     this.playerManager.movePlayer();
+    this.player.updateHealthBarPosition();
+
     this.enemyManager.moveEnemies();
+    this.enemyManager.enemies.forEach((enemy) => {
+      enemy.updateHealthBarPosition();
+    });
 
     if (Phaser.Input.Keyboard.JustDown(this.spacebar)) {
       this.player.shootBullet();
@@ -124,6 +193,10 @@ class PlayingScreen extends Phaser.Scene {
       bullet.update();
     });
 
+    if (this.player.health <= 0) {
+      this.gameOver();
+    }
+
     
     this.shield.updatePosition(this.player);
 
@@ -132,5 +205,30 @@ class PlayingScreen extends Phaser.Scene {
   gameOver() {
     this.scene.start("gameOver");
   }
+
+  shutdown() {
+    // Remove entire texture along with all animations
+    this.textures.remove(`player_texture_${this.selectedPlayerIndex}`);
+  
+    // Check if the animation exists before trying to remove it
+    if (this.anims && this.anims.exists && this.anims.exists("player_anim")) {
+      this.anims.remove("player_anim");
+    }
+    if (this.anims && this.anims.exists && this.anims.exists("player_anim_left")) {
+      this.anims.remove("player_anim_left");
+    }
+    if (this.anims && this.anims.exists && this.anims.exists("player_anim_left_diagonal")) {
+      this.anims.remove("player_anim_left_diagonal");
+    }
+    if (this.anims && this.anims.exists && this.anims.exists("player_anim_right")) {
+      this.anims.remove("player_anim_right");
+    }
+    if (this.anims && this.anims.exists && this.anims.exists("player_anim_right_diagonal")) {
+      this.anims.remove("player_anim_right_diagonal");
+    }
+  }
+  
+  
+  
 }
 export default PlayingScreen;

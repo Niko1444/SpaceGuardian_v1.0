@@ -3,10 +3,11 @@ import gameSettings from "../config/gameSettings";
 import config from "../config/config";
 
 class PlayerManager {
-  constructor(scene, player) {
+  constructor(scene, player, selectedPlayerIndex) {
     this.scene = scene;
     this.player = player;
     this.cursorKeys = scene.input.keyboard.createCursorKeys();
+    this.selectedPlayerIndex = selectedPlayerIndex;
   }
 
   movePlayer() {

@@ -1,3 +1,5 @@
+import Phaser from "phaser";
+
 import HealthPack from "../objects/utilities/healthPack";
 import ShieldPack from "../objects/utilities/ShieldPack";
 import Shield from "../objects/utilities/Shield";
@@ -25,7 +27,7 @@ class CollideManager {
       this.enemies,
       this.playerHitEnemy,
       null,
-      this.scene
+      this
     );
     
      // Add collision between player and health packs
@@ -57,8 +59,9 @@ class CollideManager {
   }
 
   playerHitEnemy(player, enemy) {
-    enemy.explode(true);
-    player.explode(true);
+    // Player takes damage
+    player.takeDamage(enemy.damage);
+    enemy.takeDamage(player.damage);
   }
 
   playerCollideHealthPack(player, HealthPack) {

@@ -1,28 +1,23 @@
 import Phaser from "phaser";
 import config from "../config/config.js";
+import GuiManager from "../manager/uiManager.js";
 class LoadingScreen extends Phaser.Scene {
   constructor() {
     super("loadingScreen");
+
+    this.guiManager = new GuiManager(this);
   }
+
+  init(data) {
+    this.selectedPlayerIndex = data.number;
+  }  
 
   preload() {
     this.load.image(
       "background_texture",
       "assets/images/backgrounds/purple/nebula_1.png"
     );
-
-    // Load Player Spritesheet
-    this.load.spritesheet({
-      key: "player_texture",
-      url: "assets/spritesheets/players/planes_03A.png",
-      frameConfig: {
-        frameWidth: 96,
-        frameHeight: 96,
-        startFrame: 0,
-        endFrame: 19,
-      },
-    });
-
+    
     // Load Enemy Spritesheets
     this.load.spritesheet({
       key: "bug1_texture",
@@ -265,8 +260,10 @@ class LoadingScreen extends Phaser.Scene {
     loadingText.setOrigin(0.5);
 
     this.time.delayedCall(1000, () => {
-      this.scene.start("playGame");
+      let value = this.selectedPlayerIndex;
+      this.scene.start("playGame", {number : value});
     });
   }
+
 }
 export default LoadingScreen;
