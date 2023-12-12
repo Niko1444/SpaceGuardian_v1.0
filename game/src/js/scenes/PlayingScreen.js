@@ -27,7 +27,7 @@ class PlayingScreen extends Phaser.Scene {
     this.selectedPlayerIndex = data.number;
   }
 
-  preload(){
+  preload() {
     // Load Player Spritesheet
     this.load.spritesheet({
       key: `player_texture_${this.selectedPlayerIndex}`,
@@ -42,61 +42,17 @@ class PlayingScreen extends Phaser.Scene {
   }
 
   create() {
-    this.anims.create({
-      key: "player_anim",
-      frames: this.anims.generateFrameNumbers(`player_texture_${this.selectedPlayerIndex}`, {
-        start: 0,
-        end: 3,
-      }),
-      frameRate: 30,
-      repeat: -1,
-    });
-
-    this.anims.create({
-      key: "player_anim_left",
-      frames: this.anims.generateFrameNumbers(`player_texture_${this.selectedPlayerIndex}`, {
-        start: 4,
-        end: 7,
-      }),
-      frameRate: 30,
-      repeat: -1,
-    });
-
-    this.anims.create({
-      key: "player_anim_left_diagonal",
-      frames: this.anims.generateFrameNumbers(`player_texture_${this.selectedPlayerIndex}`, {
-        start: 8,
-        end: 11,
-      }),
-      frameRate: 30,
-      repeat: -1,
-    });
-
-    this.anims.create({
-      key: "player_anim_right",
-      frames: this.anims.generateFrameNumbers(`player_texture_${this.selectedPlayerIndex}`, {
-        start: 12,
-        end: 15,
-      }),
-      frameRate: 30,
-      repeat: -1,
-    });
-
-    this.anims.create({
-      key: "player_anim_right_diagonal",
-      frames: this.anims.generateFrameNumbers(`player_texture_${this.selectedPlayerIndex}`, {
-        start: 16,
-        end: 19,
-      }),
-      frameRate: 30,
-      repeat: -1,
-    });
-
     // Creat GUI for PlayingScreen ( Changes in BG except Player and Enemy )
     this.guiManager = new GuiManager(this);
 
     // Spawn the Player
-    this.player = new Player(this, config.width / 2, config.height - 100, `player_texture_${this.selectedPlayerIndex}`, 100);
+    this.player = new Player(
+      this,
+      config.width / 2,
+      config.height - 100,
+      `player_texture_${this.selectedPlayerIndex}`,
+      100
+    );
     this.player.play("player_anim");
 
     // Spawn the Enemies
@@ -108,10 +64,8 @@ class PlayingScreen extends Phaser.Scene {
     this.shield = new Shield(this, this.player);
     this.shield.play("shield_anim");
 
-
     this.shield = new Shield(this, this.player);
     this.shield.play("shield_anim");
-
 
     this.bug5 = new Bug5(this, 300, 80, 30);
     this.bug5.play("bug5_anim");
@@ -120,7 +74,11 @@ class PlayingScreen extends Phaser.Scene {
     this.bug1.play("bug1_anim");
     // Create managers
     this.keyboardManager = new KeyboardManager(this);
-    this.playerManager = new PlayerManager(this, this.player, this.selectedPlayerIndex);
+    this.playerManager = new PlayerManager(
+      this,
+      this.player,
+      this.selectedPlayerIndex
+    );
     this.enemyManager = new EnemyManager(this);
     this.enemyManager.addEnemy(this.bug3_1);
     this.enemyManager.addEnemy(this.bug3_2);
@@ -137,15 +95,11 @@ class PlayingScreen extends Phaser.Scene {
     this.shieldPack3 = new ShieldPack(this, 50, 50);
     this.shieldPack3.play("shieldPack_anim");
 
-    
-
     this.UtilitiesManager = new UtilitiesManager(this);
     this.UtilitiesManager.addHealthPack(this.healthPack1);
     this.UtilitiesManager.addHealthPack(this.healthPack2);
     this.UtilitiesManager.addShieldPack(this.shieldPack2);
     this.UtilitiesManager.addShieldPack(this.shieldPack3);
-
-    
 
     const centerX = config.width / 2;
     const centerY = config.height / 2; // You can adjust this as needed
@@ -173,7 +127,7 @@ class PlayingScreen extends Phaser.Scene {
       this.UtilitiesManager.shieldPacks
     );
 
-    this.events.once('shutdown', this.shutdown, this);
+    this.events.once("shutdown", this.shutdown, this);
   }
 
   update() {
@@ -204,9 +158,7 @@ class PlayingScreen extends Phaser.Scene {
       this.gameOver();
     }
 
-    
     this.shield.updatePosition(this.player);
-
   }
 
   gameOver() {
@@ -216,26 +168,39 @@ class PlayingScreen extends Phaser.Scene {
   shutdown() {
     // Remove entire texture along with all animations
     this.textures.remove(`player_texture_${this.selectedPlayerIndex}`);
-  
+
     // Check if the animation exists before trying to remove it
     if (this.anims && this.anims.exists && this.anims.exists("player_anim")) {
       this.anims.remove("player_anim");
     }
-    if (this.anims && this.anims.exists && this.anims.exists("player_anim_left")) {
+    if (
+      this.anims &&
+      this.anims.exists &&
+      this.anims.exists("player_anim_left")
+    ) {
       this.anims.remove("player_anim_left");
     }
-    if (this.anims && this.anims.exists && this.anims.exists("player_anim_left_diagonal")) {
+    if (
+      this.anims &&
+      this.anims.exists &&
+      this.anims.exists("player_anim_left_diagonal")
+    ) {
       this.anims.remove("player_anim_left_diagonal");
     }
-    if (this.anims && this.anims.exists && this.anims.exists("player_anim_right")) {
+    if (
+      this.anims &&
+      this.anims.exists &&
+      this.anims.exists("player_anim_right")
+    ) {
       this.anims.remove("player_anim_right");
     }
-    if (this.anims && this.anims.exists && this.anims.exists("player_anim_right_diagonal")) {
+    if (
+      this.anims &&
+      this.anims.exists &&
+      this.anims.exists("player_anim_right_diagonal")
+    ) {
       this.anims.remove("player_anim_right_diagonal");
     }
   }
-  
-  
-  
 }
 export default PlayingScreen;
