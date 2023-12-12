@@ -76,22 +76,6 @@ class ChoosePLayer extends Phaser.Scene {
     );
     chooseText.setOrigin(0.5);
 
-    this.button_continue = this.add.sprite(
-      config.width / 2,
-      (config.height * 4) / 5 + 60,
-      "button_continue"
-    );
-    this.button_continue.setInteractive();
-    this.button_continue.on("pointerdown", () => {
-      this.scene.start("loadingScreen");
-    });
-    this.button_continue.on("pointerover", () => {
-      this.button_continue.setTexture("button_continue_hover");
-    });
-    this.button_continue.on("pointerout", () => {
-      this.button_continue.setTexture("button_continue");
-    });
-
     let count = 1;
     this.under_player = this.add.image(
       (config.width * 2) / 3 - config.width / 6,
@@ -114,6 +98,11 @@ class ChoosePLayer extends Phaser.Scene {
         playerImage.on("pointerover", () => {
           this.under_player.x = playerImage.x;
           this.under_player.y = playerImage.y + 12;
+        });
+
+        playerImage.on("pointerdown", () => {
+          // Call a function to handle player selection
+          this.enterPlayer();
         });
       }
     }
