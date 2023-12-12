@@ -51,7 +51,7 @@ class PlayingScreen extends Phaser.Scene {
       config.width / 2,
       config.height - 100,
       `player_texture_${this.selectedPlayerIndex}`,
-      100
+      1000
     );
     this.player.play("player_anim");
 
