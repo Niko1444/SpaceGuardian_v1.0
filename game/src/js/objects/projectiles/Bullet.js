@@ -18,7 +18,6 @@ class Bullet extends Entity {
     this.setDepth(1);
   }
 
-
   update() {
     if (this.y < 20 || !this.active) {
       this.destroy();

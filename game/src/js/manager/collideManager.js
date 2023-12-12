@@ -10,10 +10,10 @@ class CollideManager {
     this.enemies = enemies;
     this.healthPacks = healthPacks;
     this.shieldPacks = shieldPacks;
-    this.shield = shield
+    this.shield = shield;
 
     // Add collision between bullets and enemies
-    this.scene.physics.add.collider(
+    this.scene.physics.add.overlap(
       this.scene.projectiles,
       this.enemies,
       this.bulletHitEnemy,
@@ -22,16 +22,16 @@ class CollideManager {
     );
 
     // Add collision between player and enemies
-    this.scene.physics.add.collider(
+    this.scene.physics.add.overlap(
       this.player,
       this.enemies,
       this.playerHitEnemy,
       null,
       this
     );
-    
-     // Add collision between player and health packs
-     this.healthPacks.forEach((healthPack) => {
+
+    // Add collision between player and health packs
+    this.healthPacks.forEach((healthPack) => {
       this.scene.physics.add.overlap(
         this.player,
         healthPack,
@@ -55,7 +55,7 @@ class CollideManager {
 
   bulletHitEnemy(enemy, bullet) {
     bullet.destroy();
-    enemy.explode(true);
+    enemy.takeDamage(bullet.damage);
   }
 
   playerHitEnemy(player, enemy) {
@@ -67,7 +67,7 @@ class CollideManager {
   playerCollideHealthPack(player, HealthPack) {
     // const healthAmount = 20; // Set the amount of health to increase
     // const maxHealth = 100; // Set the maximum health value for the player
-  
+
     // const currentHealth = player.getData('health');
     // if (currentHealth < maxHealth) {
     //   const newHealth = Math.min(currentHealth + healthAmount, maxHealth);
@@ -78,16 +78,14 @@ class CollideManager {
     //   player.setData('health', maxHealth);
     // }
     //   // Increase player's health by the amount, ensuring it doesn't exceed the maximum
-  
+
     HealthPack.destroy();
-  
   }
 
   playerCollideShieldPack(player, ShieldPack) {
-      ShieldPack.destroy(); // Destroy the shield pack after collision
-      this.shield.show();
-    }
-  
+    ShieldPack.destroy(); // Destroy the shield pack after collision
+    this.shield.show();
+  }
 }
 
 export default CollideManager;
