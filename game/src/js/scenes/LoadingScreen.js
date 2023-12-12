@@ -62,14 +62,38 @@ class LoadingScreen extends Phaser.Scene {
       key: "healthPack_texture",
       url: "assets/spritesheets/vfx/healthPack.png",
       frameConfig: {
-        frameWidth: 12,
-        frameHeight: 12,
+        frameWidth: 32,
+        frameHeight: 32,
         startFrame: 0,
-        endFrame: 0,
+        endFrame: 4,
       },
     });
 
-    // Load second Bullet Spritesheet
+    // Load shield pack Spritesheet
+    this.load.spritesheet({
+      key: "shieldPack_texture",
+      url: "assets/spritesheets/vfx/shieldPack.png",
+      frameConfig: {
+        frameWidth: 32,
+        frameHeight: 32,
+        startFrame: 0,
+        endFrame: 4,
+      },
+    });
+
+    // Load shield Spritesheet
+    this.load.spritesheet({
+      key: "shield_texture",
+      url: "assets/spritesheets/vfx/shield.png",
+      frameConfig: {
+        frameWidth: 96,
+        frameHeight: 96,
+        startFrame: 0,
+        endFrame: 5,
+      },
+    });
+
+    // Load first Bullet Spritesheet
     this.load.spritesheet({
       key: "bullet1_texture",
       url: "assets/spritesheets/vfx/bullet1.png",
@@ -95,7 +119,40 @@ class LoadingScreen extends Phaser.Scene {
   }
 
   create() {
-    // Create player animations
+    // Create health pack animations
+    this.anims.create({
+      key: "healthPack_anim",
+      frames: this.anims.generateFrameNumbers("healthPack_texture",{
+        start: 0,
+        end: 4, 
+       }),
+      frameRate: 20,
+      repeat: -1,
+    });
+
+    // Create shield pack animations
+    this.anims.create({
+      key: "shieldPack_anim",
+      frames: this.anims.generateFrameNumbers("shieldPack_texture",{
+        start: 0,
+        end: 4, 
+       }),
+      frameRate: 20,
+      repeat: -1,
+    });
+
+    // Create shield animations
+    this.anims.create({
+      key: "shield_anim",
+      frames: this.anims.generateFrameNumbers("shield_texture",{
+        start: 0,
+        end: 5, 
+       }),
+      frameRate: 20,
+      repeat: -1,
+    });
+
+    // Create first bullet animations
     this.anims.create({
       key: "bullet1_anim",
       frames: this.anims.generateFrameNumbers("bullet1_texture",{

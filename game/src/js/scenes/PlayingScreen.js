@@ -7,10 +7,12 @@ import Bug1 from "../objects/enemies/Bug1";
 import Bug3 from "../objects/enemies/Bug3";
 import Bug5 from "../objects/enemies/Bug5";
 import HealthPack from "../objects/utilities/healthPack";
+import ShieldPack from "../objects/utilities/ShieldPack";
+import Shield from "../objects/utilities/Shield";
 import EnemyManager from "../manager/enemyManager";
 import PlayerManager from "../manager/playerManager";
 import CollideManager from "../manager/collideManager";
-import HealthPackManager from "../manager/healthPackManager";
+import UtilitiesManager from "../manager/UtilitiesManager";
 
 const BACKGROUND_SCROLL_SPEED = 0.5;
 class PlayingScreen extends Phaser.Scene {
@@ -38,6 +40,10 @@ class PlayingScreen extends Phaser.Scene {
     this.bug3_2 = new Bug3(this, 100, 100, 100);
     this.bug3_2.play("bug3_anim");
 
+    this.shield = new Shield(this, this.player);
+    this.shield.play("shield_anim");
+
+
     this.bug5 = new Bug5(this, 300, 80, 100);
     this.bug5.play("bug5_anim");
 
@@ -51,13 +57,25 @@ class PlayingScreen extends Phaser.Scene {
     this.enemyManager.addEnemy(this.bug5);
     this.enemyManager.addEnemy(this.bug1);
 
-    this.healthPack1 = new HealthPack(this, 100, 100);
-    // spawn the utility
-    this.healthPackManager = new HealthPackManager(this);
-    // Call createHealthPack to spawn initial health packs
-    this.healthPackManager.createHealthPack();
-    // Start dropping health packs at random intervals
-    this.healthPackManager.startDroppingHealthPacks();
+    this.healthPack1 = new HealthPack(this, 401, 250);
+    this.healthPack1.play("healthPack_anim");
+    this.healthPack2 = new HealthPack(this, 140, 450);
+    this.healthPack2.play("healthPack_anim");
+
+    this.shieldPack2 = new ShieldPack(this, 40, 450);
+    this.shieldPack2.play("shieldPack_anim");
+    this.shieldPack3 = new ShieldPack(this, 50, 50);
+    this.shieldPack3.play("shieldPack_anim");
+
+    
+
+    this.UtilitiesManager = new UtilitiesManager(this);
+    this.UtilitiesManager.addHealthPack(this.healthPack1);
+    this.UtilitiesManager.addHealthPack(this.healthPack2);
+    this.UtilitiesManager.addShieldPack(this.shieldPack2);
+    this.UtilitiesManager.addShieldPack(this.shieldPack3);
+
+    
 
     // Create keyboard inputs
     this.spacebar = this.input.keyboard.addKey(
@@ -75,9 +93,10 @@ class PlayingScreen extends Phaser.Scene {
     this.collideManager = new CollideManager(
       this,
       this.player,
-      this.enemyManager.enemies
+      this.enemyManager.enemies,
+      this.UtilitiesManager.healthPacks,
+      this.UtilitiesManager.shieldPacks
     );
-    
   }
 
   update() {
@@ -104,6 +123,10 @@ class PlayingScreen extends Phaser.Scene {
     this.projectiles.children.iterate((bullet) => {
       bullet.update();
     });
+
+    
+    this.shield.updatePosition(this.player);
+
   }
 
   gameOver() {

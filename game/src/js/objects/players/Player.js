@@ -7,6 +7,7 @@ class Player extends Entity {
     super(scene, x, y, "player_texture", health);
     this.body.velocity.y = gameSettings.playerSpeed;
     this.health = health;
+    this.shield = null; 
     this.setInteractiveEntity();
   }
 
@@ -30,6 +31,8 @@ class Player extends Entity {
     const bullet = new Bullet(this.scene, this.x, this.y);
     bullet.play("bullet1_anim");
     }
+
+
 }
 
 

@@ -2,9 +2,9 @@ import Entity from "../Entity.js";
 import gameSettings from "../../config/gameSettings.js";
 import Phaser from "phaser";
 
-class HealthPack extends Entity {
+class ShieldPack extends Entity {
   constructor(scene, x, y) {
-    super(scene, x, y, "healthPack_texture"); // Replace with your health pack texture key
+    super(scene, x, y, "shieldPack_texture"); // Replace with your health pack texture key
     scene.add.existing(this);
     scene.physics.add.existing(this);
     // this.body.velocity.y = gameSettings.healthPackSpeed;
@@ -65,4 +65,4 @@ class HealthPack extends Entity {
   // Additional methods or properties specific to HealthPack class can be added here
 }
 
-export default HealthPack;
+export default ShieldPack;
