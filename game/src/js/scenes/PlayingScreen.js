@@ -17,6 +17,7 @@ import GuiManager from "../manager/GuiManager.js";
 import HPBar from "../objects/ui/HPBar";
 import UtilitiesManager from "../manager/UtilitiesManager";
 import EnemyBullet from "../objects/projectiles/EnemyBullet.js";
+import ProjectileManager from "../manager/ProjectileManager.js";
 
 const BACKGROUND_SCROLL_SPEED = 0.5;
 class PlayingScreen extends Phaser.Scene {
@@ -174,23 +175,17 @@ class PlayingScreen extends Phaser.Scene {
 
     this.enemyManager.spawnCircleOfBugs(centerX, centerY, radius, numBugs);
 
+    this.projectileManager = new ProjectileManager(this);
+    this.projectileManager.createPlayerBullet();
+    this.projectileManager.createEnemyBullet();
+    this.projectileManager.callEnemyBullet();
+
+
     // Create keyboard inputs
     this.spacebar = this.input.keyboard.addKey(
       Phaser.Input.Keyboard.KeyCodes.SPACE
     );
-
-    // Create a group to manage bullets
-    this.projectiles = this.physics.add.group({
-      classType: Bullet,
-      runChildUpdate: true,
-    });
-
-    this.enemyProjectiles = this.physics.add.group({
-      classType: EnemyBullet,
-      runChildUpdate: true,
-    });
     
-
     this.collideManager = new CollideManager(
       this,
       this.player,
@@ -198,15 +193,6 @@ class PlayingScreen extends Phaser.Scene {
       this.UtilitiesManager.healthPacks,
       this.UtilitiesManager.shieldPacks
     );
-    
-    this.time.addEvent({
-      delay: 1000, // 1000 milliseconds = 1 second
-      callback: () => {
-        this.bug3_1.shootBullet(this, this.bug3_1);
-        this.bug3_2.shootBullet(this, this.bug3_2);
-      },
-      loop: true // This makes the event repeat indefinitely
-    });
 
     this.events.once("shutdown", this.shutdown, this);
   }
@@ -243,6 +229,7 @@ class PlayingScreen extends Phaser.Scene {
 
     this.bug3_1.rotateToPlayer(this.player);
     this.bug3_2.rotateToPlayer(this.player);
+    this.bug5.chasePlayer(this.player);
   }
 
   gameOver() {

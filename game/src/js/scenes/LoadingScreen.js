@@ -111,6 +111,18 @@ class LoadingScreen extends Phaser.Scene {
       },
     });
 
+    // Load bullet Spritesheet
+    // this.load.spritesheet({
+    //   key: `bullet${this.selectedPlayerIndex}_texture`,
+    //   url: `assets/spritesheets/vfx/bullet${this.selectedPlayerIndex}.png`,
+    //   frameConfig: {
+    //     frameWidth: 12,
+    //     frameHeight: 26,
+    //     startFrame: 0,
+    //     endFrame: 2,
+    //   },
+    // });
+
     // Load first Bullet Spritesheet
     this.load.spritesheet({
       key: "bullet_texture",
@@ -181,6 +193,17 @@ class LoadingScreen extends Phaser.Scene {
       frameRate: 12,
       repeat: -1,
     });
+
+    // Create bullet animations
+    // this.anims.create({
+    //   key: `bullet${this.selectedPlayerIndex}_anim`,
+    //   frames: this.anims.generateFrameNumbers(`bullet${this.selectedPlayerIndex}_texture`, {
+    //     start: 0,
+    //     end: 2,
+    //   }),
+    //   frameRate: 12,
+    //   repeat: -1,
+    // });
 
     this.anims.create({
       key: "player_anim",
