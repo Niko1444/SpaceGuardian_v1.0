@@ -13,9 +13,10 @@ import EnemyManager from "../manager/enemyManager";
 import KeyboardManager from "../manager/KeyboardManager";
 import PlayerManager from "../manager/playerManager";
 import CollideManager from "../manager/collideManager";
-import GuiManager from "../manager/uiManager";
+import GuiManager from "../manager/GuiManager.js";
 import HPBar from "../objects/ui/HPBar";
 import UtilitiesManager from "../manager/UtilitiesManager";
+import EnemyBullet from "../objects/projectiles/EnemyBullet.js";
 
 const BACKGROUND_SCROLL_SPEED = 0.5;
 class PlayingScreen extends Phaser.Scene {
@@ -27,8 +28,7 @@ class PlayingScreen extends Phaser.Scene {
     this.selectedPlayerIndex = data.number;
   }
 
-  preload() {
-    // Load Player Spritesheet
+  preload(){
     this.load.spritesheet({
       key: `player_texture_${this.selectedPlayerIndex}`,
       url: `assets/spritesheets/players/planes_0${this.selectedPlayerIndex}A.png`,
@@ -45,7 +45,73 @@ class PlayingScreen extends Phaser.Scene {
     // Creat GUI for PlayingScreen ( Changes in BG except Player and Enemy )
     this.guiManager = new GuiManager(this);
 
-    // Spawn the Player
+    // if (!(this.anims && this.anims.exists && this.anims.exists("player_anim"))) {
+      this.anims.create({
+        key: "player_anim",
+        frames: this.anims.generateFrameNumbers(
+          `player_texture_${this.selectedPlayerIndex}`,
+          {
+            start: 0,
+            end: 3,
+          }
+        ),
+        frameRate: 30,
+        repeat: -1,
+      });
+  
+      this.anims.create({
+        key: "player_anim_left",
+        frames: this.anims.generateFrameNumbers(
+          `player_texture_${this.selectedPlayerIndex}`,
+          {
+            start: 4,
+            end: 7,
+          }
+        ),
+        frameRate: 30,
+        repeat: -1,
+      });
+  
+      this.anims.create({
+        key: "player_anim_left_diagonal",
+        frames: this.anims.generateFrameNumbers(
+          `player_texture_${this.selectedPlayerIndex}`,
+          {
+            start: 8,
+            end: 11,
+          }
+        ),
+        frameRate: 30,
+        repeat: -1,
+      });
+  
+      this.anims.create({
+        key: "player_anim_right",
+        frames: this.anims.generateFrameNumbers(
+          `player_texture_${this.selectedPlayerIndex}`,
+          {
+            start: 12,
+            end: 15,
+          }
+        ),
+        frameRate: 30,
+        repeat: -1,
+      });
+  
+      this.anims.create({
+        key: "player_anim_right_diagonal",
+        frames: this.anims.generateFrameNumbers(
+          `player_texture_${this.selectedPlayerIndex}`,
+          {
+            start: 16,
+            end: 19,
+          }
+        ),
+        frameRate: 30,
+        repeat: -1,
+      });
+    // }
+
     this.player = new Player(
       this,
       config.width / 2,
@@ -119,6 +185,12 @@ class PlayingScreen extends Phaser.Scene {
       runChildUpdate: true,
     });
 
+    this.enemyProjectiles = this.physics.add.group({
+      classType: EnemyBullet,
+      runChildUpdate: true,
+    });
+    
+
     this.collideManager = new CollideManager(
       this,
       this.player,
@@ -126,6 +198,15 @@ class PlayingScreen extends Phaser.Scene {
       this.UtilitiesManager.healthPacks,
       this.UtilitiesManager.shieldPacks
     );
+    
+    this.time.addEvent({
+      delay: 1000, // 1000 milliseconds = 1 second
+      callback: () => {
+        this.bug3_1.shootBullet(this, this.bug3_1);
+        this.bug3_2.shootBullet(this, this.bug3_2);
+      },
+      loop: true // This makes the event repeat indefinitely
+    });
 
     this.events.once("shutdown", this.shutdown, this);
   }
@@ -159,6 +240,9 @@ class PlayingScreen extends Phaser.Scene {
     }
 
     this.shield.updatePosition(this.player);
+
+    this.bug3_1.rotateToPlayer(this.player);
+    this.bug3_2.rotateToPlayer(this.player);
   }
 
   gameOver() {

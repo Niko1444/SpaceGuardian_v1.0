@@ -1,6 +1,6 @@
 import Phaser from "phaser";
 import config from "../config/config.js";
-import GuiManager from "../manager/uiManager.js";
+import GuiManager from "../manager/GuiManager.js";
 class LoadingScreen extends Phaser.Scene {
   constructor() {
     super("loadingScreen");
@@ -13,6 +13,17 @@ class LoadingScreen extends Phaser.Scene {
   }
 
   preload() {
+    this.load.spritesheet({
+      key: `player_texture_${this.selectedPlayerIndex}`,
+      url: `assets/spritesheets/players/planes_0${this.selectedPlayerIndex}A.png`,
+      frameConfig: {
+        frameWidth: 96,
+        frameHeight: 96,
+        startFrame: 0,
+        endFrame: 19,
+      },
+    });
+
     this.load.image(
       "background_texture",
       "assets/images/backgrounds/purple/nebula_1.png"
@@ -100,6 +111,18 @@ class LoadingScreen extends Phaser.Scene {
       },
     });
 
+    // Load first Bullet Spritesheet
+    this.load.spritesheet({
+      key: "bullet_texture",
+      url: "assets/spritesheets/vfx/bullet.png",
+      frameConfig: {
+        frameWidth: 9,
+        frameHeight: 34,
+        startFrame: 0,
+        endFrame: 0,
+      },
+    });
+
     // Load Effect Spritesheets
     this.load.spritesheet({
       key: "explosion_texture",
@@ -110,6 +133,53 @@ class LoadingScreen extends Phaser.Scene {
         startFrame: 0,
         endFrame: 7,
       },
+    });
+
+  }
+
+  create() {
+    // Create health pack animations
+    this.anims.create({
+      key: "healthPack_anim",
+      frames: this.anims.generateFrameNumbers("healthPack_texture", {
+        start: 0,
+        end: 4,
+      }),
+      frameRate: 20,
+      repeat: -1,
+    });
+
+    // Create shield pack animations
+    this.anims.create({
+      key: "shieldPack_anim",
+      frames: this.anims.generateFrameNumbers("shieldPack_texture", {
+        start: 0,
+        end: 4,
+      }),
+      frameRate: 20,
+      repeat: -1,
+    });
+
+    // Create shield animations
+    this.anims.create({
+      key: "shield_anim",
+      frames: this.anims.generateFrameNumbers("shield_texture", {
+        start: 0,
+        end: 5,
+      }),
+      frameRate: 20,
+      repeat: -1,
+    });
+
+    // Create first bullet animations
+    this.anims.create({
+      key: "bullet1_anim",
+      frames: this.anims.generateFrameNumbers("bullet1_texture", {
+        start: 0,
+        end: 2,
+      }),
+      frameRate: 12,
+      repeat: -1,
     });
 
     this.anims.create({
@@ -173,102 +243,6 @@ class LoadingScreen extends Phaser.Scene {
           end: 19,
         }
       ),
-      frameRate: 30,
-      repeat: -1,
-    });
-  }
-
-  create() {
-    // Create health pack animations
-    this.anims.create({
-      key: "healthPack_anim",
-      frames: this.anims.generateFrameNumbers("healthPack_texture", {
-        start: 0,
-        end: 4,
-      }),
-      frameRate: 20,
-      repeat: -1,
-    });
-
-    // Create shield pack animations
-    this.anims.create({
-      key: "shieldPack_anim",
-      frames: this.anims.generateFrameNumbers("shieldPack_texture", {
-        start: 0,
-        end: 4,
-      }),
-      frameRate: 20,
-      repeat: -1,
-    });
-
-    // Create shield animations
-    this.anims.create({
-      key: "shield_anim",
-      frames: this.anims.generateFrameNumbers("shield_texture", {
-        start: 0,
-        end: 5,
-      }),
-      frameRate: 20,
-      repeat: -1,
-    });
-
-    // Create first bullet animations
-    this.anims.create({
-      key: "bullet1_anim",
-      frames: this.anims.generateFrameNumbers("bullet1_texture", {
-        start: 0,
-        end: 2,
-      }),
-      frameRate: 12,
-      repeat: -1,
-    });
-
-    this.anims.create({
-      key: "player_anim",
-      frames: this.anims.generateFrameNumbers("player_texture", {
-        start: 0,
-        end: 3,
-      }),
-      frameRate: 30,
-      repeat: -1,
-    });
-
-    this.anims.create({
-      key: "player_anim_left",
-      frames: this.anims.generateFrameNumbers("player_texture", {
-        start: 4,
-        end: 7,
-      }),
-      frameRate: 30,
-      repeat: -1,
-    });
-
-    this.anims.create({
-      key: "player_anim_left_diagonal",
-      frames: this.anims.generateFrameNumbers("player_texture", {
-        start: 8,
-        end: 11,
-      }),
-      frameRate: 30,
-      repeat: -1,
-    });
-
-    this.anims.create({
-      key: "player_anim_right",
-      frames: this.anims.generateFrameNumbers("player_texture", {
-        start: 12,
-        end: 15,
-      }),
-      frameRate: 30,
-      repeat: -1,
-    });
-
-    this.anims.create({
-      key: "player_anim_right_diagonal",
-      frames: this.anims.generateFrameNumbers("player_texture", {
-        start: 16,
-        end: 19,
-      }),
       frameRate: 30,
       repeat: -1,
     });

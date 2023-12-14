@@ -6,6 +6,9 @@ class EnemyManager {
   constructor(scene) {
     this.scene = scene;
     this.enemies = [];
+    this.enemiesBug1 = [];
+    this.enemiesBug3 = [];
+    this.enemiesBug5 = [];
     this.respawnDelays = []; // Array to store individual respawn delays
     this.lastRespawnTimes = []; // Array to store individual last respawn times
 
@@ -42,6 +45,7 @@ class EnemyManager {
     }
   }
 
+
   moveEnemies(time) {
     // Move enemies
     this.enemies.forEach((enemy, index) => {
@@ -70,6 +74,7 @@ class EnemyManager {
     this.respawnDelays.push(Phaser.Math.Between(5000, 7000));
     this.lastRespawnTimes.push(0);
   }
+
 }
 
 export default EnemyManager;
