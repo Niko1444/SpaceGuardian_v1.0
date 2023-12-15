@@ -1,13 +1,13 @@
 import Entity from "../Entity.js";
 import gameSettings from "../../config/gameSettings.js";
 class Bullet extends Entity {
-  constructor(scene) {
+  constructor(scene, number) {
     super(
       scene,
       scene.player.x,
       scene.player.y - 10,
-      "bullet1_texture",
-      "bullet1",
+      `bullet${number}_texture`,
+      `bullet${number}`,
       1
     );
     scene.add.existing(this);

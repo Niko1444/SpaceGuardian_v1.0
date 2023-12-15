@@ -214,7 +214,7 @@ class PlayingScreen extends Phaser.Scene {
     });
 
     if (Phaser.Input.Keyboard.JustDown(this.spacebar)) {
-      this.player.shootBullet();
+      this.player.shootBullet(this.selectedPlayerIndex);
     }
 
     this.projectiles.children.iterate((bullet) => {

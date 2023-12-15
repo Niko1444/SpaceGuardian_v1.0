@@ -13,6 +13,7 @@ class LoadingScreen extends Phaser.Scene {
   }
 
   preload() {
+    // Preload player texture
     this.load.spritesheet({
       key: `player_texture_${this.selectedPlayerIndex}`,
       url: `assets/spritesheets/players/planes_0${this.selectedPlayerIndex}A.png`,
@@ -24,6 +25,7 @@ class LoadingScreen extends Phaser.Scene {
       },
     });
 
+    // Load background
     this.load.image(
       "background_texture",
       "assets/images/backgrounds/purple/nebula_1.png"
@@ -100,30 +102,125 @@ class LoadingScreen extends Phaser.Scene {
     });
 
     // Load first Bullet Spritesheet
-    this.load.spritesheet({
-      key: "bullet1_texture",
-      url: "assets/spritesheets/vfx/bullet1.png",
-      frameConfig: {
-        frameWidth: 12,
-        frameHeight: 26,
-        startFrame: 0,
-        endFrame: 2,
-      },
-    });
+    if(this.selectedPlayerIndex == 1)
+    {
+      this.load.spritesheet({
+        key: `bullet${this.selectedPlayerIndex}_texture`,
+        url: `assets/spritesheets/vfx/bullet${this.selectedPlayerIndex}.png`,
+        frameConfig: {
+          frameWidth: 12,
+          frameHeight: 26,
+          startFrame: 0,
+          endFrame: 2,
+        },
+      });
+    }
 
-    // Load bullet Spritesheet
-    // this.load.spritesheet({
-    //   key: `bullet${this.selectedPlayerIndex}_texture`,
-    //   url: `assets/spritesheets/vfx/bullet${this.selectedPlayerIndex}.png`,
-    //   frameConfig: {
-    //     frameWidth: 12,
-    //     frameHeight: 26,
-    //     startFrame: 0,
-    //     endFrame: 2,
-    //   },
-    // });
+    if(this.selectedPlayerIndex == 2){
+      this.load.spritesheet({
+        key: `bullet${this.selectedPlayerIndex}_texture`,
+        url: `assets/spritesheets/vfx/bullet${this.selectedPlayerIndex}.png`,
+        frameConfig: {
+          frameWidth: 12,
+          frameHeight: 25,
+          startFrame: 0,
+          endFrame: 1,
+        },
+      });
+    }
 
-    // Load first Bullet Spritesheet
+    if(this.selectedPlayerIndex == 3){
+      this.load.spritesheet({
+        key: `bullet${this.selectedPlayerIndex}_texture`,
+        url: `assets/spritesheets/vfx/bullet${this.selectedPlayerIndex}.png`,
+        frameConfig: {
+          frameWidth: 24,
+          frameHeight: 20,
+          startFrame: 0,
+          endFrame: 1,
+        },
+      });
+    }
+
+    if(this.selectedPlayerIndex == 4){
+      this.load.spritesheet({
+        key: `bullet${this.selectedPlayerIndex}_texture`,
+        url: `assets/spritesheets/vfx/bullet${this.selectedPlayerIndex}.png`,
+        frameConfig: {
+          frameWidth: 24,
+          frameHeight: 11,
+          startFrame: 0,
+          endFrame: 1,
+        },
+      });
+    }
+
+    if(this.selectedPlayerIndex == 5){
+      this.load.spritesheet({
+        key: `bullet${this.selectedPlayerIndex}_texture`,
+        url: `assets/spritesheets/vfx/bullet${this.selectedPlayerIndex}.png`,
+        frameConfig: {
+          frameWidth: 64,
+          frameHeight: 11,
+          startFrame: 0,
+          endFrame: 1,
+        },
+      });
+    }
+
+    if(this.selectedPlayerIndex == 6){
+      this.load.spritesheet({
+        key: `bullet${this.selectedPlayerIndex}_texture`,
+        url: `assets/spritesheets/vfx/bullet${this.selectedPlayerIndex}.png`,
+        frameConfig: {
+          frameWidth: 24,
+          frameHeight: 12,
+          startFrame: 0,
+          endFrame: 1,
+        },
+      });
+    }
+
+    if(this.selectedPlayerIndex == 7){
+      this.load.spritesheet({
+        key: `bullet${this.selectedPlayerIndex}_texture`,
+        url: `assets/spritesheets/vfx/bullet${this.selectedPlayerIndex}.png`,
+        frameConfig: {
+          frameWidth: 36,
+          frameHeight: 35,
+          startFrame: 0,
+          endFrame: 2,
+        },
+      });
+    }
+
+    if(this.selectedPlayerIndex == 8){
+      this.load.spritesheet({
+        key: `bullet${this.selectedPlayerIndex}_texture`,
+        url: `assets/spritesheets/vfx/bullet${this.selectedPlayerIndex}.png`,
+        frameConfig: {
+          frameWidth: 36,
+          frameHeight: 34,
+          startFrame: 0,
+          endFrame: 2,
+        },
+      });
+    }
+
+    if(this.selectedPlayerIndex == 9){
+      this.load.spritesheet({
+        key: `bullet${this.selectedPlayerIndex}_texture`,
+        url: `assets/spritesheets/vfx/bullet${this.selectedPlayerIndex}.png`,
+        frameConfig: {
+          frameWidth: 30,
+          frameHeight: 32,
+          startFrame: 0,
+          endFrame: 2,
+        },
+      });
+    }
+
+    // Load enemy Bullet Spritesheet
     this.load.spritesheet({
       key: "bullet_texture",
       url: "assets/spritesheets/vfx/bullet.png",
@@ -184,27 +281,45 @@ class LoadingScreen extends Phaser.Scene {
     });
 
     // Create first bullet animations
-    this.anims.create({
-      key: "bullet1_anim",
-      frames: this.anims.generateFrameNumbers("bullet1_texture", {
-        start: 0,
-        end: 2,
-      }),
-      frameRate: 12,
-      repeat: -1,
-    });
+    if(this.selectedPlayerIndex == 1){
+      this.anims.create({
+        key: `bullet${this.selectedPlayerIndex}_anim`,
+        frames: this.anims.generateFrameNumbers(`bullet${this.selectedPlayerIndex}_texture`, {
+          start: 0,
+          end: 2,
+        }),
+        frameRate: 12,
+        repeat: -1,
+      });
+    }
 
-    // Create bullet animations
-    // this.anims.create({
-    //   key: `bullet${this.selectedPlayerIndex}_anim`,
-    //   frames: this.anims.generateFrameNumbers(`bullet${this.selectedPlayerIndex}_texture`, {
-    //     start: 0,
-    //     end: 2,
-    //   }),
-    //   frameRate: 12,
-    //   repeat: -1,
-    // });
+    // Create bullet animations 2 to 6
+    if(this.selectedPlayerIndex >= 2 && this.selectedPlayerIndex <= 6)
+    {
+      this.anims.create({
+        key: `bullet${this.selectedPlayerIndex}_anim`,
+        frames: this.anims.generateFrameNumbers(`bullet${this.selectedPlayerIndex}_texture`, {
+          start: 0,
+          end: 1,
+        }),
+        frameRate: 12,
+        repeat: -1,
+      });
+    }
+    // Create bullet animations 7 to 9
+    if(this.selectedPlayerIndex >= 7 && this.selectedPlayerIndex <= 9){
+      this.anims.create({
+        key: `bullet${this.selectedPlayerIndex}_anim`,
+        frames: this.anims.generateFrameNumbers(`bullet${this.selectedPlayerIndex}_texture`, {
+          start: 0,
+          end: 2,
+        }),
+        frameRate: 12,
+        repeat: -1,
+      });
+    }
 
+    // Create player animations
     this.anims.create({
       key: "player_anim",
       frames: this.anims.generateFrameNumbers(
@@ -313,6 +428,7 @@ class LoadingScreen extends Phaser.Scene {
       hideOnComplete: true,
     });
 
+    // Create loading text
     const loadingText = this.add.text(
       config.width / 2,
       config.height / 2 - 50,
