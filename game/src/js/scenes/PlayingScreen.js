@@ -16,6 +16,7 @@ import CollideManager from "../manager/collideManager";
 import GuiManager from "../manager/uiManager";
 import HPBar from "../objects/ui/HPBar";
 import UtilitiesManager from "../manager/UtilitiesManager";
+import UpgradeManager from "../manager/upradeManager";
 
 const BACKGROUND_SCROLL_SPEED = 0.5;
 class PlayingScreen extends Phaser.Scene {
@@ -44,6 +45,7 @@ class PlayingScreen extends Phaser.Scene {
   create() {
     // Creat GUI for PlayingScreen ( Changes in BG except Player and Enemy )
     this.guiManager = new GuiManager(this);
+    this.guiManager.createPlayingGui("background_texture");
 
     // Spawn the Player
     this.player = new Player(
@@ -126,6 +128,9 @@ class PlayingScreen extends Phaser.Scene {
       this.UtilitiesManager.healthPacks,
       this.UtilitiesManager.shieldPacks
     );
+
+    // Score System
+    this.upgradeManager = new UpgradeManager(this);
 
     this.events.once("shutdown", this.shutdown, this);
   }

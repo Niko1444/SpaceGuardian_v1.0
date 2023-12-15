@@ -25,10 +25,6 @@ class Bug1 extends Entity {
     this.scene.add.existing(this.hpBar);
   }
 
-  onDestroy() {
-    super.onDestroy();
-  }
-
   setVelocityY(velocity) {
     super.setVelocityY(velocity);
   }
@@ -39,6 +35,11 @@ class Bug1 extends Entity {
 
   setInteractiveEntity() {
     super.setInteractiveEntity();
+  }
+
+  explode(canDestroy) {
+    super.explode(canDestroy);
+    this.scene.upgradeManager.updateScore(10);
   }
 }
 
