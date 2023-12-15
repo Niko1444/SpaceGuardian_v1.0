@@ -18,6 +18,7 @@ import HPBar from "../objects/ui/HPBar";
 import UtilitiesManager from "../manager/UtilitiesManager";
 import EnemyBullet from "../objects/projectiles/EnemyBullet.js";
 import ProjectileManager from "../manager/ProjectileManager.js";
+import UpgradeManager from "../manager/upradeManager";
 
 const BACKGROUND_SCROLL_SPEED = 0.5;
 class PlayingScreen extends Phaser.Scene {
@@ -193,6 +194,9 @@ class PlayingScreen extends Phaser.Scene {
       this.UtilitiesManager.healthPacks,
       this.UtilitiesManager.shieldPacks
     );
+
+    // Score System
+    this.upgradeManager = new UpgradeManager(this);
 
     this.events.once("shutdown", this.shutdown, this);
   }
