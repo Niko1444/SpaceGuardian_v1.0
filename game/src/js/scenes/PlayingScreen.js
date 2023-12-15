@@ -46,6 +46,7 @@ class PlayingScreen extends Phaser.Scene {
   create() {
     // Creat GUI for PlayingScreen ( Changes in BG except Player and Enemy )
     this.guiManager = new GuiManager(this);
+    this.guiManager.createPlayingGui("background_texture");
 
     // if (!(this.anims && this.anims.exists && this.anims.exists("player_anim"))) {
       this.anims.create({
