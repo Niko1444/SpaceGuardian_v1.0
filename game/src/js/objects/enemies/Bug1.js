@@ -10,7 +10,7 @@ class Bug1 extends Entity {
     this.maxHealth = health;
     this.hpBarWidth = 20;
     this.hpBarHeight = 5;
-    this.damage = 10;
+    this.damage = 200;
     this.setInteractiveEntity();
 
     this.hpBar = new HPBar(

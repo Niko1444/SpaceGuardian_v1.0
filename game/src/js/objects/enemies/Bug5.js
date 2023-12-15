@@ -8,7 +8,7 @@ class Bug5 extends Entity {
     this.body.velocity.y = gameSettings.enemySpeed;
     this.health = health;
     this.maxHealth = health;
-    this.damage = 10;
+    this.damage = 200;
     this.hpBarWidth = 20;
     this.hpBarHeight = 5;
     this.setInteractiveEntity();
