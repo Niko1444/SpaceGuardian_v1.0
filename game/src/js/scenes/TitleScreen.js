@@ -1,6 +1,6 @@
 import Phaser from "phaser";
 import config from "../config/config.js";
-import GuiManager from "../manager/uiManager.js";
+import GuiManager from "../manager/GuiManager.js";
 class TitleScreen extends Phaser.Scene {
   constructor() {
     super("bootGame");

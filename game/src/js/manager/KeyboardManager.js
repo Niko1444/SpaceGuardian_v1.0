@@ -19,17 +19,13 @@ class KeyboardManager {
     });
   }
 
-  controlGame(){
-    
-  }
-
   pauseGame() {
     // Access keys using this.keys.spacebar and this.keys.P
     if (Phaser.Input.Keyboard.JustDown(this.keys.P)) {
       // Assuming config.pauseGame is a global variable
       config.pauseGame = !config.pauseGame;
 
-      if (config.pauseGame === true) {
+      if (config.pauseGame == true) {
         this.scene.scene.launch("pauseScreen");
         this.scene.scene.pause();
       }

@@ -13,9 +13,11 @@ import EnemyManager from "../manager/enemyManager";
 import KeyboardManager from "../manager/KeyboardManager";
 import PlayerManager from "../manager/playerManager";
 import CollideManager from "../manager/collideManager";
-import GuiManager from "../manager/uiManager";
+import GuiManager from "../manager/GuiManager.js";
 import HPBar from "../objects/ui/HPBar";
 import UtilitiesManager from "../manager/UtilitiesManager";
+import EnemyBullet from "../objects/projectiles/EnemyBullet.js";
+import ProjectileManager from "../manager/ProjectileManager.js";
 import UpgradeManager from "../manager/upradeManager";
 
 const BACKGROUND_SCROLL_SPEED = 0.5;
@@ -28,8 +30,7 @@ class PlayingScreen extends Phaser.Scene {
     this.selectedPlayerIndex = data.number;
   }
 
-  preload() {
-    // Load Player Spritesheet
+  preload(){
     this.load.spritesheet({
       key: `player_texture_${this.selectedPlayerIndex}`,
       url: `assets/spritesheets/players/planes_0${this.selectedPlayerIndex}A.png`,
@@ -47,7 +48,73 @@ class PlayingScreen extends Phaser.Scene {
     this.guiManager = new GuiManager(this);
     this.guiManager.createPlayingGui("background_texture");
 
-    // Spawn the Player
+    // if (!(this.anims && this.anims.exists && this.anims.exists("player_anim"))) {
+      this.anims.create({
+        key: "player_anim",
+        frames: this.anims.generateFrameNumbers(
+          `player_texture_${this.selectedPlayerIndex}`,
+          {
+            start: 0,
+            end: 3,
+          }
+        ),
+        frameRate: 30,
+        repeat: -1,
+      });
+  
+      this.anims.create({
+        key: "player_anim_left",
+        frames: this.anims.generateFrameNumbers(
+          `player_texture_${this.selectedPlayerIndex}`,
+          {
+            start: 4,
+            end: 7,
+          }
+        ),
+        frameRate: 30,
+        repeat: -1,
+      });
+  
+      this.anims.create({
+        key: "player_anim_left_diagonal",
+        frames: this.anims.generateFrameNumbers(
+          `player_texture_${this.selectedPlayerIndex}`,
+          {
+            start: 8,
+            end: 11,
+          }
+        ),
+        frameRate: 30,
+        repeat: -1,
+      });
+  
+      this.anims.create({
+        key: "player_anim_right",
+        frames: this.anims.generateFrameNumbers(
+          `player_texture_${this.selectedPlayerIndex}`,
+          {
+            start: 12,
+            end: 15,
+          }
+        ),
+        frameRate: 30,
+        repeat: -1,
+      });
+  
+      this.anims.create({
+        key: "player_anim_right_diagonal",
+        frames: this.anims.generateFrameNumbers(
+          `player_texture_${this.selectedPlayerIndex}`,
+          {
+            start: 16,
+            end: 19,
+          }
+        ),
+        frameRate: 30,
+        repeat: -1,
+      });
+    // }
+
     this.player = new Player(
       this,
       config.width / 2,
@@ -110,17 +177,17 @@ class PlayingScreen extends Phaser.Scene {
 
     this.enemyManager.spawnCircleOfBugs(centerX, centerY, radius, numBugs);
 
+    this.projectileManager = new ProjectileManager(this);
+    this.projectileManager.createPlayerBullet();
+    this.projectileManager.createEnemyBullet();
+    this.projectileManager.callEnemyBullet();
+
+
     // Create keyboard inputs
     this.spacebar = this.input.keyboard.addKey(
       Phaser.Input.Keyboard.KeyCodes.SPACE
     );
-
-    // Create a group to manage bullets
-    this.projectiles = this.physics.add.group({
-      classType: Bullet,
-      runChildUpdate: true,
-    });
-
+    
     this.collideManager = new CollideManager(
       this,
       this.player,
@@ -152,7 +219,7 @@ class PlayingScreen extends Phaser.Scene {
     });
 
     if (Phaser.Input.Keyboard.JustDown(this.spacebar)) {
-      this.player.shootBullet();
+      this.player.shootBullet(this.selectedPlayerIndex);
     }
 
     this.projectiles.children.iterate((bullet) => {
@@ -164,6 +231,10 @@ class PlayingScreen extends Phaser.Scene {
     }
 
     this.shield.updatePosition(this.player);
+
+    this.bug3_1.rotateToPlayer(this.player);
+    this.bug3_2.rotateToPlayer(this.player);
+    this.bug5.chasePlayer(this.player);
   }
 
   gameOver() {
