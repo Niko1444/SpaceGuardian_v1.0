@@ -3,6 +3,7 @@ import gameSettings from "../config/gameSettings";
 import config from "../config/config";
 import Bullet from "../objects/projectiles/Bullet";
 import Player from "../objects/players/Player";
+import Shield from "../objects/utilities/Shield";
 import EnemyManager from "../manager/enemyManager";
 import KeyboardManager from "../manager/KeyboardManager";
 import PlayerManager from "../manager/playerManager";
@@ -10,12 +11,12 @@ import CollideManager from "../manager/collideManager";
 import GuiManager from "../manager/uiManager";
 import HPBar from "../objects/ui/HPBar";
 import UtilitiesManager from "../manager/UtilitiesManager";
+import Bug1 from "../objects/enemies/Bug1";
 
 const BACKGROUND_SCROLL_SPEED = 0.5;
-class PlayingScreen extends Phaser.Scene {
+class TutorialScreen extends Phaser.Scene {
   constructor() {
-    super("playGame");
-    this.spawnedEnemies = [];
+    super("playTutorial");
   }
 
   init(data) {
@@ -34,13 +35,83 @@ class PlayingScreen extends Phaser.Scene {
         endFrame: 19,
       },
     });
-
   }
 
   create() {
-    // Creat GUI for PlayingScreen ( Changes in BG except Player and Enemy )
+    this.anims.create({
+      key: "player_anim",
+      frames: this.anims.generateFrameNumbers(
+        `player_texture_${this.selectedPlayerIndex}`,
+        {
+          start: 0,
+          end: 3,
+        }
+      ),
+      frameRate: 30,
+      repeat: -1,
+    });
+
+    this.anims.create({
+      key: "player_anim_left",
+      frames: this.anims.generateFrameNumbers(
+        `player_texture_${this.selectedPlayerIndex}`,
+        {
+          start: 4,
+          end: 7,
+        }
+      ),
+      frameRate: 30,
+      repeat: -1,
+    });
+
+    this.anims.create({
+      key: "player_anim_left_diagonal",
+      frames: this.anims.generateFrameNumbers(
+        `player_texture_${this.selectedPlayerIndex}`,
+        {
+          start: 8,
+          end: 11,
+        }
+      ),
+      frameRate: 30,
+      repeat: -1,
+    });
+
+    this.anims.create({
+      key: "player_anim_right",
+      frames: this.anims.generateFrameNumbers(
+        `player_texture_${this.selectedPlayerIndex}`,
+        {
+          start: 12,
+          end: 15,
+        }
+      ),
+      frameRate: 30,
+      repeat: -1,
+    });
+
+    this.anims.create({
+      key: "player_anim_right_diagonal",
+      frames: this.anims.generateFrameNumbers(
+        `player_texture_${this.selectedPlayerIndex}`,
+        {
+          start: 16,
+          end: 19,
+        }
+      ),
+      frameRate: 30,
+      repeat: -1,
+    });
+    
+    // Creat GUI for TutorialScreen ( Changes in BG except Player and Enemy )
     this.guiManager = new GuiManager(this);
     this.guiManager.createBackground("background_texture_01");
+    this.createTutorialText("Press Space to shoot",config.width / 2,config.height / 2 - 60);
+    this.createTutorialText("Press Directions to move",config.width / 2,config.height / 2 - 30,);
+    this.time.delayedCall(8000, () => {
+    this.guiManager.createSimpleText(config.width / 2, config.height / 2, 
+    "Ready? Press enter to start", "25px", "#ffffff", 0.5);
+    },null, this);
     
     // Spawn the Player
     this.player = new Player(
@@ -52,6 +123,9 @@ class PlayingScreen extends Phaser.Scene {
     );
     this.player.play("player_anim");
 
+    this.shield = new Shield(this, this.player);
+    this.shield.play("shield_anim");
+
     // Create managers
     this.keyboardManager = new KeyboardManager(this);
     this.playerManager = new PlayerManager(
@@ -59,15 +133,18 @@ class PlayingScreen extends Phaser.Scene {
       this.player,
       this.selectedPlayerIndex
     );
-
-    this.createText();
-
     this.enemyManager = new EnemyManager(this);
+    
+    // call the enemy
+    this.time.addEvent({
+      delay: 5000,
+      callback: () => {
+          this.enemyManager.addEnemyTutorial();
+      },
+      callbackScope: this,
+  });
+
     this.UtilitiesManager = new UtilitiesManager(this);
-    // spawn the enemies
-    this.time.delayedCall(3000, () => {
-      this.spawnedEnemies = this.enemyManager.scheduleRandomEnemySpawn(8);
-    }, null, this);
 
     // Create keyboard inputs
     this.spacebar = this.input.keyboard.addKey(
@@ -87,62 +164,24 @@ class PlayingScreen extends Phaser.Scene {
       this.UtilitiesManager.healthPacks,
       this.UtilitiesManager.shieldPacks
     );
+
     // this.events.once("shutdown", this.shutdown, this);
-    // FINAL WAVE
-    this.time.delayedCall(20000, () => {
-      // Destroy all spawned enemies
-      this.destroySpawnedEnemies();
 
-      // Start the final wave
-      this.startFinalWave();
-    }, null, this);
+    this.input.keyboard.on("keydown-ENTER", this.startGame, this);
   }
 
-  createText() {
-    const Level1Text = this.add.text(
-      config.width / 2,
-      config.height / 2,
-      'Level 1',
-      { fontSize: '32px', fill: '#ffffff' }
-    ).setOrigin(0.5);
-
-    this.time.delayedCall(2000, () => {
-      Level1Text.destroy();
-  }, null, this);
-}
-
-destroySpawnedEnemies() {
-  // Check if spawnedEnemies array is not null or undefined
-  if (this.spawnedEnemies) {
-    // Loop through all spawned enemies and destroy them
-    this.spawnedEnemies.forEach((enemy) => {
-      // Check if the enemy object exists and has the destroy method
-      if (enemy && enemy.destroy && typeof enemy.destroy === 'function') {
-        enemy.destroy();
-      }
-    });
-
-    // Clear the spawned enemies array
-    this.spawnedEnemies = [];
-  }
-}
-
-  startFinalWave() {
+  createTutorialText(key, x, y) {
     // Display "Final Wave" text for 2 seconds
-    const finalWaveText = this.add.text(
-      config.width / 2,
-      config.height / 2,
-      'Final Wave',
-      { fontSize: '32px', fill: '#ffffff' }
+    const TutorialText = this.add.text(
+      x,
+      y,
+      key,
+      { fontSize: '28px', fill: '#ffffff' }
     ).setOrigin(0.5);
 
-    this.time.delayedCall(2000, () => {
-      finalWaveText.destroy();
-
-      // Spawn a wave of bugs after the "Final Wave" message disappears
-      this.finalWaveBugs = this.enemyManager.spawnCircleOfBugsLv1(config.width/2, config.height/2, 120, 12);
-    }, null, this);
-  }
+    this.time.delayedCall(4000, () => {
+      TutorialText.destroy();},null, this);
+    }
 
   update() {
     // Pause the game
@@ -162,6 +201,8 @@ destroySpawnedEnemies() {
 
     if (Phaser.Input.Keyboard.JustDown(this.spacebar)) {
       this.player.shootBullet();
+
+      // this.guiManager.hideSimpleText();
     }
 
     this.projectiles.children.iterate((bullet) => {
@@ -171,24 +212,19 @@ destroySpawnedEnemies() {
     if (this.player.health <= 0) {
       this.gameOver();
     }
+
+    this.shield.updatePosition(this.player);
+
     
-    if (this.finalWaveBugs.every(bug => !bug.active)) {
-      this.moveToNextLevel();
-    }
   }
 
-  moveToNextLevel() {
+  startGame() {
     this.time.delayedCall(1000, () => {
-      this.scene.start("playLevel2", { number: this.selectedPlayerIndex });
+      this.scene.start("playGame", { number: this.selectedPlayerIndex });
     });
   }
-
   gameOver() {
     this.scene.start("gameOver");
-  }
-
-  enemyExploded() {
-    this.enemyManager.enemyExploded();
   }
 
   // shutdown() {
@@ -227,6 +263,6 @@ destroySpawnedEnemies() {
   //   ) {
   //     this.anims.remove("player_anim_right_diagonal");
   //   }
-  // }
+  // } 
 }
-export default PlayingScreen;
+export default TutorialScreen;

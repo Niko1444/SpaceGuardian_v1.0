@@ -18,6 +18,11 @@ class LoadingScreen extends Phaser.Scene {
       "assets/images/backgrounds/purple/nebula_1.png"
     );
 
+    this.load.image(
+      "background_texture_01",
+      "assets/images/backgrounds/green/nebula_2.png"
+    );
+
     // Load Enemy Spritesheets
     this.load.spritesheet({
       key: "bug1_texture",
@@ -111,71 +116,6 @@ class LoadingScreen extends Phaser.Scene {
         endFrame: 7,
       },
     });
-
-    this.anims.create({
-      key: "player_anim",
-      frames: this.anims.generateFrameNumbers(
-        `player_texture_${this.selectedPlayerIndex}`,
-        {
-          start: 0,
-          end: 3,
-        }
-      ),
-      frameRate: 30,
-      repeat: -1,
-    });
-
-    this.anims.create({
-      key: "player_anim_left",
-      frames: this.anims.generateFrameNumbers(
-        `player_texture_${this.selectedPlayerIndex}`,
-        {
-          start: 4,
-          end: 7,
-        }
-      ),
-      frameRate: 30,
-      repeat: -1,
-    });
-
-    this.anims.create({
-      key: "player_anim_left_diagonal",
-      frames: this.anims.generateFrameNumbers(
-        `player_texture_${this.selectedPlayerIndex}`,
-        {
-          start: 8,
-          end: 11,
-        }
-      ),
-      frameRate: 30,
-      repeat: -1,
-    });
-
-    this.anims.create({
-      key: "player_anim_right",
-      frames: this.anims.generateFrameNumbers(
-        `player_texture_${this.selectedPlayerIndex}`,
-        {
-          start: 12,
-          end: 15,
-        }
-      ),
-      frameRate: 30,
-      repeat: -1,
-    });
-
-    this.anims.create({
-      key: "player_anim_right_diagonal",
-      frames: this.anims.generateFrameNumbers(
-        `player_texture_${this.selectedPlayerIndex}`,
-        {
-          start: 16,
-          end: 19,
-        }
-      ),
-      frameRate: 30,
-      repeat: -1,
-    });
   }
 
   create() {
@@ -220,56 +160,6 @@ class LoadingScreen extends Phaser.Scene {
         end: 2,
       }),
       frameRate: 12,
-      repeat: -1,
-    });
-
-    this.anims.create({
-      key: "player_anim",
-      frames: this.anims.generateFrameNumbers("player_texture", {
-        start: 0,
-        end: 3,
-      }),
-      frameRate: 30,
-      repeat: -1,
-    });
-
-    this.anims.create({
-      key: "player_anim_left",
-      frames: this.anims.generateFrameNumbers("player_texture", {
-        start: 4,
-        end: 7,
-      }),
-      frameRate: 30,
-      repeat: -1,
-    });
-
-    this.anims.create({
-      key: "player_anim_left_diagonal",
-      frames: this.anims.generateFrameNumbers("player_texture", {
-        start: 8,
-        end: 11,
-      }),
-      frameRate: 30,
-      repeat: -1,
-    });
-
-    this.anims.create({
-      key: "player_anim_right",
-      frames: this.anims.generateFrameNumbers("player_texture", {
-        start: 12,
-        end: 15,
-      }),
-      frameRate: 30,
-      repeat: -1,
-    });
-
-    this.anims.create({
-      key: "player_anim_right_diagonal",
-      frames: this.anims.generateFrameNumbers("player_texture", {
-        start: 16,
-        end: 19,
-      }),
-      frameRate: 30,
       repeat: -1,
     });
 
@@ -326,7 +216,7 @@ class LoadingScreen extends Phaser.Scene {
 
     this.time.delayedCall(1000, () => {
       let value = this.selectedPlayerIndex;
-      this.scene.start("playGame", { number: value });
+      this.scene.start("playTutorial", { number: value });
     });
   }
 }

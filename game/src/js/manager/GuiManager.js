@@ -4,6 +4,7 @@ import PlayingScreen from "../scenes/PlayingScreen";
 import PauseScreen from "../scenes/PauseScreen";
 import GameOver from "../scenes/GameOver";
 import LoadingScreen from "../scenes/LoadingScreen";
+import TutorialScreen from "../scenes/TutorialScreen";
 
 class GuiManager{
     constructor(scene) {
@@ -14,9 +15,7 @@ class GuiManager{
 
     createGui() {
         // Additional GUI elements specific to each scene
-        if (this.scene instanceof PlayingScreen) {
-            this.createPlayingGui();
-        } else if (this.scene instanceof PauseScreen) {
+        if (this.scene instanceof PauseScreen) {
             this.createPauseGui();
         } else if (this.scene instanceof GameOver) {
             this.createGameOverGui();
@@ -47,13 +46,13 @@ class GuiManager{
     }
 
     createSimpleText(x,y,key,font,color,origin){
-        const test = this.scene.add.text(
+        const simpleText = this.scene.add.text(
             x,
             y,
             key,
             { fontSize: font, fill: color }
           );
-          test.setOrigin(origin);
+          simpleText.setOrigin(origin);
     }
 
     createBackground(key){
