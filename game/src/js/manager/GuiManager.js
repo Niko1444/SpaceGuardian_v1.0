@@ -23,10 +23,6 @@ class GuiManager{
         } 
     }
 
-    createPlayingGui(){
-        this.createBackground("background_texture");
-    }
-
     createPauseGui(){
 
         this.createSimpleText(config.width / 2,config.height / 2 - 50,"Pause","32px","#fff",0.5)
