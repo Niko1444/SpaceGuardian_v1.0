@@ -171,16 +171,6 @@ destroySpawnedEnemies() {
     if (this.player.health <= 0) {
       this.gameOver();
     }
-    
-    if (this.finalWaveBugs.every(bug => !bug.active)) {
-      this.moveToNextLevel();
-    }
-  }
-
-  moveToNextLevel() {
-    this.time.delayedCall(1000, () => {
-      this.scene.start("playLevel2", { number: this.selectedPlayerIndex });
-    });
   }
 
   gameOver() {

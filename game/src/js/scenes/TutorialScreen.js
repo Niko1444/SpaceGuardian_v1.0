@@ -8,10 +8,9 @@ import EnemyManager from "../manager/enemyManager";
 import KeyboardManager from "../manager/KeyboardManager";
 import PlayerManager from "../manager/playerManager";
 import CollideManager from "../manager/collideManager";
-import GuiManager from "../manager/uiManager";
 import HPBar from "../objects/ui/HPBar";
+import GuiManager from "../manager/GuiManager";
 import UtilitiesManager from "../manager/UtilitiesManager";
-import Bug1 from "../objects/enemies/Bug1";
 
 const BACKGROUND_SCROLL_SPEED = 0.5;
 class TutorialScreen extends Phaser.Scene {
@@ -213,9 +212,7 @@ class TutorialScreen extends Phaser.Scene {
       this.gameOver();
     }
 
-    this.shield.updatePosition(this.player);
-
-    
+    this.shield.updatePosition(this.player);    
   }
 
   startGame() {
@@ -226,43 +223,5 @@ class TutorialScreen extends Phaser.Scene {
   gameOver() {
     this.scene.start("gameOver");
   }
-
-  // shutdown() {
-  //   // Remove entire texture along with all animations
-  //   this.textures.remove(`player_texture_${this.selectedPlayerIndex}`);
-
-  //   // Check if the animation exists before trying to remove it
-  //   if (this.anims && this.anims.exists && this.anims.exists("player_anim")) {
-  //     this.anims.remove("player_anim");
-  //   }
-  //   if (
-  //     this.anims &&
-  //     this.anims.exists &&
-  //     this.anims.exists("player_anim_left")
-  //   ) {
-  //     this.anims.remove("player_anim_left");
-  //   }
-  //   if (
-  //     this.anims &&
-  //     this.anims.exists &&
-  //     this.anims.exists("player_anim_left_diagonal")
-  //   ) {
-  //     this.anims.remove("player_anim_left_diagonal");
-  //   }
-  //   if (
-  //     this.anims &&
-  //     this.anims.exists &&
-  //     this.anims.exists("player_anim_right")
-  //   ) {
-  //     this.anims.remove("player_anim_right");
-  //   }
-  //   if (
-  //     this.anims &&
-  //     this.anims.exists &&
-  //     this.anims.exists("player_anim_right_diagonal")
-  //   ) {
-  //     this.anims.remove("player_anim_right_diagonal");
-  //   }
-  // } 
 }
 export default TutorialScreen;

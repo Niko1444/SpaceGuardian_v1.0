@@ -65,6 +65,10 @@ class GuiManager{
           );
           this.scene.background.setOrigin(0, 0);
     }
+
+    createTutorialText() {
+        
+    }
 }
 
 export default GuiManager;
