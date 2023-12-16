@@ -180,8 +180,9 @@ class PlayingScreen extends Phaser.Scene {
     this.projectileManager = new ProjectileManager(this);
     this.projectileManager.createPlayerBullet();
     this.projectileManager.createEnemyBullet();
+    this.projectileManager.createChaseBullet();
     this.projectileManager.callEnemyBullet();
-
+    this.projectileManager.callChaseBullet();
 
     // Create keyboard inputs
     this.spacebar = this.input.keyboard.addKey(

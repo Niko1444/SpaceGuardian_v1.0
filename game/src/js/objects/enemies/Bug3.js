@@ -4,6 +4,7 @@ import HPBar from "../ui/HPBar";
 import EnemyBullet from "../projectiles/EnemyBullet";
 import config from "../../config/config";
 import Phaser from "phaser";
+import ChasingBullet from "../projectiles/ChasingBullet";
 class Bug3 extends Entity {
   constructor(scene, x, y, health) {
     super(scene, x, y, "bug3_texture", health);
@@ -47,6 +48,12 @@ class Bug3 extends Entity {
   shootBullet(scene, enemy) {
     if(this.health > 0) {
     const enemyBullet = new EnemyBullet(scene, enemy);
+    }
+  }
+
+  shootChaseBullet(scene, enemy) {
+    if(this.health > 0) {
+    const enemyBullet = new ChasingBullet(scene, enemy);
     }
   }
 
