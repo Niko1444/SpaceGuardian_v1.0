@@ -1,5 +1,6 @@
 import Phaser from "phaser";
 import config from "../config/config";
+import UpgradeScreen from "../scenes/UpgradeScreen";
 
 class UpgradeManager {
   constructor(scene) {
@@ -18,10 +19,19 @@ class UpgradeManager {
   updateScore(score) {
     this.playerScore += score;
     this.displayScore();
+
+    if (this.playerScore % 10 == 0) {
+      this.rewardEach100Score();
+    }
   }
 
   displayScore() {
     this.scoreText.setText(`Score: ${this.playerScore}`);
+  }
+
+  rewardEach100Score() {
+    this.scene.scene.launch("upgradeScreen");
+    this.scene.scene.pause();
   }
 }
 

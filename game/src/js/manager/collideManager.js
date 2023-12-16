@@ -11,7 +11,6 @@ class CollideManager {
     this.healthPacks = healthPacks;
     this.shieldPacks = shieldPacks;
     this.shield = shield;
-    
 
     // Add collision between bullets and enemies
     this.scene.physics.add.overlap(

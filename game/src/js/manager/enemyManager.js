@@ -45,7 +45,6 @@ class EnemyManager {
     }
   }
 
-
   moveEnemies(time) {
     // Move enemies
     this.enemies.forEach((enemy, index) => {
@@ -74,7 +73,6 @@ class EnemyManager {
     this.respawnDelays.push(Phaser.Math.Between(5000, 7000));
     this.lastRespawnTimes.push(0);
   }
-
 }
 
 export default EnemyManager;
