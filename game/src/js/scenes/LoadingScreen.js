@@ -17,6 +17,7 @@ class LoadingScreen extends Phaser.Scene {
       "background_texture",
       "assets/images/backgrounds/purple/nebula_1.png"
     );
+    
 
     // Load Enemy Spritesheets
     this.load.spritesheet({
@@ -61,6 +62,63 @@ class LoadingScreen extends Phaser.Scene {
         frameHeight: 32,
         startFrame: 0,
         endFrame: 4,
+      },
+    });
+
+    // Load the HealthBar 
+    this.load.spritesheet({
+      key: "healthBar_texture",
+      url: "assets/spritesheets/vfx/healthBar.png",
+      frameConfig: {
+        frameWidth: 200,
+        frameHeight: 41,
+        startFrame: 0,
+        endFrame: 0,
+      },
+    });
+
+    // Load the Pause button
+    this.load.spritesheet({
+      key: "pauseButton_texture",
+      url: "assets/spritesheets/vfx/pauseButton.png",
+      frameConfig: {
+        frameWidth: 36,
+        frameHeight: 36,
+        startFrame: 2,
+        endFrame: 4,
+      },
+    });
+
+    // Load the Pause button
+    this.load.spritesheet({
+      key: "pauseDis_texture",
+      url: "assets/spritesheets/vfx/pauseDis.png",
+      frameConfig: {
+        frameWidth: 36,
+        frameHeight: 36,
+        startFrame: 0,
+        endFrame: 1,
+      },
+    });
+    this.load.spritesheet({
+      key: "settingButton_texture",
+      url: "assets/spritesheets/vfx/settingButton.png",
+      frameConfig: {
+        frameWidth: 36,
+        frameHeight: 36,
+        startFrame: 0,
+        endFrame: 0,
+      },
+    });
+
+    this.load.spritesheet({
+      key: "settingHover_texture",
+      url: "assets/spritesheets/vfx/settingHover.png",
+      frameConfig: {
+        frameWidth: 36,
+        frameHeight: 36,
+        startFrame: 0,
+        endFrame: 0,
       },
     });
 
@@ -188,6 +246,40 @@ class LoadingScreen extends Phaser.Scene {
       }),
       frameRate: 20,
       repeat: -1,
+    });
+
+    this.anims.create({
+      key: "pauseDis_anim",
+      frames: this.anims.generateFrameNumbers("pauseDis_texture", {
+        start: 0,
+        end: 1,
+      }),
+      frameRate: 60,
+      repeat: 0,
+      hideOnComplete: true,
+
+    });
+
+    this.anims.create({
+      key: "pauseButton_anim",
+      frames: this.anims.generateFrameNumbers("pauseButton_texture", {
+        start: 2,
+        end: 3,
+      }),
+      frameRate: 60,
+      repeat: 0,
+
+    });
+
+    this.anims.create({
+      key: "resumeButton_anim",
+      frames: this.anims.generateFrameNumbers("pauseButton_texture", {
+        start: 3,
+        end: 4,
+      }),
+      frameRate: 60,
+      repeat: 0,
+
     });
 
     // Create shield pack animations

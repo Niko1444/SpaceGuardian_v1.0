@@ -1,6 +1,7 @@
 import Phaser from "phaser";
 import config from "../config/config.js";
 import GuiManager from "../manager/uiManager.js";
+import Button from "../objects/Button.js";
 class TitleScreen extends Phaser.Scene {
   constructor() {
     super("bootGame");
@@ -97,21 +98,23 @@ class TitleScreen extends Phaser.Scene {
     });
 
     // Create Play Button
-    this.button_play = this.add.sprite(
-      config.width / 2,
-      config.height / 2 + 60,
-      "button_play"
-    );
-    this.button_play.setInteractive();
-    this.button_play.on("pointerdown", () => {
-        this.scene.start("choosePlayer");
-    });
-    this.button_play.on("pointerover", () => {
-      this.button_play.setTexture("button_hover");
-    });
-    this.button_play.on("pointerout", () => {
-      this.button_play.setTexture("button_play");
-    });
+    this.button_play = new Button(this, config.width/2 , config.height / 2 + 60, 'button_play', 'button_hover', "choosePlayer");
+
+    // this.button_play = this.add.sprite(
+    //   config.width / 2,
+    //   config.height / 2 + 60,
+    //   "button_play"
+    // );
+    // this.button_play.setInteractive();
+    // this.button_play.on("pointerdown", () => {
+    //     this.scene.start("choosePlayer");
+    // });
+    // this.button_play.on("pointerover", () => {
+    //   this.button_play.setTexture("button_hover");
+    // });
+    // this.button_play.on("pointerout", () => {
+    //   this.button_play.setTexture("button_play");
+    // });
   }
 }
 export default TitleScreen;

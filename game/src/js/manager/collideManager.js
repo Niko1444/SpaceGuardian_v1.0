@@ -1,17 +1,14 @@
 import Phaser from "phaser";
-
-import HealthPack from "../objects/utilities/healthPack";
-import ShieldPack from "../objects/utilities/ShieldPack";
-import Shield from "../objects/utilities/Shield";
-class CollideManager {
-  constructor(scene, player, enemies, healthPacks, shieldPacks, shield, health) {
+import UtilitiesManager from "./UtilitiesManager";
+class CollideManager{
+  constructor(scene, player, enemies, healthPacks, shieldPacks, shield) {
     this.scene = scene;
     this.player = player;
     this.enemies = enemies;
     this.healthPacks = healthPacks;
     this.shieldPacks = shieldPacks;
     this.shield = shield;
-    
+    this.shieldActive = false;
 
     // Add collision between bullets and enemies
     this.scene.physics.add.overlap(
@@ -21,15 +18,23 @@ class CollideManager {
       null,
       this.scene
     );
-
-    // Add collision between player and enemies
-    this.scene.physics.add.overlap(
-      this.player,
-      this.enemies,
-      this.playerHitEnemy,
-      null,
-      this
-    );
+    // player and enemies
+      this.scene.physics.add.overlap(
+        this.player,
+        this.enemies,
+        this.playerHitEnemy,
+        null,
+        this
+      );
+              // Add collision between player having shield and enemies
+        this.scene.physics.add.overlap(
+        this.shield, // Assuming the shield is a property of the player
+        this.enemies,
+        this.shieldCollideEnemy,
+        null,
+        this.scene
+      );
+    
 
     // Add collision between player and health packs
     this.healthPacks.forEach((healthPack) => {
@@ -54,13 +59,23 @@ class CollideManager {
     });
   }
 
+
+  shieldCollideEnemy(shield, enemy, player) {
+    if(this.shieldActive){
+    enemy.set0health();
+    enemy.explode(true);
+    // enemy.play("explosion_anim");
+    shield.hide();
+    this.shieldActive = false;
+    }
+  }
+
   bulletHitEnemy(enemy, bullet) {
     bullet.destroy();
     enemy.takeDamage(bullet.damage);
   }
 
   playerHitEnemy(player, enemy) {
-    // Player takes damage
     player.takeDamage(enemy.damage);
     enemy.takeDamage(player.damage);
   }
@@ -74,7 +89,10 @@ class CollideManager {
   playerCollideShieldPack(player, ShieldPack) {
     ShieldPack.destroy(); // Destroy the shield pack after collision
     this.shield.show();
+    this.shieldActive = true;
   }
+
+  
 }
 
 export default CollideManager;

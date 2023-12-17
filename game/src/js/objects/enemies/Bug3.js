@@ -40,6 +40,11 @@ class Bug3 extends Entity {
   setInteractiveEntity() {
     super.setInteractiveEntity();
   }
+
+  set0health(){
+    this.health = 0;
+    this.updateHealthBarValue();
+  }
 }
 
 export default Bug3;
