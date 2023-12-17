@@ -105,8 +105,8 @@ class TutorialScreen extends Phaser.Scene {
     // Creat GUI for TutorialScreen ( Changes in BG except Player and Enemy )
     this.guiManager = new GuiManager(this);
     this.guiManager.createBackground("background_texture_01");
-    this.createTutorialText("Press Space to shoot",config.width / 2,config.height / 2 - 60);
-    this.createTutorialText("Press Directions to move",config.width / 2,config.height / 2 - 30,);
+    this.guiManager.createTutorialText("Press Space to shoot",config.width / 2,config.height / 2 - 60);
+    this.guiManager.createTutorialText("Press Directions to move",config.width / 2,config.height / 2 - 30,);
     this.time.delayedCall(8000, () => {
     this.guiManager.createSimpleText(config.width / 2, config.height / 2, 
     "Ready? Press enter to start", "25px", "#ffffff", 0.5);
@@ -136,7 +136,7 @@ class TutorialScreen extends Phaser.Scene {
     
     // call the enemy
     this.time.addEvent({
-      delay: 5000,
+      delay: 0,
       callback: () => {
           this.enemyManager.addEnemyTutorial();
       },
@@ -168,19 +168,6 @@ class TutorialScreen extends Phaser.Scene {
 
     this.input.keyboard.on("keydown-ENTER", this.startGame, this);
   }
-
-  createTutorialText(key, x, y) {
-    // Display "Final Wave" text for 2 seconds
-    const TutorialText = this.add.text(
-      x,
-      y,
-      key,
-      { fontSize: '28px', fill: '#ffffff' }
-    ).setOrigin(0.5);
-
-    this.time.delayedCall(4000, () => {
-      TutorialText.destroy();},null, this);
-    }
 
   update() {
     // Pause the game

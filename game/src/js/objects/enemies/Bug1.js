@@ -3,9 +3,8 @@ import gameSettings from "../../config/gameSettings";
 import HPBar from "../ui/HPBar";
 
 class Bug1 extends Entity {
-  constructor(scene, x, y, health, enemyManager) {
+  constructor(scene, x, y, health) {
     super(scene, x, y, "bug1_texture", health);
-    this.enemyManager = enemyManager;
     this.body.velocity.y = gameSettings.enemySpeed;
     this.health = health;
     this.maxHealth = health;
@@ -30,8 +29,6 @@ class Bug1 extends Entity {
 
   onDestroy() {
     super.onDestroy();
-    this.isDestroyed = true; // Mark the enemy as destroyed
-    this.enemyManager.enemyExploded();
   }
 
   setVelocityY(velocity) {

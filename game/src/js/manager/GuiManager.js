@@ -11,6 +11,7 @@ class GuiManager{
         this.scene = scene;
         this.loadingSceneStarted = false;
         this.createGui();
+        this.TutorialText = null;
     }
 
     createGui() {
@@ -66,9 +67,30 @@ class GuiManager{
           this.scene.background.setOrigin(0, 0);
     }
 
-    createTutorialText() {
-        
+    createLevelText(x, y, key, font, color) {
+        const LevelText = this.scene.add.text(
+            x,
+            y,
+            key,
+            { fontSize: font, fill: color }
+          );
+          LevelText.setOrigin(0.5);
+      
+          this.scene.time.delayedCall(4000, () => {
+            LevelText.destroy();},null, this);
     }
+
+    createTutorialText(key, x, y) {
+        const TutorialText = this.scene.add.text(
+          x,
+          y,
+          key,
+          { fontSize: '28px', fill: '#ffffff' }
+        ).setOrigin(0.5);
+    
+        this.scene.time.delayedCall(4000, () => {
+          TutorialText.destroy();},null, this);
+        }
 }
 
 export default GuiManager;

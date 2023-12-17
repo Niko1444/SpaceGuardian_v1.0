@@ -23,6 +23,11 @@ class LoadingScreen extends Phaser.Scene {
       "assets/images/backgrounds/green/nebula_2.png"
     );
 
+    this.load.image(
+      "background_texture_02",
+      "assets/images/backgrounds/blue/nebula_2.png"
+    )
+
     // Load Enemy Spritesheets
     this.load.spritesheet({
       key: "bug1_texture",

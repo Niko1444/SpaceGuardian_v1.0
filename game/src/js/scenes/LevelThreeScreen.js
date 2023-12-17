@@ -10,14 +10,11 @@ import CollideManager from "../manager/collideManager";
 import GuiManager from "../manager/GuiManager";
 import HPBar from "../objects/ui/HPBar";
 import UtilitiesManager from "../manager/UtilitiesManager";
-import Bug1 from "../objects/enemies/Bug1";
-import Bug3 from "../objects/enemies/Bug3";
-import Bug5 from "../objects/enemies/Bug5";
 
 const BACKGROUND_SCROLL_SPEED = 0.5;
-class PlayingScreen extends Phaser.Scene {
+class LevelThreeScreen extends Phaser.Scene {
   constructor() {
-    super("playGame");
+    super("playLevelThree");
     this.spawnedEnemies = [];
   }
 
@@ -42,7 +39,14 @@ class PlayingScreen extends Phaser.Scene {
   create() {
     // Creat GUI for PlayingScreen ( Changes in BG except Player and Enemy )
     this.guiManager = new GuiManager(this);
-    this.guiManager.createBackground("background_texture_01");
+    this.guiManager.createBackground("background_texture_02");
+    this.guiManager.createLevelText(
+      config.width / 2,
+      config.height / 2,
+      "Level 3",
+      "32px",
+      "#ffffff"
+    );
 
     // Spawn the Player
     this.player = new Player(
@@ -62,13 +66,11 @@ class PlayingScreen extends Phaser.Scene {
       this.selectedPlayerIndex
     );
 
-    this.createText();
-
     this.enemyManager = new EnemyManager(this);
     this.UtilitiesManager = new UtilitiesManager(this);
     // spawn the enemies
     this.time.delayedCall(
-      3000,
+      4000,
       () => {
         this.spawnedEnemies = this.enemyManager.scheduleRandomEnemySpawn(8);
       },
@@ -87,6 +89,7 @@ class PlayingScreen extends Phaser.Scene {
       runChildUpdate: true,
     });
 
+    // create the collision
     this.collideManager = new CollideManager(
       this,
       this.player,
@@ -98,57 +101,12 @@ class PlayingScreen extends Phaser.Scene {
     this.time.delayedCall(
       20000,
       () => {
-        // Destroy all spawned enemies
-        this.destroySpawnedEnemies();
-
         // Start the final wave
         this.startFinalWave();
       },
       null,
       this
     );
-
-    this.input.keyboard.on("keydown-ENTER", this.goToNextLevel, this);
-  }
-
-  createText() {
-    const Level1Text = this.add
-      .text(config.width / 2, config.height / 2, "Level 1", {
-        fontSize: "32px",
-        fill: "#ffffff",
-      })
-      .setOrigin(0.5);
-
-    this.time.delayedCall(
-      2000,
-      () => {
-        Level1Text.destroy();
-      },
-      null,
-      this
-    );
-  }
-
-  destroySpawnedEnemies() {
-    // Check if spawnedEnemies array is not null or undefined
-    if (this.spawnedEnemies) {
-      // Loop through all spawned enemies and destroy them
-      this.spawnedEnemies.forEach((enemy) => {
-        // Check if the enemy object exists and has the destroy method
-        if (enemy && enemy.destroy && typeof enemy.destroy === "function") {
-          enemy.destroy();
-        }
-      });
-
-      // Clear the spawned enemies array
-      this.spawnedEnemies = [];
-    }
-  }
-
-  goToNextLevel() {
-    this.time.delayedCall(1000, () => {
-      this.scene.start("playLevelTwo", { number: this.selectedPlayerIndex });
-    });
   }
 
   startFinalWave() {
@@ -208,50 +166,11 @@ class PlayingScreen extends Phaser.Scene {
   }
 
   gameOver() {
-    this.events.once("shutdown", this.shutdown, this);
     this.scene.start("gameOver");
   }
 
-  enemyExploded() {
-    this.enemyManager.enemyExploded();
-  }
-
-  shutdown() {
-    // Remove entire texture along with all animations
-    this.textures.remove(`player_texture_${this.selectedPlayerIndex}`);
-
-    // Check if the animation exists before trying to remove it
-    if (this.anims && this.anims.exists && this.anims.exists("player_anim")) {
-      this.anims.remove("player_anim");
-    }
-    if (
-      this.anims &&
-      this.anims.exists &&
-      this.anims.exists("player_anim_left")
-    ) {
-      this.anims.remove("player_anim_left");
-    }
-    if (
-      this.anims &&
-      this.anims.exists &&
-      this.anims.exists("player_anim_left_diagonal")
-    ) {
-      this.anims.remove("player_anim_left_diagonal");
-    }
-    if (
-      this.anims &&
-      this.anims.exists &&
-      this.anims.exists("player_anim_right")
-    ) {
-      this.anims.remove("player_anim_right");
-    }
-    if (
-      this.anims &&
-      this.anims.exists &&
-      this.anims.exists("player_anim_right_diagonal")
-    ) {
-      this.anims.remove("player_anim_right_diagonal");
-    }
+  goToNextLevel() {
+    //condition to move to the next level
   }
 }
-export default PlayingScreen;
+export default LevelThreeScreen;

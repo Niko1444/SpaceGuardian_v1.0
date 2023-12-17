@@ -71,7 +71,7 @@ getRandomBugX() {
 spawnRandomEnemy(number) {
     const randomX = this.getRandomBugX();
     if (number == 1) {
-    var newEnemy = new Bug1(this.scene, randomX, -20, 30, this);
+    var newEnemy = new Bug1(this.scene, randomX, -20, 30);
     newEnemy.play("bug1_anim");
     this.addEnemy(newEnemy);
     }
