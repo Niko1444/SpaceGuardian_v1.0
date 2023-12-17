@@ -15,7 +15,7 @@ import GuiManager from "../manager/GuiManager.js";
 import UtilitiesManager from "../manager/UtilitiesManager";
 import buttonManager from "../manager/buttonManager";
 import ProjectileManager from "../manager/ProjectileManager.js";
-import UpgradeManager from "../manager/UpgradeManager";
+import UpgradeManager from "../manager/UpgradeManager.js";
 
 const BACKGROUND_SCROLL_SPEED = 0.5;
 class PlayingScreen extends Phaser.Scene {
@@ -42,6 +42,7 @@ class PlayingScreen extends Phaser.Scene {
   }
 
   create() {
+    
     // Creat GUI for PlayingScreen ( Changes in BG except Player and Enemy )
     this.guiManager = new GuiManager(this);
     this.guiManager.createPlayingGui("background_texture");
@@ -205,7 +206,6 @@ class PlayingScreen extends Phaser.Scene {
     // Score System
     this.upgradeManager = new UpgradeManager(this);
 
-    this.events.once("shutdown", this.shutdown, this);
   }
 
   
@@ -247,7 +247,9 @@ class PlayingScreen extends Phaser.Scene {
   }
 
   gameOver() {
+    this.events.once("shutdown", this.shutdown, this);
     this.scene.start("gameOver");
+
   }
 
   shutdown() {
