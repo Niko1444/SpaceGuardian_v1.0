@@ -28,6 +28,8 @@ class Entity extends Phaser.GameObjects.Sprite {
 
   explode(canDestroy) {
     if (!this.getData("isDead")) {
+      this.body.enable = false;
+
       this.setTexture("explosion_texture");
       this.play("explosion_anim");
 
@@ -74,14 +76,16 @@ class Entity extends Phaser.GameObjects.Sprite {
   }
 
   takeDamage(damage) {
-    this.health -= damage;
-    new DamageNumber(this.scene, this.x, this.y, damage);
+    if (!this.getData("isDead")) {
+      this.health -= damage;
+      new DamageNumber(this.scene, this.x, this.y, damage);
 
-    this.updateHealthBarValue();
+      this.updateHealthBarValue();
 
-    if (this.health <= 0) {
-      this.explode(true);
-      this.hpBar.destroy();
+      if (this.health <= 0) {
+        this.explode(true);
+        this.hpBar.destroy();
+      }
     }
   }
 }

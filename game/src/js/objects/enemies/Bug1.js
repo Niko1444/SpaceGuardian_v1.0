@@ -10,7 +10,7 @@ class Bug1 extends Entity {
     this.maxHealth = health;
     this.hpBarWidth = 20;
     this.hpBarHeight = 5;
-    this.damage = 10;
+    this.damage = 200;
     this.setInteractiveEntity();
 
     this.isDestroyed = false;
@@ -27,10 +27,6 @@ class Bug1 extends Entity {
     this.scene.add.existing(this.hpBar);
   }
 
-  onDestroy() {
-    super.onDestroy();
-  }
-
   setVelocityY(velocity) {
     super.setVelocityY(velocity);
   }
@@ -41,6 +37,14 @@ class Bug1 extends Entity {
 
   setInteractiveEntity() {
     super.setInteractiveEntity();
+  }
+  set0health() {
+    this.health = 0;
+    this.updateHealthBarValue();
+  }
+  explode(canDestroy) {
+    super.explode(canDestroy);
+    this.scene.upgradeManager.updateScore(10);
   }
 }
 

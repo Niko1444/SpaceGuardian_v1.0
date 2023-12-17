@@ -1,11 +1,10 @@
 import Phaser, { Create } from "phaser";
 import config from "../config/config.js";
-import GuiManager from "../manager/uiManager.js";
+import GuiManager from "../manager/GuiManager.js";
 
 class ChoosePLayer extends Phaser.Scene {
   constructor() {
     super("choosePlayer");
-    // this.cursorKeys = this.input.keyboard.createCursorKeys();
   }
 
   preload() {
@@ -121,7 +120,6 @@ class ChoosePLayer extends Phaser.Scene {
       this
     );
 
-    // this.events.on('shutdown', this.shutdown, this);
   }
 
   update() {
@@ -204,11 +202,6 @@ class ChoosePLayer extends Phaser.Scene {
     }
   }
 
-  // shutdown(){
-  //     for(let i = 1 ; i <= 9; i++){
-  //         this.textures.remove(`player_texture_${i}`);
-  //     }
-  // }
 }
 
 export default ChoosePLayer;
