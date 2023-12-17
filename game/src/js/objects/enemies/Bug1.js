@@ -13,6 +13,8 @@ class Bug1 extends Entity {
     this.damage = 200;
     this.setInteractiveEntity();
 
+    this.isDestroyed = false;
+
     this.hpBar = new HPBar(
       scene,
       this.x,

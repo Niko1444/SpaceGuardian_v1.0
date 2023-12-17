@@ -31,6 +31,16 @@ class LoadingScreen extends Phaser.Scene {
       "assets/images/backgrounds/purple/nebula_1.png"
     );
 
+    this.load.image(
+      "background_texture_01",
+      "assets/images/backgrounds/green/nebula_2.png"
+    );
+
+    this.load.image(
+      "background_texture_02",
+      "assets/images/backgrounds/blue/nebula_2.png"
+    )
+
     // Load Enemy Spritesheets
     this.load.spritesheet({
       key: "bug1_texture",
@@ -525,8 +535,6 @@ class LoadingScreen extends Phaser.Scene {
       repeat: -1,
     });
 
-    
-
     // Create enemy animations
     this.anims.create({
       key: "bug1_anim",
@@ -581,7 +589,7 @@ class LoadingScreen extends Phaser.Scene {
 
     this.time.delayedCall(1000, () => {
       let value = this.selectedPlayerIndex;
-      this.scene.start("playGame", { number: value });
+      this.scene.start("playTutorial", { number: value });
     });
   }
 }
