@@ -1,6 +1,6 @@
 import Phaser from "phaser";
 import config from "../config/config.js";
-import GuiManager from "../manager/uiManager";
+import GuiManager from "../manager/GuiManager.js";
 import KeyboardManager from "../manager/KeyboardManager.js";
 import InterfaceManager from "./interfaceScene.js";
 class GameOver extends Phaser.Scene {

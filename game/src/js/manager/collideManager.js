@@ -1,6 +1,9 @@
 import Phaser from "phaser";
 import UtilitiesManager from "./UtilitiesManager";
-class CollideManager{
+import HealthPack from "../objects/utilities/healthPack";
+import ShieldPack from "../objects/utilities/ShieldPack";
+import Shield from "../objects/utilities/Shield";
+class CollideManager {
   constructor(scene, player, enemies, healthPacks, shieldPacks, shield) {
     this.scene = scene;
     this.player = player;
@@ -35,6 +38,23 @@ class CollideManager{
         this.scene
       );
     
+
+    this.scene.physics.add.overlap(
+      this.scene.enemyProjectiles,
+      this.player,
+      this.bulletHitPlayer,
+      null,
+      this.scene
+    );
+
+    // Add collision between player and enemies
+    this.scene.physics.add.overlap(
+      this.player,
+      this.enemies,
+      this.playerHitEnemy,
+      null,
+      this
+    );
 
     // Add collision between player and health packs
     this.healthPacks.forEach((healthPack) => {
@@ -75,19 +95,24 @@ class CollideManager{
     enemy.takeDamage(bullet.damage);
   }
 
+  bulletHitPlayer(player, enemyBullet) {
+    enemyBullet.destroy();
+    player.takeDamage(enemyBullet.damage);
+  }
+
   playerHitEnemy(player, enemy) {
     player.takeDamage(enemy.damage);
     enemy.takeDamage(player.damage);
   }
 
-  playerCollideHealthPack(player, HealthPack) {
+  playerCollideHealthPack(player, healthPack) {
     const healthAmount = 500; // Set the amount of health to increase
     player.getHeal(healthAmount);
-    HealthPack.destroy();
+    healthPack.destroy();
   }
 
-  playerCollideShieldPack(player, ShieldPack) {
-    ShieldPack.destroy(); // Destroy the shield pack after collision
+  playerCollideShieldPack(player, shieldPack) {
+    shieldPack.destroy(); // Destroy the shield pack after collision
     this.shield.show();
     this.shieldActive = true;
   }

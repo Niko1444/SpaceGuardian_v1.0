@@ -50,9 +50,9 @@ class Player extends Entity {
     super.setInteractiveEntity();
   }
 
-  shootBullet() {
-    const bullet = new Bullet(this.scene, this.x, this.y);
-    bullet.play("bullet1_anim");
+  shootBullet(number) {
+    const bullet = new Bullet(this.scene, number );
+    bullet.play(`bullet${number}_anim`);
   }
 
   setPhysics(scene) {
