@@ -6,24 +6,22 @@ import Player from "../objects/players/Player";
 import Bug1 from "../objects/enemies/Bug1";
 import Bug3 from "../objects/enemies/Bug3";
 import Bug5 from "../objects/enemies/Bug5";
-import HealthPack from "../objects/utilities/healthPack";
-import ShieldPack from "../objects/utilities/ShieldPack";
 import Shield from "../objects/utilities/Shield";
 import EnemyManager from "../manager/enemyManager";
 import KeyboardManager from "../manager/KeyboardManager";
 import PlayerManager from "../manager/playerManager";
 import CollideManager from "../manager/collideManager";
 import GuiManager from "../manager/GuiManager.js";
-import HPBar from "../objects/ui/HPBar";
 import UtilitiesManager from "../manager/UtilitiesManager";
-import EnemyBullet from "../objects/projectiles/EnemyBullet.js";
+import buttonManager from "../manager/buttonManager";
 import ProjectileManager from "../manager/ProjectileManager.js";
-import UpgradeManager from "../manager/upradeManager";
+import UpgradeManager from "../manager/UpgradeManager";
 
 const BACKGROUND_SCROLL_SPEED = 0.5;
 class PlayingScreen extends Phaser.Scene {
   constructor() {
     super("playGame");
+    this.buttonManager = null;
   }
 
   init(data) {
@@ -133,9 +131,6 @@ class PlayingScreen extends Phaser.Scene {
     this.shield = new Shield(this, this.player);
     this.shield.play("shield_anim");
 
-    this.shield = new Shield(this, this.player);
-    this.shield.play("shield_anim");
-
     this.bug5 = new Bug5(this, 300, 80, 30);
     this.bug5.play("bug5_anim");
 
@@ -154,21 +149,24 @@ class PlayingScreen extends Phaser.Scene {
     this.enemyManager.addEnemy(this.bug5);
     this.enemyManager.addEnemy(this.bug1);
 
-    this.healthPack1 = new HealthPack(this, 401, 250);
-    this.healthPack1.play("healthPack_anim");
-    this.healthPack2 = new HealthPack(this, 140, 450);
-    this.healthPack2.play("healthPack_anim");
-
-    this.shieldPack2 = new ShieldPack(this, 40, 450);
-    this.shieldPack2.play("shieldPack_anim");
-    this.shieldPack3 = new ShieldPack(this, 50, 50);
-    this.shieldPack3.play("shieldPack_anim");
-
     this.UtilitiesManager = new UtilitiesManager(this);
-    this.UtilitiesManager.addHealthPack(this.healthPack1);
-    this.UtilitiesManager.addHealthPack(this.healthPack2);
-    this.UtilitiesManager.addShieldPack(this.shieldPack2);
-    this.UtilitiesManager.addShieldPack(this.shieldPack3);
+    // Add a delayed event to spawn utilities after a delay
+    this.time.addEvent({
+      delay: 5000,
+      callback: () => {
+        this.UtilitiesManager.addUtilitiesForPlayingScreen(3, 4);
+        this.collideManager1 = new CollideManager(
+          this,
+          this.player,
+          this.enemyManager.enemies,
+          this.UtilitiesManager.healthPacks,
+          this.UtilitiesManager.shieldPacks,
+          this.shield
+        );
+      },
+      callbackScope: this,
+    });
+    this.buttonManager = new buttonManager(this);
 
     const centerX = config.width / 2;
     const centerY = config.height / 2; // You can adjust this as needed
@@ -188,13 +186,20 @@ class PlayingScreen extends Phaser.Scene {
     this.spacebar = this.input.keyboard.addKey(
       Phaser.Input.Keyboard.KeyCodes.SPACE
     );
+
+    // Create a group to manage bullets
+    this.projectiles = this.physics.add.group({
+      classType: Bullet,
+      runChildUpdate: true,
+    });
     
     this.collideManager = new CollideManager(
       this,
       this.player,
       this.enemyManager.enemies,
       this.UtilitiesManager.healthPacks,
-      this.UtilitiesManager.shieldPacks
+      this.UtilitiesManager.shieldPacks,
+      this.shield
     );
 
     // Score System
@@ -203,7 +208,11 @@ class PlayingScreen extends Phaser.Scene {
     this.events.once("shutdown", this.shutdown, this);
   }
 
+  
+
   update() {
+
+    // this.buttonManager.update();
     // Pause the game
     this.keyboardManager.pauseGame();
 
@@ -212,8 +221,7 @@ class PlayingScreen extends Phaser.Scene {
 
     // Move the player and enemies
     this.playerManager.movePlayer();
-    this.player.updateHealthBarPosition();
-
+    // this.player.updateHealthBarPosition();
     this.enemyManager.moveEnemies();
     this.enemyManager.enemies.forEach((enemy) => {
       enemy.updateHealthBarPosition();

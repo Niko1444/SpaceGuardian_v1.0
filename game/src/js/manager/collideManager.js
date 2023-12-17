@@ -1,5 +1,5 @@
 import Phaser from "phaser";
-
+import UtilitiesManager from "./UtilitiesManager";
 import HealthPack from "../objects/utilities/healthPack";
 import ShieldPack from "../objects/utilities/ShieldPack";
 import Shield from "../objects/utilities/Shield";
@@ -11,7 +11,7 @@ class CollideManager {
     this.healthPacks = healthPacks;
     this.shieldPacks = shieldPacks;
     this.shield = shield;
-    
+    this.shieldActive = false;
 
     // Add collision between bullets and enemies
     this.scene.physics.add.overlap(
@@ -21,6 +21,23 @@ class CollideManager {
       null,
       this.scene
     );
+    // player and enemies
+      this.scene.physics.add.overlap(
+        this.player,
+        this.enemies,
+        this.playerHitEnemy,
+        null,
+        this
+      );
+              // Add collision between player having shield and enemies
+        this.scene.physics.add.overlap(
+        this.shield, // Assuming the shield is a property of the player
+        this.enemies,
+        this.shieldCollideEnemy,
+        null,
+        this.scene
+      );
+    
 
     this.scene.physics.add.overlap(
       this.scene.enemyProjectiles,
@@ -62,6 +79,17 @@ class CollideManager {
     });
   }
 
+
+  shieldCollideEnemy(shield, enemy, player) {
+    if(this.shieldActive){
+    enemy.set0health();
+    enemy.explode(true);
+    // enemy.play("explosion_anim");
+    shield.hide();
+    this.shieldActive = false;
+    }
+  }
+
   bulletHitEnemy(enemy, bullet) {
     bullet.destroy();
     enemy.takeDamage(bullet.damage);
@@ -73,7 +101,6 @@ class CollideManager {
   }
 
   playerHitEnemy(player, enemy) {
-    // Player takes damage
     player.takeDamage(enemy.damage);
     enemy.takeDamage(player.damage);
   }
@@ -87,7 +114,10 @@ class CollideManager {
   playerCollideShieldPack(player, shieldPack) {
     shieldPack.destroy(); // Destroy the shield pack after collision
     this.shield.show();
+    this.shieldActive = true;
   }
+
+  
 }
 
 export default CollideManager;
