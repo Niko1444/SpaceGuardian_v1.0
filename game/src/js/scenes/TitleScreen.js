@@ -9,8 +9,10 @@ class TitleScreen extends Phaser.Scene {
   preload() {
     this.load.image(
       "background",
-      "assets/images/backgrounds/purple/nebula_3.png"
+      "assets/images/backgrounds/background_title.png"
     );
+
+    this.load.image("logo", "assets/images/logo.png");
 
     this.load.spritesheet({
       key: "button_play",
@@ -46,8 +48,6 @@ class TitleScreen extends Phaser.Scene {
     );
     this.background.setOrigin(0, 0);
 
-    const titleText = "SPACE GUARDIAN";
-
     // Create "SPACE" text
     const spaceText = this.add.text(
       config.width / 2,
@@ -56,7 +56,7 @@ class TitleScreen extends Phaser.Scene {
       {
         fontFamily: "Pixelify Sans",
         fontSize: "64px",
-        color: "#FF454D", // Set the color for "SPACE"
+        color: "#F3F8FF", // Set the color for "SPACE"
         align: "center",
       }
     );
@@ -66,15 +66,22 @@ class TitleScreen extends Phaser.Scene {
     const guardianText = this.add.text(
       config.width / 2,
       config.height / 2 - 30,
-      "Guardian",
+      "GUARDIAN",
       {
         fontFamily: "Pixelify Sans",
-        color: "#FF454D",
+        color: "#F3F8FF",
         fontSize: "64px",
         align: "center",
       }
     );
     guardianText.setOrigin(0.5);
+
+    // Create "LOGO" image
+    const bottomLeftImage = this.add.image(27, config.height - 20, "logo");
+    bottomLeftImage.setOrigin(0, 1); // Set the origin to the bottom left
+
+    // Optionally, you can set the scale of the image
+    bottomLeftImage.setScale(0.2); // Adjust the scale as needed
 
     // Tween animation for the rainbow effect on "GUARDIAN"
     this.tweens.add({
@@ -104,7 +111,7 @@ class TitleScreen extends Phaser.Scene {
     );
     this.button_play.setInteractive();
     this.button_play.on("pointerdown", () => {
-        this.scene.start("choosePlayer");
+      this.scene.start("choosePlayer");
     });
     this.button_play.on("pointerover", () => {
       this.button_play.setTexture("button_hover");

@@ -39,27 +39,78 @@ class UpgradeScreen extends Phaser.Scene {
     upgrade1Image.setOrigin(0.5, 0.5);
 
     const upgrade1Text = this.add.text(
-      middleX,
+      middleX - 50,
       middleY - rowGap,
       "Increase Health",
       {
         fontSize: "16px",
+        fontFamily: "Pixelify Sans",
         fill: "#fff",
-        align: "left",
+        align: "center",
       }
     );
     upgrade1Text.setOrigin(0, 0.5);
 
-    const upgrade2 = this.add.sprite(middleX, middleY, "upgrade2");
-    upgrade2.setInteractive();
+    // Upgrade 2
+    const upgrade2Rect = this.add.rectangle(
+      middleX,
+      middleY,
+      300,
+      100,
+      0x000000
+    );
+    upgrade2Rect.setInteractive();
 
-    const upgrade3 = this.add.sprite(middleX, middleY + rowGap, "upgrade3");
-    upgrade3.setInteractive();
+    const upgrade2Image = this.add.sprite(middleX - 100, middleY, "upgrade2");
+    upgrade2Image.setOrigin(0.5, 0.5);
+
+    const upgrade2Text = this.add.text(
+      middleX - 50,
+      middleY,
+      "Increase Speed",
+      {
+        fontSize: "16px",
+        fontFamily: "Pixelify Sans",
+        fill: "#fff",
+        align: "center",
+      }
+    );
+    upgrade2Text.setOrigin(0, 0.5);
+
+    // Upgrade 3
+    const upgrade3Rect = this.add.rectangle(
+      middleX,
+      middleY + rowGap,
+      300,
+      100,
+      0x000000
+    );
+    upgrade3Rect.setInteractive();
+
+    const upgrade3Image = this.add.sprite(
+      middleX - 100,
+      middleY + rowGap,
+      "upgrade3"
+    );
+    upgrade3Image.setOrigin(0.5, 0.5);
+
+    const upgrade3Text = this.add.text(
+      middleX - 50,
+      middleY + rowGap,
+      "Increase Damage",
+      {
+        fontSize: "16px",
+        fontFamily: "Pixelify Sans",
+        fill: "#fff",
+        align: "center",
+      }
+    );
+    upgrade3Text.setOrigin(0, 0.5);
 
     // Event listener for upgrade123
     upgrade1Rect.on("pointerdown", () => this.handleUpgradeChoice("upgrade1"));
-    upgrade2.on("pointerdown", () => this.handleUpgradeChoice("upgrade2"));
-    upgrade3.on("pointerdown", () => this.handleUpgradeChoice("upgrade3"));
+    upgrade2Rect.on("pointerdown", () => this.handleUpgradeChoice("upgrade2"));
+    upgrade3Rect.on("pointerdown", () => this.handleUpgradeChoice("upgrade3"));
   }
 
   handleUpgradeChoice(choice) {
