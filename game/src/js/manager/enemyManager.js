@@ -24,36 +24,6 @@ class EnemyManager {
     }
   }
 
-<<<<<<< HEAD
-=======
-  spawnCircleOfBugs(centerX, centerY, radius, numBugs) {
-    const angleIncrement = (2 * Math.PI) / numBugs;
-
-    for (let i = 0; i < numBugs; i++) {
-      const angle = i * angleIncrement;
-      const bugX = centerX + radius * Math.cos(angle);
-      const bugY = centerY + radius * Math.sin(angle);
-
-      // Create a new bug
-      const newBug = new Bug1(this.scene, bugX, -20, 30); // Initialize at the top
-      this.addEnemy(newBug); // Add the bug to the array
-
-      // Add a tween to move the bug downward
-      this.scene.tweens.add({
-        targets: newBug,
-        y: bugY, // Final Y position (centerY)
-        duration: 10000, // Duration of the drop (in milliseconds)
-        ease: "Linear", // Linear easing for constant speed
-        onComplete: () => {
-          // Bug has reached its final position
-          // You can add any additional logic here if needed
-        },
-      });
-    }
-  }
-
-
->>>>>>> main
   moveEnemies(time) {
     // Move enemies
     this.enemies.forEach((enemy, index) => {
@@ -83,7 +53,6 @@ class EnemyManager {
     this.lastRespawnTimes.push(0);
   }
 
-<<<<<<< HEAD
   addEnemyForOnce(enemy) {
     this.enemies.push(enemy);
     this.respawnDelays.push(Phaser.Math.Between(5000, 7000));
@@ -189,8 +158,6 @@ scheduleRandomEnemySpawn(numEnemies, duration = 20000) {
     }
     return finalWaveBugs;
   }
-=======
->>>>>>> main
 }
 
 export default EnemyManager;
