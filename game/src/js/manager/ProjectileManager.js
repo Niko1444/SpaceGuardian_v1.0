@@ -30,6 +30,22 @@ class ProjectileManager {
       loop: true, // This makes the event repeat indefinitely
     });
   }
+  createChaseBullet() {
+    this.scene.chaseProjectiles = this.scene.physics.add.group({
+      classType: ChasingBullet,
+      runChildUpdate: true,
+    });
+  }
+
+  callChaseBullet() {
+    this.scene.time.addEvent({
+      delay: 3000, // 1000 milliseconds = 1 second
+      callback: () => {
+        this.scene.bug3_2.shootChaseBullet(this.scene, this.scene.bug3_2);
+      },
+      loop: true, // This makes the event repeat indefinitely
+    });
+  }
 
   createBossBullet() {}
 }

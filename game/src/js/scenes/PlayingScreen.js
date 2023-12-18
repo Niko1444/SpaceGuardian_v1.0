@@ -18,7 +18,7 @@ import HPBar from "../objects/ui/HPBar";
 import UtilitiesManager from "../manager/UtilitiesManager";
 import EnemyBullet from "../objects/projectiles/EnemyBullet.js";
 import ProjectileManager from "../manager/ProjectileManager.js";
-import UpgradeManager from "../manager/upgradeManager";
+import UpgradeManager from "../manager/UpgradeManager";
 
 const BACKGROUND_SCROLL_SPEED = 0.5;
 class PlayingScreen extends Phaser.Scene {
