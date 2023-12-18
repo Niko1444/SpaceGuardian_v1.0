@@ -15,8 +15,7 @@ import Bug5 from "../objects/enemies/Bug5";
 import GuiManager from "../manager/GuiManager.js";
 import UtilitiesManager from "../manager/UtilitiesManager";
 import buttonManager from "../manager/buttonManager";
-import ProjectileManager from "../manager/ProjectileManager.js";
-import UpgradeManager from "../manager/UpgradeManager.js";
+import ProjectileManager from "../manager/ProjectileManager";
 import UpgradeManager from "../manager/UpgradeManager";
 
 const BACKGROUND_SCROLL_SPEED = 0.5;
