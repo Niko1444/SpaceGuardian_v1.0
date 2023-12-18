@@ -143,7 +143,8 @@ class PlayingScreen extends Phaser.Scene {
 
     // Create managers
     this.keyboardManager = new KeyboardManager(this);
-
+    // Score System
+    this.upgradeManager = new UpgradeManager(this);
     this.playerManager = new PlayerManager(
       this,
       this.player,
@@ -377,8 +378,6 @@ class PlayingScreen extends Phaser.Scene {
       null,
       this
     );
-    // Score System
-    this.upgradeManager = new UpgradeManager(this);
   }
 }
 export default PlayingScreen;
