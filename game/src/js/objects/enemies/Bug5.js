@@ -38,21 +38,30 @@ class Bug5 extends Entity {
     super.setInteractiveEntity();
   }
 
+  set0health() {
+    this.health = 0;
+    this.updateHealthBarValue();
+  }
   chasePlayer(player) {
-    if(this.y >= config.height/2 && this.health > 0) 
-    {
+    if (this.y >= config.height / 2 && this.health > 0) {
       let dx = player.x - this.x;
       let dy = player.y - this.y;
-  
-      this.rotation = Math.atan2(dy, dx) + Math.PI*3 / 2;
 
-      let direction = new Phaser.Math.Vector2(this.scene.player.x - this.x, this.scene.player.y - this.y);
+      this.rotation = Math.atan2(dy, dx) + (Math.PI * 3) / 2;
+
+      let direction = new Phaser.Math.Vector2(
+        this.scene.player.x - this.x,
+        this.scene.player.y - this.y
+      );
 
       // Normalize the direction vector (convert it to a vector of length 1)
       direction.normalize();
 
       // If it has, set its y velocity to 0 to stop it
-      this.body.velocity.set(direction.x * gameSettings.enemySpeed/2, direction.y * gameSettings.enemySpeed/2);
+      this.body.velocity.set(
+        (direction.x * gameSettings.enemySpeed) / 2,
+        (direction.y * gameSettings.enemySpeed) / 2
+      );
     }
   }
 

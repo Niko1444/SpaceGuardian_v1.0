@@ -8,19 +8,21 @@ class Shield extends Entity {
         super(scene, player.x, player.y, "shield_texture");
         scene.add.existing(this);
         this.setDepth(2);
-    
         this.setVisible(false); // Initially, hide the shield
+
         this.setInteractiveEntity();
-      }
+      } 
     
       show() {
         this.setVisible(true); // Show the shield
+
       }
     
       hide() {
         this.setVisible(false); // Hide the shield
+
       }
-    
+
       updatePosition(player) {
         this.setPosition(player.x, player.y);
       }

@@ -1,43 +1,47 @@
 import Phaser from "phaser";
 import config from "../config/config";
 import HealthPack from "../objects/utilities/healthPack";
-
+import ShieldPack from "../objects/utilities/ShieldPack";
 class UtilitiesManager {
   constructor(scene) {
     this.scene = scene;
     this.healthPacks = [];
     this.shieldPacks = [];
-    //     this.respawnDelays = []; // Array to store individual respawn delays
-    //     this.lastRespawnTimes = []; // Array to store individual last respawn times
-
-    // // Set initial random delays and times for each enemy
-    // for (let i = 0; i < this.Utilities.length; i++) {
-    //   this.respawnDelays[i] = Phaser.Math.Between(2000, 5000);
-    //   this.lastRespawnTimes[i] = 0;
-    // }
+    this.delayTime = 3000; // Set your desired delay time in milliseconds
+    this.timeElapsed = 0;
+    this.shieldPacksSpawned = false;
   }
 
-  // moveUtilities(time) {
-  //     // Move healthpacks
-  //     this.Utilities.forEach((utility, index) => {
-  //       if (utility.y >= config.height) {
-  //         const currentTime = this.scene.time.now;
+  generateRandomPosition() {
+    const minX = 50; // Minimum X position
+    const maxX = this.scene.sys.game.config.width - 50; // Maximum X position
+    const minY = 50; // Minimum Y position
+    const maxY = this.scene.sys.game.config.height - 50; // Maximum Y position
 
-  //         // Check if enough time has passed for the next respawn for this specific enemy
-  //         if (
-  //           currentTime - this.lastRespawnTimes[index] >=
-  //           this.respawnDelays[index]
-  //         ) {
-  //           utility.y = Phaser.Math.Between(-100, 100);
-  //           utility.x = Phaser.Math.Between(-100, 100);
-  //             //config.width - 48
-  //           // Set a new random delay for the next respawn for this specific enemy
-  //           this.respawnDelays[index] = Phaser.Math.Between(5000, 7000);
-  //           this.lastRespawnTimes[index] = currentTime;
-  //         }
-  //       }
-  //     });
-  //   }
+    const randomX = Phaser.Math.Between(minX, maxX);
+    const randomY = Phaser.Math.Between(minY, maxY);
+
+    return { x: randomX, y: randomY };
+  }
+
+  addUtilitiesForPlayingScreen(numHealth, numShield) {
+    for (let i = 0; i < numHealth; i++) {
+      const randomPos = this.generateRandomPosition();
+      const shieldPack = new ShieldPack(this.scene, randomPos.x, randomPos.y);
+      shieldPack.play("shieldPack_anim");
+      // const shieldPack3 = new ShieldPack(this.scene, config.width / 2, 30);
+      // shieldPack3.play("shieldPack_anim");
+      this.addShieldPack(shieldPack);
+    }
+    for (let j = 0; j < numShield; j++) {
+      const randomPos = this.generateRandomPosition();
+      const healthPack = new HealthPack(this.scene, randomPos.x, randomPos.y);
+      healthPack.play("healthPack_anim");
+      // const shieldPack3 = new ShieldPack(this.scene, config.width / 2, 30);
+      // shieldPack3.play("shieldPack_anim");
+      this.addHealthPack(healthPack);
+    }
+  }
 
   addHealthPack(HealthPack) {
     this.healthPacks.push(HealthPack);
@@ -48,12 +52,24 @@ class UtilitiesManager {
     this.shieldPacks.push(ShieldPack);
     // ... other code for managing respawn delays, etc.
   }
-  // addUtility(utility) {
-  //   // When adding a new enemy, initialize its random delay and last respawn time
-  //   this.Utilities.push(utility);
-  //   // this.respawnDelays.push(Phaser.Math.Between(5000, 7000));
-  //   // this.lastRespawnTimes.push(0);
-  // }
+
+  // update(time) {
+  //   this.timeElapsed += time;
+
+  //   if (!this.shieldPacksSpawned && this.timeElapsed >= this.delayTime) {
+  //     this.shieldPacks.forEach((shieldPack) => {
+  //       shieldPack.setActive(true);
+  //       shieldPack.setVisible(true);
+  //     });
+  //     this.shieldPacksSpawned = true;
+  //   }
+  // Other update logic
 }
+// addUtility(utility) {
+//   // When adding a new enemy, initialize its random delay and last respawn time
+//   this.Utilities.push(utility);
+//   // this.respawnDelays.push(Phaser.Math.Between(5000, 7000));
+//   // this.lastRespawnTimes.push(0);
+// }
 
 export default UtilitiesManager;

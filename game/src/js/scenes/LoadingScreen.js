@@ -13,22 +13,20 @@ class LoadingScreen extends Phaser.Scene {
   }
 
   preload() {
-    // Preload player texture
-    this.load.spritesheet({
-      key: `player_texture_${this.selectedPlayerIndex}`,
-      url: `assets/spritesheets/players/planes_0${this.selectedPlayerIndex}A.png`,
-      frameConfig: {
-        frameWidth: 96,
-        frameHeight: 96,
-        startFrame: 0,
-        endFrame: 19,
-      },
-    });
-
     // Load background
     this.load.image(
       "background_texture",
       "assets/images/backgrounds/purple/nebula_1.png"
+    );
+
+    this.load.image(
+      "background_texture_01",
+      "assets/images/backgrounds/green/nebula_2.png"
+    );
+
+    this.load.image(
+      "background_texture_02",
+      "assets/images/backgrounds/blue/nebula_2.png"
     );
 
     // Load Enemy Spritesheets
@@ -74,6 +72,66 @@ class LoadingScreen extends Phaser.Scene {
         frameHeight: 32,
         startFrame: 0,
         endFrame: 4,
+      },
+    });
+
+    // Load the HealthBar
+    this.load.spritesheet({
+      key: "healthBar_texture",
+      url: "assets/spritesheets/vfx/healthBar.png",
+      frameConfig: {
+        frameWidth: 200,
+        frameHeight: 41,
+        startFrame: 0,
+        endFrame: 0,
+      },
+    });
+
+    // Load the Pause button
+    this.load.spritesheet({
+      key: "pauseButton_texture",
+      url: "assets/spritesheets/vfx/pauseButton.png",
+      frameConfig: {
+        frameWidth: 36,
+        frameHeight: 36,
+        startFrame: 2,
+        endFrame: 4,
+      },
+    });
+
+    // Load the Pause display button
+    this.load.spritesheet({
+      key: "pauseDis_texture",
+      url: "assets/spritesheets/vfx/pauseDis.png",
+      frameConfig: {
+        frameWidth: 36,
+        frameHeight: 36,
+        startFrame: 0,
+        endFrame: 1,
+      },
+    });
+
+    // Load the setting button
+    this.load.spritesheet({
+      key: "settingButton_texture",
+      url: "assets/spritesheets/vfx/settingButton.png",
+      frameConfig: {
+        frameWidth: 36,
+        frameHeight: 36,
+        startFrame: 0,
+        endFrame: 0,
+      },
+    });
+
+    // Load the setting hover button
+    this.load.spritesheet({
+      key: "settingHover_texture",
+      url: "assets/spritesheets/vfx/settingHover.png",
+      frameConfig: {
+        frameWidth: 36,
+        frameHeight: 36,
+        startFrame: 0,
+        endFrame: 0,
       },
     });
 
@@ -492,6 +550,53 @@ class LoadingScreen extends Phaser.Scene {
       repeat: -1,
     });
 
+    // Create first bullet animations
+    if (this.selectedPlayerIndex == 1) {
+      this.anims.create({
+        key: `bullet${this.selectedPlayerIndex}_anim`,
+        frames: this.anims.generateFrameNumbers(
+          `bullet${this.selectedPlayerIndex}_texture`,
+          {
+            start: 0,
+            end: 2,
+          }
+        ),
+        frameRate: 12,
+        repeat: -1,
+      });
+    }
+
+    // Create bullet animations 2 to 6
+    if (this.selectedPlayerIndex >= 2 && this.selectedPlayerIndex <= 6) {
+      this.anims.create({
+        key: `bullet${this.selectedPlayerIndex}_anim`,
+        frames: this.anims.generateFrameNumbers(
+          `bullet${this.selectedPlayerIndex}_texture`,
+          {
+            start: 0,
+            end: 1,
+          }
+        ),
+        frameRate: 12,
+        repeat: -1,
+      });
+    }
+    // Create bullet animations 7 to 9
+    if (this.selectedPlayerIndex >= 7 && this.selectedPlayerIndex <= 9) {
+      this.anims.create({
+        key: `bullet${this.selectedPlayerIndex}_anim`,
+        frames: this.anims.generateFrameNumbers(
+          `bullet${this.selectedPlayerIndex}_texture`,
+          {
+            start: 0,
+            end: 2,
+          }
+        ),
+        frameRate: 12,
+        repeat: -1,
+      });
+    }
+
     // Create enemy animations
     this.anims.create({
       key: "bug1_anim",
@@ -523,6 +628,39 @@ class LoadingScreen extends Phaser.Scene {
       repeat: -1,
     });
 
+    // Create health pack animations
+    this.anims.create({
+      key: "healthPack_anim",
+      frames: this.anims.generateFrameNumbers("healthPack_texture", {
+        start: 0,
+        end: 4,
+      }),
+      frameRate: 20,
+      repeat: -1,
+    });
+
+    // Create shield pack animations
+    this.anims.create({
+      key: "shieldPack_anim",
+      frames: this.anims.generateFrameNumbers("shieldPack_texture", {
+        start: 0,
+        end: 4,
+      }),
+      frameRate: 20,
+      repeat: -1,
+    });
+
+    // Create shield animations
+    this.anims.create({
+      key: "shield_anim",
+      frames: this.anims.generateFrameNumbers("shield_texture", {
+        start: 0,
+        end: 5,
+      }),
+      frameRate: 20,
+      repeat: -1,
+    });
+
     // Create explosion animations
     this.anims.create({
       key: "explosion_anim",
@@ -533,6 +671,40 @@ class LoadingScreen extends Phaser.Scene {
       frameRate: 20,
       repeat: 0,
       hideOnComplete: true,
+    });
+
+    // Create pause display animations
+    this.anims.create({
+      key: "pauseDis_anim",
+      frames: this.anims.generateFrameNumbers("pauseDis_texture", {
+        start: 0,
+        end: 1,
+      }),
+      frameRate: 60,
+      repeat: 0,
+      hideOnComplete: true,
+    });
+
+    // Create pauseButton animations
+    this.anims.create({
+      key: "pauseButton_anim",
+      frames: this.anims.generateFrameNumbers("pauseButton_texture", {
+        start: 2,
+        end: 3,
+      }),
+      frameRate: 60,
+      repeat: 0,
+    });
+
+    // Create resumeButton animations
+    this.anims.create({
+      key: "resumeButton_anim",
+      frames: this.anims.generateFrameNumbers("pauseButton_texture", {
+        start: 3,
+        end: 4,
+      }),
+      frameRate: 60,
+      repeat: 0,
     });
 
     // Create loading text
@@ -546,7 +718,7 @@ class LoadingScreen extends Phaser.Scene {
 
     this.time.delayedCall(1000, () => {
       let value = this.selectedPlayerIndex;
-      this.scene.start("playGame", { number: value });
+      this.scene.start("playTutorial", { number: value });
     });
   }
 }

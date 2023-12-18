@@ -13,6 +13,8 @@ class Bug1 extends Entity {
     this.damage = 200;
     this.setInteractiveEntity();
 
+    this.isDestroyed = false;
+
     this.hpBar = new HPBar(
       scene,
       this.x,
@@ -36,7 +38,10 @@ class Bug1 extends Entity {
   setInteractiveEntity() {
     super.setInteractiveEntity();
   }
-
+  set0health() {
+    this.health = 0;
+    this.updateHealthBarValue();
+  }
   explode(canDestroy) {
     super.explode(canDestroy);
     this.scene.upgradeManager.updateScore(10);

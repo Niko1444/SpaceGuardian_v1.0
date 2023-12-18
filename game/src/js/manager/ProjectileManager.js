@@ -1,5 +1,6 @@
 import Bullet from "../objects/projectiles/Bullet.js";
 import EnemyBullet from "../objects/projectiles/EnemyBullet.js";
+import ChasingBullet from "../objects/projectiles/ChasingBullet.js";
 
 class ProjectileManager {
   constructor(scene) {
@@ -20,20 +21,20 @@ class ProjectileManager {
     });
   }
 
+  createChaseBullet() {
+    this.scene.chaseProjectiles = this.scene.physics.add.group({
+      classType: ChasingBullet,
+      runChildUpdate: true,
+    });
+  }
+
   callEnemyBullet() {
     this.scene.time.addEvent({
       delay: 1000, // 1000 milliseconds = 1 second
       callback: () => {
         this.scene.bug3_1.shootBullet(this.scene, this.scene.bug3_1);
-        this.scene.bug3_2.shootBullet(this.scene, this.scene.bug3_2);
       },
       loop: true, // This makes the event repeat indefinitely
-    });
-  }
-  createChaseBullet() {
-    this.scene.chaseProjectiles = this.scene.physics.add.group({
-      classType: ChasingBullet,
-      runChildUpdate: true,
     });
   }
 

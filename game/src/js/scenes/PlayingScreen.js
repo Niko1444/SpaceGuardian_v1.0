@@ -3,27 +3,28 @@ import gameSettings from "../config/gameSettings";
 import config from "../config/config";
 import Bullet from "../objects/projectiles/Bullet";
 import Player from "../objects/players/Player";
-import Bug1 from "../objects/enemies/Bug1";
-import Bug3 from "../objects/enemies/Bug3";
-import Bug5 from "../objects/enemies/Bug5";
-import HealthPack from "../objects/utilities/healthPack";
-import ShieldPack from "../objects/utilities/ShieldPack";
 import Shield from "../objects/utilities/Shield";
 import EnemyManager from "../manager/enemyManager";
 import KeyboardManager from "../manager/KeyboardManager";
 import PlayerManager from "../manager/playerManager";
 import CollideManager from "../manager/collideManager";
-import GuiManager from "../manager/GuiManager.js";
 import HPBar from "../objects/ui/HPBar";
+import Bug1 from "../objects/enemies/Bug1";
+import Bug3 from "../objects/enemies/Bug3";
+import Bug5 from "../objects/enemies/Bug5";
+import GuiManager from "../manager/GuiManager.js";
 import UtilitiesManager from "../manager/UtilitiesManager";
-import EnemyBullet from "../objects/projectiles/EnemyBullet.js";
+import buttonManager from "../manager/buttonManager";
 import ProjectileManager from "../manager/ProjectileManager.js";
+import UpgradeManager from "../manager/UpgradeManager.js";
 import UpgradeManager from "../manager/UpgradeManager";
 
 const BACKGROUND_SCROLL_SPEED = 0.5;
 class PlayingScreen extends Phaser.Scene {
   constructor() {
     super("playGame");
+    this.spawnedEnemies = [];
+    this.buttonManager = null;
   }
 
   init(data) {
@@ -46,7 +47,7 @@ class PlayingScreen extends Phaser.Scene {
   create() {
     // Creat GUI for PlayingScreen ( Changes in BG except Player and Enemy )
     this.guiManager = new GuiManager(this);
-    this.guiManager.createPlayingGui("background_texture");
+    this.guiManager.createBackground("background_texture_01");
 
     // if (!(this.anims && this.anims.exists && this.anims.exists("player_anim"))) {
     this.anims.create({
@@ -129,58 +130,89 @@ class PlayingScreen extends Phaser.Scene {
     this.bug3_1.play("bug3_anim");
     this.bug3_2 = new Bug3(this, 100, 100, 30);
     this.bug3_2.play("bug3_anim");
-
-    this.shield = new Shield(this, this.player);
-    this.shield.play("shield_anim");
-
-    this.shield = new Shield(this, this.player);
-    this.shield.play("shield_anim");
-
     this.bug5 = new Bug5(this, 300, 80, 30);
     this.bug5.play("bug5_anim");
-
     this.bug1 = new Bug1(this, 200, 180, 30);
     this.bug1.play("bug1_anim");
+
+    // Create text for level 1
+    this.createText();
+
+    // Spawn the Shield
+    this.shield = new Shield(this, this.player);
+    this.shield.play("shield_anim");
+
     // Create managers
     this.keyboardManager = new KeyboardManager(this);
+
     this.playerManager = new PlayerManager(
       this,
       this.player,
       this.selectedPlayerIndex
     );
+
     this.enemyManager = new EnemyManager(this);
     this.enemyManager.addEnemy(this.bug3_1);
     this.enemyManager.addEnemy(this.bug3_2);
     this.enemyManager.addEnemy(this.bug5);
     this.enemyManager.addEnemy(this.bug1);
 
-    this.healthPack1 = new HealthPack(this, 401, 250);
-    this.healthPack1.play("healthPack_anim");
-    this.healthPack2 = new HealthPack(this, 140, 450);
-    this.healthPack2.play("healthPack_anim");
+    // spawn the enemies
+    this.time.delayedCall(
+      3000,
+      () => {
+        this.spawnedEnemies = this.enemyManager.scheduleRandomEnemySpawn(8);
+      },
+      null,
+      this
+    );
 
-    this.shieldPack2 = new ShieldPack(this, 40, 450);
-    this.shieldPack2.play("shieldPack_anim");
-    this.shieldPack3 = new ShieldPack(this, 50, 50);
-    this.shieldPack3.play("shieldPack_anim");
+    this.enemyManager.spawnCircleOfBugsLv1(
+      config.width / 2,
+      config.height / 2,
+      150,
+      8
+    );
+
+    // FINAL WAVE
+    this.time.delayedCall(
+      20000,
+      () => {
+        // Destroy all spawned enemies
+        this.destroySpawnedEnemies();
+
+        // Start the final wave
+        this.startFinalWave();
+      },
+      null,
+      this
+    );
 
     this.UtilitiesManager = new UtilitiesManager(this);
-    this.UtilitiesManager.addHealthPack(this.healthPack1);
-    this.UtilitiesManager.addHealthPack(this.healthPack2);
-    this.UtilitiesManager.addShieldPack(this.shieldPack2);
-    this.UtilitiesManager.addShieldPack(this.shieldPack3);
-
-    const centerX = config.width / 2;
-    const centerY = config.height / 2; // You can adjust this as needed
-    const radius = 150; // Adjust the radius as needed
-    const numBugs = 8; // Number of bugs in the circle
-
-    this.enemyManager.spawnCircleOfBugs(centerX, centerY, radius, numBugs);
+    // Add a delayed event to spawn utilities after a delay
+    this.time.addEvent({
+      delay: 5000,
+      callback: () => {
+        this.UtilitiesManager.addUtilitiesForPlayingScreen(3, 4);
+        this.collideManager1 = new CollideManager(
+          this,
+          this.player,
+          this.enemyManager.enemies,
+          this.UtilitiesManager.healthPacks,
+          this.UtilitiesManager.shieldPacks,
+          this.shield
+        );
+      },
+      callbackScope: this,
+    });
+    this.buttonManager = new buttonManager(this);
 
     this.projectileManager = new ProjectileManager(this);
     this.projectileManager.createPlayerBullet();
     this.projectileManager.createEnemyBullet();
+    this.projectileManager.createChaseBullet();
     this.projectileManager.callEnemyBullet();
+    this.projectileManager.callChaseBullet();
 
     // Create keyboard inputs
     this.spacebar = this.input.keyboard.addKey(
@@ -192,16 +224,15 @@ class PlayingScreen extends Phaser.Scene {
       this.player,
       this.enemyManager.enemies,
       this.UtilitiesManager.healthPacks,
-      this.UtilitiesManager.shieldPacks
+      this.UtilitiesManager.shieldPacks,
+      this.shield
     );
 
-    // Score System
-    this.upgradeManager = new UpgradeManager(this);
-
-    this.events.once("shutdown", this.shutdown, this);
+    this.input.keyboard.on("keydown-ENTER", this.goToNextLevel, this);
   }
 
   update() {
+    // this.buttonManager.update();
     // Pause the game
     this.keyboardManager.pauseGame();
 
@@ -210,7 +241,6 @@ class PlayingScreen extends Phaser.Scene {
 
     // Move the player and enemies
     this.playerManager.movePlayer();
-    this.player.updateHealthBarPosition();
 
     this.enemyManager.moveEnemies();
     this.enemyManager.enemies.forEach((enemy) => {
@@ -237,7 +267,12 @@ class PlayingScreen extends Phaser.Scene {
   }
 
   gameOver() {
+    this.events.once("shutdown", this.shutdown, this);
     this.scene.start("gameOver");
+  }
+
+  enemyExploded() {
+    this.enemyManager.enemyExploded();
   }
 
   shutdown() {
@@ -276,6 +311,75 @@ class PlayingScreen extends Phaser.Scene {
     ) {
       this.anims.remove("player_anim_right_diagonal");
     }
+  }
+
+  createText() {
+    const Level1Text = this.add
+      .text(config.width / 2, config.height / 2, "Level 1", {
+        fontSize: "32px",
+        fill: "#ffffff",
+      })
+      .setOrigin(0.5);
+
+    this.time.delayedCall(
+      2000,
+      () => {
+        Level1Text.destroy();
+      },
+      null,
+      this
+    );
+  }
+
+  destroySpawnedEnemies() {
+    // Check if spawnedEnemies array is not null or undefined
+    if (this.spawnedEnemies) {
+      // Loop through all spawned enemies and destroy them
+      this.spawnedEnemies.forEach((enemy) => {
+        // Check if the enemy object exists and has the destroy method
+        if (enemy && enemy.destroy && typeof enemy.destroy === "function") {
+          enemy.destroy();
+        }
+      });
+
+      // Clear the spawned enemies array
+      this.spawnedEnemies = [];
+    }
+  }
+
+  goToNextLevel() {
+    this.time.delayedCall(1000, () => {
+      this.scene.start("playLevelTwo", { number: this.selectedPlayerIndex });
+    });
+  }
+
+  startFinalWave() {
+    // Display "Final Wave" text for 2 seconds
+    const finalWaveText = this.add
+      .text(config.width / 2, config.height / 2, "Final Wave", {
+        fontSize: "32px",
+        fill: "#ffffff",
+      })
+      .setOrigin(0.5);
+
+    this.time.delayedCall(
+      2000,
+      () => {
+        finalWaveText.destroy();
+
+        // Spawn a wave of bugs after the "Final Wave" message disappears
+        this.finalWaveBugs = this.enemyManager.spawnCircleOfBugsLv1(
+          config.width / 2,
+          config.height / 2,
+          120,
+          12
+        );
+      },
+      null,
+      this
+    );
+    // Score System
+    this.upgradeManager = new UpgradeManager(this);
   }
 }
 export default PlayingScreen;

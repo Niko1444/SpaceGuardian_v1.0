@@ -4,12 +4,14 @@ import PlayingScreen from "../scenes/PlayingScreen";
 import PauseScreen from "../scenes/PauseScreen";
 import GameOver from "../scenes/GameOver";
 import LoadingScreen from "../scenes/LoadingScreen";
+import TutorialScreen from "../scenes/TutorialScreen";
 
 class GuiManager {
   constructor(scene) {
     this.scene = scene;
     this.loadingSceneStarted = false;
     this.createGui();
+    this.TutorialText = null;
   }
 
   createGui() {
@@ -89,12 +91,15 @@ class GuiManager {
     // Add later
   }
 
+
   createSimpleText(x, y, key, font, color, origin) {
-    const test = this.scene.add.text(x, y, key, {
-      fontSize: font,
-      fill: color,
-    });
-    test.setOrigin(origin);
+    const simpleText = this.scene.add.text(
+      x,
+      y,
+      key,
+      { fontSize: font, fill: color }
+    );
+    simpleText.setOrigin(origin);
   }
 
   createBackground(key) {
@@ -106,6 +111,33 @@ class GuiManager {
       key
     );
     this.scene.background.setOrigin(0, 0);
+  }
+
+  createLevelText(x, y, key, font, color) {
+    const LevelText = this.scene.add.text(
+      x,
+      y,
+      key,
+      { fontSize: font, fill: color }
+    );
+    LevelText.setOrigin(0.5);
+
+    this.scene.time.delayedCall(4000, () => {
+      LevelText.destroy();
+    }, null, this);
+  }
+
+  createTutorialText(key, x, y) {
+    const TutorialText = this.scene.add.text(
+      x,
+      y,
+      key,
+      { fontSize: '28px', fill: '#ffffff' }
+    ).setOrigin(0.5);
+
+    this.scene.time.delayedCall(4000, () => {
+      TutorialText.destroy();
+    }, null, this);
   }
 }
 
