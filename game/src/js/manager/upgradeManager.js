@@ -7,6 +7,7 @@ class UpgradeManager {
     this.scene = scene;
     this.playerScore = 0;
     this.createScoreText();
+    // dit me github
   }
 
   createScoreText() {
