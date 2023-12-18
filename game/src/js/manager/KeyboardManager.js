@@ -14,7 +14,7 @@ class KeyboardManager {
       spacebar: Phaser.Input.Keyboard.KeyCodes.SPACE,
       P: Phaser.Input.Keyboard.KeyCodes.P,
       T: Phaser.Input.Keyboard.KeyCodes.T,
-      R: Phaser.Input.Keyboard.KeyCodes.R
+      R: Phaser.Input.Keyboard.KeyCodes.R,
       // Add more keys as needed
     });
   }
@@ -48,13 +48,12 @@ class KeyboardManager {
     });
   }
 
-  restartGame(){
+  restartGame() {
     this.keys.R.on("down", () => {
       this.scene.scene.start("playGame");
       this.scene.scene.stop("gameOver");
     });
   }
-
 }
 
 export default KeyboardManager;

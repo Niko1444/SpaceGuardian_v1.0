@@ -4,6 +4,7 @@ import PlayingScreen from "../scenes/PlayingScreen.js";
 import GameOver from "../scenes/GameOver.js";
 import PauseScreen from "../scenes/PauseScreen.js";
 import ChoosePLayer from "../scenes/ChoosePLayer.js";
+import UpgradeScreen from "../scenes/UpgradeScreen.js";
 import TutorialScreen from "../scenes/TutorialScreen.js";
 import LevelTwoScreen from "../scenes/LevelTwoScreen.js";
 import LevelThreeScreen from "../scenes/LevelThreeScreen.js";
@@ -21,7 +22,19 @@ const config = {
   width: gameWidth,
   height: gameHeight,
   backgroundColor: 0x000000,
-  scene: [TitleScreen, LoadingScreen, PlayingScreen, GameOver, PauseScreen, ChoosePLayer, TutorialScreen, LevelTwoScreen, LevelThreeScreen, LeaderBoard],
+  scene: [
+    TitleScreen,
+    LoadingScreen,
+    PlayingScreen,
+    GameOver,
+    PauseScreen,
+    ChoosePLayer,
+    UpgradeScreen,
+    TutorialScreen,
+    LevelTwoScreen,
+    LevelThreeScreen,
+    LeaderBoard,
+  ],
   pixelArt: true,
   physics: {
     default: "arcade",

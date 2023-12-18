@@ -17,6 +17,7 @@ import UtilitiesManager from "../manager/UtilitiesManager";
 import buttonManager from "../manager/buttonManager";
 import ProjectileManager from "../manager/ProjectileManager.js";
 import UpgradeManager from "../manager/UpgradeManager.js";
+import UpgradeManager from "../manager/UpgradeManager";
 
 const BACKGROUND_SCROLL_SPEED = 0.5;
 class PlayingScreen extends Phaser.Scene {
@@ -30,7 +31,7 @@ class PlayingScreen extends Phaser.Scene {
     this.selectedPlayerIndex = data.number;
   }
 
-  preload(){
+  preload() {
     this.load.spritesheet({
       key: `player_texture_${this.selectedPlayerIndex}`,
       url: `assets/spritesheets/players/planes_0${this.selectedPlayerIndex}A.png`,
@@ -44,76 +45,75 @@ class PlayingScreen extends Phaser.Scene {
   }
 
   create() {
-    
     // Creat GUI for PlayingScreen ( Changes in BG except Player and Enemy )
     this.guiManager = new GuiManager(this);
     this.guiManager.createBackground("background_texture_01");
 
     // if (!(this.anims && this.anims.exists && this.anims.exists("player_anim"))) {
-      this.anims.create({
-        key: "player_anim",
-        frames: this.anims.generateFrameNumbers(
-          `player_texture_${this.selectedPlayerIndex}`,
-          {
-            start: 0,
-            end: 3,
-          }
-        ),
-        frameRate: 30,
-        repeat: -1,
-      });
-  
-      this.anims.create({
-        key: "player_anim_left",
-        frames: this.anims.generateFrameNumbers(
-          `player_texture_${this.selectedPlayerIndex}`,
-          {
-            start: 4,
-            end: 7,
-          }
-        ),
-        frameRate: 30,
-        repeat: -1,
-      });
-  
-      this.anims.create({
-        key: "player_anim_left_diagonal",
-        frames: this.anims.generateFrameNumbers(
-          `player_texture_${this.selectedPlayerIndex}`,
-          {
-            start: 8,
-            end: 11,
-          }
-        ),
-        frameRate: 30,
-        repeat: -1,
-      });
-  
-      this.anims.create({
-        key: "player_anim_right",
-        frames: this.anims.generateFrameNumbers(
-          `player_texture_${this.selectedPlayerIndex}`,
-          {
-            start: 12,
-            end: 15,
-          }
-        ),
-        frameRate: 30,
-        repeat: -1,
-      });
-  
-      this.anims.create({
-        key: "player_anim_right_diagonal",
-        frames: this.anims.generateFrameNumbers(
-          `player_texture_${this.selectedPlayerIndex}`,
-          {
-            start: 16,
-            end: 19,
-          }
-        ),
-        frameRate: 30,
-        repeat: -1,
-      });
+    this.anims.create({
+      key: "player_anim",
+      frames: this.anims.generateFrameNumbers(
+        `player_texture_${this.selectedPlayerIndex}`,
+        {
+          start: 0,
+          end: 3,
+        }
+      ),
+      frameRate: 30,
+      repeat: -1,
+    });
+
+    this.anims.create({
+      key: "player_anim_left",
+      frames: this.anims.generateFrameNumbers(
+        `player_texture_${this.selectedPlayerIndex}`,
+        {
+          start: 4,
+          end: 7,
+        }
+      ),
+      frameRate: 30,
+      repeat: -1,
+    });
+
+    this.anims.create({
+      key: "player_anim_left_diagonal",
+      frames: this.anims.generateFrameNumbers(
+        `player_texture_${this.selectedPlayerIndex}`,
+        {
+          start: 8,
+          end: 11,
+        }
+      ),
+      frameRate: 30,
+      repeat: -1,
+    });
+
+    this.anims.create({
+      key: "player_anim_right",
+      frames: this.anims.generateFrameNumbers(
+        `player_texture_${this.selectedPlayerIndex}`,
+        {
+          start: 12,
+          end: 15,
+        }
+      ),
+      frameRate: 30,
+      repeat: -1,
+    });
+
+    this.anims.create({
+      key: "player_anim_right_diagonal",
+      frames: this.anims.generateFrameNumbers(
+        `player_texture_${this.selectedPlayerIndex}`,
+        {
+          start: 16,
+          end: 19,
+        }
+      ),
+      frameRate: 30,
+      repeat: -1,
+    });
     // }
 
     this.player = new Player(
@@ -167,7 +167,12 @@ class PlayingScreen extends Phaser.Scene {
       this
     );
 
-    this.enemyManager.spawnCircleOfBugsLv1(config.width / 2, config.height / 2, 150, 8);
+    this.enemyManager.spawnCircleOfBugsLv1(
+      config.width / 2,
+      config.height / 2,
+      150,
+      8
+    );
 
     // FINAL WAVE
     this.time.delayedCall(
@@ -214,7 +219,6 @@ class PlayingScreen extends Phaser.Scene {
       Phaser.Input.Keyboard.KeyCodes.SPACE
     );
 
-    
     this.collideManager = new CollideManager(
       this,
       this.player,
@@ -228,7 +232,6 @@ class PlayingScreen extends Phaser.Scene {
   }
 
   update() {
-
     // this.buttonManager.update();
     // Pause the game
     this.keyboardManager.pauseGame();
@@ -377,7 +380,6 @@ class PlayingScreen extends Phaser.Scene {
     );
     // Score System
     this.upgradeManager = new UpgradeManager(this);
-
   }
 }
 export default PlayingScreen;

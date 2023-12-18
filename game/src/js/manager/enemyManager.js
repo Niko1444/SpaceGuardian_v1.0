@@ -20,7 +20,7 @@ class EnemyManager {
     // Set initial random delays and times for each enemy
     for (let i = 0; i < this.enemies.length; i++) {
       this.respawnDelays[i] = Phaser.Math.Between(2000, 5000);
-      this.lastRespawnTimes[i] = 0; 
+      this.lastRespawnTimes[i] = 0;
     }
   }
 
@@ -77,8 +77,7 @@ class EnemyManager {
       var newEnemy = new Bug1(this.scene, randomX, -20, 30);
       newEnemy.play("bug1_anim");
       this.addEnemy(newEnemy);
-    }
-    else if (number == 3) {
+    } else if (number == 3) {
       var newEnemy = new Bug3(this.scene, randomX, -20, 30);
       newEnemy.play("bug3_anim");
       this.addEnemy(newEnemy);

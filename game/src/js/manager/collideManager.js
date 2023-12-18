@@ -79,7 +79,6 @@ class CollideManager {
     });
   }
 
-
   shieldCollideEnemy(shield, enemy, player) {
     if (this.shieldActive) {
       enemy.set0health();
@@ -116,8 +115,6 @@ class CollideManager {
     this.shield.show();
     this.shieldActive = true;
   }
-
-
 }
 
 export default CollideManager;

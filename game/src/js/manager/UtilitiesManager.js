@@ -43,19 +43,15 @@ class UtilitiesManager {
     }
   }
 
-
-
   addHealthPack(HealthPack) {
     this.healthPacks.push(HealthPack);
     // ... other code for managing respawn delays, etc.
   }
 
-
   addShieldPack(ShieldPack) {
     this.shieldPacks.push(ShieldPack);
     // ... other code for managing respawn delays, etc.
   }
-
 
   // update(time) {
   //   this.timeElapsed += time;
@@ -75,6 +71,5 @@ class UtilitiesManager {
 //   // this.respawnDelays.push(Phaser.Math.Between(5000, 7000));
 //   // this.lastRespawnTimes.push(0);
 // }
-
 
 export default UtilitiesManager;

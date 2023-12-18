@@ -45,7 +45,7 @@ class ChoosePLayer extends Phaser.Scene {
       {
         fontFamily: "Pixelify Sans",
         fontSize: "40px",
-        color: "#FF454D", // Set the color for "SPACE"
+        color: "#F3F8FF", // Set the color for "SPACE"
         align: "center",
       }
     );
@@ -96,6 +96,12 @@ class ChoosePLayer extends Phaser.Scene {
       this
     );
 
+    // Create "LOGO" image
+    const bottomLeftImage = this.add.image(27, config.height - 20, "logo");
+    bottomLeftImage.setOrigin(0, 1); // Set the origin to the bottom left
+
+    // Optionally, you can set the scale of the image
+    bottomLeftImage.setScale(0.2); // Adjust the scale as needed
   }
 
   update() {
@@ -177,7 +183,6 @@ class ChoosePLayer extends Phaser.Scene {
       }
     }
   }
-
 }
 
 export default ChoosePLayer;
