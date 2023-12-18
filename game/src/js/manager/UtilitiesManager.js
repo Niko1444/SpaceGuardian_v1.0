@@ -11,6 +11,7 @@ class UtilitiesManager {
     this.timeElapsed = 0;
     this.shieldPacksSpawned = false;
   }
+
   generateRandomPosition() {
     const minX = 50; // Minimum X position
     const maxX = this.scene.sys.game.config.width - 50; // Maximum X position
@@ -23,9 +24,8 @@ class UtilitiesManager {
     return { x: randomX, y: randomY };
   }
 
-  addUtilitiesForPlayingScreen(numHealth, numShield){
-    
-    for(let i = 0; i < numHealth; i++){
+  addUtilitiesForPlayingScreen(numHealth, numShield) {
+    for (let i = 0; i < numHealth; i++) {
       const randomPos = this.generateRandomPosition();
       const shieldPack = new ShieldPack(this.scene, randomPos.x, randomPos.y);
       shieldPack.play("shieldPack_anim");
@@ -33,8 +33,7 @@ class UtilitiesManager {
       // shieldPack3.play("shieldPack_anim");
       this.addShieldPack(shieldPack);
     }
-
-    for(let j = 0; j < numShield; j++){
+    for (let j = 0; j < numShield; j++) {
       const randomPos = this.generateRandomPosition();
       const healthPack = new HealthPack(this.scene, randomPos.x, randomPos.y);
       healthPack.play("healthPack_anim");
@@ -42,18 +41,15 @@ class UtilitiesManager {
       // shieldPack3.play("shieldPack_anim");
       this.addHealthPack(healthPack);
     }
-      
-    
-      
   }
 
-  
+
 
   addHealthPack(HealthPack) {
     this.healthPacks.push(HealthPack);
     // ... other code for managing respawn delays, etc.
   }
- 
+
 
   addShieldPack(ShieldPack) {
     this.shieldPacks.push(ShieldPack);
@@ -71,14 +67,14 @@ class UtilitiesManager {
   //     });
   //     this.shieldPacksSpawned = true;
   //   }
-    // Other update logic
-  }
-  // addUtility(utility) {
-  //   // When adding a new enemy, initialize its random delay and last respawn time
-  //   this.Utilities.push(utility);
-  //   // this.respawnDelays.push(Phaser.Math.Between(5000, 7000));
-  //   // this.lastRespawnTimes.push(0);
-  // }
+  // Other update logic
+}
+// addUtility(utility) {
+//   // When adding a new enemy, initialize its random delay and last respawn time
+//   this.Utilities.push(utility);
+//   // this.respawnDelays.push(Phaser.Math.Between(5000, 7000));
+//   // this.lastRespawnTimes.push(0);
+// }
 
 
 export default UtilitiesManager;

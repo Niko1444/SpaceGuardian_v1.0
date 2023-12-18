@@ -13,17 +13,6 @@ class LoadingScreen extends Phaser.Scene {
   }
 
   preload() {
-    // Preload player texture
-    this.load.spritesheet({
-      key: `player_texture_${this.selectedPlayerIndex}`,
-      url: `assets/spritesheets/players/planes_0${this.selectedPlayerIndex}A.png`,
-      frameConfig: {
-        frameWidth: 96,
-        frameHeight: 96,
-        startFrame: 0,
-        endFrame: 19,
-      },
-    });
 
     // Load background
     this.load.image(
@@ -111,7 +100,7 @@ class LoadingScreen extends Phaser.Scene {
       },
     });
 
-    // Load the Pause button
+    // Load the Pause display button
     this.load.spritesheet({
       key: "pauseDis_texture",
       url: "assets/spritesheets/vfx/pauseDis.png",
@@ -122,6 +111,8 @@ class LoadingScreen extends Phaser.Scene {
         endFrame: 1,
       },
     });
+
+    // Load the setting button
     this.load.spritesheet({
       key: "settingButton_texture",
       url: "assets/spritesheets/vfx/settingButton.png",
@@ -133,6 +124,7 @@ class LoadingScreen extends Phaser.Scene {
       },
     });
 
+    // Load the setting hover button
     this.load.spritesheet({
       key: "settingHover_texture",
       url: "assets/spritesheets/vfx/settingHover.png",
@@ -312,85 +304,6 @@ class LoadingScreen extends Phaser.Scene {
   }
 
   create() {
-    // Create health pack animations
-    this.anims.create({
-      key: "healthPack_anim",
-      frames: this.anims.generateFrameNumbers("healthPack_texture", {
-        start: 0,
-        end: 4,
-      }),
-      frameRate: 20,
-      repeat: -1,
-    });
-
-    // Create shield pack animations
-    this.anims.create({
-      key: "shieldPack_anim",
-      frames: this.anims.generateFrameNumbers("shieldPack_texture", {
-        start: 0,
-        end: 4,
-      }),
-      frameRate: 20,
-      repeat: -1,
-    });
-
-    // Create shield animations
-    this.anims.create({
-      key: "shield_anim",
-      frames: this.anims.generateFrameNumbers("shield_texture", {
-        start: 0,
-        end: 5,
-      }),
-      frameRate: 20,
-      repeat: -1,
-    });
-
-    // Create first bullet animations
-    if (this.selectedPlayerIndex == 1) {
-      this.anims.create({
-        key: `bullet${this.selectedPlayerIndex}_anim`,
-        frames: this.anims.generateFrameNumbers(
-          `bullet${this.selectedPlayerIndex}_texture`,
-          {
-            start: 0,
-            end: 2,
-          }
-        ),
-        frameRate: 12,
-        repeat: -1,
-      });
-    }
-
-    // Create bullet animations 2 to 6
-    if (this.selectedPlayerIndex >= 2 && this.selectedPlayerIndex <= 6) {
-      this.anims.create({
-        key: `bullet${this.selectedPlayerIndex}_anim`,
-        frames: this.anims.generateFrameNumbers(
-          `bullet${this.selectedPlayerIndex}_texture`,
-          {
-            start: 0,
-            end: 1,
-          }
-        ),
-        frameRate: 12,
-        repeat: -1,
-      });
-    }
-    // Create bullet animations 7 to 9
-    if (this.selectedPlayerIndex >= 7 && this.selectedPlayerIndex <= 9) {
-      this.anims.create({
-        key: `bullet${this.selectedPlayerIndex}_anim`,
-        frames: this.anims.generateFrameNumbers(
-          `bullet${this.selectedPlayerIndex}_texture`,
-          {
-            start: 0,
-            end: 2,
-          }
-        ),
-        frameRate: 12,
-        repeat: -1,
-      });
-    }
 
     // Create player animations
     this.anims.create({
@@ -457,83 +370,54 @@ class LoadingScreen extends Phaser.Scene {
       frameRate: 30,
       repeat: -1,
     });
-  }
 
-  create() {
-    // Create health pack animations
-    this.anims.create({
-      key: "healthPack_anim",
-      frames: this.anims.generateFrameNumbers("healthPack_texture", {
-        start: 0,
-        end: 4,
-      }),
-      frameRate: 20,
-      repeat: -1,
-    });
-
-    this.anims.create({
-      key: "pauseDis_anim",
-      frames: this.anims.generateFrameNumbers("pauseDis_texture", {
-        start: 0,
-        end: 1,
-      }),
-      frameRate: 60,
-      repeat: 0,
-      hideOnComplete: true,
-    });
-
-    this.anims.create({
-      key: "pauseButton_anim",
-      frames: this.anims.generateFrameNumbers("pauseButton_texture", {
-        start: 2,
-        end: 3,
-      }),
-      frameRate: 60,
-      repeat: 0,
-    });
-
-    this.anims.create({
-      key: "resumeButton_anim",
-      frames: this.anims.generateFrameNumbers("pauseButton_texture", {
-        start: 3,
-        end: 4,
-      }),
-      frameRate: 60,
-      repeat: 0,
-    });
-
-    // Create shield pack animations
-    this.anims.create({
-      key: "shieldPack_anim",
-      frames: this.anims.generateFrameNumbers("shieldPack_texture", {
-        start: 0,
-        end: 4,
-      }),
-      frameRate: 20,
-      repeat: -1,
-    });
-
-    // Create shield animations
-    this.anims.create({
-      key: "shield_anim",
-      frames: this.anims.generateFrameNumbers("shield_texture", {
-        start: 0,
-        end: 5,
-      }),
-      frameRate: 20,
-      repeat: -1,
-    });
 
     // Create first bullet animations
-    this.anims.create({
-      key: "bullet1_anim",
-      frames: this.anims.generateFrameNumbers("bullet1_texture", {
-        start: 0,
-        end: 2,
-      }),
-      frameRate: 12,
-      repeat: -1,
-    });
+    if (this.selectedPlayerIndex == 1) {
+      this.anims.create({
+        key: `bullet${this.selectedPlayerIndex}_anim`,
+        frames: this.anims.generateFrameNumbers(
+          `bullet${this.selectedPlayerIndex}_texture`,
+          {
+            start: 0,
+            end: 2,
+          }
+        ),
+        frameRate: 12,
+        repeat: -1,
+      });
+    }
+
+    // Create bullet animations 2 to 6
+    if (this.selectedPlayerIndex >= 2 && this.selectedPlayerIndex <= 6) {
+      this.anims.create({
+        key: `bullet${this.selectedPlayerIndex}_anim`,
+        frames: this.anims.generateFrameNumbers(
+          `bullet${this.selectedPlayerIndex}_texture`,
+          {
+            start: 0,
+            end: 1,
+          }
+        ),
+        frameRate: 12,
+        repeat: -1,
+      });
+    }
+    // Create bullet animations 7 to 9
+    if (this.selectedPlayerIndex >= 7 && this.selectedPlayerIndex <= 9) {
+      this.anims.create({
+        key: `bullet${this.selectedPlayerIndex}_anim`,
+        frames: this.anims.generateFrameNumbers(
+          `bullet${this.selectedPlayerIndex}_texture`,
+          {
+            start: 0,
+            end: 2,
+          }
+        ),
+        frameRate: 12,
+        repeat: -1,
+      });
+    }
 
     // Create enemy animations
     this.anims.create({
@@ -566,6 +450,40 @@ class LoadingScreen extends Phaser.Scene {
       repeat: -1,
     });
 
+    // Create health pack animations
+    this.anims.create({
+      key: "healthPack_anim",
+      frames: this.anims.generateFrameNumbers("healthPack_texture", {
+        start: 0,
+        end: 4,
+      }),
+      frameRate: 20,
+      repeat: -1,
+    });
+
+
+    // Create shield pack animations
+    this.anims.create({
+      key: "shieldPack_anim",
+      frames: this.anims.generateFrameNumbers("shieldPack_texture", {
+        start: 0,
+        end: 4,
+      }),
+      frameRate: 20,
+      repeat: -1,
+    });
+
+    // Create shield animations
+    this.anims.create({
+      key: "shield_anim",
+      frames: this.anims.generateFrameNumbers("shield_texture", {
+        start: 0,
+        end: 5,
+      }),
+      frameRate: 20,
+      repeat: -1,
+    });
+
     // Create explosion animations
     this.anims.create({
       key: "explosion_anim",
@@ -576,6 +494,40 @@ class LoadingScreen extends Phaser.Scene {
       frameRate: 20,
       repeat: 0,
       hideOnComplete: true,
+    });
+
+    // Create pause display animations
+    this.anims.create({
+      key: "pauseDis_anim",
+      frames: this.anims.generateFrameNumbers("pauseDis_texture", {
+        start: 0,
+        end: 1,
+      }),
+      frameRate: 60,
+      repeat: 0,
+      hideOnComplete: true,
+    });
+
+    // Create pauseButton animations
+    this.anims.create({
+      key: "pauseButton_anim",
+      frames: this.anims.generateFrameNumbers("pauseButton_texture", {
+        start: 2,
+        end: 3,
+      }),
+      frameRate: 60,
+      repeat: 0,
+    });
+
+    // Create resumeButton animations
+    this.anims.create({
+      key: "resumeButton_anim",
+      frames: this.anims.generateFrameNumbers("pauseButton_texture", {
+        start: 3,
+        end: 4,
+      }),
+      frameRate: 60,
+      repeat: 0,
     });
 
     // Create loading text
@@ -592,5 +544,6 @@ class LoadingScreen extends Phaser.Scene {
       this.scene.start("playTutorial", { number: value });
     });
   }
+
 }
 export default LoadingScreen;

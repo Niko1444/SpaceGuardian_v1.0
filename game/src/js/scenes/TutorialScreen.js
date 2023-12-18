@@ -11,6 +11,12 @@ import CollideManager from "../manager/collideManager";
 import HPBar from "../objects/ui/HPBar";
 import GuiManager from "../manager/GuiManager";
 import UtilitiesManager from "../manager/UtilitiesManager";
+import ProjectileManager from "../manager/ProjectileManager";
+import Bug1 from "../objects/enemies/Bug1";
+import HealthPack from "../objects/utilities/healthPack";
+import ShieldPack from "../objects/utilities/ShieldPack";
+import EnemyBullet from "../objects/projectiles/EnemyBullet";
+import UpgradeManager from "../manager/UpgradeManager";
 
 const BACKGROUND_SCROLL_SPEED = 0.5;
 class TutorialScreen extends Phaser.Scene {
@@ -37,6 +43,18 @@ class TutorialScreen extends Phaser.Scene {
   }
 
   create() {
+
+    this.guiManager = new GuiManager(this);
+    this.guiManager.createBackground("background_texture_01");
+    this.guiManager.createTutorialText("Press Space to shoot", config.width / 2, config.height / 2 - 60);
+    this.guiManager.createTutorialText("Press Directions to move", config.width / 2, config.height / 2 - 30,);
+
+    this.time.delayedCall(8000, () => {
+      this.guiManager.createSimpleText(config.width / 2, config.height / 2,
+        "Ready? Press enter to start", "25px", "#ffffff", 0.5);
+    }, null, this);
+
+    // Create player animations
     this.anims.create({
       key: "player_anim",
       frames: this.anims.generateFrameNumbers(
@@ -101,17 +119,7 @@ class TutorialScreen extends Phaser.Scene {
       frameRate: 30,
       repeat: -1,
     });
-    
-    // Creat GUI for TutorialScreen ( Changes in BG except Player and Enemy )
-    this.guiManager = new GuiManager(this);
-    this.guiManager.createBackground("background_texture_01");
-    this.guiManager.createTutorialText("Press Space to shoot",config.width / 2,config.height / 2 - 60);
-    this.guiManager.createTutorialText("Press Directions to move",config.width / 2,config.height / 2 - 30,);
-    this.time.delayedCall(8000, () => {
-    this.guiManager.createSimpleText(config.width / 2, config.height / 2, 
-    "Ready? Press enter to start", "25px", "#ffffff", 0.5);
-    },null, this);
-    
+
     // Spawn the Player
     this.player = new Player(
       this,
@@ -122,28 +130,40 @@ class TutorialScreen extends Phaser.Scene {
     );
     this.player.play("player_anim");
 
+    // Spawn the enemies
+    this.newBug = new Bug1(this, config.width / 2, -20, 30);
+
     this.shield = new Shield(this, this.player);
     this.shield.play("shield_anim");
 
+    this.healthPack1 = new HealthPack(this, 401, 250);
+    this.healthPack1.play("healthPack_anim");
+    this.healthPack2 = new HealthPack(this, 140, 450);
+    this.healthPack2.play("healthPack_anim");
+
+    this.shieldPack2 = new ShieldPack(this, 40, 450);
+    this.shieldPack2.play("shieldPack_anim");
+    this.shieldPack3 = new ShieldPack(this, 50, 50);
+    this.shieldPack3.play("shieldPack_anim");
+
     // Create managers
     this.keyboardManager = new KeyboardManager(this);
+    this.upgradeManager = new UpgradeManager(this);
+
     this.playerManager = new PlayerManager(
       this,
       this.player,
       this.selectedPlayerIndex
     );
+
     this.enemyManager = new EnemyManager(this);
-    
-    // call the enemy
-    this.time.addEvent({
-      delay: 0,
-      callback: () => {
-          this.enemyManager.addEnemyTutorial();
-      },
-      callbackScope: this,
-  });
+    this.enemyManager.addEnemy(this.newBug);
 
     this.UtilitiesManager = new UtilitiesManager(this);
+    this.UtilitiesManager.addHealthPack(this.healthPack1);
+    this.UtilitiesManager.addHealthPack(this.healthPack2);
+    this.UtilitiesManager.addShieldPack(this.shieldPack2);
+    this.UtilitiesManager.addShieldPack(this.shieldPack3);
 
     // Create keyboard inputs
     this.spacebar = this.input.keyboard.addKey(
@@ -153,7 +173,12 @@ class TutorialScreen extends Phaser.Scene {
     // Create a group to manage bullets
     this.projectiles = this.physics.add.group({
       classType: Bullet,
-      runChildUpdate: true,
+      runChildUpdate: true
+    });
+
+    this.enemyProjectiles = this.physics.add.group({
+      classType: EnemyBullet,
+      runChildUpdate: true
     });
 
     this.collideManager = new CollideManager(
@@ -161,7 +186,8 @@ class TutorialScreen extends Phaser.Scene {
       this.player,
       this.enemyManager.enemies,
       this.UtilitiesManager.healthPacks,
-      this.UtilitiesManager.shieldPacks
+      this.UtilitiesManager.shieldPacks,
+      this.shield
     );
 
     // this.events.once("shutdown", this.shutdown, this);
@@ -178,7 +204,6 @@ class TutorialScreen extends Phaser.Scene {
 
     // Move the player and enemies
     this.playerManager.movePlayer();
-    this.player.updateHealthBarPosition();
 
     this.enemyManager.moveEnemies();
     this.enemyManager.enemies.forEach((enemy) => {
@@ -186,20 +211,18 @@ class TutorialScreen extends Phaser.Scene {
     });
 
     if (Phaser.Input.Keyboard.JustDown(this.spacebar)) {
-      this.player.shootBullet();
-
-      // this.guiManager.hideSimpleText();
+      this.player.shootBullet(this.selectedPlayerIndex);
     }
 
     this.projectiles.children.iterate((bullet) => {
       bullet.update();
     });
 
+    this.shield.updatePosition(this.player);
+
     if (this.player.health <= 0) {
       this.gameOver();
     }
-
-    this.shield.updatePosition(this.player);    
   }
 
   startGame() {
@@ -207,6 +230,7 @@ class TutorialScreen extends Phaser.Scene {
       this.scene.start("playGame", { number: this.selectedPlayerIndex });
     });
   }
+
   gameOver() {
     this.scene.start("gameOver");
   }

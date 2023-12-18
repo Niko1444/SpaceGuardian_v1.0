@@ -20,7 +20,7 @@ class EnemyManager {
     // Set initial random delays and times for each enemy
     for (let i = 0; i < this.enemies.length; i++) {
       this.respawnDelays[i] = Phaser.Math.Between(2000, 5000);
-      this.lastRespawnTimes[i] = 0;
+      this.lastRespawnTimes[i] = 0; 
     }
   }
 
@@ -59,45 +59,45 @@ class EnemyManager {
     this.lastRespawnTimes.push(0);
 
     this.scene.tweens.add({
-        targets: enemy,
-        y: config.height,
-        duration: 5000, 
-        ease: "Linear", 
+      targets: enemy,
+      y: config.height,
+      duration: 5000,
+      ease: "Linear",
     });
-}
+  }
 
-getRandomBugX() {
-  const gameWidth = config.width; 
-  return Math.random() * gameWidth;
-}
+  getRandomBugX() {
+    const gameWidth = config.width;
+    return Math.random() * gameWidth;
+  }
 
-spawnRandomEnemy(number) {
+  spawnRandomEnemy(number) {
     const randomX = this.getRandomBugX();
     if (number == 1) {
-    var newEnemy = new Bug1(this.scene, randomX, -20, 30);
-    newEnemy.play("bug1_anim");
-    this.addEnemy(newEnemy);
+      var newEnemy = new Bug1(this.scene, randomX, -20, 30);
+      newEnemy.play("bug1_anim");
+      this.addEnemy(newEnemy);
     }
     else if (number == 3) {
-    var newEnemy = new Bug3(this.scene, randomX, -20, 30);
-    newEnemy.play("bug3_anim");
-    this.addEnemy(newEnemy);
+      var newEnemy = new Bug3(this.scene, randomX, -20, 30);
+      newEnemy.play("bug3_anim");
+      this.addEnemy(newEnemy);
     } else {
-    var newEnemy = new Bug5(this.scene, randomX, -20, 30);
-    newEnemy.play("bug5_anim");
-    this.addEnemy(newEnemy);
+      var newEnemy = new Bug5(this.scene, randomX, -20, 30);
+      newEnemy.play("bug5_anim");
+      this.addEnemy(newEnemy);
     }
 
     this.enemyCounter++;
 
     this.scene.tweens.add({
-        targets: newEnemy,
-        y: config.height, 
-        duration: 4000, 
+      targets: newEnemy,
+      y: config.height,
+      duration: 4000,
     });
-}
+  }
 
-scheduleRandomEnemySpawn(numEnemies, duration = 20000) {
+  scheduleRandomEnemySpawn(numEnemies, duration = 20000) {
     const endTime = this.scene.time.now + duration;
     const spawnedEnemies = [];
 
@@ -127,12 +127,13 @@ scheduleRandomEnemySpawn(numEnemies, duration = 20000) {
 
   // FOR TUTORIAL SCREEN
   addEnemyTutorial() {
-      var newBug = new Bug1(this.scene, config.width/2, -20, 30);
-      newBug.play("bug1_anim");
-      this.addEnemyForOnce(newBug);
-}
+    var newBug = new Bug1(this.scene, config.width / 2, -20, 30);
+    newBug.play("bug1_anim");
+    this.addEnemy(newBug);
+    this.addEnemyForOnce(newBug);
+  }
 
-// FOR LEVEL 1
+  // FOR LEVEL 1
   spawnCircleOfBugsLv1(centerX, centerY, radius, numBugs) {
     const angleIncrement = (2 * Math.PI) / numBugs;
     const finalWaveBugs = [];
@@ -152,8 +153,8 @@ scheduleRandomEnemySpawn(numEnemies, duration = 20000) {
       this.scene.tweens.add({
         targets: newBug,
         y: bugY,
-        duration: 5000, 
-        ease: "Linear", 
+        duration: 5000,
+        ease: "Linear",
       });
     }
     return finalWaveBugs;

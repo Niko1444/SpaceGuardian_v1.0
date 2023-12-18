@@ -13,30 +13,6 @@ class ChoosePLayer extends Phaser.Scene {
       "assets/images/backgrounds/purple/nebula_3.png"
     );
 
-    this.load.spritesheet({
-      key: "button_continue",
-      url: "assets/gui/button.png",
-      frameConfig: {
-        frameWidth: 93,
-        frameHeight: 28,
-        startFrame: 3,
-        endFrame: 3,
-      },
-    });
-
-    this.load.spritesheet({
-      key: "button_continue_hover",
-      url: "assets/gui/button_hover.png",
-      frameConfig: {
-        frameWidth: 93,
-        frameHeight: 28,
-        startFrame: 3,
-        endFrame: 3,
-      },
-    });
-
-    this.load.image("under_player_hover", "assets/gui/under_player_hover.png");
-
     for (let i = 1; i <= 9; i++) {
       this.load.spritesheet({
         key: `player_texture_${i}`,

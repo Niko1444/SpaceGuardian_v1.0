@@ -22,23 +22,23 @@ class CollideManager {
       this.scene
     );
     // player and enemies
-      this.scene.physics.add.overlap(
-        this.player,
-        this.enemies,
-        this.playerHitEnemy,
-        null,
-        this
-      );
-              // Add collision between player having shield and enemies
-        this.scene.physics.add.overlap(
-        this.shield, // Assuming the shield is a property of the player
-        this.enemies,
-        this.shieldCollideEnemy,
-        null,
-        this.scene
-      );
-    
+    this.scene.physics.add.overlap(
+      this.player,
+      this.enemies,
+      this.playerHitEnemy,
+      null,
+      this
+    );
+    // Add collision between player having shield and enemies
+    this.scene.physics.add.overlap(
+      this.shield, // Assuming the shield is a property of the player
+      this.enemies,
+      this.shieldCollideEnemy,
+      null,
+      this.scene
+    );
 
+    // Add collision between enemy bullets and player
     this.scene.physics.add.overlap(
       this.scene.enemyProjectiles,
       this.player,
@@ -81,12 +81,12 @@ class CollideManager {
 
 
   shieldCollideEnemy(shield, enemy, player) {
-    if(this.shieldActive){
-    enemy.set0health();
-    enemy.explode(true);
-    // enemy.play("explosion_anim");
-    shield.hide();
-    this.shieldActive = false;
+    if (this.shieldActive) {
+      enemy.set0health();
+      enemy.explode(true);
+      // enemy.play("explosion_anim");
+      shield.hide();
+      this.shieldActive = false;
     }
   }
 
@@ -117,7 +117,7 @@ class CollideManager {
     this.shieldActive = true;
   }
 
-  
+
 }
 
 export default CollideManager;

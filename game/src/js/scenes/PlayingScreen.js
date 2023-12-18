@@ -130,27 +130,33 @@ class PlayingScreen extends Phaser.Scene {
     this.bug3_1.play("bug3_anim");
     this.bug3_2 = new Bug3(this, 100, 100, 30);
     this.bug3_2.play("bug3_anim");
+    this.bug5 = new Bug5(this, 300, 80, 30);
+    this.bug5.play("bug5_anim");
+    this.bug1 = new Bug1(this, 200, 180, 30);
+    this.bug1.play("bug1_anim");
 
+    // Create text for level 1
+    this.createText();
+
+    // Spawn the Shield
     this.shield = new Shield(this, this.player);
     this.shield.play("shield_anim");
 
-    this.bug5 = new Bug5(this, 300, 80, 30);
-    this.bug5.play("bug5_anim");
-
-    this.bug1 = new Bug1(this, 200, 180, 30);
-    this.bug1.play("bug1_anim");
     // Create managers
     this.keyboardManager = new KeyboardManager(this);
+
     this.playerManager = new PlayerManager(
       this,
       this.player,
       this.selectedPlayerIndex
     );
 
-    this.createText();
-
     this.enemyManager = new EnemyManager(this);
-    this.UtilitiesManager = new UtilitiesManager(this);
+    this.enemyManager.addEnemy(this.bug3_1);
+    this.enemyManager.addEnemy(this.bug3_2);
+    this.enemyManager.addEnemy(this.bug5);
+    this.enemyManager.addEnemy(this.bug1);
+
     // spawn the enemies
     this.time.delayedCall(
       3000,
@@ -160,10 +166,22 @@ class PlayingScreen extends Phaser.Scene {
       null,
       this
     );
-    this.enemyManager.addEnemy(this.bug3_1);
-    this.enemyManager.addEnemy(this.bug3_2);
-    this.enemyManager.addEnemy(this.bug5);
-    this.enemyManager.addEnemy(this.bug1);
+
+    this.enemyManager.spawnCircleOfBugsLv1(config.width / 2, config.height / 2, 150, 8);
+
+    // FINAL WAVE
+    this.time.delayedCall(
+      20000,
+      () => {
+        // Destroy all spawned enemies
+        this.destroySpawnedEnemies();
+
+        // Start the final wave
+        this.startFinalWave();
+      },
+      null,
+      this
+    );
 
     this.UtilitiesManager = new UtilitiesManager(this);
     // Add a delayed event to spawn utilities after a delay
@@ -184,13 +202,6 @@ class PlayingScreen extends Phaser.Scene {
     });
     this.buttonManager = new buttonManager(this);
 
-    const centerX = config.width / 2;
-    const centerY = config.height / 2; // You can adjust this as needed
-    const radius = 150; // Adjust the radius as needed
-    const numBugs = 8; // Number of bugs in the circle
-
-    this.enemyManager.spawnCircleOfBugs(centerX, centerY, radius, numBugs);
-
     this.projectileManager = new ProjectileManager(this);
     this.projectileManager.createPlayerBullet();
     this.projectileManager.createEnemyBullet();
@@ -203,11 +214,6 @@ class PlayingScreen extends Phaser.Scene {
       Phaser.Input.Keyboard.KeyCodes.SPACE
     );
 
-    // Create a group to manage bullets
-    this.projectiles = this.physics.add.group({
-      classType: Bullet,
-      runChildUpdate: true,
-    });
     
     this.collideManager = new CollideManager(
       this,
@@ -217,21 +223,91 @@ class PlayingScreen extends Phaser.Scene {
       this.UtilitiesManager.shieldPacks,
       this.shield
     );
-    // FINAL WAVE
-    this.time.delayedCall(
-      20000,
-      () => {
-        // Destroy all spawned enemies
-        this.destroySpawnedEnemies();
-
-        // Start the final wave
-        this.startFinalWave();
-      },
-      null,
-      this
-    );
 
     this.input.keyboard.on("keydown-ENTER", this.goToNextLevel, this);
+  }
+
+  update() {
+
+    // this.buttonManager.update();
+    // Pause the game
+    this.keyboardManager.pauseGame();
+
+    // Move the background
+    this.background.tilePositionY -= BACKGROUND_SCROLL_SPEED;
+
+    // Move the player and enemies
+    this.playerManager.movePlayer();
+
+    this.enemyManager.moveEnemies();
+    this.enemyManager.enemies.forEach((enemy) => {
+      enemy.updateHealthBarPosition();
+    });
+
+    if (Phaser.Input.Keyboard.JustDown(this.spacebar)) {
+      this.player.shootBullet(this.selectedPlayerIndex);
+    }
+
+    this.projectiles.children.iterate((bullet) => {
+      bullet.update();
+    });
+
+    if (this.player.health <= 0) {
+      this.gameOver();
+    }
+
+    this.shield.updatePosition(this.player);
+
+    this.bug3_1.rotateToPlayer(this.player);
+    this.bug3_2.rotateToPlayer(this.player);
+    this.bug5.chasePlayer(this.player);
+  }
+
+  gameOver() {
+    this.events.once("shutdown", this.shutdown, this);
+    this.scene.start("gameOver");
+  }
+
+  enemyExploded() {
+    this.enemyManager.enemyExploded();
+  }
+
+  shutdown() {
+    // Remove entire texture along with all animations
+    this.textures.remove(`player_texture_${this.selectedPlayerIndex}`);
+
+    // Check if the animation exists before trying to remove it
+    if (this.anims && this.anims.exists && this.anims.exists("player_anim")) {
+      this.anims.remove("player_anim");
+    }
+    if (
+      this.anims &&
+      this.anims.exists &&
+      this.anims.exists("player_anim_left")
+    ) {
+      this.anims.remove("player_anim_left");
+    }
+    if (
+      this.anims &&
+      this.anims.exists &&
+      this.anims.exists("player_anim_left_diagonal")
+    ) {
+      this.anims.remove("player_anim_left_diagonal");
+    }
+    if (
+      this.anims &&
+      this.anims.exists &&
+      this.anims.exists("player_anim_right")
+    ) {
+      this.anims.remove("player_anim_right");
+    }
+    if (
+      this.anims &&
+      this.anims.exists &&
+      this.anims.exists("player_anim_right_diagonal")
+    ) {
+      this.anims.remove("player_anim_right_diagonal");
+    }
   }
 
   createText() {
@@ -302,92 +378,6 @@ class PlayingScreen extends Phaser.Scene {
     // Score System
     this.upgradeManager = new UpgradeManager(this);
 
-  }
-
-  
-
-  update() {
-
-    // this.buttonManager.update();
-    // Pause the game
-    this.keyboardManager.pauseGame();
-
-    // Move the background
-    this.background.tilePositionY -= BACKGROUND_SCROLL_SPEED;
-
-    // Move the player and enemies
-    this.playerManager.movePlayer();
-    // this.player.updateHealthBarPosition();
-    this.enemyManager.moveEnemies();
-    this.enemyManager.enemies.forEach((enemy) => {
-      enemy.updateHealthBarPosition();
-    });
-
-    if (Phaser.Input.Keyboard.JustDown(this.spacebar)) {
-      this.player.shootBullet(this.selectedPlayerIndex);
-    }
-
-    this.projectiles.children.iterate((bullet) => {
-      bullet.update();
-    });
-
-    if (this.player.health <= 0) {
-      this.gameOver();
-    }
-
-    this.shield.updatePosition(this.player);
-
-    this.bug3_1.rotateToPlayer(this.player);
-    this.bug3_2.rotateToPlayer(this.player);
-    this.bug5.chasePlayer(this.player);
-  }
-
-  gameOver() {
-    this.events.once("shutdown", this.shutdown, this);
-    this.scene.start("gameOver");
-
-  }
-
-  enemyExploded() {
-    this.enemyManager.enemyExploded();
-  }
-
-  shutdown() {
-    // Remove entire texture along with all animations
-    this.textures.remove(`player_texture_${this.selectedPlayerIndex}`);
-
-    // Check if the animation exists before trying to remove it
-    if (this.anims && this.anims.exists && this.anims.exists("player_anim")) {
-      this.anims.remove("player_anim");
-    }
-    if (
-      this.anims &&
-      this.anims.exists &&
-      this.anims.exists("player_anim_left")
-    ) {
-      this.anims.remove("player_anim_left");
-    }
-    if (
-      this.anims &&
-      this.anims.exists &&
-      this.anims.exists("player_anim_left_diagonal")
-    ) {
-      this.anims.remove("player_anim_left_diagonal");
-    }
-    if (
-      this.anims &&
-      this.anims.exists &&
-      this.anims.exists("player_anim_right")
-    ) {
-      this.anims.remove("player_anim_right");
-    }
-    if (
-      this.anims &&
-      this.anims.exists &&
-      this.anims.exists("player_anim_right_diagonal")
-    ) {
-      this.anims.remove("player_anim_right_diagonal");
-    }
   }
 }
 export default PlayingScreen;
