@@ -44,16 +44,6 @@ class TutorialScreen extends Phaser.Scene {
 
   create() {
 
-    this.guiManager = new GuiManager(this);
-    this.guiManager.createBackground("background_texture_01");
-    this.guiManager.createTutorialText("Press Space to shoot", config.width / 2, config.height / 2 - 60);
-    this.guiManager.createTutorialText("Press Directions to move", config.width / 2, config.height / 2 - 30,);
-
-    this.time.delayedCall(8000, () => {
-      this.guiManager.createSimpleText(config.width / 2, config.height / 2,
-        "Ready? Press enter to start", "25px", "#ffffff", 0.5);
-    }, null, this);
-
     // Create player animations
     this.anims.create({
       key: "player_anim",
@@ -120,6 +110,16 @@ class TutorialScreen extends Phaser.Scene {
       repeat: -1,
     });
 
+    this.guiManager = new GuiManager(this);
+    this.guiManager.createBackground("background_texture_01");
+    this.guiManager.createTutorialText("Press Space to shoot", config.width / 2, config.height / 2 - 60);
+    this.guiManager.createTutorialText("Press Directions to move", config.width / 2, config.height / 2 - 30,);
+
+    this.time.delayedCall(8000, () => {
+      this.guiManager.createSimpleText(config.width / 2, config.height / 2,
+        "Ready? Press enter to start", "25px", "#ffffff", 0.5);
+    }, null, this);
+
     // Spawn the Player
     this.player = new Player(
       this,
@@ -136,34 +136,23 @@ class TutorialScreen extends Phaser.Scene {
     this.shield = new Shield(this, this.player);
     this.shield.play("shield_anim");
 
-    this.healthPack1 = new HealthPack(this, 401, 250);
-    this.healthPack1.play("healthPack_anim");
-    this.healthPack2 = new HealthPack(this, 140, 450);
-    this.healthPack2.play("healthPack_anim");
-
-    this.shieldPack2 = new ShieldPack(this, 40, 450);
-    this.shieldPack2.play("shieldPack_anim");
-    this.shieldPack3 = new ShieldPack(this, 50, 50);
-    this.shieldPack3.play("shieldPack_anim");
-
     // Create managers
+    // Keyboard
     this.keyboardManager = new KeyboardManager(this);
+    // Upgrade
     this.upgradeManager = new UpgradeManager(this);
-
+    // Player
     this.playerManager = new PlayerManager(
       this,
       this.player,
       this.selectedPlayerIndex
     );
-
+    // Utilities
+    this.UtilitiesManager = new UtilitiesManager(this);
+    // Enemy
     this.enemyManager = new EnemyManager(this);
     this.enemyManager.addEnemy(this.newBug);
 
-    this.UtilitiesManager = new UtilitiesManager(this);
-    this.UtilitiesManager.addHealthPack(this.healthPack1);
-    this.UtilitiesManager.addHealthPack(this.healthPack2);
-    this.UtilitiesManager.addShieldPack(this.shieldPack2);
-    this.UtilitiesManager.addShieldPack(this.shieldPack3);
 
     // Create keyboard inputs
     this.spacebar = this.input.keyboard.addKey(
@@ -171,15 +160,10 @@ class TutorialScreen extends Phaser.Scene {
     );
 
     // Create a group to manage bullets
-    this.projectiles = this.physics.add.group({
-      classType: Bullet,
-      runChildUpdate: true
-    });
-
-    this.enemyProjectiles = this.physics.add.group({
-      classType: EnemyBullet,
-      runChildUpdate: true
-    });
+    this.projectileManager = new ProjectileManager(this);
+    this.projectileManager.createPlayerBullet();
+    this.projectileManager.createEnemyBullet();
+    this.projectileManager.createChaseBullet();
 
     this.collideManager = new CollideManager(
       this,

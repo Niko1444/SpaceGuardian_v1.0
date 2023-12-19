@@ -10,6 +10,10 @@ import CollideManager from "../manager/collideManager";
 import GuiManager from "../manager/GuiManager";
 import HPBar from "../objects/ui/HPBar";
 import UtilitiesManager from "../manager/UtilitiesManager";
+import ProjectileManager from "../manager/ProjectileManager";
+import Shield from "../objects/utilities/Shield";
+import UpgradeManager from "../manager/UpgradeManager";
+
 
 const BACKGROUND_SCROLL_SPEED = 0.5;
 class LevelThreeScreen extends Phaser.Scene {
@@ -37,6 +41,71 @@ class LevelThreeScreen extends Phaser.Scene {
   }
 
   create() {
+
+    this.anims.create({
+      key: "player_anim",
+      frames: this.anims.generateFrameNumbers(
+        `player_texture_${this.selectedPlayerIndex}`,
+        {
+          start: 0,
+          end: 3,
+        }
+      ),
+      frameRate: 30,
+      repeat: -1,
+    });
+
+    this.anims.create({
+      key: "player_anim_left",
+      frames: this.anims.generateFrameNumbers(
+        `player_texture_${this.selectedPlayerIndex}`,
+        {
+          start: 4,
+          end: 7,
+        }
+      ),
+      frameRate: 30,
+      repeat: -1,
+    });
+
+    this.anims.create({
+      key: "player_anim_left_diagonal",
+      frames: this.anims.generateFrameNumbers(
+        `player_texture_${this.selectedPlayerIndex}`,
+        {
+          start: 8,
+          end: 11,
+        }
+      ),
+      frameRate: 30,
+      repeat: -1,
+    });
+
+    this.anims.create({
+      key: "player_anim_right",
+      frames: this.anims.generateFrameNumbers(
+        `player_texture_${this.selectedPlayerIndex}`,
+        {
+          start: 12,
+          end: 15,
+        }
+      ),
+      frameRate: 30,
+      repeat: -1,
+    });
+
+    this.anims.create({
+      key: "player_anim_right_diagonal",
+      frames: this.anims.generateFrameNumbers(
+        `player_texture_${this.selectedPlayerIndex}`,
+        {
+          start: 16,
+          end: 19,
+        }
+      ),
+      frameRate: 30,
+      repeat: -1,
+    });
     // Creat GUI for PlayingScreen ( Changes in BG except Player and Enemy )
     this.guiManager = new GuiManager(this);
     this.guiManager.createBackground("background_texture_02");
@@ -58,16 +127,24 @@ class LevelThreeScreen extends Phaser.Scene {
     );
     this.player.play("player_anim");
 
+    this.shield = new Shield(this, this.player);
+    this.shield.play("shield_anim");
+
     // Create managers
+    // Keyboard
     this.keyboardManager = new KeyboardManager(this);
+    // Upgrade
+    this.upgradeManager = new UpgradeManager(this);
+    // Player
     this.playerManager = new PlayerManager(
       this,
       this.player,
       this.selectedPlayerIndex
     );
+    // Utilities
+    this.UtilitiesManager = new UtilitiesManager(this);
 
     this.enemyManager = new EnemyManager(this);
-    this.UtilitiesManager = new UtilitiesManager(this);
     // spawn the enemies
     this.time.delayedCall(
       4000,
@@ -78,25 +155,15 @@ class LevelThreeScreen extends Phaser.Scene {
       this
     );
 
-    // Create keyboard inputs
     this.spacebar = this.input.keyboard.addKey(
       Phaser.Input.Keyboard.KeyCodes.SPACE
     );
 
-    // Create a group to manage bullets
-    this.projectiles = this.physics.add.group({
-      classType: Bullet,
-      runChildUpdate: true,
-    });
-
-    // create the collision
-    this.collideManager = new CollideManager(
-      this,
-      this.player,
-      this.enemyManager.enemies,
-      this.UtilitiesManager.healthPacks,
-      this.UtilitiesManager.shieldPacks
-    );
+    // Create keyboard inputs
+    this.projectileManager = new ProjectileManager(this);
+    this.projectileManager.createPlayerBullet();
+    this.projectileManager.createEnemyBullet();
+    this.projectileManager.createChaseBullet();
     // FINAL WAVE
     this.time.delayedCall(
       20000,
@@ -107,6 +174,53 @@ class LevelThreeScreen extends Phaser.Scene {
       null,
       this
     );
+    
+    // Create collision
+    this.collideManager = new CollideManager(
+      this,
+      this.player,
+      this.enemyManager.enemies,
+      this.UtilitiesManager.healthPacks,
+      this.UtilitiesManager.shieldPacks,
+      this.shield
+    );
+  }
+
+
+  update() {
+    // Pause the game
+    this.keyboardManager.pauseGame();
+
+    // Move the background
+    this.background.tilePositionY -= BACKGROUND_SCROLL_SPEED;
+
+    // Move the player and enemies
+    this.playerManager.movePlayer();
+
+    this.enemyManager.moveEnemies();
+    this.enemyManager.enemies.forEach((enemy) => {
+      enemy.updateHealthBarPosition();
+    });
+
+    if (Phaser.Input.Keyboard.JustDown(this.spacebar)) {
+      this.player.shootBullet(this.selectedPlayerIndex);
+    }
+
+    this.projectiles.children.iterate((bullet) => {
+      bullet.update();
+    });
+
+    if (this.player.health <= 0) {
+      this.gameOver();
+    }
+  }
+
+  gameOver() {
+    this.scene.start("gameOver");
+  }
+
+  goToNextLevel() {
+    //condition to move to the next level
   }
 
   startFinalWave() {
@@ -134,43 +248,6 @@ class LevelThreeScreen extends Phaser.Scene {
       null,
       this
     );
-  }
-
-  update() {
-    // Pause the game
-    this.keyboardManager.pauseGame();
-
-    // Move the background
-    this.background.tilePositionY -= BACKGROUND_SCROLL_SPEED;
-
-    // Move the player and enemies
-    this.playerManager.movePlayer();
-    this.player.updateHealthBarPosition();
-
-    this.enemyManager.moveEnemies();
-    this.enemyManager.enemies.forEach((enemy) => {
-      enemy.updateHealthBarPosition();
-    });
-
-    if (Phaser.Input.Keyboard.JustDown(this.spacebar)) {
-      this.player.shootBullet();
-    }
-
-    this.projectiles.children.iterate((bullet) => {
-      bullet.update();
-    });
-
-    if (this.player.health <= 0) {
-      this.gameOver();
-    }
-  }
-
-  gameOver() {
-    this.scene.start("gameOver");
-  }
-
-  goToNextLevel() {
-    //condition to move to the next level
   }
 }
 export default LevelThreeScreen;

@@ -10,6 +10,9 @@ import CollideManager from "../manager/collideManager";
 import GuiManager from "../manager/GuiManager";
 import HPBar from "../objects/ui/HPBar";
 import UtilitiesManager from "../manager/UtilitiesManager";
+import ProjectileManager from "../manager/ProjectileManager";
+import Shield from "../objects/utilities/Shield";
+import UpgradeManager from "../manager/UpgradeManager";
 
 const BACKGROUND_SCROLL_SPEED = 0.5;
 class LevelTwoScreen extends Phaser.Scene {
@@ -37,6 +40,72 @@ class LevelTwoScreen extends Phaser.Scene {
   }
 
   create() {
+
+    this.anims.create({
+      key: "player_anim",
+      frames: this.anims.generateFrameNumbers(
+        `player_texture_${this.selectedPlayerIndex}`,
+        {
+          start: 0,
+          end: 3,
+        }
+      ),
+      frameRate: 30,
+      repeat: -1,
+    });
+
+    this.anims.create({
+      key: "player_anim_left",
+      frames: this.anims.generateFrameNumbers(
+        `player_texture_${this.selectedPlayerIndex}`,
+        {
+          start: 4,
+          end: 7,
+        }
+      ),
+      frameRate: 30,
+      repeat: -1,
+    });
+
+    this.anims.create({
+      key: "player_anim_left_diagonal",
+      frames: this.anims.generateFrameNumbers(
+        `player_texture_${this.selectedPlayerIndex}`,
+        {
+          start: 8,
+          end: 11,
+        }
+      ),
+      frameRate: 30,
+      repeat: -1,
+    });
+
+    this.anims.create({
+      key: "player_anim_right",
+      frames: this.anims.generateFrameNumbers(
+        `player_texture_${this.selectedPlayerIndex}`,
+        {
+          start: 12,
+          end: 15,
+        }
+      ),
+      frameRate: 30,
+      repeat: -1,
+    });
+
+    this.anims.create({
+      key: "player_anim_right_diagonal",
+      frames: this.anims.generateFrameNumbers(
+        `player_texture_${this.selectedPlayerIndex}`,
+        {
+          start: 16,
+          end: 19,
+        }
+      ),
+      frameRate: 30,
+      repeat: -1,
+    });
+
     // Creat GUI for PlayingScreen ( Changes in BG except Player and Enemy )
     this.guiManager = new GuiManager(this);
     this.guiManager.createBackground("background_texture");
@@ -58,16 +127,24 @@ class LevelTwoScreen extends Phaser.Scene {
     );
     this.player.play("player_anim");
 
+    this.shield = new Shield(this, this.player);
+    this.shield.play("shield_anim");
+
     // Create managers
+    // Keyboard
     this.keyboardManager = new KeyboardManager(this);
+    // Upgrade
+    this.upgradeManager = new UpgradeManager(this);
+    // Player
     this.playerManager = new PlayerManager(
       this,
       this.player,
       this.selectedPlayerIndex
     );
+    // Utilities
+    this.UtilitiesManager = new UtilitiesManager(this);
 
     this.enemyManager = new EnemyManager(this);
-    this.UtilitiesManager = new UtilitiesManager(this);
     // spawn the enemies
     this.time.delayedCall(
       4000,
@@ -78,25 +155,6 @@ class LevelTwoScreen extends Phaser.Scene {
       this
     );
 
-    // Create keyboard inputs
-    this.spacebar = this.input.keyboard.addKey(
-      Phaser.Input.Keyboard.KeyCodes.SPACE
-    );
-
-    // Create a group to manage bullets
-    this.projectiles = this.physics.add.group({
-      classType: Bullet,
-      runChildUpdate: true,
-    });
-
-    // create the collision
-    this.collideManager = new CollideManager(
-      this,
-      this.player,
-      this.enemyManager.enemies,
-      this.UtilitiesManager.healthPacks,
-      this.UtilitiesManager.shieldPacks
-    );
     // FINAL WAVE
     this.time.delayedCall(
       20000,
@@ -106,6 +164,25 @@ class LevelTwoScreen extends Phaser.Scene {
       },
       null,
       this
+    );
+
+    // Create keyboard inputs
+    this.spacebar = this.input.keyboard.addKey(
+      Phaser.Input.Keyboard.KeyCodes.SPACE
+    );
+
+    this.projectileManager = new ProjectileManager(this);
+    this.projectileManager.createPlayerBullet();
+    this.projectileManager.createEnemyBullet();
+    this.projectileManager.createChaseBullet();
+
+    this.collideManager = new CollideManager(
+      this,
+      this.player,
+      this.enemyManager.enemies,
+      this.UtilitiesManager.healthPacks,
+      this.UtilitiesManager.shieldPacks,
+      this.shield
     );
 
     this.input.keyboard.on("keydown-ENTER", this.goToNextLevel, this);
@@ -147,7 +224,6 @@ class LevelTwoScreen extends Phaser.Scene {
 
     // Move the player and enemies
     this.playerManager.movePlayer();
-    this.player.updateHealthBarPosition();
 
     this.enemyManager.moveEnemies();
     this.enemyManager.enemies.forEach((enemy) => {
@@ -155,7 +231,7 @@ class LevelTwoScreen extends Phaser.Scene {
     });
 
     if (Phaser.Input.Keyboard.JustDown(this.spacebar)) {
-      this.player.shootBullet();
+      this.player.shootBullet(this.selectedPlayerIndex);
     }
 
     this.projectiles.children.iterate((bullet) => {
