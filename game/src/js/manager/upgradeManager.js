@@ -20,7 +20,7 @@ class UpgradeManager {
     this.playerScore += score;
     this.displayScore();
 
-    if (this.playerScore % 10 == 0) {
+    if (this.playerScore % 50 == 0 && this.scene.player.health != 0) {
       this.rewardEach100Score();
     }
   }

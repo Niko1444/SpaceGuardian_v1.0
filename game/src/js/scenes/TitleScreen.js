@@ -52,11 +52,11 @@ class TitleScreen extends Phaser.Scene {
     // Create "SPACE" text
     const spaceText = this.add.text(
       config.width / 2,
-      config.height / 2 - 100,
+      config.height / 2 - 130,
       "SPACE",
       {
         fontFamily: "Pixelify Sans",
-        fontSize: "64px",
+        fontSize: "100px",
         color: "#F3F8FF", // Set the color for "SPACE"
         align: "center",
       }
@@ -71,7 +71,7 @@ class TitleScreen extends Phaser.Scene {
       {
         fontFamily: "Pixelify Sans",
         color: "#F3F8FF",
-        fontSize: "64px",
+        fontSize: "100px",
         align: "center",
       }
     );
