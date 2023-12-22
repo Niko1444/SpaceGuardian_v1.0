@@ -118,8 +118,8 @@ class UpgradeScreen extends Phaser.Scene {
     // Handle the upgrade choice here
     switch (choice) {
       case "upgrade1":
-        // Implement logic for upgrade 1 (increase health)
-        console.log("Upgrading Health");
+        this.scene.get("playGame").player.maxHealth += 500;
+        this.scene.get("playGame").player.health += 500;
         break;
 
       case "upgrade2":
