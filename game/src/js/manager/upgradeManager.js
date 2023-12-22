@@ -11,6 +11,7 @@ class UpgradeManager {
 
   createScoreText() {
     this.scoreText = this.scene.add.text(10, 10, `Score: ${this.playerScore}`, {
+      fontFamily: "Pixelify Sans",
       fontSize: "32px",
       fill: "#fff",
     });
