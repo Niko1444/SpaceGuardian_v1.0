@@ -16,7 +16,7 @@ import GuiManager from "../manager/GuiManager.js";
 import UtilitiesManager from "../manager/UtilitiesManager";
 import buttonManager from "../manager/buttonManager";
 import ProjectileManager from "../manager/ProjectileManager";
-import UpgradeManager from "../manager/UpgradeManager";
+import UpgradeManager from "../manager/UpgradeManager.js";
 
 const BACKGROUND_SCROLL_SPEED = 0.5;
 class PlayingScreen extends Phaser.Scene {
