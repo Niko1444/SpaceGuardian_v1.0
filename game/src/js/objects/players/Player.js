@@ -11,19 +11,20 @@ class Player extends Entity {
     this.health = health;
     this.maxHealth = health;
     this.damage = 100;
+    this.bulletDamage = 10;
+    this.speed = gameSettings.playerSpeed;
 
     this.shield = null;
     this.setInteractiveEntity();
     this.setPhysics(scene);
     this.body.setSize(48, 48);
+    this.body.velocity.y = this.speed;
 
     this.hpBar = new HPBar2(
       scene,
-      // this.x,
-      // this.y - 30,
       scene.sys.game.config.width - 400,
       scene.sys.game.config.height - 40,
-      200, // Width of the health bar
+      200,
       41,
       this.health,
       this.maxHealth
@@ -50,6 +51,7 @@ class Player extends Entity {
 
   shootBullet(number) {
     const bullet = new Bullet(this.scene, number);
+    bullet.damage = this.bulletDamage;
     bullet.play(`bullet${number}_anim`);
   }
 

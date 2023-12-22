@@ -157,8 +157,7 @@ class TutorialScreen extends Phaser.Scene {
     // Create managers
     // Keyboard
     this.keyboardManager = new KeyboardManager(this);
-    // Upgrade
-    this.upgradeManager = new UpgradeManager(this);
+
     // Player
     this.playerManager = new PlayerManager(
       this,
