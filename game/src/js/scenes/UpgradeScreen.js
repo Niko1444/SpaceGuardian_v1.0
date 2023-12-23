@@ -15,7 +15,7 @@ class UpgradeScreen extends Phaser.Scene {
   }
 
   create() {
-    this.cameras.main.setAlpha(0.8);
+    this.cameras.main.setAlpha(0.9);
 
     const middleX = config.width / 2;
     const middleY = (config.height - 100) / 2;
@@ -26,23 +26,23 @@ class UpgradeScreen extends Phaser.Scene {
     const upgrade1Rect = this.add.rectangle(
       middleX,
       middleY - rowGap,
-      300,
-      100,
+      400,
+      80,
       0x000000
     );
     upgrade1Rect.setInteractive();
 
     const upgrade1Image = this.add.sprite(
-      middleX - 100,
+      middleX - 150,
       middleY - rowGap,
       "upgrade1"
     );
     upgrade1Image.setOrigin(0.5, 0.5);
 
     const upgrade1Text = this.add.text(
-      middleX - 50,
+      middleX - 70,
       middleY - rowGap,
-      "Increase Max Health",
+      "Hard As Rock (+200 HP)",
       {
         fontSize: "16px",
         fontFamily: "Pixelify Sans",
@@ -56,19 +56,19 @@ class UpgradeScreen extends Phaser.Scene {
     const upgrade2Rect = this.add.rectangle(
       middleX,
       middleY,
-      300,
-      100,
+      400,
+      80,
       0x000000
     );
     upgrade2Rect.setInteractive();
 
-    const upgrade2Image = this.add.sprite(middleX - 100, middleY, "upgrade2");
+    const upgrade2Image = this.add.sprite(middleX - 150, middleY, "upgrade2");
     upgrade2Image.setOrigin(0.5, 0.5);
 
     const upgrade2Text = this.add.text(
-      middleX - 50,
+      middleX - 70,
       middleY,
-      "Increase Speed",
+      "Wormhole Engine (+ 100 SPD)",
       {
         fontSize: "16px",
         fontFamily: "Pixelify Sans",
@@ -82,23 +82,23 @@ class UpgradeScreen extends Phaser.Scene {
     const upgrade3Rect = this.add.rectangle(
       middleX,
       middleY + rowGap,
-      300,
-      100,
+      400,
+      80,
       0x000000
     );
     upgrade3Rect.setInteractive();
 
     const upgrade3Image = this.add.sprite(
-      middleX - 100,
+      middleX - 150,
       middleY + rowGap,
       "upgrade3"
     );
     upgrade3Image.setOrigin(0.5, 0.5);
 
     const upgrade3Text = this.add.text(
-      middleX - 50,
+      middleX - 70,
       middleY + rowGap,
-      "Increase Damage",
+      "Sharp Eye Bullseye (+ 10 DMG)",
       {
         fontSize: "16px",
         fontFamily: "Pixelify Sans",
@@ -109,6 +109,27 @@ class UpgradeScreen extends Phaser.Scene {
     upgrade3Text.setOrigin(0, 0.5);
 
     // Event listener for upgrade123
+    upgrade1Rect.on("pointerover", () => {
+      upgrade1Rect.setFillStyle(0x333333); // Change the color or apply a tint
+    });
+    upgrade1Rect.on("pointerout", () => {
+      upgrade1Rect.setFillStyle(0x000000); // Revert to the original color or remove the tint
+    });
+
+    upgrade2Rect.on("pointerover", () => {
+      upgrade2Rect.setFillStyle(0x333333); // Change the color or apply a tint
+    });
+    upgrade2Rect.on("pointerout", () => {
+      upgrade2Rect.setFillStyle(0x000000); // Revert to the original color or remove the tint
+    });
+
+    upgrade3Rect.on("pointerover", () => {
+      upgrade3Rect.setFillStyle(0x333333); // Change the color or apply a tint
+    });
+    upgrade3Rect.on("pointerout", () => {
+      upgrade3Rect.setFillStyle(0x000000); // Revert to the original color or remove the tint
+    });
+
     upgrade1Rect.on("pointerdown", () => this.handleUpgradeChoice("upgrade1"));
     upgrade2Rect.on("pointerdown", () => this.handleUpgradeChoice("upgrade2"));
     upgrade3Rect.on("pointerdown", () => this.handleUpgradeChoice("upgrade3"));
