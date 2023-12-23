@@ -14,8 +14,8 @@ const rem =
   (parseFloat(getComputedStyle(document.documentElement).fontSize) * 62.5) /
   100;
 
-const gameWidth = 40 * rem;
-const gameHeight = 75 * rem;
+const gameWidth = 60 * rem;
+const gameHeight = 95 * rem;
 
 const config = {
   pauseGame: false,
@@ -39,7 +39,7 @@ const config = {
   physics: {
     default: "arcade",
     arcade: {
-      debug: true,
+      debug: false,
     },
   },
 };

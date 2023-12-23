@@ -1,6 +1,6 @@
 import Phaser from "phaser";
 import config from "../config/config";
-
+import gameSettings from "../config/gameSettings";
 class UpgradeScreen extends Phaser.Scene {
   constructor() {
     super("upgradeScreen");
@@ -42,7 +42,7 @@ class UpgradeScreen extends Phaser.Scene {
     const upgrade1Text = this.add.text(
       middleX - 50,
       middleY - rowGap,
-      "Increase Health",
+      "Increase Max Health",
       {
         fontSize: "16px",
         fontFamily: "Pixelify Sans",
@@ -118,18 +118,16 @@ class UpgradeScreen extends Phaser.Scene {
     // Handle the upgrade choice here
     switch (choice) {
       case "upgrade1":
-        // Implement logic for upgrade 1 (increase health)
-        console.log("Upgrading Health");
+        this.scene.get("playGame").player.maxHealth += 200;
+        this.scene.get("playGame").player.health += 200;
         break;
 
       case "upgrade2":
-        // Implement logic for upgrade 2 (increase damage)
-        console.log("Upgrading Speed");
+        this.scene.get("playGame").player.speed += 100;
         break;
 
       case "upgrade3":
-        // Implement logic for upgrade 3 (other upgrade)
-        console.log("Upgrading Damage");
+        this.scene.get("playGame").player.bulletDamage += 10;
         break;
     }
     // Close the upgrade scene and resume the parent scene

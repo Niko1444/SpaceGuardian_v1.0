@@ -294,10 +294,10 @@ class LoadingScreen extends Phaser.Scene {
       key: "explosion_texture",
       url: "assets/spritesheets/vfx/explosion.png",
       frameConfig: {
-        frameWidth: 48,
-        frameHeight: 48,
+        frameWidth: 100,
+        frameHeight: 100,
         startFrame: 0,
-        endFrame: 7,
+        endFrame: 11,
       },
     });
   }
@@ -666,9 +666,9 @@ class LoadingScreen extends Phaser.Scene {
       key: "explosion_anim",
       frames: this.anims.generateFrameNumbers("explosion_texture", {
         start: 0,
-        end: 7,
+        end: 10,
       }),
-      frameRate: 20,
+      frameRate: 30,
       repeat: 0,
       hideOnComplete: true,
     });
