@@ -247,7 +247,7 @@ class PlayingScreen extends Phaser.Scene {
       enemy.updateHealthBarPosition();
     });
 
-    if (Phaser.Input.Keyboard.JustDown(this.spacebar)) {
+    if (this.spacebar.isDown) {
       this.player.shootBullet(this.selectedPlayerIndex);
     }
 
