@@ -110,7 +110,7 @@ class UpgradeScreen extends Phaser.Scene {
       case "upgrade4":
         player.takeDamage(player.health * 0.9);
         player.bulletDamage += 50;
-        player.bulletSize += 0.5;
+        player.bulletSize *= 1.5;
         break;
     }
     // Close the upgrade scene and resume the parent scene
