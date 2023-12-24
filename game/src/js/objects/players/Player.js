@@ -19,6 +19,7 @@ class Player extends Entity {
     this.setPhysics(scene);
     this.body.setSize(48, 48);
     this.body.velocity.y = this.speed;
+    this.bulletSize = 1;
 
     this.hpBar = new HPBar2(
       scene,
