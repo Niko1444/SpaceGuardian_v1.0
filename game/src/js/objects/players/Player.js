@@ -19,7 +19,10 @@ class Player extends Entity {
     this.setPhysics(scene);
     this.body.setSize(48, 48);
     this.body.velocity.y = this.speed;
-    this.bulletSize = 1;
+    this.bulletSize = 1.2;
+
+    this.fireRate = 500;
+    this.lastShootTime = 0;
 
     this.hpBar = new HPBar2(
       scene,
@@ -32,6 +35,8 @@ class Player extends Entity {
     );
     this.scene.add.existing(this.hpBar);
     this.key = key;
+
+    this.setDepth(1);
   }
 
   setVelocityY(velocity) {
@@ -51,9 +56,16 @@ class Player extends Entity {
   }
 
   shootBullet(number) {
-    const bullet = new Bullet(this.scene, number);
-    bullet.damage = this.bulletDamage;
-    bullet.play(`bullet${number}_anim`);
+    const currentTime = this.scene.time.now;
+    const elapsedTime = currentTime - this.lastShootTime;
+
+    if (elapsedTime > this.fireRate) {
+      this.lastShootTime = currentTime;
+
+      const bullet = new Bullet(this.scene, number);
+      bullet.damage = this.bulletDamage;
+      bullet.play(`bullet${number}_anim`);
+    }
   }
 
   setPhysics(scene) {

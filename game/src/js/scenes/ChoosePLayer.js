@@ -101,7 +101,7 @@ class ChoosePLayer extends Phaser.Scene {
     bottomLeftImage.setOrigin(0, 1); // Set the origin to the bottom left
 
     // Optionally, you can set the scale of the image
-    bottomLeftImage.setScale(0.2); // Adjust the scale as needed
+    bottomLeftImage.setScale(0.32); // Adjust the scale as needed
   }
 
   update() {
