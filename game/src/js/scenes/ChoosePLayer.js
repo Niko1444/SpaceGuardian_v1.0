@@ -40,7 +40,7 @@ class ChoosePLayer extends Phaser.Scene {
 
     const chooseText = this.add.text(
       config.width / 2,
-      config.height / 4 - 100,
+      config.height / 4 - 130,
       "Choose your player",
       {
         fontFamily: "Pixelify Sans",
@@ -57,6 +57,8 @@ class ChoosePLayer extends Phaser.Scene {
       (config.height * 2) / 4 + 12,
       "under_player_hover"
     );
+    this.under_player.setOrigin(0.5);
+    this.under_player.setScale(5);
 
     for (let i = 1; i <= 3; i++) {
       for (let j = 1; j <= 3; j++) {
@@ -67,6 +69,7 @@ class ChoosePLayer extends Phaser.Scene {
           0
         );
         playerImage.setOrigin(0.5);
+        playerImage.setScale(2);
         playerImage.setInteractive();
         count = count + 1;
 
