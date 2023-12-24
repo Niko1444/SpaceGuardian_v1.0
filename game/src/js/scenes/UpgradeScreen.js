@@ -12,6 +12,7 @@ class UpgradeScreen extends Phaser.Scene {
     this.load.image("upgrade1", "assets/images/upgrades/upgrade_01.png");
     this.load.image("upgrade2", "assets/images/upgrades/upgrade_02.png");
     this.load.image("upgrade3", "assets/images/upgrades/upgrade_03.png");
+    this.load.image("upgrade4", "assets/images/upgrades/upgrade_04.png");
   }
 
   create() {
@@ -22,133 +23,94 @@ class UpgradeScreen extends Phaser.Scene {
 
     const rowGap = 150;
 
-    // Upgrade 1
-    const upgrade1Rect = this.add.rectangle(
-      middleX,
-      middleY - rowGap,
-      400,
-      80,
-      0x000000
-    );
-    upgrade1Rect.setInteractive();
+    // Create an array of available upgrades
+    const availableUpgrades = ["upgrade1", "upgrade2", "upgrade3", "upgrade4"];
 
-    const upgrade1Image = this.add.sprite(
-      middleX - 150,
-      middleY - rowGap,
-      "upgrade1"
-    );
-    upgrade1Image.setOrigin(0.5, 0.5);
+    // Shuffle the array to randomize the upgrades
+    Phaser.Math.RND.shuffle(availableUpgrades);
 
-    const upgrade1Text = this.add.text(
-      middleX - 70,
-      middleY - rowGap,
-      "Hard As Rock (+200 HP)",
-      {
-        fontSize: "16px",
-        fontFamily: "Pixelify Sans",
-        fill: "#fff",
-        align: "center",
-      }
-    );
-    upgrade1Text.setOrigin(0, 0.5);
+    for (let i = 0; i < 3; i++) {
+      const upgradeRect = this.add.rectangle(
+        middleX,
+        middleY - 150 + i * rowGap,
+        400,
+        80,
+        0x000000
+      );
+      upgradeRect.setInteractive();
 
-    // Upgrade 2
-    const upgrade2Rect = this.add.rectangle(
-      middleX,
-      middleY,
-      400,
-      80,
-      0x000000
-    );
-    upgrade2Rect.setInteractive();
+      const upgradeImage = this.add.sprite(
+        middleX - 150,
+        middleY - 150 + i * rowGap,
+        availableUpgrades[i]
+      );
+      upgradeImage.setOrigin(0.5, 0.5);
 
-    const upgrade2Image = this.add.sprite(middleX - 150, middleY, "upgrade2");
-    upgrade2Image.setOrigin(0.5, 0.5);
+      const upgradeText = this.add.text(
+        middleX - 70,
+        middleY - 150 + i * rowGap,
+        this.getUpgradeText(availableUpgrades[i]),
+        {
+          fontSize: "16px",
+          fontFamily: "Pixelify Sans",
+          fill: "#fff",
+          align: "center",
+        }
+      );
+      upgradeText.setOrigin(0, 0.5);
 
-    const upgrade2Text = this.add.text(
-      middleX - 70,
-      middleY,
-      "Wormhole Engine (+ 100 SPD)",
-      {
-        fontSize: "16px",
-        fontFamily: "Pixelify Sans",
-        fill: "#fff",
-        align: "center",
-      }
-    );
-    upgrade2Text.setOrigin(0, 0.5);
+      // Event listener for upgrades
+      upgradeRect.on("pointerover", () => {
+        upgradeRect.setFillStyle(0x333333);
+      });
+      upgradeRect.on("pointerout", () => {
+        upgradeRect.setFillStyle(0x000000);
+      });
 
-    // Upgrade 3
-    const upgrade3Rect = this.add.rectangle(
-      middleX,
-      middleY + rowGap,
-      400,
-      80,
-      0x000000
-    );
-    upgrade3Rect.setInteractive();
+      upgradeRect.on("pointerdown", () =>
+        this.handleUpgradeChoice(availableUpgrades[i])
+      );
+    }
+  }
 
-    const upgrade3Image = this.add.sprite(
-      middleX - 150,
-      middleY + rowGap,
-      "upgrade3"
-    );
-    upgrade3Image.setOrigin(0.5, 0.5);
-
-    const upgrade3Text = this.add.text(
-      middleX - 70,
-      middleY + rowGap,
-      "Sharp Eye Bullseye (+ 10 DMG)",
-      {
-        fontSize: "16px",
-        fontFamily: "Pixelify Sans",
-        fill: "#fff",
-        align: "center",
-      }
-    );
-    upgrade3Text.setOrigin(0, 0.5);
-
-    // Event listener for upgrade123
-    upgrade1Rect.on("pointerover", () => {
-      upgrade1Rect.setFillStyle(0x333333); // Change the color or apply a tint
-    });
-    upgrade1Rect.on("pointerout", () => {
-      upgrade1Rect.setFillStyle(0x000000); // Revert to the original color or remove the tint
-    });
-
-    upgrade2Rect.on("pointerover", () => {
-      upgrade2Rect.setFillStyle(0x333333); // Change the color or apply a tint
-    });
-    upgrade2Rect.on("pointerout", () => {
-      upgrade2Rect.setFillStyle(0x000000); // Revert to the original color or remove the tint
-    });
-
-    upgrade3Rect.on("pointerover", () => {
-      upgrade3Rect.setFillStyle(0x333333); // Change the color or apply a tint
-    });
-    upgrade3Rect.on("pointerout", () => {
-      upgrade3Rect.setFillStyle(0x000000); // Revert to the original color or remove the tint
-    });
-
-    upgrade1Rect.on("pointerdown", () => this.handleUpgradeChoice("upgrade1"));
-    upgrade2Rect.on("pointerdown", () => this.handleUpgradeChoice("upgrade2"));
-    upgrade3Rect.on("pointerdown", () => this.handleUpgradeChoice("upgrade3"));
+  getUpgradeText(upgradeType) {
+    switch (upgradeType) {
+      case "upgrade1":
+        return "Hard As Rock (+200 HP)";
+      case "upgrade2":
+        return "Wormhole Engine (+100 SPD)";
+      case "upgrade3":
+        return "Sharp Eye Bullseye (+10 DMG)";
+      case "upgrade4":
+        return "Stained Warrior (UNKNOWN)";
+      default:
+        return "";
+    }
   }
 
   handleUpgradeChoice(choice) {
     // Handle the upgrade choice here
+    const playGameScene = this.scene.get("playGame");
+    const player = playGameScene.player;
+
     switch (choice) {
       case "upgrade1":
-        this.scene.get("playGame").player.maxHealth += 200;
-        this.scene.get("playGame").player.health += 200;
+        player.maxHealth += 200;
+        player.health += 200;
         break;
 
       case "upgrade2":
-        this.scene.get("playGame").player.speed += 100;
+        player.speed += 100;
         break;
 
       case "upgrade3":
-        this.scene.get("playGame").player.bulletDamage += 10;
+        player.bulletDamage += 10;
+        break;
+
+      case "upgrade4":
+        player.takeDamage(player.health * 0.9);
+        player.bulletDamage += 50;
+        player.bulletSize += 0.5;
         break;
     }
     // Close the upgrade scene and resume the parent scene
