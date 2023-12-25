@@ -21,8 +21,9 @@ class Player extends Entity {
     this.body.velocity.y = this.speed;
     this.bulletSize = 1.2;
 
-    this.fireRate = 500;
+    this.fireRate = 400;
     this.lastShootTime = 0;
+    this.lifestealRate = 0;
 
     this.hpBar = new HPBar2(
       scene,

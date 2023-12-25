@@ -13,6 +13,7 @@ class UpgradeScreen extends Phaser.Scene {
     this.load.image("upgrade2", "assets/images/upgrades/upgrade_02.png");
     this.load.image("upgrade3", "assets/images/upgrades/upgrade_03.png");
     this.load.image("upgrade4", "assets/images/upgrades/upgrade_04.png");
+    this.load.image("upgrade5", "assets/images/upgrades/upgrade_05.png");
   }
 
   create() {
@@ -24,7 +25,13 @@ class UpgradeScreen extends Phaser.Scene {
     const rowGap = 150;
 
     // Create an array of available upgrades
-    const availableUpgrades = ["upgrade1", "upgrade2", "upgrade3", "upgrade4"];
+    const availableUpgrades = [
+      "upgrade1",
+      "upgrade2",
+      "upgrade3",
+      "upgrade4",
+      "upgrade5",
+    ];
 
     // Shuffle the array to randomize the upgrades
     Phaser.Math.RND.shuffle(availableUpgrades);
@@ -83,6 +90,8 @@ class UpgradeScreen extends Phaser.Scene {
         return "Sharp Eye Bullseye (+10 DMG)";
       case "upgrade4":
         return "Stained Warrior (UNKNOWN)";
+      case "upgrade5":
+        return "Energy Fluid (Lifesteal)";
       default:
         return "";
     }
@@ -112,7 +121,12 @@ class UpgradeScreen extends Phaser.Scene {
         player.bulletDamage += 50;
         player.bulletSize *= 1.5;
         break;
+
+      case "upgrade5":
+        player.lifestealRate += 20;
+        break;
     }
+
     // Close the upgrade scene and resume the parent scene
     this.scene.stop();
     this.scene.resume("playGame");

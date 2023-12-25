@@ -43,6 +43,7 @@ class Bug5 extends Entity {
     this.health = 0;
     this.updateHealthBarValue();
   }
+
   chasePlayer(player) {
     if (this.y >= config.height / 2 && this.health > 0) {
       let dx = player.x - this.x;
@@ -68,6 +69,7 @@ class Bug5 extends Entity {
 
   explode(canDestroy) {
     super.explode(canDestroy);
+    this.scene.player.getHeal(this.scene.player.lifestealRate);
     this.scene.upgradeManager.updateScore(10);
   }
 }

@@ -193,7 +193,7 @@ class PlayingScreen extends Phaser.Scene {
     this.time.addEvent({
       delay: 5000,
       callback: () => {
-        this.UtilitiesManager.addUtilitiesForPlayingScreen(3, 4);
+        this.UtilitiesManager.addUtilitiesForPlayingScreen(2, 2);
         this.collideManager1 = new CollideManager(
           this,
           this.player,
