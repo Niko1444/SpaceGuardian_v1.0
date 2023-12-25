@@ -22,7 +22,6 @@ const BACKGROUND_SCROLL_SPEED = 0.5;
 class PlayingScreen extends Phaser.Scene {
   constructor() {
     super("playGame");
-    this.spawnedEnemies = [];
     this.buttonManager = null;
   }
 
@@ -125,14 +124,25 @@ class PlayingScreen extends Phaser.Scene {
     this.player.play("player_anim");
 
     // Spawn the Enemies
-    this.bug3_1 = new Bug3(this, 150, 200, 30);
-    this.bug3_1.play("bug3_anim");
-    this.bug3_2 = new Bug3(this, 100, 100, 30);
-    this.bug3_2.play("bug3_anim");
-    this.bug5 = new Bug5(this, 300, 80, 30);
-    this.bug5.play("bug5_anim");
-    this.bug1 = new Bug1(this, 200, 180, 30);
-    this.bug1.play("bug1_anim");
+    this.time.delayedCall(
+      21000,
+      () => {
+    // shoot straight bullet
+    this.bug3_1 = new Bug3(this, config.width-20, -20, 30);
+    this.bug3_2 = new Bug3(this,20, -20, 30);
+
+    // shoot following bullet
+    this.bug3_3 = new Bug3(this, 70, -20, 30);
+    this.bug3_4 = new Bug3(this, config.width-70, -20, 30);
+
+    // chasing enemies
+    this.bug5_1 = new Bug5(this, config.width/2, -20, 30);
+    this.bug5_2 = new Bug5(this, config.width/2-50, -20, 30);
+    this.bug5_3 = new Bug5(this, config.width/2+50, -20, 30);
+  },
+  null,
+  this
+);
 
     // Create text for level 1
     this.createText();
@@ -152,41 +162,77 @@ class PlayingScreen extends Phaser.Scene {
     );
 
     this.enemyManager = new EnemyManager(this);
-    this.enemyManager.addEnemy(this.bug3_1);
-    this.enemyManager.addEnemy(this.bug3_2);
-    this.enemyManager.addEnemy(this.bug5);
-    this.enemyManager.addEnemy(this.bug1);
-
-    // spawn the enemies
     this.time.delayedCall(
       3000,
       () => {
-        this.spawnedEnemies = this.enemyManager.scheduleRandomEnemySpawn(8);
-      },
-      null,
-      this
-    );
+    const enemyRow = this.enemyManager.spawnEnemyRow(30, 8, 40, 30);
+      this.time.delayedCall(
+            6000,
+            () => {
+              const enemyRow1 = this.enemyManager.spawnEnemyRow(30, 8, 40, 30);
+                },
+            null,
+            this
+            );
+      this.time.delayedCall(
+            12000,
+            () => {
+              const enemyRow2 = this.enemyManager.spawnEnemyRow(30, 8, 40, 30);
+                },
+            null,
+            this
+            );
+          },
+        null,
+        this
+      );
 
-    this.enemyManager.spawnCircleOfBugsLv1(
-      config.width / 2,
-      config.height / 2,
-      150,
-      8
-    );
-
-    // FINAL WAVE
     this.time.delayedCall(
-      20000,
+      21000,
       () => {
-        // Destroy all spawned enemies
-        this.destroySpawnedEnemies();
+    this.enemyManager.addEnemy(this.bug3_1);
+    this.enemyManager.addEnemy(this.bug3_2);
+    this.enemyManager.addEnemy(this.bug3_3);
+    this.enemyManager.addEnemy(this.bug3_4);
+    this.enemyManager.addEnemy(this.bug5_1);
+    this.enemyManager.addEnemy(this.bug5_2);
+    this.enemyManager.addEnemy(this.bug5_3);
+  },
+  null,
+  this
+);
 
+const isDestroyed = this.enemyManager.areEnemiesDestroyed([
+  this.bug3_1,
+  this.bug3_2,
+  this.bug3_3,
+  this.bug3_4,
+  this.bug5_1,
+  this.bug5_2,
+  this.bug5_3,
+]);
+    // FINAL WAVE
+    let timer;
+    this.time.delayedCall(
+      40000,
+      () => {
+    timer = this.time.addEvent({
+      delay: 1000,
+      callback: () => {
+    if (isDestroyed) {
+      timer.remove();
         // Start the final wave
         this.startFinalWave();
-      },
-      null,
-      this
-    );
+    }
+  },
+  callbackScope: this,
+  loop: true, // Set to true for a repeating timer
+});
+},
+null,
+this
+);
+  
 
     this.UtilitiesManager = new UtilitiesManager(this);
     // Add a delayed event to spawn utilities after a delay
@@ -211,8 +257,14 @@ class PlayingScreen extends Phaser.Scene {
     this.projectileManager.createPlayerBullet();
     this.projectileManager.createEnemyBullet();
     this.projectileManager.createChaseBullet();
+    this.time.addEvent({
+      delay: 21000,
+      callback: () => {
     this.projectileManager.callEnemyBullet();
     this.projectileManager.callChaseBullet();
+  },
+  callbackScope: this,
+});
 
     // Create keyboard inputs
     this.spacebar = this.input.keyboard.addKey(
@@ -261,10 +313,27 @@ class PlayingScreen extends Phaser.Scene {
 
     this.shield.updatePosition(this.player);
 
+    this.time.addEvent({
+    delay: 22000,
+      callback: () => {
     this.bug3_1.rotateToPlayer(this.player);
     this.bug3_2.rotateToPlayer(this.player);
-    this.bug5.chasePlayer(this.player);
-  }
+    this.bug3_3.rotateToPlayer(this.player);
+    this.bug3_4.rotateToPlayer(this.player);
+  },
+  callbackScope: this,
+  });
+
+    this.time.addEvent({
+    delay: 21000,
+      callback: () => {
+    this.bug5_1.chasePlayer(this.player);
+    this.bug5_2.chasePlayer(this.player);
+    this.bug5_3.chasePlayer(this.player);
+  },
+  callbackScope: this,
+  });
+}
 
   gameOver() {
     this.events.once("shutdown", this.shutdown, this);
@@ -332,22 +401,6 @@ class PlayingScreen extends Phaser.Scene {
     );
   }
 
-  destroySpawnedEnemies() {
-    // Check if spawnedEnemies array is not null or undefined
-    if (this.spawnedEnemies) {
-      // Loop through all spawned enemies and destroy them
-      this.spawnedEnemies.forEach((enemy) => {
-        // Check if the enemy object exists and has the destroy method
-        if (enemy && enemy.destroy && typeof enemy.destroy === "function") {
-          enemy.destroy();
-        }
-      });
-
-      // Clear the spawned enemies array
-      this.spawnedEnemies = [];
-    }
-  }
-
   goToNextLevel() {
     this.time.delayedCall(1000, () => {
       this.scene.start("playLevelTwo", { number: this.selectedPlayerIndex });
@@ -372,8 +425,8 @@ class PlayingScreen extends Phaser.Scene {
         this.finalWaveBugs = this.enemyManager.spawnCircleOfBugsLv1(
           config.width / 2,
           config.height / 2,
-          120,
-          12
+          150,
+          14
         );
       },
       null,

@@ -4,6 +4,7 @@ import Bug1 from "../objects/enemies/Bug1";
 import Bug3 from "../objects/enemies/Bug3";
 import Bug5 from "../objects/enemies/Bug5";
 import LoadingScreen from "../scenes/LoadingScreen";
+import ProjectileManager from "./ProjectileManager";
 
 class EnemyManager {
   constructor(scene) {
@@ -45,7 +46,7 @@ class EnemyManager {
       }
     });
   }
-
+  // this can make the enemies respawn
   addEnemy(enemy) {
     // When adding a new enemy, initialize its random delay and last respawn time
     this.enemies.push(enemy);
@@ -53,39 +54,16 @@ class EnemyManager {
     this.lastRespawnTimes.push(0);
   }
 
-  addEnemyForOnce(enemy) {
-    this.enemies.push(enemy);
-    this.respawnDelays.push(Phaser.Math.Between(5000, 7000));
-    this.lastRespawnTimes.push(0);
-
-    this.scene.tweens.add({
-      targets: enemy,
-      y: config.height,
-      duration: 5000,
-      ease: "Linear",
-    });
-  }
-
   getRandomBugX() {
     const gameWidth = config.width;
     return Math.random() * gameWidth;
   }
 
-  spawnRandomEnemy(number) {
+  spawnRandomEnemy() {
     const randomX = this.getRandomBugX();
-    if (number == 1) {
       var newEnemy = new Bug1(this.scene, randomX, -20, 30);
       newEnemy.play("bug1_anim");
       this.addEnemy(newEnemy);
-    } else if (number == 3) {
-      var newEnemy = new Bug3(this.scene, randomX, -20, 30);
-      newEnemy.play("bug3_anim");
-      this.addEnemy(newEnemy);
-    } else {
-      var newEnemy = new Bug5(this.scene, randomX, -20, 30);
-      newEnemy.play("bug5_anim");
-      this.addEnemy(newEnemy);
-    }
 
     this.enemyCounter++;
 
@@ -96,39 +74,59 @@ class EnemyManager {
     });
   }
 
-  scheduleRandomEnemySpawn(numEnemies, duration = 20000) {
-    const endTime = this.scene.time.now + duration;
-    const spawnedEnemies = [];
+  spawnSingleEnemy(type, x, y, health) {
+    let newEnemy;
 
-    const spawnEvent = () => {
-      // Check if the current time is still within the allowed duration
-      if (this.scene.time.now < endTime) {
-        for (let i = 0; i < numEnemies; i++) {
-          const newEnemy = this.spawnRandomEnemy(Phaser.Math.Between(1, 3));
-          spawnedEnemies.push(newEnemy);
-        }
+    switch (type) {
+      case 1:
+        newEnemy = new Bug1(this.scene, x, y, health);
+        newEnemy.play("bug1_anim");
+        break;
+      case 3:
+        newEnemy = new Bug3(this.scene, x, y, health);
+        newEnemy.play("bug3_anim");
+        break;
+      case 5:
+        newEnemy = new Bug5(this.scene, x, y, health);
+        newEnemy.play("bug5_anim");
+        break;
+      // Add more cases for other enemy types if needed
 
-        // Schedule the next random enemy spawn
-        this.scene.time.addEvent({
-          delay: Phaser.Math.Between(3000, 5000),
-          callback: null,
-          callbackScope: this,
-        });
-      }
-    };
+      default:
+        // Default case, spawn Bug1 if the type is not recognized
+        newEnemy = new Bug1(this.scene, x, y, health);
+        newEnemy.play("bug1_anim");
+        break;
+    }
 
-    // Start the initial spawn event
-    spawnEvent();
+    // Add the new enemy to the array
+    this.enemies.push(newEnemy);
+    
+    return newEnemy;
+  }
 
-    // Return the array of spawned enemies
-    return spawnedEnemies;
+  spawnEnemyRow(rowX, numRows, gapSize, health) {
+    const enemies = [];
+
+    for (let i = 0; i < numRows; i++) {
+      const x = rowX + i * (50 + gapSize);
+      const y = -20;
+
+      const newEnemy = this.spawnSingleEnemy(1,x, y, health);
+      enemies.push(newEnemy);
+    }
+
+    return enemies;
+  }
+
+  areEnemiesDestroyed(enemies) {
+    return enemies.every((enemy) => !enemy || (enemy && enemy.isDestroyed));
   }
 
   // FOR TUTORIAL SCREEN
   addEnemyTutorial() {
-    var newBug = new Bug1(this.scene, config.width / 2, -20, 30);
+    var newBug = new Bug1(this.scene, config.width/2, -20, 30);
     newBug.play("bug1_anim");
-    this.addEnemy(newBug);
     this.addEnemyForOnce(newBug);
   }
 
@@ -145,7 +143,7 @@ class EnemyManager {
       // Create a new bug
       const newBug = new Bug1(this.scene, bugX, -20, 30);
       newBug.play("bug1_anim");
-      this.addEnemyForOnce(newBug);
+      this.addEnemy(newBug);
       finalWaveBugs.push(newBug);
 
       // Add a tween to move the bug downward

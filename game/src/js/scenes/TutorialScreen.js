@@ -12,7 +12,6 @@ import HPBar from "../objects/ui/HPBar";
 import GuiManager from "../manager/GuiManager";
 import UtilitiesManager from "../manager/UtilitiesManager";
 import ProjectileManager from "../manager/ProjectileManager";
-import Bug1 from "../objects/enemies/Bug1";
 import HealthPack from "../objects/utilities/healthPack";
 import ShieldPack from "../objects/utilities/ShieldPack";
 import EnemyBullet from "../objects/projectiles/EnemyBullet";
@@ -148,9 +147,6 @@ class TutorialScreen extends Phaser.Scene {
     );
     this.player.play("player_anim");
 
-    // Spawn the enemies
-    this.newBug = new Bug1(this, config.width / 2, -20, 30);
-
     this.shield = new Shield(this, this.player);
     this.shield.play("shield_anim");
 
@@ -168,8 +164,15 @@ class TutorialScreen extends Phaser.Scene {
     this.UtilitiesManager = new UtilitiesManager(this);
     // Enemy
     this.enemyManager = new EnemyManager(this);
-    this.enemyManager.addEnemy(this.newBug);
-
+    this.time.delayedCall(
+      3000,
+      () => {
+        this.enemyManager.addEnemyTutorial();
+      },
+      null,
+      this
+    );
+   
     // Create keyboard inputs
     this.spacebar = this.input.keyboard.addKey(
       Phaser.Input.Keyboard.KeyCodes.SPACE
@@ -192,8 +195,6 @@ class TutorialScreen extends Phaser.Scene {
 
     // Score System
     this.upgradeManager = new UpgradeManager(this);
-
-    // this.events.once("shutdown", this.shutdown, this);
 
     this.input.keyboard.on("keydown-ENTER", this.startGame, this);
   }
@@ -236,6 +237,7 @@ class TutorialScreen extends Phaser.Scene {
 
   gameOver() {
     this.scene.start("gameOver");
+    this.events.once("shutdown", this.shutdown, this);
   }
 }
 export default TutorialScreen;
