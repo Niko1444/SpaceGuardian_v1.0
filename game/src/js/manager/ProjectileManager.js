@@ -1,6 +1,7 @@
 import Bullet from "../objects/projectiles/Bullet.js";
 import EnemyBullet from "../objects/projectiles/EnemyBullet.js";
 import ChasingBullet from "../objects/projectiles/ChasingBullet.js";
+import config from "../config/config.js";
 
 class ProjectileManager {
   constructor(scene) {
@@ -48,7 +49,34 @@ class ProjectileManager {
     });
   }
 
-  createBossBullet() {}
+  callEnemyBulletBoss(){
+    this.scene.time.addEvent({
+      delay: 1000, // 1000 milliseconds = 1 second
+      callback: () => {
+        this.scene.bug3_1.shootBullet(this.scene, this.scene.bug3_1);
+
+        if(this.scene.firstMini.y > config.height /2){
+          this.scene.firstMini.shootBullet(this.scene, this.scene.firstMini);
+        }
+
+        if(this.scene.secondMini.y > config.height /2){
+          this.scene.secondMini.shootBullet(this.scene, this.scene.secondMini);
+        }
+      },
+      loop: true, // This makes the event repeat indefinitely
+    });
+  }
+
+  callChaseBulletBoss(){
+    this.scene.time.addEvent({
+      delay: 3000, // 1000 milliseconds = 1 second
+      callback: () => {
+        this.scene.bug3_2.shootChaseBullet(this.scene, this.scene.bug3_2);
+      },
+      loop: true, // This makes the event repeat indefinitely
+    });
+  }
+
 }
 
 export default ProjectileManager;

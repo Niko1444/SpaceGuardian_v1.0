@@ -230,7 +230,8 @@ class TutorialScreen extends Phaser.Scene {
 
   startGame() {
     this.time.delayedCall(1000, () => {
-      this.scene.start("playGame", { number: this.selectedPlayerIndex });
+      // this.scene.start("playGame", { number: this.selectedPlayerIndex });
+      this.scene.start("bossGame", { number: this.selectedPlayerIndex });
     });
   }
 

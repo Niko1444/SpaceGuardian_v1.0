@@ -14,7 +14,8 @@ class Bullet extends Entity {
     scene.physics.world.enableBody(this);
     scene.projectiles.add(this);
     this.body.velocity.y = -gameSettings.bulletSpeed;
-    this.damage = 10;
+    this.damage = 100;
+    // this.damage = 10;
     this.setDepth(1);
   }
 

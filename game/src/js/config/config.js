@@ -9,6 +9,7 @@ import TutorialScreen from "../scenes/TutorialScreen.js";
 import LevelTwoScreen from "../scenes/LevelTwoScreen.js";
 import LevelThreeScreen from "../scenes/LevelThreeScreen.js";
 import LeaderBoard from "../scenes/leaderBoard.js";
+import BossScreen from "../scenes/BossScreen.js";
 
 const rem =
   (parseFloat(getComputedStyle(document.documentElement).fontSize) * 62.5) /
@@ -34,6 +35,7 @@ const config = {
     LevelTwoScreen,
     LevelThreeScreen,
     LeaderBoard,
+    BossScreen
   ],
   pixelArt: true,
   physics: {
