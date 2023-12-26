@@ -35,6 +35,7 @@ class CollideManager{
       null,
       this
     );
+
     // Add collision between player having shield and enemies
     this.scene.physics.add.overlap(
       this.shield, // Assuming the shield is a property of the player
@@ -95,8 +96,7 @@ class CollideManager{
 
   shieldCollideEnemy(shield, enemy, player) {
     if (this.shieldActive) {
-      enemy.set0health();
-      enemy.explode(true);
+      enemy.takeDamage(100);
       // enemy.play("explosion_anim");
       shield.hide();
       this.shieldActive = false;
@@ -112,7 +112,9 @@ class CollideManager{
 
   bulletHitEnemy(enemy, bullet) {
     bullet.destroy();
-    enemy.takeDamage(bullet.damage);
+    // enemy.takeDamage(bullet.damage);
+    // temporary
+    enemy.takeDamage(100);
   }
 
   bulletHitPlayer(player, enemyBullet) {
@@ -122,7 +124,7 @@ class CollideManager{
 
   playerHitEnemy(player, enemy) {
     player.takeDamage(enemy.damage);
-    enemy.takeDamage(player.damage);
+    enemy.takeDamage(0);
   }
 
   playerCollideHealthPack(player, healthPack) {

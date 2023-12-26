@@ -29,6 +29,29 @@ class LoadingScreen extends Phaser.Scene {
       "assets/images/backgrounds/blue/nebula_2.png"
     );
 
+    // Load boss spritesheets
+    this.load.spritesheet({
+      key: "boss_texture",
+      url: "assets/spritesheets/enemies/boss-01.png",
+      frameConfig: {
+        frameWidth: 240,
+        frameHeight: 240,
+        startFrame: 0,
+        endFrame: 7,
+      },
+    });
+
+    this.load.spritesheet({
+      key: "mini_texture",
+      url: "assets/spritesheets/enemies/support-bot.png",
+      frameConfig: {
+        frameWidth: 96,
+        frameHeight: 96,
+        startFrame: 0,
+        endFrame: 0,
+      },
+    });
+
     // Load Enemy Spritesheets
     this.load.spritesheet({
       key: "bug1_texture",
@@ -485,21 +508,6 @@ class LoadingScreen extends Phaser.Scene {
       });
     }
 
-    if (this.selectedPlayerIndex == 7) {
-      this.anims.create({
-        key: `bullet${this.selectedPlayerIndex}_anim`,
-        frames: this.anims.generateFrameNumbers(
-          `bullet${this.selectedPlayerIndex}_texture`,
-          {
-            start: 0,
-            end: 3,
-          }
-        ),
-        frameRate: 30,
-        repeat: -1,
-      });
-    }
-
     if (this.selectedPlayerIndex == 8) {
       this.anims.create({
         key: `bullet${this.selectedPlayerIndex}_anim`,
@@ -596,52 +604,27 @@ class LoadingScreen extends Phaser.Scene {
       repeat: -1,
     });
 
-    // Create first bullet animations
-    if (this.selectedPlayerIndex == 1) {
-      this.anims.create({
-        key: `bullet${this.selectedPlayerIndex}_anim`,
-        frames: this.anims.generateFrameNumbers(
-          `bullet${this.selectedPlayerIndex}_texture`,
-          {
-            start: 0,
-            end: 2,
-          }
-        ),
-        frameRate: 12,
-        repeat: -1,
-      });
-    }
+    // Create boss animations
 
-    // Create bullet animations 2 to 6
-    if (this.selectedPlayerIndex >= 2 && this.selectedPlayerIndex <= 6) {
-      this.anims.create({
-        key: `bullet${this.selectedPlayerIndex}_anim`,
-        frames: this.anims.generateFrameNumbers(
-          `bullet${this.selectedPlayerIndex}_texture`,
-          {
-            start: 0,
-            end: 1,
-          }
-        ),
-        frameRate: 12,
-        repeat: -1,
-      });
-    }
-    // Create bullet animations 7 to 9
-    if (this.selectedPlayerIndex >= 7 && this.selectedPlayerIndex <= 9) {
-      this.anims.create({
-        key: `bullet${this.selectedPlayerIndex}_anim`,
-        frames: this.anims.generateFrameNumbers(
-          `bullet${this.selectedPlayerIndex}_texture`,
-          {
-            start: 0,
-            end: 2,
-          }
-        ),
-        frameRate: 12,
-        repeat: -1,
-      });
-    }
+    this.anims.create({
+      key: "boss_move_anim",
+      frames: this.anims.generateFrameNumbers("boss_texture", {
+        start: 0,
+        end: 3,
+      }),
+      frameRate: 20,
+      repeat: -1,
+    });
+
+    this.anims.create({
+      key: "boss_shoot_anim",
+      frames: this.anims.generateFrameNumbers("boss_texture", {
+        start: 0,
+        end: 7,
+      }),
+      frameRate: 20,
+      repeat: -1,
+    });
 
     // Create enemy animations
     this.anims.create({

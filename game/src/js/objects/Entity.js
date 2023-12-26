@@ -27,9 +27,16 @@ class Entity extends Phaser.GameObjects.Sprite {
   }
 
   updateHealthBarPosition() {
-    this.hpBar.x = this.x - this.hpBarWidth / 2;
-    this.hpBar.y = this.y + 30;
+    if(this.hpBarWidth < 30){
+      this.hpBar.x = this.x - this.hpBarWidth / 2;
+      this.hpBar.y = this.y + 30;
+    }
+    else{
+      this.hpBar.x = this.x - this.hpBarWidth / 2;
+      this.hpBar.y = this.y + 120;
+    }
   }
+
 
   explode(canDestroy) {
     if (!this.getData("isDead")) {

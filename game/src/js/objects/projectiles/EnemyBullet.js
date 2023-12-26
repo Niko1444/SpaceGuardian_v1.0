@@ -4,11 +4,21 @@ import config from "../../config/config.js";
 import Bug3 from "../enemies/Bug3.js";
 
 class EnemyBullet extends Entity {
-  constructor(scene, enemy) {
+  constructor(scene, enemy, x = null, y = null, rotation = null, angle = null) {
+    let posX, posY;
+
+    if (x === null && y === null) {
+      posX = enemy.x;
+      posY = enemy.y + 10;
+    } else {
+      posX = enemy.x + x;
+      posY = enemy.y + y;
+    }
+
     super(
       scene,
-      enemy.x,
-      enemy.y + 10,
+      posX,
+      posY,
       "bullet_texture",
       "bullet",
       1
@@ -16,9 +26,22 @@ class EnemyBullet extends Entity {
     scene.add.existing(this);
     scene.physics.world.enableBody(this);
     scene.enemyProjectiles.add(this);
-    this.initializeVelocity();
-    this.damage = 50;
+    this.damage = 100;
     this.setDepth(1);
+
+    if (rotation !== null && angle !== null) {
+      this.initialBulletForBoss(rotation,angle);
+    } else {
+      this.initializeVelocity();
+    }
+  }
+
+  initialBulletForBoss(rotation, angle) {
+    // Convert angle from radians to degrees
+    this.angle = angle * (180 / Math.PI) + 90;
+    
+    let direction = rotation;
+    this.body.velocity.set(direction.x * gameSettings.bulletSpeed/1.5, direction.y * gameSettings.bulletSpeed/1.5);
   }
 
   initializeVelocity() {
@@ -29,7 +52,7 @@ class EnemyBullet extends Entity {
     direction.normalize();
 
     // Set the velocity of the bullet
-    this.body.velocity.set(direction.x * gameSettings.bulletSpeed, direction.y * gameSettings.bulletSpeed);
+    this.body.velocity.set(direction.x * gameSettings.bulletSpeed/2, direction.y * gameSettings.bulletSpeed/2);
 
     // Calculate the angle in radians from the direction vector
     let angle = Math.atan2(direction.y, direction.x);
@@ -38,7 +61,7 @@ class EnemyBullet extends Entity {
     let pi = Math.PI;
 
     this.angle = Phaser.Math.RadToDeg(angle) + 90;
-    
+
   }
 
   update() {
@@ -46,8 +69,8 @@ class EnemyBullet extends Entity {
     if (this.y < 20 || !this.active) {
       this.destroy();
     }
-    
-    if(this.x <= 0 || this.x >= config.width) {
+
+    if (this.x <= 0 || this.x >= config.width) {
       this.destroy();
     }
   }

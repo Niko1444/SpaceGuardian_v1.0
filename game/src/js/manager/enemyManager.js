@@ -35,7 +35,7 @@ class EnemyManager {
           this.respawnDelays[index]
         ) {
           enemy.y = 0;
-          enemy.x = Phaser.Math.Between(0, config.width - 48);
+          enemy.x = Phaser.Math.Between(120, config.width - 120);
 
           // Set a new random delay for the next respawn for this specific enemy
           this.respawnDelays[index] = Phaser.Math.Between(5000, 7000);
