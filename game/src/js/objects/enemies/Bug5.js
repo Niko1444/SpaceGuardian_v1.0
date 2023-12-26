@@ -10,7 +10,7 @@ class Bug5 extends Entity {
     this.body.velocity.y = gameSettings.enemySpeed;
     this.health = health;
     this.maxHealth = health;
-    this.damage = 200;
+    this.damage = 100;
     this.hpBarWidth = 20;
     this.hpBarHeight = 5;
     this.setInteractiveEntity();
@@ -68,6 +68,7 @@ class Bug5 extends Entity {
 
   explode(canDestroy) {
     super.explode(canDestroy);
+    this.scene.player.getHeal(this.scene.player.lifestealRate);
     this.scene.upgradeManager.updateScore(10);
   }
 }

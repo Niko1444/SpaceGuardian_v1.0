@@ -114,7 +114,7 @@ class EnemyManager {
       const bugY = centerY + radius * Math.sin(angle);
 
       // Create a new bug
-      const newBug = new Bug1(this.scene, bugX, -20, 30);
+      const newBug = new Bug1(this.scene, bugX, -20, 300);
       newBug.play("bug1_anim");
       this.addEnemyForOnce(newBug);
 

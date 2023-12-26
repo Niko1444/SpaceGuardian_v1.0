@@ -13,6 +13,10 @@ class UpgradeScreen extends Phaser.Scene {
     this.load.image("upgrade2", "assets/images/upgrades/upgrade_02.png");
     this.load.image("upgrade3", "assets/images/upgrades/upgrade_03.png");
     this.load.image("upgrade4", "assets/images/upgrades/upgrade_04.png");
+    this.load.image("upgrade5", "assets/images/upgrades/upgrade_05.png");
+    this.load.image("upgrade6", "assets/images/upgrades/upgrade_06.png");
+    this.load.image("upgrade7", "assets/images/upgrades/upgrade_07.png");
+    this.load.image("upgrade8", "assets/images/upgrades/upgrade_08.png");
   }
 
   create() {
@@ -24,7 +28,16 @@ class UpgradeScreen extends Phaser.Scene {
     const rowGap = 150;
 
     // Create an array of available upgrades
-    const availableUpgrades = ["upgrade1", "upgrade2", "upgrade3", "upgrade4"];
+    const availableUpgrades = [
+      "upgrade1",
+      "upgrade2",
+      "upgrade3",
+      "upgrade4",
+      "upgrade5",
+      "upgrade6",
+      "upgrade7",
+      "upgrade8",
+    ];
 
     // Shuffle the array to randomize the upgrades
     Phaser.Math.RND.shuffle(availableUpgrades);
@@ -83,6 +96,14 @@ class UpgradeScreen extends Phaser.Scene {
         return "Sharp Eye Bullseye (+10 DMG)";
       case "upgrade4":
         return "Stained Warrior (UNKNOWN)";
+      case "upgrade5":
+        return "Energy Fluid (+Lifesteal)";
+      case "upgrade6":
+        return "Bullet Barrage (+1 Bullet)";
+      case "upgrade7":
+        return "Ratatata (+Fire Rate)";
+      case "upgrade8":
+        return "Zoom Zoom (+Bullet Speed)";
       default:
         return "";
     }
@@ -100,19 +121,36 @@ class UpgradeScreen extends Phaser.Scene {
         break;
 
       case "upgrade2":
-        player.speed += 100;
+        player.speed += 50;
         break;
 
       case "upgrade3":
-        player.bulletDamage += 10;
+        player.bulletDamage += 100;
         break;
 
       case "upgrade4":
         player.takeDamage(player.health * 0.9);
-        player.bulletDamage += 50;
+        player.bulletDamage += 100;
         player.bulletSize *= 1.5;
         break;
+
+      case "upgrade5":
+        player.lifestealRate += 50;
+        break;
+
+      case "upgrade6":
+        player.numberOfBullets += 1;
+        break;
+
+      case "upgrade7":
+        player.fireRate -= 100;
+        break;
+
+      case "upgrade8":
+        player.bulletSpeed += 100;
+        break;
     }
+
     // Close the upgrade scene and resume the parent scene
     this.scene.stop();
     this.scene.resume("playGame");
