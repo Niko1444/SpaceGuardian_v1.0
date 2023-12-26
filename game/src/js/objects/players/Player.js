@@ -10,28 +10,36 @@ class Player extends Entity {
     this.body.velocity.y = gameSettings.playerSpeed;
     this.health = health;
     this.maxHealth = health;
-    this.damage = 100;
-    // this.hpBarWidth = 180;
-    // this.hpBarHeight = 3;
-    
+    this.damage = 300;
+    this.bulletDamage = 100;
+    this.speed = gameSettings.playerSpeed;
+
     this.shield = null;
     this.setInteractiveEntity();
     this.setPhysics(scene);
     this.body.setSize(48, 48);
+    this.body.velocity.y = this.speed;
+    this.bulletSize = 1.2;
+
+    this.fireRate = 700; // default 700
+    this.lastShootTime = 0;
+    this.lifestealRate = 0;
+    this.numberOfBullets = 1;
+    this.bulletSpeed = 400;
 
     this.hpBar = new HPBar2(
       scene,
-      // this.x,
-      // this.y - 30,
       scene.sys.game.config.width - 400,
       scene.sys.game.config.height - 40,
-      200, // Width of the health bar
-      41, 
+      200,
+      41,
       this.health,
       this.maxHealth
     );
     this.scene.add.existing(this.hpBar);
     this.key = key;
+
+    this.setDepth(1);
   }
 
   setVelocityY(velocity) {
@@ -51,8 +59,44 @@ class Player extends Entity {
   }
 
   shootBullet(number) {
-    const bullet = new Bullet(this.scene, number );
-    bullet.play(`bullet${number}_anim`);
+    const currentTime = this.scene.time.now;
+    const elapsedTime = currentTime - this.lastShootTime;
+
+    if (elapsedTime > this.fireRate) {
+      this.lastShootTime = currentTime;
+
+      let totalBullets = this.numberOfBullets;
+
+      // Define patterns for 3, 4, and 5 bullets
+      const patternsX = {
+        1: [0], // Pattern for 1 bullet
+        2: [-15, 15], // Pattern for 2 bullets
+        3: [-15, 0, 15], // Pattern for 3 bullets
+        4: [-30, -15, 15, 30], // Pattern for 4 bullets
+        5: [-30, -15, 0, 15, 30], // Pattern for 5 bullets
+        6: [-45, -30, -15, 15, 30, 45], // Pattern for 6 bullets
+      };
+
+      const patternsY = {
+        1: [0], // Pattern for 1 bullet
+        2: [0, 0], // Pattern for 2 bullets
+        3: [0, -25, 0], // Pattern for 3 bullets
+        4: [0, -25, -25, 0], // Pattern for 4 bullets
+        5: [0, -25, -50, -25, 0], // Pattern for 5 bullets
+        6: [0, -25, -50, -50, -25, 0], // Pattern for 6 bullets
+      };
+
+      for (let i = 0; i < totalBullets; i++) {
+        const offsetX = patternsX[totalBullets][i] || 0; // Use the defined pattern or default to 0
+        const offsetY = patternsY[totalBullets][i] || 0; // Use the defined pattern or default to 0
+
+        const bullet = new Bullet(this.scene, number);
+        bullet.damage = this.bulletDamage;
+        bullet.body.velocity.y = -this.bulletSpeed;
+        bullet.setPosition(this.x + offsetX, this.y + offsetY);
+        bullet.play(`bullet${number}_anim`);
+      }
+    }
   }
 
   setPhysics(scene) {

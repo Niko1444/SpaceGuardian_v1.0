@@ -12,6 +12,7 @@ class Entity extends Phaser.GameObjects.Sprite {
     this.setData("isDead", false);
     this.hpBarWidth = 20;
     this.hpBarHeight = 5;
+    this.speed = 0;
 
     this.scene.physics.world.enableBody(this, 0);
     this.scene.add.existing(this);
