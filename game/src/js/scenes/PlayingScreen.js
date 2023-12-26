@@ -1,5 +1,4 @@
 import Phaser from "phaser";
-import gameSettings from "../config/gameSettings";
 import config from "../config/config";
 import Bullet from "../objects/projectiles/Bullet";
 import Player from "../objects/players/Player";
@@ -23,7 +22,6 @@ const BACKGROUND_SCROLL_SPEED = 0.5;
 class PlayingScreen extends Phaser.Scene {
   constructor() {
     super("playGame");
-    this.spawnedEnemies = [];
     this.buttonManager = null;
     this.pic;
   }
@@ -144,17 +142,28 @@ class PlayingScreen extends Phaser.Scene {
     this.player.play("player_anim");
 
     // Spawn the Enemies
-    this.bug3_1 = new Bug3(this, 150, 200, 300);
-    this.bug3_1.play("bug3_anim");
-    this.bug3_2 = new Bug3(this, 100, 100, 300);
-    this.bug3_2.play("bug3_anim");
-    this.bug5 = new Bug5(this, 300, 80, 300);
-    this.bug5.play("bug5_anim");
-    this.bug1 = new Bug1(this, 200, 180, 300);
-    this.bug1.play("bug1_anim");
+    this.time.delayedCall(
+      21000,
+      () => {
+    // shoot straight bullet
+    this.bug3_1 = new Bug3(this, config.width-20, -20, 30);
+    this.bug3_2 = new Bug3(this, 20, -20, 30);
+
+    // shoot following bullet
+    this.bug3_3 = new Bug3(this, 70, -20, 30);
+    this.bug3_4 = new Bug3(this, config.width-70, -20, 30);
+
+    // chasing enemies
+    this.bug5_1 = new Bug5(this, config.width/2, -20, 30);
+    this.bug5_2 = new Bug5(this, config.width/2-50, -20, 30);
+    this.bug5_3 = new Bug5(this, config.width/2+50, -20, 30);
+  },
+  null,
+  this
+);
 
     // Create text for level 1
-    this.createText();
+    this.createText("Level 1", config.width/2, config.height/2);
 
     // Spawn the Shield
     this.shield = new Shield(this, this.player);
@@ -171,42 +180,35 @@ class PlayingScreen extends Phaser.Scene {
     );
 
     this.enemyManager = new EnemyManager(this);
-    this.enemyManager.addEnemy(this.bug3_1);
-    this.enemyManager.addEnemy(this.bug3_2);
-    this.enemyManager.addEnemy(this.bug5);
-    this.enemyManager.addEnemy(this.bug1);
+    this.time.delayedCall(3000, () => this.enemyManager.spawnEnemyRowWithDelay(this, 0), null, this);
+    this.time.delayedCall(6000, () => this.enemyManager.spawnEnemyRowWithDelay(this, 0), null, this);
+    this.time.delayedCall(12000, () => this.enemyManager.spawnEnemyRowWithDelay(this, 0), null, this);
 
-    // spawn the enemies
     this.time.delayedCall(
-      3000,
+      21000,
       () => {
-        this.spawnedEnemies = this.enemyManager.scheduleRandomEnemySpawn(8);
-      },
-      null,
-      this
-    );
-
-    this.enemyManager.spawnCircleOfBugsLv1(
-      config.width / 2,
-      config.height / 2,
-      150,
-      8
-    );
+    this.enemyManager.addEnemyForOnce(this.bug3_1);
+    this.enemyManager.addEnemyForOnce(this.bug3_2);
+    this.enemyManager.addEnemyForOnce(this.bug3_3);
+    this.enemyManager.addEnemyForOnce(this.bug3_4);
+    this.enemyManager.addEnemyForOnce(this.bug5_1);
+    this.enemyManager.addEnemyForOnce(this.bug5_2);
+    this.enemyManager.addEnemyForOnce(this.bug5_3);
+  },
+  null,
+  this
+);
 
     // FINAL WAVE
     this.time.delayedCall(
-      20000,
+      40000,
       () => {
-        // Destroy all spawned enemies
-        this.destroySpawnedEnemies();
-
-        // Start the final wave
         this.startFinalWave();
-      },
-      null,
-      this
-    );
-
+},
+null,
+this
+);
+  
     this.UtilitiesManager = new UtilitiesManager(this);
     // Add a delayed event to spawn utilities after a delay
     this.soundManager = new soundManager(this);
@@ -233,13 +235,22 @@ class PlayingScreen extends Phaser.Scene {
     this.projectileManager.createPlayerBullet();
     this.projectileManager.createEnemyBullet();
     this.projectileManager.createChaseBullet();
+    this.time.addEvent({
+      delay: 21000,
+      callback: () => {
     this.projectileManager.callEnemyBullet();
     this.projectileManager.callChaseBullet();
+  },
+  callbackScope: this,
+});
 
     // Create keyboard inputs
     this.spacebar = this.input.keyboard.addKey(
       Phaser.Input.Keyboard.KeyCodes.SPACE
     );
+    this.enter = this.input.keyboard.addKey(
+      Phaser.Input.Keyboard.KeyCodes.ENTER
+    )
 
     this.collideManager = new CollideManager(
       this,
@@ -251,6 +262,14 @@ class PlayingScreen extends Phaser.Scene {
       this.soundManager
     );
 
+    this.time.delayedCall(
+      51000,
+      () => {
+        this.goToNextLevel();
+      },
+      null,
+      this
+    );
     this.input.keyboard.on("keydown-ENTER", this.goToNextLevel, this);
 
     // create pause button
@@ -333,19 +352,32 @@ class PlayingScreen extends Phaser.Scene {
 
     this.shield.updatePosition(this.player);
 
+    this.time.addEvent({
+    delay: 22000,
+      callback: () => {
     this.bug3_1.rotateToPlayer(this.player);
     this.bug3_2.rotateToPlayer(this.player);
-    this.bug5.chasePlayer(this.player);
-  }
+    this.bug3_3.rotateToPlayer(this.player);
+    this.bug3_4.rotateToPlayer(this.player);
+  },
+  callbackScope: this,
+  });
+
+    this.time.addEvent({
+    delay: 21000,
+      callback: () => {
+    this.bug5_1.chasePlayer(this.player);
+    this.bug5_2.chasePlayer(this.player);
+    this.bug5_3.chasePlayer(this.player);
+  },
+  callbackScope: this,
+  });
+}
 
   gameOver() {
     this.events.once("shutdown", this.shutdown, this);
     this.scene.stop("upgradeScreen");
     this.scene.start("gameOver");
-  }
-
-  enemyExploded() {
-    this.enemyManager.enemyExploded();
   }
 
   shutdown() {
@@ -386,9 +418,9 @@ class PlayingScreen extends Phaser.Scene {
     }
   }
 
-  createText() {
+  createText(key, x, y) {
     const Level1Text = this.add
-      .text(config.width / 2, config.height / 2, "Level 1", {
+      .text(x, y, key, {
         fontSize: "32px",
         fill: "#ffffff",
       })
@@ -404,27 +436,22 @@ class PlayingScreen extends Phaser.Scene {
     );
   }
 
-  destroySpawnedEnemies() {
-    // Check if spawnedEnemies array is not null or undefined
-    if (this.spawnedEnemies) {
-      // Loop through all spawned enemies and destroy them
-      this.spawnedEnemies.forEach((enemy) => {
-        // Check if the enemy object exists and has the destroy method
-        if (enemy && enemy.destroy && typeof enemy.destroy === "function") {
-          enemy.destroy();
-        }
-      });
-
-      // Clear the spawned enemies array
-      this.spawnedEnemies = [];
-    }
+  goToNextLevel() {  
+    this.createText("Level completed", config.width/2, config.height/2 +30);
+    this.createText("Press Enter to continue", config.width/2, config.height/2 - 30);
+  
+    // Check for Enter key press continuously in the update loop
+    this.input.keyboard.on('keydown-ENTER', this.handleEnterKey, this);
   }
-
-  goToNextLevel() {
+  
+  handleEnterKey() {  
     this.time.delayedCall(1000, () => {
       this.scene.start("playLevelTwo", { number: this.selectedPlayerIndex });
     });
+  
+    this.input.keyboard.off('keydown-ENTER', this.handleEnterKey, this);
   }
+  
 
   startFinalWave() {
     // Display "Final Wave" text for 2 seconds
@@ -444,8 +471,8 @@ class PlayingScreen extends Phaser.Scene {
         this.finalWaveBugs = this.enemyManager.spawnCircleOfBugsLv1(
           config.width / 2,
           config.height / 2,
-          120,
-          12
+          200,
+          14
         );
       },
       null,

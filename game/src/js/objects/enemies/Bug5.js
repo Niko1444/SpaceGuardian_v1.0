@@ -43,8 +43,7 @@ class Bug5 extends Entity {
     this.health = 0;
     this.updateHealthBarValue();
   }
-
-  chasePlayer(player) {
+  chasePlayer(player, speed = 200) {
     if (this.y >= config.height / 2 && this.health > 0) {
       let dx = player.x - this.x;
       let dy = player.y - this.y;
@@ -61,8 +60,8 @@ class Bug5 extends Entity {
 
       // If it has, set its y velocity to 0 to stop it
       this.body.velocity.set(
-        (direction.x * gameSettings.enemySpeed) / 2,
-        (direction.y * gameSettings.enemySpeed) / 2
+        (direction.x * speed) / 2,
+        (direction.y * speed) / 2
       );
     }
   }
