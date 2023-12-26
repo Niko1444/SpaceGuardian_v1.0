@@ -28,7 +28,6 @@ class Player extends Entity {
     this.bulletSpeed = 400;
     this.soundManager = new soundManager(scene);
 
-
     this.hpBar = new HPBar2(
       scene,
       scene.sys.game.config.width - 400,
@@ -100,15 +99,11 @@ class Player extends Entity {
         bullet.damage = this.bulletDamage;
         bullet.body.velocity.y = -this.bulletSpeed;
         bullet.setPosition(this.x + offsetX, this.y + offsetY);
-    
-    bullet.play(`bullet${number}_anim`);
-      }
-    }
-    // if (this.scene.sys.game.globals.music.soundOn) {
 
-    // this.scene.sound.play('shootSound', { volume: 1 }); // Adjust volume as needed
-    // }
-    this.soundManager.playBulletSound();
+        bullet.play(`bullet${number}_anim`);
+      }
+      this.soundManager.playBulletSound();
+    }
   }
 
   setPhysics(scene) {
