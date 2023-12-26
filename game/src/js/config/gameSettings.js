@@ -1,4 +1,4 @@
-const gameSettings = {
+var gameSettings = {
   playerSpeed: 250,
   enemySpeed: 200,
   bulletSpeed: 400,

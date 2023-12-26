@@ -1,5 +1,4 @@
 import Phaser from "phaser";
-import gameSettings from "../config/gameSettings";
 import config from "../config/config";
 import Bullet from "../objects/projectiles/Bullet";
 import Player from "../objects/players/Player";
@@ -129,7 +128,7 @@ class PlayingScreen extends Phaser.Scene {
       () => {
     // shoot straight bullet
     this.bug3_1 = new Bug3(this, config.width-20, -20, 30);
-    this.bug3_2 = new Bug3(this,20, -20, 30);
+    this.bug3_2 = new Bug3(this, 20, -20, 30);
 
     // shoot following bullet
     this.bug3_3 = new Bug3(this, 70, -20, 30);
@@ -145,7 +144,7 @@ class PlayingScreen extends Phaser.Scene {
 );
 
     // Create text for level 1
-    this.createText();
+    this.createText("Level 1", config.width/2, config.height/2);
 
     // Spawn the Shield
     this.shield = new Shield(this, this.player);
@@ -162,30 +161,9 @@ class PlayingScreen extends Phaser.Scene {
     );
 
     this.enemyManager = new EnemyManager(this);
-    this.time.delayedCall(
-      3000,
-      () => {
-    const enemyRow = this.enemyManager.spawnEnemyRow(30, 8, 40, 30);
-      this.time.delayedCall(
-            6000,
-            () => {
-              const enemyRow1 = this.enemyManager.spawnEnemyRow(30, 8, 40, 30);
-                },
-            null,
-            this
-            );
-      this.time.delayedCall(
-            12000,
-            () => {
-              const enemyRow2 = this.enemyManager.spawnEnemyRow(30, 8, 40, 30);
-                },
-            null,
-            this
-            );
-          },
-        null,
-        this
-      );
+    this.time.delayedCall(3000, () => this.enemyManager.spawnEnemyRowWithDelay(this, 0), null, this);
+    this.time.delayedCall(6000, () => this.enemyManager.spawnEnemyRowWithDelay(this, 0), null, this);
+    this.time.delayedCall(12000, () => this.enemyManager.spawnEnemyRowWithDelay(this, 0), null, this);
 
     this.time.delayedCall(
       21000,
@@ -202,38 +180,16 @@ class PlayingScreen extends Phaser.Scene {
   this
 );
 
-const isDestroyed = this.enemyManager.areEnemiesDestroyed([
-  this.bug3_1,
-  this.bug3_2,
-  this.bug3_3,
-  this.bug3_4,
-  this.bug5_1,
-  this.bug5_2,
-  this.bug5_3,
-]);
     // FINAL WAVE
-    let timer;
     this.time.delayedCall(
       40000,
       () => {
-    timer = this.time.addEvent({
-      delay: 1000,
-      callback: () => {
-    if (isDestroyed) {
-      timer.remove();
-        // Start the final wave
         this.startFinalWave();
-    }
-  },
-  callbackScope: this,
-  loop: true, // Set to true for a repeating timer
-});
 },
 null,
 this
 );
   
-
     this.UtilitiesManager = new UtilitiesManager(this);
     // Add a delayed event to spawn utilities after a delay
     this.time.addEvent({
@@ -270,6 +226,9 @@ this
     this.spacebar = this.input.keyboard.addKey(
       Phaser.Input.Keyboard.KeyCodes.SPACE
     );
+    this.enter = this.input.keyboard.addKey(
+      Phaser.Input.Keyboard.KeyCodes.ENTER
+    )
 
     this.collideManager = new CollideManager(
       this,
@@ -280,7 +239,14 @@ this
       this.shield
     );
 
-    this.input.keyboard.on("keydown-ENTER", this.goToNextLevel, this);
+    this.time.delayedCall(
+      51000,
+      () => {
+        this.goToNextLevel();
+      },
+      null,
+      this
+    );
   }
 
   update() {
@@ -341,10 +307,6 @@ this
     this.scene.start("gameOver");
   }
 
-  enemyExploded() {
-    this.enemyManager.enemyExploded();
-  }
-
   shutdown() {
     // Remove entire texture along with all animations
     this.textures.remove(`player_texture_${this.selectedPlayerIndex}`);
@@ -383,9 +345,9 @@ this
     }
   }
 
-  createText() {
+  createText(key, x, y) {
     const Level1Text = this.add
-      .text(config.width / 2, config.height / 2, "Level 1", {
+      .text(x, y, key, {
         fontSize: "32px",
         fill: "#ffffff",
       })
@@ -401,11 +363,22 @@ this
     );
   }
 
-  goToNextLevel() {
+  goToNextLevel() {  
+    this.createText("Level completed", config.width/2, config.height/2 +30);
+    this.createText("Press Enter to continue", config.width/2, config.height/2 - 30);
+  
+    // Check for Enter key press continuously in the update loop
+    this.input.keyboard.on('keydown-ENTER', this.handleEnterKey, this);
+  }
+  
+  handleEnterKey() {  
     this.time.delayedCall(1000, () => {
       this.scene.start("playLevelTwo", { number: this.selectedPlayerIndex });
     });
+  
+    this.input.keyboard.off('keydown-ENTER', this.handleEnterKey, this);
   }
+  
 
   startFinalWave() {
     // Display "Final Wave" text for 2 seconds
@@ -425,7 +398,7 @@ this
         this.finalWaveBugs = this.enemyManager.spawnCircleOfBugsLv1(
           config.width / 2,
           config.height / 2,
-          150,
+          200,
           14
         );
       },
