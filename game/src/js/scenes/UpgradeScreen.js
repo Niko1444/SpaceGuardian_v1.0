@@ -14,6 +14,7 @@ class UpgradeScreen extends Phaser.Scene {
     this.load.image("upgrade3", "assets/images/upgrades/upgrade_03.png");
     this.load.image("upgrade4", "assets/images/upgrades/upgrade_04.png");
     this.load.image("upgrade5", "assets/images/upgrades/upgrade_05.png");
+    this.load.image("upgrade6", "assets/images/upgrades/upgrade_06.png");
   }
 
   create() {
@@ -31,6 +32,7 @@ class UpgradeScreen extends Phaser.Scene {
       "upgrade3",
       "upgrade4",
       "upgrade5",
+      "upgrade6",
     ];
 
     // Shuffle the array to randomize the upgrades
@@ -91,7 +93,9 @@ class UpgradeScreen extends Phaser.Scene {
       case "upgrade4":
         return "Stained Warrior (UNKNOWN)";
       case "upgrade5":
-        return "Energy Fluid (Lifesteal)";
+        return "Energy Fluid (+Lifesteal)";
+      case "upgrade6":
+        return "Bullet Barrage (+1 Bullet)";
       default:
         return "";
     }
@@ -124,6 +128,10 @@ class UpgradeScreen extends Phaser.Scene {
 
       case "upgrade5":
         player.lifestealRate += 20;
+        break;
+
+      case "upgrade6":
+        player.numberOfBullets += 1;
         break;
     }
 

@@ -24,6 +24,7 @@ class Player extends Entity {
     this.fireRate = 400;
     this.lastShootTime = 0;
     this.lifestealRate = 0;
+    this.numberOfBullets = 2;
 
     this.hpBar = new HPBar2(
       scene,
@@ -63,9 +64,36 @@ class Player extends Entity {
     if (elapsedTime > this.fireRate) {
       this.lastShootTime = currentTime;
 
-      const bullet = new Bullet(this.scene, number);
-      bullet.damage = this.bulletDamage;
-      bullet.play(`bullet${number}_anim`);
+      let totalBullets = this.numberOfBullets;
+
+      // Define patterns for 3, 4, and 5 bullets
+      const patternsX = {
+        1: [0], // Pattern for 1 bullet
+        2: [-15, 15], // Pattern for 2 bullets
+        3: [-15, 0, 15], // Pattern for 3 bullets
+        4: [-30, -15, 15, 30], // Pattern for 4 bullets
+        5: [-30, -15, 0, 15, 30], // Pattern for 5 bullets
+        6: [-45, -30, -15, 15, 30, 45], // Pattern for 6 bullets
+      };
+
+      const patternsY = {
+        1: [0], // Pattern for 1 bullet
+        2: [0, 0], // Pattern for 2 bullets
+        3: [0, -25, 0], // Pattern for 3 bullets
+        4: [0, -25, -25, 0], // Pattern for 4 bullets
+        5: [0, -25, -50, -25, 0], // Pattern for 5 bullets
+        6: [0, -25, -50, -50, -25, 0], // Pattern for 6 bullets
+      };
+
+      for (let i = 0; i < totalBullets; i++) {
+        const offsetX = patternsX[totalBullets][i] || 0; // Use the defined pattern or default to 0
+        const offsetY = patternsY[totalBullets][i] || 0; // Use the defined pattern or default to 0
+
+        const bullet = new Bullet(this.scene, number);
+        bullet.damage = this.bulletDamage;
+        bullet.setPosition(this.x + offsetX, this.y + offsetY);
+        bullet.play(`bullet${number}_anim`);
+      }
     }
   }
 
