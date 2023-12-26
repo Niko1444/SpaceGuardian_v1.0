@@ -10,7 +10,7 @@ class Bug5 extends Entity {
     this.body.velocity.y = gameSettings.enemySpeed;
     this.health = health;
     this.maxHealth = health;
-    this.damage = 200;
+    this.damage = 100;
     this.hpBarWidth = 20;
     this.hpBarHeight = 5;
     this.setInteractiveEntity();
@@ -43,7 +43,7 @@ class Bug5 extends Entity {
     this.health = 0;
     this.updateHealthBarValue();
   }
-  chasePlayer(player) {
+  chasePlayer(player, speed = 200) {
     if (this.y >= config.height / 2 && this.health > 0) {
       let dx = player.x - this.x;
       let dy = player.y - this.y;
@@ -60,14 +60,15 @@ class Bug5 extends Entity {
 
       // If it has, set its y velocity to 0 to stop it
       this.body.velocity.set(
-        (direction.x * gameSettings.enemySpeed) / 2,
-        (direction.y * gameSettings.enemySpeed) / 2
+        (direction.x * speed) / 2,
+        (direction.y * speed) / 2
       );
     }
   }
 
   explode(canDestroy) {
     super.explode(canDestroy);
+    this.scene.player.getHeal(this.scene.player.lifestealRate);
     this.scene.upgradeManager.updateScore(10);
   }
 }

@@ -13,10 +13,15 @@ class Bullet extends Entity {
     scene.add.existing(this);
     scene.physics.world.enableBody(this);
     scene.projectiles.add(this);
+
     this.body.velocity.y = -gameSettings.bulletSpeed;
+
     this.damage = 100;
-    // this.damage = 10;
-    this.setDepth(1);
+
+    this.bulletSize = scene.player.bulletSize;
+    this.setScale(this.bulletSize);
+
+    this.setDepth(0);
   }
 
   update() {

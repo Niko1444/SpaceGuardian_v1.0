@@ -43,8 +43,10 @@ class Bug1 extends Entity {
     this.health = 0;
     this.updateHealthBarValue();
   }
+
   explode(canDestroy) {
     super.explode(canDestroy);
+    this.scene.player.getHeal(this.scene.player.lifestealRate);
     this.scene.upgradeManager.updateScore(10);
   }
 }

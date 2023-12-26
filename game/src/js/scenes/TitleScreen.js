@@ -2,12 +2,17 @@ import Phaser from "phaser";
 import config from "../config/config.js";
 import Button from "../objects/Button.js";
 import GuiManager from "../manager/GuiManager.js";
+import Music from "../mode/Music.js";
 class TitleScreen extends Phaser.Scene {
   constructor() {
     super("bootGame");
+    const music = new Music();
+    this.globals = { music, bgMusic: null };
   }
 
   preload() {
+    this.load.audio("main_menu_music", "assets/audio/backgroundMusic.mp3");
+
     this.load.image(
       "background",
       "assets/images/backgrounds/background_title.png"
@@ -39,6 +44,16 @@ class TitleScreen extends Phaser.Scene {
   }
 
   create() {
+    this.music = this.sys.game.globals.music;
+    if (this.music.musicOn === true && this.music.bgMusicPlaying === false) {
+      this.bgMusic = this.sound.add("main_menu_music", {
+        volume: 0.6,
+        loop: true,
+      });
+      this.bgMusic.play();
+      this.music.bgMusicPlaying = true;
+      this.sys.game.globals.bgMusic = this.bgMusic;
+    }
     // Create Background
     this.background = this.add.tileSprite(
       0,
@@ -114,21 +129,23 @@ class TitleScreen extends Phaser.Scene {
       "choosePlayer"
     );
 
-    // this.button_play = this.add.sprite(
-    //   config.width / 2,
-    //   config.height / 2 + 60,
-    //   "button_play"
-    // );
-    // this.button_play.setInteractive();
-    // this.button_play.on("pointerdown", () => {
-    //     this.scene.start("choosePlayer");
-    // });
-    // this.button_play.on("pointerover", () => {
-    //   this.button_play.setTexture("button_hover");
-    // });
-    // this.button_play.on("pointerout", () => {
-    //   this.button_play.setTexture("button_play");
-    // });
+    this.button_play = this.add.sprite(
+      config.width / 2,
+      config.height / 2 + 60,
+      "button_play"
+    );
+    this.button_play.setInteractive();
+    this.button_play.on("pointerdown", () => {
+      this.scene.start("choosePlayer");
+    });
+    this.button_play.on("pointerover", () => {
+      this.button_play.setTexture("button_hover");
+    });
+    this.button_play.on("pointerout", () => {
+      this.button_play.setTexture("button_play");
+    });
   }
+
+  update() {}
 }
 export default TitleScreen;

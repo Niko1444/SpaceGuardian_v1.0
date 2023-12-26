@@ -1,25 +1,26 @@
 import Phaser from "phaser";
-import gameSettings from "../config/gameSettings";
 import config from "../config/config";
 import Bullet from "../objects/projectiles/Bullet";
 import Player from "../objects/players/Player";
+import Shield from "../objects/utilities/Shield";
 import EnemyManager from "../manager/enemyManager";
 import KeyboardManager from "../manager/KeyboardManager";
 import PlayerManager from "../manager/playerManager";
 import CollideManager from "../manager/collideManager";
-import GuiManager from "../manager/GuiManager";
 import HPBar from "../objects/ui/HPBar";
+import Bug3 from "../objects/enemies/Bug3";
+import Bug5 from "../objects/enemies/Bug5";
+import GuiManager from "../manager/GuiManager.js";
 import UtilitiesManager from "../manager/UtilitiesManager";
+import buttonManager from "../manager/buttonManager";
 import ProjectileManager from "../manager/ProjectileManager";
-import Shield from "../objects/utilities/Shield";
-import UpgradeManager from "../manager/UpgradeManager";
-
+import UpgradeManager from "../manager/UpgradeManager.js";
 
 const BACKGROUND_SCROLL_SPEED = 0.5;
 class LevelThreeScreen extends Phaser.Scene {
   constructor() {
     super("playLevelThree");
-    this.spawnedEnemies = [];
+    this.buttonManager = null;
   }
 
   init(data) {
@@ -27,7 +28,6 @@ class LevelThreeScreen extends Phaser.Scene {
   }
 
   preload() {
-    // Load Player Spritesheet
     this.load.spritesheet({
       key: `player_texture_${this.selectedPlayerIndex}`,
       url: `assets/spritesheets/players/planes_0${this.selectedPlayerIndex}A.png`,
@@ -41,7 +41,11 @@ class LevelThreeScreen extends Phaser.Scene {
   }
 
   create() {
+    // Creat GUI for PlayingScreen ( Changes in BG except Player and Enemy )
+    this.guiManager = new GuiManager(this);
+    this.guiManager.createBackground("background_texture_02");
 
+    // if (!(this.anims && this.anims.exists && this.anims.exists("player_anim"))) {
     this.anims.create({
       key: "player_anim",
       frames: this.anims.generateFrameNumbers(
@@ -106,18 +110,8 @@ class LevelThreeScreen extends Phaser.Scene {
       frameRate: 30,
       repeat: -1,
     });
-    // Creat GUI for PlayingScreen ( Changes in BG except Player and Enemy )
-    this.guiManager = new GuiManager(this);
-    this.guiManager.createBackground("background_texture_02");
-    this.guiManager.createLevelText(
-      config.width / 2,
-      config.height / 2,
-      "Level 3",
-      "32px",
-      "#ffffff"
-    );
+    // }
 
-    // Spawn the Player
     this.player = new Player(
       this,
       config.width / 2,
@@ -127,55 +121,105 @@ class LevelThreeScreen extends Phaser.Scene {
     );
     this.player.play("player_anim");
 
+    // Spawn the Enemies
+    this.time.delayedCall(
+      18000,
+      () => {
+    // chasing enemies
+    this.bug5_1 = new Bug5(this, 30, -20, 30);
+    this.bug5_2 = new Bug5(this, 120, -20, 30);
+    this.bug5_3 = new Bug5(this, 210, -20, 30);
+    this.bug5_4 = new Bug5(this, 300, -20, 30);
+    this.bug5_5 = new Bug5(this, 390, -20, 30);
+    this.bug5_6 = new Bug5(this, 480, -20, 30);
+    this.bug5_7 = new Bug5(this, 570, -20, 30);
+  },
+  null,
+  this
+);
+
+    // Create text for level 3
+    this.createText("Level 3", config.width/2, config.height/2);
+
+    this.time.delayedCall(
+      15000,
+      () => {
+    this.createText("Try to survive", config.width/2, config.height/2);
+  },
+  null,
+  this
+);
+
+    // Spawn the Shield
     this.shield = new Shield(this, this.player);
     this.shield.play("shield_anim");
 
     // Create managers
-    // Keyboard
     this.keyboardManager = new KeyboardManager(this);
-    // Upgrade
+    // Score System
     this.upgradeManager = new UpgradeManager(this);
-    // Player
     this.playerManager = new PlayerManager(
       this,
       this.player,
       this.selectedPlayerIndex
     );
-    // Utilities
-    this.UtilitiesManager = new UtilitiesManager(this);
 
     this.enemyManager = new EnemyManager(this);
-    // spawn the enemies
+    this.time.delayedCall(3000, () => this.enemyManager.spawnEnemyRowWithDelay(this, 0), null, this);
+    this.time.delayedCall(5000, () => this.enemyManager.spawnEnemyRowWithDelay(this, 0), null, this);
+    this.time.delayedCall(7000, () => this.enemyManager.spawnEnemyRowWithDelay(this, 0), null, this);
+    // this.time.delayedCall(9000, () => this.enemyManager.spawnEnemyRowWithDelay(this, 0), null, this);
+    // this.time.delayedCall(11000, () => this.enemyManager.spawnEnemyRowWithDelay(this, 0), null, this);
+
     this.time.delayedCall(
-      4000,
+      18000,
       () => {
-        this.spawnedEnemies = this.enemyManager.scheduleRandomEnemySpawn(8);
+    this.enemyManager.addEnemyForOnce(this.bug5_1);
+    this.enemyManager.addEnemyForOnce(this.bug5_2);
+    this.enemyManager.addEnemyForOnce(this.bug5_3);
+    this.enemyManager.addEnemyForOnce(this.bug5_4);
+    this.enemyManager.addEnemyForOnce(this.bug5_5);
+    this.enemyManager.addEnemyForOnce(this.bug5_6);
+    this.enemyManager.addEnemyForOnce(this.bug5_7);
+  },
+  null,
+  this
+);
+  
+    this.UtilitiesManager = new UtilitiesManager(this);
+    // Add a delayed event to spawn utilities after a delay
+    this.time.addEvent({
+      delay: 5000,
+      callback: () => {
+        this.UtilitiesManager.addUtilitiesForPlayingScreen(3, 4);
+        this.collideManager1 = new CollideManager(
+          this,
+          this.player,
+          this.enemyManager.enemies,
+          this.UtilitiesManager.healthPacks,
+          this.UtilitiesManager.shieldPacks,
+          this.shield
+        );
       },
-      null,
-      this
-    );
+      callbackScope: this,
+    });
+    this.buttonManager = new buttonManager(this);
 
-    this.spacebar = this.input.keyboard.addKey(
-      Phaser.Input.Keyboard.KeyCodes.SPACE
-    );
-
-    // Create keyboard inputs
     this.projectileManager = new ProjectileManager(this);
     this.projectileManager.createPlayerBullet();
     this.projectileManager.createEnemyBullet();
     this.projectileManager.createChaseBullet();
-    // FINAL WAVE
-    this.time.delayedCall(
-      20000,
-      () => {
-        // Start the final wave
-        this.startFinalWave();
-      },
-      null,
-      this
+    // this.projectileManager.callEnemyBullet();
+    // this.projectileManager.callChaseBullet();
+
+    // Create keyboard inputs
+    this.spacebar = this.input.keyboard.addKey(
+      Phaser.Input.Keyboard.KeyCodes.SPACE
     );
-    
-    // Create collision
+    this.enter = this.input.keyboard.addKey(
+      Phaser.Input.Keyboard.KeyCodes.ENTER
+    )
+
     this.collideManager = new CollideManager(
       this,
       this.player,
@@ -184,10 +228,19 @@ class LevelThreeScreen extends Phaser.Scene {
       this.UtilitiesManager.shieldPacks,
       this.shield
     );
+
+    this.time.delayedCall(
+      35000,
+      () => {
+        this.goToNextLevel();
+      },
+      null,
+      this
+    );
   }
 
-
   update() {
+    // this.buttonManager.update();
     // Pause the game
     this.keyboardManager.pauseGame();
 
@@ -202,7 +255,7 @@ class LevelThreeScreen extends Phaser.Scene {
       enemy.updateHealthBarPosition();
     });
 
-    if (Phaser.Input.Keyboard.JustDown(this.spacebar)) {
+    if (this.spacebar.isDown) {
       this.player.shootBullet(this.selectedPlayerIndex);
     }
 
@@ -213,20 +266,71 @@ class LevelThreeScreen extends Phaser.Scene {
     if (this.player.health <= 0) {
       this.gameOver();
     }
-  }
+
+    this.shield.updatePosition(this.player);
+
+    this.time.addEvent({
+    delay: 18000,
+      callback: () => {
+    this.bug5_1.chasePlayer(this.player, 200);
+    this.bug5_2.chasePlayer(this.player, 240);
+    this.bug5_3.chasePlayer(this.player, 280);
+    this.bug5_4.chasePlayer(this.player, 300);
+    this.bug5_5.chasePlayer(this.player, 320);
+    this.bug5_6.chasePlayer(this.player, 350);
+    this.bug5_7.chasePlayer(this.player, 400);
+  },
+  callbackScope: this,
+  });
+}
 
   gameOver() {
+    this.events.once("shutdown", this.shutdown, this);
+    this.scene.stop("upgradeScreen");
     this.scene.start("gameOver");
   }
 
-  goToNextLevel() {
-    //condition to move to the next level
+  shutdown() {
+    // Remove entire texture along with all animations
+    this.textures.remove(`player_texture_${this.selectedPlayerIndex}`);
+
+    // Check if the animation exists before trying to remove it
+    if (this.anims && this.anims.exists && this.anims.exists("player_anim")) {
+      this.anims.remove("player_anim");
+    }
+    if (
+      this.anims &&
+      this.anims.exists &&
+      this.anims.exists("player_anim_left")
+    ) {
+      this.anims.remove("player_anim_left");
+    }
+    if (
+      this.anims &&
+      this.anims.exists &&
+      this.anims.exists("player_anim_left_diagonal")
+    ) {
+      this.anims.remove("player_anim_left_diagonal");
+    }
+    if (
+      this.anims &&
+      this.anims.exists &&
+      this.anims.exists("player_anim_right")
+    ) {
+      this.anims.remove("player_anim_right");
+    }
+    if (
+      this.anims &&
+      this.anims.exists &&
+      this.anims.exists("player_anim_right_diagonal")
+    ) {
+      this.anims.remove("player_anim_right_diagonal");
+    }
   }
 
-  startFinalWave() {
-    // Display "Final Wave" text for 2 seconds
-    const finalWaveText = this.add
-      .text(config.width / 2, config.height / 2, "Final Wave", {
+  createText(key, x, y) {
+    const Level1Text = this.add
+      .text(x, y, key, {
         fontSize: "32px",
         fill: "#ffffff",
       })
@@ -235,19 +339,27 @@ class LevelThreeScreen extends Phaser.Scene {
     this.time.delayedCall(
       2000,
       () => {
-        finalWaveText.destroy();
-
-        // Spawn a wave of bugs after the "Final Wave" message disappears
-        this.finalWaveBugs = this.enemyManager.spawnCircleOfBugsLv1(
-          config.width / 2,
-          config.height / 2,
-          120,
-          12
-        );
+        Level1Text.destroy();
       },
       null,
       this
     );
+  }
+
+  goToNextLevel() {  
+    this.createText("Level completed", config.width/2, config.height/2 + 30);
+    this.createText("Press Enter to continue", config.width/2, config.height/2 - 30);
+  
+    // Check for Enter key press continuously in the update loop
+    this.input.keyboard.on('keydown-ENTER', this.handleEnterKey, this);
+  }
+  
+  handleEnterKey() {  
+    this.time.delayedCall(1000, () => {
+      this.scene.start("playBoss hay gì đó", { number: this.selectedPlayerIndex });
+    });
+  
+    this.input.keyboard.off('keydown-ENTER', this.handleEnterKey, this);
   }
 }
 export default LevelThreeScreen;

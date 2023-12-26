@@ -3,8 +3,10 @@ import UtilitiesManager from "./UtilitiesManager";
 import HealthPack from "../objects/utilities/healthPack";
 import ShieldPack from "../objects/utilities/ShieldPack";
 import Shield from "../objects/utilities/Shield";
-class CollideManager {
-  constructor(scene, player, enemies, healthPacks, shieldPacks, shield) {
+import config from "../config/config";
+import soundManager from "./soundManager";
+class CollideManager{
+  constructor(scene, player, enemies, healthPacks, shieldPacks, shield, soundManager) {
     this.scene = scene;
     this.player = player;
     this.enemies = enemies;
@@ -12,6 +14,10 @@ class CollideManager {
     this.shieldPacks = shieldPacks;
     this.shield = shield;
     this.shieldActive = false;
+    this.soundManager = soundManager;
+    
+
+
 
     // Add collision between bullets and enemies
     this.scene.physics.add.overlap(
@@ -35,6 +41,14 @@ class CollideManager {
       this.shield, // Assuming the shield is a property of the player
       this.enemies,
       this.shieldCollideEnemy,
+      null,
+      this.scene
+    );
+    // Add collision between player having shield and bullet
+    this.scene.physics.add.overlap(
+      this.scene.enemyProjectiles,
+      this.shield, // Assuming the shield is a property of the player
+      this.shieldCollideBullet,
       null,
       this.scene
     );
@@ -88,6 +102,13 @@ class CollideManager {
       this.shieldActive = false;
     }
   }
+  shieldCollideBullet(shield, enemyBullet) {
+    if (this.shieldActive) {
+      enemyBullet.destroy();
+      shield.hide();
+      this.shieldActive = false;
+    }
+  }
 
   bulletHitEnemy(enemy, bullet) {
     bullet.destroy();
@@ -107,16 +128,20 @@ class CollideManager {
   }
 
   playerCollideHealthPack(player, healthPack) {
+    this.soundManager.playHealthSound();
     const healthAmount = 500; // Set the amount of health to increase
     player.getHeal(healthAmount);
     healthPack.destroy();
   }
 
   playerCollideShieldPack(player, shieldPack) {
+    this.soundManager.playShieldSound();
     shieldPack.destroy(); // Destroy the shield pack after collision
     this.shield.show();
     this.shieldActive = true;
   }
+
+
 }
 
 export default CollideManager;
