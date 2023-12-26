@@ -87,17 +87,29 @@ class LoadingScreen extends Phaser.Scene {
       },
     });
 
-    // Load the Pause button
-    this.load.spritesheet({
-      key: "pauseButton_texture",
-      url: "assets/spritesheets/vfx/pauseButton.png",
-      frameConfig: {
-        frameWidth: 36,
-        frameHeight: 36,
-        startFrame: 2,
-        endFrame: 4,
-      },
-    });
+    // // Load the Pause button
+    // this.load.spritesheet({
+    //   key: "pause_texture",
+    //   url: "assets/spritesheets/vfx/pause.png",
+    //   frameConfig: {
+    //     frameWidth: 36,
+    //     frameHeight: 36,
+    //     startFrame: 0,
+    //     endFrame: 0,
+    //   },
+    // });
+
+    // // Load the resume button
+    // this.load.spritesheet({
+    //   key: "resume_texture",
+    //   url: "assets/spritesheets/vfx/resume.png",
+    //   frameConfig: {
+    //     frameWidth: 36,
+    //     frameHeight: 36,
+    //     startFrame: 0,
+    //     endFrame: 0,
+    //   },
+    // });
 
     // Load the Pause display button
     this.load.spritesheet({
@@ -115,6 +127,31 @@ class LoadingScreen extends Phaser.Scene {
     this.load.spritesheet({
       key: "settingButton_texture",
       url: "assets/spritesheets/vfx/settingButton.png",
+      frameConfig: {
+        frameWidth: 36,
+        frameHeight: 36,
+        startFrame: 0,
+        endFrame: 0,
+      },
+    });
+
+    // Load the setting hover button
+    this.load.spritesheet({
+      key: "mute_texture",
+      url: "assets/spritesheets/vfx/mute.png",
+      frameConfig: {
+        frameWidth: 36,
+        frameHeight: 36,
+        startFrame: 0,
+        endFrame: 0,
+      },
+    });
+
+
+    // Load the setting button
+    this.load.spritesheet({
+      key: "sound_texture",
+      url: "assets/spritesheets/vfx/sound.png",
       frameConfig: {
         frameWidth: 36,
         frameHeight: 36,
@@ -300,6 +337,15 @@ class LoadingScreen extends Phaser.Scene {
         endFrame: 7,
       },
     });
+    this.load.audio('explosionSound', 'assets/audio/DestroyEnemySmall.wav');
+    this.load.audio('shootSound', 'assets/audio/bullet.wav');
+    this.load.audio('main_menu_music', 'assets/audio/backgroundMusic.mp3');
+    this.load.audio('desertMusic', 'assets/audio/playingMusic.mp3');
+    this.load.audio('health', 'assets/audio/health.wav');
+    this.load.audio('shield', 'assets/audio/shield.wav');
+    this.load.audio('forestMusic', 'assets/audio/forest.wav');
+    this.load.audio('riverMusic', 'assets/audio/river.mp3');
+    this.load.audio('warzoneMusic', 'assets/audio/warzone.mp3');
   }
 
   create() {

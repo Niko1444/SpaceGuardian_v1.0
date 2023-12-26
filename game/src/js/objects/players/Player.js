@@ -3,7 +3,7 @@ import Bullet from "../projectiles/Bullet";
 import gameSettings from "../../config/gameSettings";
 import HPBar from "../ui/HPBar";
 import HPBar2 from "../ui/HPBar2";
-
+import soundManager from "../../manager/soundManager";
 class Player extends Entity {
   constructor(scene, x, y, key, health) {
     super(scene, x, y, key, health);
@@ -18,6 +18,8 @@ class Player extends Entity {
     this.setInteractiveEntity();
     this.setPhysics(scene);
     this.body.setSize(48, 48);
+    this.soundManager = new soundManager(scene);
+
 
     this.hpBar = new HPBar2(
       scene,
@@ -32,8 +34,16 @@ class Player extends Entity {
     );
     this.scene.add.existing(this.hpBar);
     this.key = key;
+    // this.music = this.sys.game.globals.music;
+    // scene.load.audio('shootSound', 'assets/audio/bullet.wav');
+    // scene.load.audio('health', 'assets/audio/health.wav');
+
   }
 
+  // preload(){
+  //   this.load.audio('shootSound', 'assets/audio/missile.ogg');
+
+  // }
   setVelocityY(velocity) {
     super.setVelocityY(velocity);
   }
@@ -52,7 +62,13 @@ class Player extends Entity {
 
   shootBullet(number) {
     const bullet = new Bullet(this.scene, number );
+
     bullet.play(`bullet${number}_anim`);
+    // if (this.scene.sys.game.globals.music.soundOn) {
+
+    // this.scene.sound.play('shootSound', { volume: 1 }); // Adjust volume as needed
+    // }
+    this.soundManager.playBulletSound();
   }
 
   setPhysics(scene) {

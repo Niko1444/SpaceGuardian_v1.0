@@ -2,7 +2,7 @@ import Phaser from "phaser";
 import config from "../config/config.js";
 import gameSettings from "../config/gameSettings.js";
 import DamageNumber from "./ui/DamageNumber.js";
-import HPBar from "./ui/HPBar.js";
+import soundManager from "../manager/soundManager.js";
 class Entity extends Phaser.GameObjects.Sprite {
   constructor(scene, x, y, key, health) {
     super(scene, x, y, key);
@@ -12,9 +12,13 @@ class Entity extends Phaser.GameObjects.Sprite {
     this.setData("isDead", false);
     this.hpBarWidth = 20;
     this.hpBarHeight = 5;
+    this.soundManager = new soundManager(scene);
 
     this.scene.physics.world.enableBody(this, 0);
     this.scene.add.existing(this);
+    // this.music = this.sys.game.globals.music;
+    // scene.load.audio('explosionSound', 'assets/audio/explosion.mp3');
+
   }
 
   updateHealthBarValue(health, maxHealth) {
@@ -31,6 +35,10 @@ class Entity extends Phaser.GameObjects.Sprite {
       this.body.enable = false;
 
       this.setTexture("explosion_texture");
+      // if (this.scene.sys.game.globals.music.soundOn) {
+      // this.scene.sound.play('explosionSound', { volume: 1 }); // Adjust volume as needed
+      // }
+      this.soundManager.playExplosionSound();
       this.play("explosion_anim");
 
       if (this.shootTimer !== undefined) {
@@ -53,6 +61,8 @@ class Entity extends Phaser.GameObjects.Sprite {
         },
         this
       );
+        // this.scene.sfx.explosion.play();
+
       this.setData("isDead", true);
     }
   }
