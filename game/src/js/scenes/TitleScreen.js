@@ -11,7 +11,7 @@ class TitleScreen extends Phaser.Scene {
   }
 
   preload() {
-    this.load.audio('main_menu_music', 'assets/audio/backgroundMusic.mp3');
+    this.load.audio("main_menu_music", "assets/audio/backgroundMusic.mp3");
 
     this.load.image(
       "background",
@@ -46,7 +46,10 @@ class TitleScreen extends Phaser.Scene {
   create() {
     this.music = this.sys.game.globals.music;
     if (this.music.musicOn === true && this.music.bgMusicPlaying === false) {
-      this.bgMusic = this.sound.add('main_menu_music', { volume: 0.6, loop: true });
+      this.bgMusic = this.sound.add("main_menu_music", {
+        volume: 0.6,
+        loop: true,
+      });
       this.bgMusic.play();
       this.music.bgMusicPlaying = true;
       this.sys.game.globals.bgMusic = this.bgMusic;
@@ -133,7 +136,7 @@ class TitleScreen extends Phaser.Scene {
     );
     this.button_play.setInteractive();
     this.button_play.on("pointerdown", () => {
-        this.scene.start("choosePlayer");
+      this.scene.start("choosePlayer");
     });
     this.button_play.on("pointerover", () => {
       this.button_play.setTexture("button_hover");
@@ -141,10 +144,8 @@ class TitleScreen extends Phaser.Scene {
     this.button_play.on("pointerout", () => {
       this.button_play.setTexture("button_play");
     });
-    }
-    update(){
-      
   }
-    
+
+  update() {}
 }
 export default TitleScreen;
