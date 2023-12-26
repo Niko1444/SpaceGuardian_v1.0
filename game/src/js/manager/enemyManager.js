@@ -74,15 +74,15 @@ class EnemyManager {
   spawnRandomEnemy(number) {
     const randomX = this.getRandomBugX();
     if (number == 1) {
-      var newEnemy = new Bug1(this.scene, randomX, -20, 30);
+      var newEnemy = new Bug1(this.scene, randomX, -20, 300);
       newEnemy.play("bug1_anim");
       this.addEnemy(newEnemy);
     } else if (number == 3) {
-      var newEnemy = new Bug3(this.scene, randomX, -20, 30);
+      var newEnemy = new Bug3(this.scene, randomX, -20, 300);
       newEnemy.play("bug3_anim");
       this.addEnemy(newEnemy);
     } else {
-      var newEnemy = new Bug5(this.scene, randomX, -20, 30);
+      var newEnemy = new Bug5(this.scene, randomX, -20, 300);
       newEnemy.play("bug5_anim");
       this.addEnemy(newEnemy);
     }
@@ -126,7 +126,7 @@ class EnemyManager {
 
   // FOR TUTORIAL SCREEN
   addEnemyTutorial() {
-    var newBug = new Bug1(this.scene, config.width / 2, -20, 30);
+    var newBug = new Bug1(this.scene, config.width / 2, -20, 300);
     newBug.play("bug1_anim");
     this.addEnemy(newBug);
     this.addEnemyForOnce(newBug);
@@ -143,7 +143,7 @@ class EnemyManager {
       const bugY = centerY + radius * Math.sin(angle);
 
       // Create a new bug
-      const newBug = new Bug1(this.scene, bugX, -20, 30);
+      const newBug = new Bug1(this.scene, bugX, -20, 300);
       newBug.play("bug1_anim");
       this.addEnemyForOnce(newBug);
       finalWaveBugs.push(newBug);
