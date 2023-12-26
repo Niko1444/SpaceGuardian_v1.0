@@ -13,7 +13,7 @@ class Bug3 extends Entity {
     this.maxHealth = health;
     this.hpBarWidth = 20;
     this.hpBarHeight = 5;
-    this.damage = 200;
+    this.damage = 100;
     this.setInteractiveEntity();
 
     this.hpBar = new HPBar(

@@ -10,8 +10,8 @@ class Player extends Entity {
     this.body.velocity.y = gameSettings.playerSpeed;
     this.health = health;
     this.maxHealth = health;
-    this.damage = 100;
-    this.bulletDamage = 10;
+    this.damage = 300;
+    this.bulletDamage = 100;
     this.speed = gameSettings.playerSpeed;
 
     this.shield = null;
@@ -21,10 +21,11 @@ class Player extends Entity {
     this.body.velocity.y = this.speed;
     this.bulletSize = 1.2;
 
-    this.fireRate = 400;
+    this.fireRate = 700; // default 700
     this.lastShootTime = 0;
     this.lifestealRate = 0;
-    this.numberOfBullets = 2;
+    this.numberOfBullets = 1;
+    this.bulletSpeed = 400;
 
     this.hpBar = new HPBar2(
       scene,
@@ -91,6 +92,7 @@ class Player extends Entity {
 
         const bullet = new Bullet(this.scene, number);
         bullet.damage = this.bulletDamage;
+        bullet.body.velocity.y = -this.bulletSpeed;
         bullet.setPosition(this.x + offsetX, this.y + offsetY);
         bullet.play(`bullet${number}_anim`);
       }
