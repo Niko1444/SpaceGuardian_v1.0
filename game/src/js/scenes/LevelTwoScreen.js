@@ -42,10 +42,6 @@ class LevelTwoScreen extends Phaser.Scene {
   }
 
   create() {
-    // Creat GUI for PlayingScreen ( Changes in BG except Player and Enemy )
-    this.guiManager = new GuiManager(this);
-    this.guiManager.createBackground("background_texture_01");
-
     // if (!(this.anims && this.anims.exists && this.anims.exists("player_anim"))) {
     this.anims.create({
       key: "player_anim",

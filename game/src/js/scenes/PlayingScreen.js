@@ -168,13 +168,13 @@ class PlayingScreen extends Phaser.Scene {
     this.time.delayedCall(
       21000,
       () => {
-    this.enemyManager.addEnemy(this.bug3_1);
-    this.enemyManager.addEnemy(this.bug3_2);
-    this.enemyManager.addEnemy(this.bug3_3);
-    this.enemyManager.addEnemy(this.bug3_4);
-    this.enemyManager.addEnemy(this.bug5_1);
-    this.enemyManager.addEnemy(this.bug5_2);
-    this.enemyManager.addEnemy(this.bug5_3);
+    this.enemyManager.addEnemyForOnce(this.bug3_1);
+    this.enemyManager.addEnemyForOnce(this.bug3_2);
+    this.enemyManager.addEnemyForOnce(this.bug3_3);
+    this.enemyManager.addEnemyForOnce(this.bug3_4);
+    this.enemyManager.addEnemyForOnce(this.bug5_1);
+    this.enemyManager.addEnemyForOnce(this.bug5_2);
+    this.enemyManager.addEnemyForOnce(this.bug5_3);
   },
   null,
   this
