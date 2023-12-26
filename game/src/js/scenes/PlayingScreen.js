@@ -16,7 +16,7 @@ import GuiManager from "../manager/GuiManager.js";
 import UtilitiesManager from "../manager/UtilitiesManager";
 import buttonManager from "../manager/buttonManager";
 import ProjectileManager from "../manager/ProjectileManager";
-import UpgradeManager from "../manager/UpgradeManager";
+import UpgradeManager from "../manager/UpgradeManager.js";
 import Music from "../mode/Music.js";
 import soundManager from "../manager/soundManager.js";
 const BACKGROUND_SCROLL_SPEED = 0.5;
@@ -139,18 +139,18 @@ class PlayingScreen extends Phaser.Scene {
       config.width / 2,
       config.height - 100,
       `player_texture_${this.selectedPlayerIndex}`,
-      1000
+      800
     );
     this.player.play("player_anim");
 
     // Spawn the Enemies
-    this.bug3_1 = new Bug3(this, 150, 200, 30);
+    this.bug3_1 = new Bug3(this, 150, 200, 300);
     this.bug3_1.play("bug3_anim");
-    this.bug3_2 = new Bug3(this, 100, 100, 30);
+    this.bug3_2 = new Bug3(this, 100, 100, 300);
     this.bug3_2.play("bug3_anim");
-    this.bug5 = new Bug5(this, 300, 80, 30);
+    this.bug5 = new Bug5(this, 300, 80, 300);
     this.bug5.play("bug5_anim");
-    this.bug1 = new Bug1(this, 200, 180, 30);
+    this.bug1 = new Bug1(this, 200, 180, 300);
     this.bug1.play("bug1_anim");
 
     // Create text for level 1
@@ -214,7 +214,7 @@ class PlayingScreen extends Phaser.Scene {
     this.time.addEvent({
       delay: 5000,
       callback: () => {
-        this.UtilitiesManager.addUtilitiesForPlayingScreen(3, 4);
+        this.UtilitiesManager.addUtilitiesForPlayingScreen(2, 2);
         this.collideManager1 = new CollideManager(
           this,
           this.player,
@@ -318,7 +318,7 @@ class PlayingScreen extends Phaser.Scene {
       enemy.updateHealthBarPosition();
     });
 
-    if (Phaser.Input.Keyboard.JustDown(this.spacebar)) {
+    if (this.spacebar.isDown) {
       this.player.shootBullet(this.selectedPlayerIndex);
       // this.scene.sfx.missile.play();
     }
@@ -340,6 +340,7 @@ class PlayingScreen extends Phaser.Scene {
 
   gameOver() {
     this.events.once("shutdown", this.shutdown, this);
+    this.scene.stop("upgradeScreen");
     this.scene.start("gameOver");
   }
 

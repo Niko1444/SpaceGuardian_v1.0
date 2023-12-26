@@ -43,7 +43,6 @@ class TutorialScreen extends Phaser.Scene {
   }
 
   create() {
-
     // Create player animations
     this.anims.create({
       key: "player_anim",
@@ -112,13 +111,32 @@ class TutorialScreen extends Phaser.Scene {
 
     this.guiManager = new GuiManager(this);
     this.guiManager.createBackground("background_texture_01");
-    this.guiManager.createTutorialText("Press Space to shoot", config.width / 2, config.height / 2 - 60);
-    this.guiManager.createTutorialText("Press Directions to move", config.width / 2, config.height / 2 - 30,);
+    this.guiManager.createTutorialText(
+      "Press Space to shoot",
+      config.width / 2,
+      config.height / 2 - 60
+    );
+    this.guiManager.createTutorialText(
+      "Press Directions to move",
+      config.width / 2,
+      config.height / 2 - 30
+    );
 
-    this.time.delayedCall(8000, () => {
-      this.guiManager.createSimpleText(config.width / 2, config.height / 2,
-        "Ready? Press enter to start", "25px", "#ffffff", 0.5);
-    }, null, this);
+    this.time.delayedCall(
+      8000,
+      () => {
+        this.guiManager.createSimpleText(
+          config.width / 2,
+          config.height / 2,
+          "Ready? Press enter to start",
+          "25px",
+          "#ffffff",
+          0.5
+        );
+      },
+      null,
+      this
+    );
 
     // Spawn the Player
     this.player = new Player(
@@ -139,8 +157,7 @@ class TutorialScreen extends Phaser.Scene {
     // Create managers
     // Keyboard
     this.keyboardManager = new KeyboardManager(this);
-    // Upgrade
-    this.upgradeManager = new UpgradeManager(this);
+
     // Player
     this.playerManager = new PlayerManager(
       this,
@@ -152,7 +169,6 @@ class TutorialScreen extends Phaser.Scene {
     // Enemy
     this.enemyManager = new EnemyManager(this);
     this.enemyManager.addEnemy(this.newBug);
-
 
     // Create keyboard inputs
     this.spacebar = this.input.keyboard.addKey(
@@ -173,6 +189,9 @@ class TutorialScreen extends Phaser.Scene {
       this.UtilitiesManager.shieldPacks,
       this.shield
     );
+
+    // Score System
+    this.upgradeManager = new UpgradeManager(this);
 
     // this.events.once("shutdown", this.shutdown, this);
 

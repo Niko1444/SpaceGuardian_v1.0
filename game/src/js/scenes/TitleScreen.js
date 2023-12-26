@@ -64,11 +64,11 @@ class TitleScreen extends Phaser.Scene {
     // Create "SPACE" text
     const spaceText = this.add.text(
       config.width / 2,
-      config.height / 2 - 100,
+      config.height / 2 - 130,
       "SPACE",
       {
         fontFamily: "Pixelify Sans",
-        fontSize: "64px",
+        fontSize: "100px",
         color: "#F3F8FF", // Set the color for "SPACE"
         align: "center",
       }
@@ -83,7 +83,7 @@ class TitleScreen extends Phaser.Scene {
       {
         fontFamily: "Pixelify Sans",
         color: "#F3F8FF",
-        fontSize: "64px",
+        fontSize: "100px",
         align: "center",
       }
     );
@@ -94,7 +94,7 @@ class TitleScreen extends Phaser.Scene {
     bottomLeftImage.setOrigin(0, 1); // Set the origin to the bottom left
 
     // Optionally, you can set the scale of the image
-    bottomLeftImage.setScale(0.2); // Adjust the scale as needed
+    bottomLeftImage.setScale(0.32); // Adjust the scale as needed
 
     // Tween animation for the rainbow effect on "GUARDIAN"
     this.tweens.add({

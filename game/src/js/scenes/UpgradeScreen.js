@@ -1,9 +1,10 @@
 import Phaser from "phaser";
 import config from "../config/config";
-
+import gameSettings from "../config/gameSettings";
 class UpgradeScreen extends Phaser.Scene {
   constructor() {
     super("upgradeScreen");
+    // change for commit
   }
 
   preload() {
@@ -11,126 +12,145 @@ class UpgradeScreen extends Phaser.Scene {
     this.load.image("upgrade1", "assets/images/upgrades/upgrade_01.png");
     this.load.image("upgrade2", "assets/images/upgrades/upgrade_02.png");
     this.load.image("upgrade3", "assets/images/upgrades/upgrade_03.png");
+    this.load.image("upgrade4", "assets/images/upgrades/upgrade_04.png");
+    this.load.image("upgrade5", "assets/images/upgrades/upgrade_05.png");
+    this.load.image("upgrade6", "assets/images/upgrades/upgrade_06.png");
+    this.load.image("upgrade7", "assets/images/upgrades/upgrade_07.png");
+    this.load.image("upgrade8", "assets/images/upgrades/upgrade_08.png");
   }
 
   create() {
-    this.cameras.main.setAlpha(0.8);
+    this.cameras.main.setAlpha(0.9);
 
     const middleX = config.width / 2;
     const middleY = (config.height - 100) / 2;
 
     const rowGap = 150;
 
-    // Upgrade 1
-    const upgrade1Rect = this.add.rectangle(
-      middleX,
-      middleY - rowGap,
-      300,
-      100,
-      0x000000
-    );
-    upgrade1Rect.setInteractive();
+    // Create an array of available upgrades
+    const availableUpgrades = [
+      "upgrade1",
+      "upgrade2",
+      "upgrade3",
+      "upgrade4",
+      "upgrade5",
+      "upgrade6",
+      "upgrade7",
+      "upgrade8",
+    ];
 
-    const upgrade1Image = this.add.sprite(
-      middleX - 100,
-      middleY - rowGap,
-      "upgrade1"
-    );
-    upgrade1Image.setOrigin(0.5, 0.5);
+    // Shuffle the array to randomize the upgrades
+    Phaser.Math.RND.shuffle(availableUpgrades);
 
-    const upgrade1Text = this.add.text(
-      middleX - 50,
-      middleY - rowGap,
-      "Increase Health",
-      {
-        fontSize: "16px",
-        fontFamily: "Pixelify Sans",
-        fill: "#fff",
-        align: "center",
-      }
-    );
-    upgrade1Text.setOrigin(0, 0.5);
+    for (let i = 0; i < 3; i++) {
+      const upgradeRect = this.add.rectangle(
+        middleX,
+        middleY - 150 + i * rowGap,
+        400,
+        80,
+        0x000000
+      );
+      upgradeRect.setInteractive();
 
-    // Upgrade 2
-    const upgrade2Rect = this.add.rectangle(
-      middleX,
-      middleY,
-      300,
-      100,
-      0x000000
-    );
-    upgrade2Rect.setInteractive();
+      const upgradeImage = this.add.sprite(
+        middleX - 150,
+        middleY - 150 + i * rowGap,
+        availableUpgrades[i]
+      );
+      upgradeImage.setOrigin(0.5, 0.5);
 
-    const upgrade2Image = this.add.sprite(middleX - 100, middleY, "upgrade2");
-    upgrade2Image.setOrigin(0.5, 0.5);
+      const upgradeText = this.add.text(
+        middleX - 70,
+        middleY - 150 + i * rowGap,
+        this.getUpgradeText(availableUpgrades[i]),
+        {
+          fontSize: "16px",
+          fontFamily: "Pixelify Sans",
+          fill: "#fff",
+          align: "center",
+        }
+      );
+      upgradeText.setOrigin(0, 0.5);
 
-    const upgrade2Text = this.add.text(
-      middleX - 50,
-      middleY,
-      "Increase Speed",
-      {
-        fontSize: "16px",
-        fontFamily: "Pixelify Sans",
-        fill: "#fff",
-        align: "center",
-      }
-    );
-    upgrade2Text.setOrigin(0, 0.5);
+      // Event listener for upgrades
+      upgradeRect.on("pointerover", () => {
+        upgradeRect.setFillStyle(0x333333);
+      });
+      upgradeRect.on("pointerout", () => {
+        upgradeRect.setFillStyle(0x000000);
+      });
 
-    // Upgrade 3
-    const upgrade3Rect = this.add.rectangle(
-      middleX,
-      middleY + rowGap,
-      300,
-      100,
-      0x000000
-    );
-    upgrade3Rect.setInteractive();
+      upgradeRect.on("pointerdown", () =>
+        this.handleUpgradeChoice(availableUpgrades[i])
+      );
+    }
+  }
 
-    const upgrade3Image = this.add.sprite(
-      middleX - 100,
-      middleY + rowGap,
-      "upgrade3"
-    );
-    upgrade3Image.setOrigin(0.5, 0.5);
-
-    const upgrade3Text = this.add.text(
-      middleX - 50,
-      middleY + rowGap,
-      "Increase Damage",
-      {
-        fontSize: "16px",
-        fontFamily: "Pixelify Sans",
-        fill: "#fff",
-        align: "center",
-      }
-    );
-    upgrade3Text.setOrigin(0, 0.5);
-
-    // Event listener for upgrade123
-    upgrade1Rect.on("pointerdown", () => this.handleUpgradeChoice("upgrade1"));
-    upgrade2Rect.on("pointerdown", () => this.handleUpgradeChoice("upgrade2"));
-    upgrade3Rect.on("pointerdown", () => this.handleUpgradeChoice("upgrade3"));
+  getUpgradeText(upgradeType) {
+    switch (upgradeType) {
+      case "upgrade1":
+        return "Hard As Rock (+200 HP)";
+      case "upgrade2":
+        return "Wormhole Engine (+100 SPD)";
+      case "upgrade3":
+        return "Sharp Eye Bullseye (+10 DMG)";
+      case "upgrade4":
+        return "Stained Warrior (UNKNOWN)";
+      case "upgrade5":
+        return "Energy Fluid (+Lifesteal)";
+      case "upgrade6":
+        return "Bullet Barrage (+1 Bullet)";
+      case "upgrade7":
+        return "Ratatata (+Fire Rate)";
+      case "upgrade8":
+        return "Zoom Zoom (+Bullet Speed)";
+      default:
+        return "";
+    }
   }
 
   handleUpgradeChoice(choice) {
     // Handle the upgrade choice here
+    const playGameScene = this.scene.get("playGame");
+    const player = playGameScene.player;
+
     switch (choice) {
       case "upgrade1":
-        // Implement logic for upgrade 1 (increase health)
-        console.log("Upgrading Health");
+        player.maxHealth += 200;
+        player.health += 200;
         break;
 
       case "upgrade2":
-        // Implement logic for upgrade 2 (increase damage)
-        console.log("Upgrading Speed");
+        player.speed += 50;
         break;
 
       case "upgrade3":
-        // Implement logic for upgrade 3 (other upgrade)
-        console.log("Upgrading Damage");
+        player.bulletDamage += 100;
+        break;
+
+      case "upgrade4":
+        player.takeDamage(player.health * 0.9);
+        player.bulletDamage += 100;
+        player.bulletSize *= 1.5;
+        break;
+
+      case "upgrade5":
+        player.lifestealRate += 50;
+        break;
+
+      case "upgrade6":
+        player.numberOfBullets += 1;
+        break;
+
+      case "upgrade7":
+        player.fireRate -= 100;
+        break;
+
+      case "upgrade8":
+        player.bulletSpeed += 100;
         break;
     }
+
     // Close the upgrade scene and resume the parent scene
     this.scene.stop();
     this.scene.resume("playGame");

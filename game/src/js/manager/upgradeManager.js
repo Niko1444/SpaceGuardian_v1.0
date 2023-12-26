@@ -11,6 +11,7 @@ class UpgradeManager {
 
   createScoreText() {
     this.scoreText = this.scene.add.text(10, 10, `Score: ${this.playerScore}`, {
+      fontFamily: "Pixelify Sans",
       fontSize: "32px",
       fill: "#fff",
     });
@@ -20,7 +21,7 @@ class UpgradeManager {
     this.playerScore += score;
     this.displayScore();
 
-    if (this.playerScore % 50 == 0) {
+    if (this.playerScore % 50 == 0 && this.scene.player.health != 0) {
       this.rewardEach100Score();
     }
   }

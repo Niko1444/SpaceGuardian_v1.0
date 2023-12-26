@@ -18,16 +18,16 @@ class PlayerManager {
     let animationKey = "player_anim";
 
     if (this.cursorKeys.up.isDown) {
-      yVelocity = -gameSettings.playerSpeed;
+      yVelocity = -this.player.speed;
     } else if (this.cursorKeys.down.isDown) {
-      yVelocity = gameSettings.playerSpeed;
+      yVelocity = this.player.speed;
     }
 
     if (this.cursorKeys.left.isDown) {
-      xVelocity = -gameSettings.playerSpeed;
+      xVelocity = -this.player.speed;
       animationKey = "player_anim_left";
     } else if (this.cursorKeys.right.isDown) {
-      xVelocity = gameSettings.playerSpeed;
+      xVelocity = this.player.speed;
       animationKey = "player_anim_right";
     }
 
@@ -35,13 +35,13 @@ class PlayerManager {
     if (this.cursorKeys.up.isDown) {
       if (this.cursorKeys.left.isDown) {
         // Diagonal movement: up + left
-        xVelocity = -gameSettings.playerSpeed * 0.7071;
-        yVelocity = -gameSettings.playerSpeed * 0.7071;
+        xVelocity = -this.player.speed * 0.7071;
+        yVelocity = -this.player.speed * 0.7071;
         animationKey = "player_anim_left_diagonal";
       } else if (this.cursorKeys.right.isDown) {
         // Diagonal movement: up + right
-        xVelocity = gameSettings.playerSpeed * 0.7071;
-        yVelocity = -gameSettings.playerSpeed * 0.7071;
+        xVelocity = this.player.speed * 0.7071;
+        yVelocity = -this.player.speed * 0.7071;
         animationKey = "player_anim_right_diagonal";
       }
     }
@@ -50,13 +50,13 @@ class PlayerManager {
     if (this.cursorKeys.down.isDown) {
       if (this.cursorKeys.left.isDown) {
         // Diagonal movement: down + left
-        xVelocity = -gameSettings.playerSpeed * 0.7071;
-        yVelocity = gameSettings.playerSpeed * 0.7071;
+        xVelocity = -this.player.speed * 0.7071;
+        yVelocity = this.player.speed * 0.7071;
         animationKey = "player_anim_left_diagonal";
       } else if (this.cursorKeys.right.isDown) {
         // Diagonal movement: down + right
-        xVelocity = gameSettings.playerSpeed * 0.7071;
-        yVelocity = gameSettings.playerSpeed * 0.7071;
+        xVelocity = this.player.speed * 0.7071;
+        yVelocity = this.player.speed * 0.7071;
         animationKey = "player_anim_right_diagonal";
       }
     }
