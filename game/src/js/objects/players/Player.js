@@ -3,7 +3,7 @@ import Bullet from "../projectiles/Bullet";
 import gameSettings from "../../config/gameSettings";
 import HPBar from "../ui/HPBar";
 import HPBar2 from "../ui/HPBar2";
-
+import soundManager from "../../manager/soundManager";
 class Player extends Entity {
   constructor(scene, x, y, key, health) {
     super(scene, x, y, key, health);
@@ -26,6 +26,8 @@ class Player extends Entity {
     this.lifestealRate = 0;
     this.numberOfBullets = 1;
     this.bulletSpeed = 400;
+    this.soundManager = new soundManager(scene);
+
 
     this.hpBar = new HPBar2(
       scene,
@@ -42,6 +44,10 @@ class Player extends Entity {
     this.setDepth(1);
   }
 
+  // preload(){
+  //   this.load.audio('shootSound', 'assets/audio/missile.ogg');
+
+  // }
   setVelocityY(velocity) {
     super.setVelocityY(velocity);
   }
@@ -94,9 +100,15 @@ class Player extends Entity {
         bullet.damage = this.bulletDamage;
         bullet.body.velocity.y = -this.bulletSpeed;
         bullet.setPosition(this.x + offsetX, this.y + offsetY);
-        bullet.play(`bullet${number}_anim`);
+    
+    bullet.play(`bullet${number}_anim`);
       }
     }
+    // if (this.scene.sys.game.globals.music.soundOn) {
+
+    // this.scene.sound.play('shootSound', { volume: 1 }); // Adjust volume as needed
+    // }
+    this.soundManager.playBulletSound();
   }
 
   setPhysics(scene) {

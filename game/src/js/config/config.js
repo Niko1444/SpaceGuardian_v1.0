@@ -18,6 +18,7 @@ const gameWidth = 60 * rem;
 const gameHeight = 95 * rem;
 
 const config = {
+  type: Phaser.AUTO,
   pauseGame: false,
   width: gameWidth,
   height: gameHeight,
@@ -26,8 +27,9 @@ const config = {
     TitleScreen,
     LoadingScreen,
     PlayingScreen,
-    GameOver,
     PauseScreen,
+    GameOver,
+    // PauseScreen,
     ChoosePLayer,
     UpgradeScreen,
     TutorialScreen,
