@@ -15,6 +15,7 @@ import UtilitiesManager from "../manager/UtilitiesManager";
 import buttonManager from "../manager/buttonManager";
 import ProjectileManager from "../manager/ProjectileManager";
 import UpgradeManager from "../manager/UpgradeManager.js";
+import soundManager from "../manager/soundManager.js";
 
 const BACKGROUND_SCROLL_SPEED = 0.5;
 class LevelThreeScreen extends Phaser.Scene {
@@ -45,72 +46,84 @@ class LevelThreeScreen extends Phaser.Scene {
     this.guiManager = new GuiManager(this);
     this.guiManager.createBackground("background_texture_02");
 
-    // if (!(this.anims && this.anims.exists && this.anims.exists("player_anim"))) {
-    this.anims.create({
-      key: "player_anim",
-      frames: this.anims.generateFrameNumbers(
-        `player_texture_${this.selectedPlayerIndex}`,
-        {
-          start: 0,
-          end: 3,
-        }
-      ),
-      frameRate: 30,
-      repeat: -1,
-    });
+    this.music = this.sys.game.globals.music;
+    if (this.music.musicOn === true) {
+      this.sys.game.globals.bgMusic.stop();
+      this.bgMusic = this.sound.add("desertMusic", { volume: 0.6, loop: true });
+      this.bgMusic.play();
+      this.music.bgMusicPlaying = true;
+      this.sys.game.globals.bgMusic = this.bgMusic;
+      this.sys.game.globals.bgMusic.play();
+    }
 
-    this.anims.create({
-      key: "player_anim_left",
-      frames: this.anims.generateFrameNumbers(
-        `player_texture_${this.selectedPlayerIndex}`,
-        {
-          start: 4,
-          end: 7,
-        }
-      ),
-      frameRate: 30,
-      repeat: -1,
-    });
+    if (
+      !(this.anims && this.anims.exists && this.anims.exists("player_anim"))
+    ) {
+      this.anims.create({
+        key: "player_anim",
+        frames: this.anims.generateFrameNumbers(
+          `player_texture_${this.selectedPlayerIndex}`,
+          {
+            start: 0,
+            end: 3,
+          }
+        ),
+        frameRate: 30,
+        repeat: -1,
+      });
 
-    this.anims.create({
-      key: "player_anim_left_diagonal",
-      frames: this.anims.generateFrameNumbers(
-        `player_texture_${this.selectedPlayerIndex}`,
-        {
-          start: 8,
-          end: 11,
-        }
-      ),
-      frameRate: 30,
-      repeat: -1,
-    });
+      this.anims.create({
+        key: "player_anim_left",
+        frames: this.anims.generateFrameNumbers(
+          `player_texture_${this.selectedPlayerIndex}`,
+          {
+            start: 4,
+            end: 7,
+          }
+        ),
+        frameRate: 30,
+        repeat: -1,
+      });
 
-    this.anims.create({
-      key: "player_anim_right",
-      frames: this.anims.generateFrameNumbers(
-        `player_texture_${this.selectedPlayerIndex}`,
-        {
-          start: 12,
-          end: 15,
-        }
-      ),
-      frameRate: 30,
-      repeat: -1,
-    });
+      this.anims.create({
+        key: "player_anim_left_diagonal",
+        frames: this.anims.generateFrameNumbers(
+          `player_texture_${this.selectedPlayerIndex}`,
+          {
+            start: 8,
+            end: 11,
+          }
+        ),
+        frameRate: 30,
+        repeat: -1,
+      });
 
-    this.anims.create({
-      key: "player_anim_right_diagonal",
-      frames: this.anims.generateFrameNumbers(
-        `player_texture_${this.selectedPlayerIndex}`,
-        {
-          start: 16,
-          end: 19,
-        }
-      ),
-      frameRate: 30,
-      repeat: -1,
-    });
-    // }
+      this.anims.create({
+        key: "player_anim_right",
+        frames: this.anims.generateFrameNumbers(
+          `player_texture_${this.selectedPlayerIndex}`,
+          {
+            start: 12,
+            end: 15,
+          }
+        ),
+        frameRate: 30,
+        repeat: -1,
+      });
+
+      this.anims.create({
+        key: "player_anim_right_diagonal",
+        frames: this.anims.generateFrameNumbers(
+          `player_texture_${this.selectedPlayerIndex}`,
+          {
+            start: 16,
+            end: 19,
+          }
+        ),
+        frameRate: 30,
+        repeat: -1,
+      });
+    }
 
     this.player = new Player(
       this,
@@ -125,30 +138,30 @@ class LevelThreeScreen extends Phaser.Scene {
     this.time.delayedCall(
       18000,
       () => {
-    // chasing enemies
-    this.bug5_1 = new Bug5(this, 30, -20, 30);
-    this.bug5_2 = new Bug5(this, 120, -20, 30);
-    this.bug5_3 = new Bug5(this, 210, -20, 30);
-    this.bug5_4 = new Bug5(this, 300, -20, 30);
-    this.bug5_5 = new Bug5(this, 390, -20, 30);
-    this.bug5_6 = new Bug5(this, 480, -20, 30);
-    this.bug5_7 = new Bug5(this, 570, -20, 30);
-  },
-  null,
-  this
-);
+        // chasing enemies
+        this.bug5_1 = new Bug5(this, 30, -20, 30);
+        this.bug5_2 = new Bug5(this, 120, -20, 30);
+        this.bug5_3 = new Bug5(this, 210, -20, 30);
+        this.bug5_4 = new Bug5(this, 300, -20, 30);
+        this.bug5_5 = new Bug5(this, 390, -20, 30);
+        this.bug5_6 = new Bug5(this, 480, -20, 30);
+        this.bug5_7 = new Bug5(this, 570, -20, 30);
+      },
+      null,
+      this
+    );
 
     // Create text for level 3
-    this.createText("Level 3", config.width/2, config.height/2);
+    this.createText("Level 3", config.width / 2, config.height / 2);
 
     this.time.delayedCall(
       15000,
       () => {
-    this.createText("Try to survive", config.width/2, config.height/2);
-  },
-  null,
-  this
-);
+        this.createText("Try to survive", config.width / 2, config.height / 2);
+      },
+      null,
+      this
+    );
 
     // Spawn the Shield
     this.shield = new Shield(this, this.player);
@@ -174,18 +187,18 @@ class LevelThreeScreen extends Phaser.Scene {
     this.time.delayedCall(
       18000,
       () => {
-    this.enemyManager.addEnemyForOnce(this.bug5_1);
-    this.enemyManager.addEnemyForOnce(this.bug5_2);
-    this.enemyManager.addEnemyForOnce(this.bug5_3);
-    this.enemyManager.addEnemyForOnce(this.bug5_4);
-    this.enemyManager.addEnemyForOnce(this.bug5_5);
-    this.enemyManager.addEnemyForOnce(this.bug5_6);
-    this.enemyManager.addEnemyForOnce(this.bug5_7);
-  },
-  null,
-  this
-);
-  
+        this.enemyManager.addEnemyForOnce(this.bug5_1);
+        this.enemyManager.addEnemyForOnce(this.bug5_2);
+        this.enemyManager.addEnemyForOnce(this.bug5_3);
+        this.enemyManager.addEnemyForOnce(this.bug5_4);
+        this.enemyManager.addEnemyForOnce(this.bug5_5);
+        this.enemyManager.addEnemyForOnce(this.bug5_6);
+        this.enemyManager.addEnemyForOnce(this.bug5_7);
+      },
+      null,
+      this
+    );
+
     this.UtilitiesManager = new UtilitiesManager(this);
     // Add a delayed event to spawn utilities after a delay
     this.time.addEvent({
@@ -270,19 +283,19 @@ class LevelThreeScreen extends Phaser.Scene {
     this.shield.updatePosition(this.player);
 
     this.time.addEvent({
-    delay: 18000,
+      delay: 18000,
       callback: () => {
-    this.bug5_1.chasePlayer(this.player, 200);
-    this.bug5_2.chasePlayer(this.player, 240);
-    this.bug5_3.chasePlayer(this.player, 280);
-    this.bug5_4.chasePlayer(this.player, 300);
-    this.bug5_5.chasePlayer(this.player, 320);
-    this.bug5_6.chasePlayer(this.player, 350);
-    this.bug5_7.chasePlayer(this.player, 400);
-  },
-  callbackScope: this,
-  });
-}
+        this.bug5_1.chasePlayer(this.player, 200);
+        this.bug5_2.chasePlayer(this.player, 240);
+        this.bug5_3.chasePlayer(this.player, 280);
+        this.bug5_4.chasePlayer(this.player, 300);
+        this.bug5_5.chasePlayer(this.player, 320);
+        this.bug5_6.chasePlayer(this.player, 350);
+        this.bug5_7.chasePlayer(this.player, 400);
+      },
+      callbackScope: this,
+    });
+  }
 
   gameOver() {
     this.events.once("shutdown", this.shutdown, this);
@@ -346,19 +359,19 @@ class LevelThreeScreen extends Phaser.Scene {
     );
   }
 
-  goToNextLevel() {  
-    this.createText("Level completed", config.width/2, config.height/2 + 30);
-    this.createText("Press Enter to continue", config.width/2, config.height/2 - 30);
-  
+  goToNextLevel() {
+    this.createText("Level completed", config.width / 2, config.height / 2 + 30);
+    this.createText("Press Enter to continue", config.width / 2, config.height / 2 - 30);
+
     // Check for Enter key press continuously in the update loop
     this.input.keyboard.on('keydown-ENTER', this.handleEnterKey, this);
   }
-  
-  handleEnterKey() {  
+
+  handleEnterKey() {
     this.time.delayedCall(1000, () => {
-      this.scene.start("playBoss hay gì đó", { number: this.selectedPlayerIndex });
+      this.scene.start("bossGame", { number: this.selectedPlayerIndex });
     });
-  
+
     this.input.keyboard.off('keydown-ENTER', this.handleEnterKey, this);
   }
 }
