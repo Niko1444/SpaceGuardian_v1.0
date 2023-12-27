@@ -231,6 +231,8 @@ class TutorialScreen extends Phaser.Scene {
   }
 
   startGame() {
+    this.scene.stop("upgradeScreen");
+
     this.time.delayedCall(1000, () => {
       this.scene.start("playGame", { number: this.selectedPlayerIndex });
     });
@@ -238,6 +240,7 @@ class TutorialScreen extends Phaser.Scene {
 
   gameOver() {
     this.scene.start("gameOver");
+    this.scene.stop("upgradeScreen");
     this.events.once("shutdown", this.shutdown, this);
   }
 }

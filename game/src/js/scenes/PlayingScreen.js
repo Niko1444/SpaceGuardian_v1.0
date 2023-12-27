@@ -22,6 +22,7 @@ const BACKGROUND_SCROLL_SPEED = 0.5;
 class PlayingScreen extends Phaser.Scene {
   constructor() {
     super("playGame");
+    this.callingScene = "playGame";
     this.buttonManager = null;
     this.pic;
   }
@@ -172,7 +173,7 @@ class PlayingScreen extends Phaser.Scene {
     // Create managers
     this.keyboardManager = new KeyboardManager(this);
     // Score System
-    this.upgradeManager = new UpgradeManager(this);
+    this.upgradeManager = new UpgradeManager(this, this.callingScene);
     this.playerManager = new PlayerManager(
       this,
       this.player,
@@ -468,6 +469,8 @@ class PlayingScreen extends Phaser.Scene {
   }
 
   handleEnterKey() {
+    this.scene.stop("upgradeScreen");
+
     this.time.delayedCall(1000, () => {
       this.scene.start("playLevelTwo", { number: this.selectedPlayerIndex });
     });
@@ -493,13 +496,13 @@ class PlayingScreen extends Phaser.Scene {
         // Spawn a wave of bugs after the "Final Wave" message disappears
         this.finalWaveBugs = this.enemyManager.spawnCircleOfBugsLv1(
           config.width / 2,
-          config.height / 2-300,
+          config.height / 2 - 300,
           250,
           14
         );
         this.finalWaveBugs = this.enemyManager.spawnCircleOfBugsLv1(
           config.width / 2,
-          config.height / 2-300,
+          config.height / 2 - 300,
           100,
           8
         );

@@ -324,6 +324,7 @@ class BossScreen extends Phaser.Scene {
 
   gameOver() {
     this.events.once("shutdown", this.shutdown, this);
+    this.scene.stop("upgradeScreen");
     this.scene.start("gameOver");
   }
 

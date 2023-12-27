@@ -29,6 +29,7 @@ class UpgradeManager {
 
   displayScore() {
     this.scoreText.setText(`Score: ${this.playerScore}`);
+    this.scoreText.setDepth(3);
   }
 
   rewardEach100Score(callingScene) {
