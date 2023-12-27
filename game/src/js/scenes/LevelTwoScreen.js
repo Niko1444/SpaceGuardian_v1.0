@@ -43,7 +43,9 @@ class LevelTwoScreen extends Phaser.Scene {
   }
 
   create() {
-    if (!(this.anims && this.anims.exists && this.anims.exists("player_anim"))) {
+    if (
+      !(this.anims && this.anims.exists && this.anims.exists("player_anim"))
+    ) {
       this.anims.create({
         key: "player_anim",
         frames: this.anims.generateFrameNumbers(
@@ -149,7 +151,7 @@ class LevelTwoScreen extends Phaser.Scene {
     );
 
     // Create text for level 2
-    this.createText("Level 2", config.width / 2, config.height / 2);
+    this.createText("LEVEL 2", config.width / 2, config.height / 2 - 60);
 
     // Spawn the Shield
     this.shield = new Shield(this, this.player);
@@ -157,6 +159,7 @@ class LevelTwoScreen extends Phaser.Scene {
 
     // Create managers
     this.keyboardManager = new KeyboardManager(this);
+
     // Score System
     this.upgradeManager = new UpgradeManager(this);
     this.playerManager = new PlayerManager(
@@ -166,9 +169,24 @@ class LevelTwoScreen extends Phaser.Scene {
     );
 
     this.enemyManager = new EnemyManager(this);
-    this.time.delayedCall(3000, () => this.enemyManager.spawnEnemyRowWithDelay(this, 0), null, this);
-    this.time.delayedCall(5000, () => this.enemyManager.spawnEnemyRowWithDelay(this, 0), null, this);
-    this.time.delayedCall(7000, () => this.enemyManager.spawnEnemyRowWithDelay(this, 0), null, this);
+    this.time.delayedCall(
+      3000,
+      () => this.enemyManager.spawnEnemyRowWithDelay(this, 0),
+      null,
+      this
+    );
+    this.time.delayedCall(
+      5000,
+      () => this.enemyManager.spawnEnemyRowWithDelay(this, 0),
+      null,
+      this
+    );
+    this.time.delayedCall(
+      7000,
+      () => this.enemyManager.spawnEnemyRowWithDelay(this, 0),
+      null,
+      this
+    );
 
     this.time.delayedCall(
       13000,
@@ -247,7 +265,7 @@ class LevelTwoScreen extends Phaser.Scene {
     );
     this.enter = this.input.keyboard.addKey(
       Phaser.Input.Keyboard.KeyCodes.ENTER
-    )
+    );
 
     this.collideManager = new CollideManager(
       this,
@@ -369,7 +387,6 @@ class LevelTwoScreen extends Phaser.Scene {
         this.music.bgMusicPlaying = true;
       }
     }
-
   }
 
   gameOver() {
@@ -419,6 +436,7 @@ class LevelTwoScreen extends Phaser.Scene {
   createText(key, x, y) {
     const Level2Text = this.add
       .text(x, y, key, {
+        fontFamily: "Pixelify Sans",
         fontSize: "32px",
         fill: "#ffffff",
       })
@@ -435,11 +453,19 @@ class LevelTwoScreen extends Phaser.Scene {
   }
 
   goToNextLevel() {
-    this.createText("Level completed", config.width / 2, config.height / 2 + 30);
-    this.createText("Press Enter to continue", config.width / 2, config.height / 2 - 30);
+    this.createText(
+      "LEVEL COMPLETED",
+      config.width / 2,
+      config.height / 2 - 60
+    );
+    this.createText(
+      "Press Enter to continue",
+      config.width / 2,
+      config.height / 2 - 30
+    );
 
     // Check for Enter key press continuously in the update loop
-    this.input.keyboard.on('keydown-ENTER', this.handleEnterKey, this);
+    this.input.keyboard.on("keydown-ENTER", this.handleEnterKey, this);
   }
 
   handleEnterKey() {
@@ -447,9 +473,8 @@ class LevelTwoScreen extends Phaser.Scene {
       this.scene.start("playLevelThree", { number: this.selectedPlayerIndex });
     });
 
-    this.input.keyboard.off('keydown-ENTER', this.handleEnterKey, this);
+    this.input.keyboard.off("keydown-ENTER", this.handleEnterKey, this);
   }
-
 
   startFinalWave() {
     // Display "Final Wave" text for 2 seconds

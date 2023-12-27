@@ -48,7 +48,7 @@ class PlayingScreen extends Phaser.Scene {
   }
 
   create() {
-    //------------------------ 
+    //------------------------
     if (
       !(this.anims && this.anims.exists && this.anims.exists("player_anim"))
     ) {
@@ -121,7 +121,7 @@ class PlayingScreen extends Phaser.Scene {
     // Create GUI for PlayingScreen ( Changes in BG except Player and Enemy )
     this.guiManager = new GuiManager(this);
     this.guiManager.createBackground("background_texture_01");
-    //add sound for playing screen
+    // Add sound for playing screen
     this.music = this.sys.game.globals.music;
     if (this.music.musicOn === true) {
       this.sys.game.globals.bgMusic.stop();
@@ -163,7 +163,7 @@ class PlayingScreen extends Phaser.Scene {
     );
 
     // Create text for level 1
-    this.createText("Level 1", config.width / 2, config.height / 2);
+    this.createText("LEVEL 1", config.width / 2, config.height / 2 - 60);
 
     // Spawn the Shield
     this.shield = new Shield(this, this.player);
@@ -180,9 +180,24 @@ class PlayingScreen extends Phaser.Scene {
     );
 
     this.enemyManager = new EnemyManager(this);
-    this.time.delayedCall(3000, () => this.enemyManager.spawnEnemyRowWithDelay(this, 0), null, this);
-    this.time.delayedCall(6000, () => this.enemyManager.spawnEnemyRowWithDelay(this, 0), null, this);
-    this.time.delayedCall(12000, () => this.enemyManager.spawnEnemyRowWithDelay(this, 0), null, this);
+    this.time.delayedCall(
+      3000,
+      () => this.enemyManager.spawnEnemyRowWithDelay(this, 0),
+      null,
+      this
+    );
+    this.time.delayedCall(
+      6000,
+      () => this.enemyManager.spawnEnemyRowWithDelay(this, 0),
+      null,
+      this
+    );
+    this.time.delayedCall(
+      12000,
+      () => this.enemyManager.spawnEnemyRowWithDelay(this, 0),
+      null,
+      this
+    );
 
     this.time.delayedCall(
       21000,
@@ -249,7 +264,7 @@ class PlayingScreen extends Phaser.Scene {
     );
     this.enter = this.input.keyboard.addKey(
       Phaser.Input.Keyboard.KeyCodes.ENTER
-    )
+    );
 
     this.collideManager = new CollideManager(
       this,
@@ -371,7 +386,6 @@ class PlayingScreen extends Phaser.Scene {
         this.music.bgMusicPlaying = true;
       }
     }
-
   }
 
   gameOver() {
@@ -421,6 +435,7 @@ class PlayingScreen extends Phaser.Scene {
   createText(key, x, y) {
     const Level1Text = this.add
       .text(x, y, key, {
+        fontFamily: "Pixelify Sans",
         fontSize: "32px",
         fill: "#ffffff",
       })
@@ -437,11 +452,19 @@ class PlayingScreen extends Phaser.Scene {
   }
 
   goToNextLevel() {
-    this.createText("Level completed", config.width / 2, config.height / 2 + 30);
-    this.createText("Press Enter to continue", config.width / 2, config.height / 2 - 30);
+    this.createText(
+      "LEVEL COMPLETED",
+      config.width / 2,
+      config.height / 2 - 60
+    );
+    this.createText(
+      "Press Enter to continue",
+      config.width / 2,
+      config.height / 2 - 30
+    );
 
     // Check for Enter key press continuously in the update loop
-    this.input.keyboard.on('keydown-ENTER', this.handleEnterKey, this);
+    this.input.keyboard.on("keydown-ENTER", this.handleEnterKey, this);
   }
 
   handleEnterKey() {
@@ -449,14 +472,14 @@ class PlayingScreen extends Phaser.Scene {
       this.scene.start("playLevelTwo", { number: this.selectedPlayerIndex });
     });
 
-    this.input.keyboard.off('keydown-ENTER', this.handleEnterKey, this);
+    this.input.keyboard.off("keydown-ENTER", this.handleEnterKey, this);
   }
-
 
   startFinalWave() {
     // Display "Final Wave" text for 2 seconds
     const finalWaveText = this.add
       .text(config.width / 2, config.height / 2, "Final Wave", {
+        fontFamily: "Pixelify Sans",
         fontSize: "32px",
         fill: "#ffffff",
       })

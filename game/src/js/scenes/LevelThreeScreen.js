@@ -152,12 +152,16 @@ class LevelThreeScreen extends Phaser.Scene {
     );
 
     // Create text for level 3
-    this.createText("Level 3", config.width / 2, config.height / 2);
+    this.createText("LEVEL 3", config.width / 2, config.height / 2 - 60);
 
     this.time.delayedCall(
       15000,
       () => {
-        this.createText("Try to survive", config.width / 2, config.height / 2);
+        this.createText(
+          "Try your best to survive!",
+          config.width / 2,
+          config.height / 2 - 60
+        );
       },
       null,
       this
@@ -178,9 +182,24 @@ class LevelThreeScreen extends Phaser.Scene {
     );
 
     this.enemyManager = new EnemyManager(this);
-    this.time.delayedCall(3000, () => this.enemyManager.spawnEnemyRowWithDelay(this, 0), null, this);
-    this.time.delayedCall(5000, () => this.enemyManager.spawnEnemyRowWithDelay(this, 0), null, this);
-    this.time.delayedCall(7000, () => this.enemyManager.spawnEnemyRowWithDelay(this, 0), null, this);
+    this.time.delayedCall(
+      3000,
+      () => this.enemyManager.spawnEnemyRowWithDelay(this, 0),
+      null,
+      this
+    );
+    this.time.delayedCall(
+      5000,
+      () => this.enemyManager.spawnEnemyRowWithDelay(this, 0),
+      null,
+      this
+    );
+    this.time.delayedCall(
+      7000,
+      () => this.enemyManager.spawnEnemyRowWithDelay(this, 0),
+      null,
+      this
+    );
     // this.time.delayedCall(9000, () => this.enemyManager.spawnEnemyRowWithDelay(this, 0), null, this);
     // this.time.delayedCall(11000, () => this.enemyManager.spawnEnemyRowWithDelay(this, 0), null, this);
 
@@ -231,7 +250,7 @@ class LevelThreeScreen extends Phaser.Scene {
     );
     this.enter = this.input.keyboard.addKey(
       Phaser.Input.Keyboard.KeyCodes.ENTER
-    )
+    );
 
     this.collideManager = new CollideManager(
       this,
@@ -360,11 +379,19 @@ class LevelThreeScreen extends Phaser.Scene {
   }
 
   goToNextLevel() {
-    this.createText("Level completed", config.width / 2, config.height / 2 + 30);
-    this.createText("Press Enter to continue", config.width / 2, config.height / 2 - 30);
+    this.createText(
+      "LEVEL COMPLETED",
+      config.width / 2,
+      config.height / 2 - 60
+    );
+    this.createText(
+      "Press Enter to continue",
+      config.width / 2,
+      config.height / 2 - 30
+    );
 
     // Check for Enter key press continuously in the update loop
-    this.input.keyboard.on('keydown-ENTER', this.handleEnterKey, this);
+    this.input.keyboard.on("keydown-ENTER", this.handleEnterKey, this);
   }
 
   handleEnterKey() {
@@ -372,7 +399,7 @@ class LevelThreeScreen extends Phaser.Scene {
       this.scene.start("bossGame", { number: this.selectedPlayerIndex });
     });
 
-    this.input.keyboard.off('keydown-ENTER', this.handleEnterKey, this);
+    this.input.keyboard.off("keydown-ENTER", this.handleEnterKey, this);
   }
 }
 export default LevelThreeScreen;

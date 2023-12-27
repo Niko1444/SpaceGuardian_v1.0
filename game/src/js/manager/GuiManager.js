@@ -80,7 +80,7 @@ class GuiManager {
     this.createSimpleText(
       config.width / 2,
       config.height / 2 + 30,
-      "Press T to TitleScreen",
+      "Press T back to title",
       "24px",
       "#fff",
       0.5
@@ -91,14 +91,12 @@ class GuiManager {
     // Add later
   }
 
-
   createSimpleText(x, y, key, font, color, origin) {
-    const simpleText = this.scene.add.text(
-      x,
-      y,
-      key,
-      { fontSize: font, fill: color }
-    );
+    const simpleText = this.scene.add.text(x, y, key, {
+      fontFamily: "Pixelify Sans",
+      fontSize: font,
+      fill: color,
+    });
     simpleText.setOrigin(origin);
   }
 
@@ -114,30 +112,40 @@ class GuiManager {
   }
 
   createLevelText(x, y, key, font, color) {
-    const LevelText = this.scene.add.text(
-      x,
-      y,
-      key,
-      { fontSize: font, fill: color }
-    );
+    const LevelText = this.scene.add.text(x, y, key, {
+      fontFamily: "Pixelify Sans",
+      fontSize: font,
+      fill: color,
+    });
     LevelText.setOrigin(0.5);
 
-    this.scene.time.delayedCall(4000, () => {
-      LevelText.destroy();
-    }, null, this);
+    this.scene.time.delayedCall(
+      4000,
+      () => {
+        LevelText.destroy();
+      },
+      null,
+      this
+    );
   }
 
   createTutorialText(key, x, y) {
-    const TutorialText = this.scene.add.text(
-      x,
-      y,
-      key,
-      { fontSize: '28px', fill: '#ffffff' }
-    ).setOrigin(0.5);
+    const TutorialText = this.scene.add
+      .text(x, y, key, {
+        fontFamily: "Pixelify Sans",
+        fontSize: "28px",
+        fill: "#ffffff",
+      })
+      .setOrigin(0.5);
 
-    this.scene.time.delayedCall(4000, () => {
-      TutorialText.destroy();
-    }, null, this);
+    this.scene.time.delayedCall(
+      4000,
+      () => {
+        TutorialText.destroy();
+      },
+      null,
+      this
+    );
   }
 }
 
