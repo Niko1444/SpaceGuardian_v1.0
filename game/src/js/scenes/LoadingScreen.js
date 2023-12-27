@@ -746,7 +746,7 @@ class LoadingScreen extends Phaser.Scene {
 
     this.time.delayedCall(1000, () => {
       let value = this.selectedPlayerIndex;
-      this.scene.start("playLevelTwo", { number: value });
+      this.scene.start("bossGame", { number: value });
     });
   }
 }

@@ -8,7 +8,7 @@ import UpgradeScreen from "../scenes/UpgradeScreen.js";
 import TutorialScreen from "../scenes/TutorialScreen.js";
 import LevelTwoScreen from "../scenes/LevelTwoScreen.js";
 import LevelThreeScreen from "../scenes/LevelThreeScreen.js";
-import LeaderBoard from "../scenes/leaderBoard.js";
+import Leaderboard from "../scenes/Leaderboard.js";
 import BossScreen from "../scenes/BossScreen.js";
 
 const rem =
@@ -33,10 +33,10 @@ const config = {
     LevelTwoScreen,
     LevelThreeScreen,
     BossScreen,
-    LeaderBoard,
     PauseScreen,
     UpgradeScreen,
     GameOver,
+    Leaderboard,
   ],
   pixelArt: true,
   physics: {

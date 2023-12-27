@@ -3,6 +3,7 @@ import config from "../config/config.js";
 import GuiManager from "../manager/GuiManager.js";
 import KeyboardManager from "../manager/KeyboardManager.js";
 import InterfaceManager from "./interfaceScene.js";
+
 class GameOver extends Phaser.Scene {
   constructor() {
     super("gameOver");
@@ -19,8 +20,6 @@ class GameOver extends Phaser.Scene {
 
     // Define the "T" key to back to the title screen
     this.keyboardManager.titleScreen();
-    this.interfaceManager.goToLeaderboard(3000);
-
   }
 }
 export default GameOver;
