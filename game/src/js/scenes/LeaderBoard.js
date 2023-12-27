@@ -94,12 +94,16 @@ class LeaderBoard extends Phaser.Scene {
 
     // Sample leaderboard data - replace with your actual data
     let leaderboardData = [
-      { score: 1000, name: "JASON" },
-      { score: 900, name: "LEON" },
-      { score: 800, name: "TOM" },
-      { score: 700, name: "MIKE" },
-      { score: 600, name: "HARRY" },
-      { score: 500, name: "JACK" },
+      { rank: 1, score: 1000, name: "JASON" },
+      { rank: 2, score: 900, name: "JASON" },
+      { rank: 3, score: 800, name: "JASON" },
+      { rank: 4, score: 700, name: "JASON" },
+      { rank: 5, score: 600, name: "JASON" },
+      { rank: 6, score: 500, name: "JASON" },
+      { rank: 7, score: 400, name: "JASON" },
+      { rank: 8, score: 300, name: "JASON" },
+      { rank: 9, score: 200, name: "JASON" },
+      { rank: 10, score: 100, name: "JASON" },
     ];
 
     // Function to add a new player with a name

@@ -174,8 +174,7 @@ class LevelThreeScreen extends Phaser.Scene {
 
     // Create managers
     this.keyboardManager = new KeyboardManager(this);
-    // Score System
-    this.upgradeManager = new UpgradeManager(this, this.callingScene);
+
     this.playerManager = new PlayerManager(
       this,
       this.player,
@@ -288,6 +287,9 @@ class LevelThreeScreen extends Phaser.Scene {
       },
       this
     );
+
+    // Score System
+    this.upgradeManager = new UpgradeManager(this, this.callingScene);
   }
 
   update() {
@@ -428,6 +430,8 @@ class LevelThreeScreen extends Phaser.Scene {
   }
 
   handleEnterKey() {
+    this.scene.stop("upgradeScreen");
+
     this.time.delayedCall(1000, () => {
       this.scene.start("bossGame", { number: this.selectedPlayerIndex });
     });

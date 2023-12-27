@@ -2,7 +2,7 @@ import Phaser from "phaser";
 import config from "../config/config";
 import gameSettings from "../config/gameSettings";
 class UpgradeScreen extends Phaser.Scene {
-  constructor(scene) {
+  constructor() {
     super("upgradeScreen");
   }
 
@@ -21,6 +21,7 @@ class UpgradeScreen extends Phaser.Scene {
   create(data) {
     // Get the calling scene name
     this.callbackSceneName = data.callingScene;
+    console.log("callbackSceneName: " + this.callbackSceneName);
 
     this.cameras.main.setAlpha(0.9);
 
@@ -85,6 +86,11 @@ class UpgradeScreen extends Phaser.Scene {
       upgradeRect.on("pointerdown", () =>
         this.handleUpgradeChoice(availableUpgrades[i], this.callbackSceneName)
       );
+
+      // Set depth
+      upgradeRect.setDepth(3);
+      upgradeImage.setDepth(4);
+      upgradeText.setDepth(4);
     }
   }
 
