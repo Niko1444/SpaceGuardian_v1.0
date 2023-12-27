@@ -247,7 +247,14 @@ class LevelTwoScreen extends Phaser.Scene {
       delay: 27000,
       callback: () => {
         this.projectileManager.callEnemyBullet();
-        this.projectileManager.callChaseBullet();
+        this.projectileManager.callChaseBullet(this, this.bug4_1);
+        this.projectileManager.callChaseBullet(this, this.bug4_2);
+        this.projectileManager.callChaseBullet(this, this.bug4_3);
+        this.projectileManager.callChaseBullet(this, this.bug4_4);
+        this.projectileManager.callChaseBullet(this, this.bug4_5);
+        this.projectileManager.callChaseBullet(this, this.bug4_6);
+        this.projectileManager.callChaseBullet(this, this.bug4_7);
+        this.projectileManager.callChaseBullet(this, this.bug4_8);
       },
       callbackScope: this,
     });
@@ -427,7 +434,7 @@ class LevelTwoScreen extends Phaser.Scene {
   }
 
   createText(key, x, y) {
-    const Level1Text = this.add
+    const Level2Text = this.add
       .text(x, y, key, {
         fontFamily: "Pixelify Sans",
         fontSize: "32px",
@@ -438,7 +445,7 @@ class LevelTwoScreen extends Phaser.Scene {
     this.time.delayedCall(
       2000,
       () => {
-        Level1Text.destroy();
+        Level2Text.destroy();
       },
       null,
       this
