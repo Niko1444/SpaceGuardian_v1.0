@@ -2,9 +2,8 @@ import Phaser from "phaser";
 import config from "../config/config";
 import gameSettings from "../config/gameSettings";
 class UpgradeScreen extends Phaser.Scene {
-  constructor() {
+  constructor(scene) {
     super("upgradeScreen");
-    // change for commit
   }
 
   preload() {
@@ -19,7 +18,10 @@ class UpgradeScreen extends Phaser.Scene {
     this.load.image("upgrade8", "assets/images/upgrades/upgrade_08.png");
   }
 
-  create() {
+  create(data) {
+    // Get the calling scene name
+    this.callbackSceneName = data.callingScene;
+
     this.cameras.main.setAlpha(0.9);
 
     const middleX = config.width / 2;
@@ -81,7 +83,7 @@ class UpgradeScreen extends Phaser.Scene {
       });
 
       upgradeRect.on("pointerdown", () =>
-        this.handleUpgradeChoice(availableUpgrades[i])
+        this.handleUpgradeChoice(availableUpgrades[i], this.callbackSceneName)
       );
     }
   }
@@ -109,9 +111,8 @@ class UpgradeScreen extends Phaser.Scene {
     }
   }
 
-  handleUpgradeChoice(choice) {
-    // Handle the upgrade choice here
-    const playGameScene = this.scene.get("playGame");
+  handleUpgradeChoice(choice, callingScene) {
+    const playGameScene = this.scene.get(callingScene);
     const player = playGameScene.player;
 
     switch (choice) {
@@ -153,7 +154,7 @@ class UpgradeScreen extends Phaser.Scene {
 
     // Close the upgrade scene and resume the parent scene
     this.scene.stop();
-    this.scene.resume("playGame");
+    this.scene.resume(callingScene);
   }
 }
 

@@ -22,6 +22,7 @@ const BACKGROUND_SCROLL_SPEED = 0.5;
 class LevelTwoScreen extends Phaser.Scene {
   constructor() {
     super("playLevelTwo");
+    this.callingScene = "playLevelTwo";
     this.buttonManager = null;
   }
 
@@ -159,9 +160,9 @@ class LevelTwoScreen extends Phaser.Scene {
 
     // Create managers
     this.keyboardManager = new KeyboardManager(this);
-
     // Score System
-    this.upgradeManager = new UpgradeManager(this);
+    this.upgradeManager = new UpgradeManager(this, this.callingScene);
+
     this.playerManager = new PlayerManager(
       this,
       this.player,

@@ -3,8 +3,9 @@ import config from "../config/config";
 import UpgradeScreen from "../scenes/UpgradeScreen";
 
 class UpgradeManager {
-  constructor(scene) {
+  constructor(scene, callingScene) {
     this.scene = scene;
+    this.callingScene = callingScene;
     this.playerScore = 0;
     this.createScoreText();
   }
@@ -22,7 +23,7 @@ class UpgradeManager {
     this.displayScore();
 
     if (this.playerScore % 50 == 0 && this.scene.player.health != 0) {
-      this.rewardEach100Score();
+      this.rewardEach100Score(this.callingScene);
     }
   }
 
@@ -30,9 +31,11 @@ class UpgradeManager {
     this.scoreText.setText(`Score: ${this.playerScore}`);
   }
 
-  rewardEach100Score() {
-    this.scene.scene.launch("upgradeScreen");
+  rewardEach100Score(callingScene) {
+    // Pause the current scene
     this.scene.scene.pause();
+    // Launch upgradeScreen and pass the sceneName as part of the data
+    this.scene.scene.launch("upgradeScreen", { callingScene: callingScene });
   }
 }
 

@@ -37,7 +37,7 @@ const config = {
     LevelTwoScreen,
     LevelThreeScreen,
     LeaderBoard,
-    BossScreen
+    BossScreen,
   ],
   pixelArt: true,
   physics: {

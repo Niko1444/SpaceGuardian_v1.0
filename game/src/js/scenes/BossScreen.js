@@ -24,6 +24,7 @@ const BACKGROUND_SCROLL_SPEED = 0.5;
 class BossScreen extends Phaser.Scene {
   constructor() {
     super("bossGame");
+    this.callingScene = "bossGame";
     this.spawnedEnemies = [];
     this.buttonManager = null;
   }
@@ -121,7 +122,7 @@ class BossScreen extends Phaser.Scene {
     this.boss.play("boss_move_anim");
 
     this.firstMini = new MiniBot(this, config.width / 5, -96, 100);
-    this.secondMini = new MiniBot(this, config.width * 4 / 5, -96, 100);
+    this.secondMini = new MiniBot(this, (config.width * 4) / 5, -96, 100);
 
     this.player = new Player(
       this,
@@ -150,7 +151,7 @@ class BossScreen extends Phaser.Scene {
     // Create managers
     this.keyboardManager = new KeyboardManager(this);
     // Score System
-    this.upgradeManager = new UpgradeManager(this);
+    this.upgradeManager = new UpgradeManager(this, this.callingScene);
     this.playerManager = new PlayerManager(
       this,
       this.player,
@@ -280,7 +281,6 @@ class BossScreen extends Phaser.Scene {
     this.bug5.chasePlayer(this.player);
 
     this.bossProcess();
-
   }
 
   gameOver() {
@@ -292,14 +292,15 @@ class BossScreen extends Phaser.Scene {
     this.enemyManager.enemyExploded();
   }
 
-
-
   bossProcess() {
     if (this.boss.health < 800 && this.boss.health > 550) {
       this.boss.moveToCenter();
     }
 
-    if ((this.boss.health < 550 && this.boss.health > 350) || this.checkBossHeal === true) {
+    if (
+      (this.boss.health < 550 && this.boss.health > 350) ||
+      this.checkBossHeal === true
+    ) {
       this.boss.bossBound();
       if (this.timeHealth === 0) {
         this.callMini;
@@ -319,12 +320,16 @@ class BossScreen extends Phaser.Scene {
       }
     }
 
-    if (this.boss.health < 200 && this.checkBossHeal === false && this.timeHealth === 1) {
+    if (
+      this.boss.health < 200 &&
+      this.checkBossHeal === false &&
+      this.timeHealth === 1
+    ) {
       this.checkBossHeal = true;
       this.timeHealth = 0;
     }
 
-    if(this.boss.health < 150){
+    if (this.boss.health < 150) {
       this.boss.shootBullet(this, this.boss);
     }
   }
@@ -344,7 +349,6 @@ class BossScreen extends Phaser.Scene {
       this.boss.health += 2;
     }
   }
-
 
   shutdown() {
     // Remove entire texture along with all animations
@@ -401,7 +405,5 @@ class BossScreen extends Phaser.Scene {
       this
     );
   }
-
-
 }
 export default BossScreen;

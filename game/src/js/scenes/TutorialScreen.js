@@ -21,6 +21,7 @@ const BACKGROUND_SCROLL_SPEED = 0.5;
 class TutorialScreen extends Phaser.Scene {
   constructor() {
     super("playTutorial");
+    this.callingScene = "playTutorial";
   }
 
   init(data) {
@@ -194,7 +195,7 @@ class TutorialScreen extends Phaser.Scene {
     );
 
     // Score System
-    this.upgradeManager = new UpgradeManager(this);
+    this.upgradeManager = new UpgradeManager(this, this.callingScene);
 
     this.input.keyboard.on("keydown-ENTER", this.startGame, this);
   }
