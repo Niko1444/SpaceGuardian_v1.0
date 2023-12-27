@@ -286,6 +286,8 @@ class LevelTwoScreen extends Phaser.Scene {
       this
     );
 
+    this.input.keyboard.on("keydown-ENTER", this.goToNextLevel, this);
+
     this.musicButton = this.add.image(config.width - 60, 30, "sound_texture");
     this.musicButton.setInteractive();
 

@@ -19,6 +19,7 @@ import ProjectileManager from "../manager/ProjectileManager.js";
 import UpgradeManager from "../manager/UpgradeManager.js";
 import Boss from "../objects/enemies/Boss.js";
 import MiniBot from "../objects/enemies/Minibot.js";
+import soundManager from "../manager/soundManager.js";
 
 const BACKGROUND_SCROLL_SPEED = 0.5;
 class BossScreen extends Phaser.Scene {
@@ -49,6 +50,16 @@ class BossScreen extends Phaser.Scene {
     // Creat GUI for PlayingScreen ( Changes in BG except Player and Enemy )
     this.guiManager = new GuiManager(this);
     this.guiManager.createBackground("background_texture_01");
+
+    this.music = this.sys.game.globals.music;
+    if (this.music.musicOn === true) {
+      this.sys.game.globals.bgMusic.stop();
+      this.bgMusic = this.sound.add("desertMusic", { volume: 0.6, loop: true });
+      this.bgMusic.play();
+      this.music.bgMusicPlaying = true;
+      this.sys.game.globals.bgMusic = this.bgMusic;
+      this.sys.game.globals.bgMusic.play();
+    }
 
     // if (!(this.anims && this.anims.exists && this.anims.exists("player_anim"))) {
     this.anims.create({
@@ -199,6 +210,7 @@ class BossScreen extends Phaser.Scene {
     // );
 
     this.UtilitiesManager = new UtilitiesManager(this);
+    this.soundManager = new soundManager(this);
     // Add a delayed event to spawn utilities after a delay
     this.time.addEvent({
       delay: 5000,
@@ -235,13 +247,26 @@ class BossScreen extends Phaser.Scene {
       this.enemyManager.enemies,
       this.UtilitiesManager.healthPacks,
       this.UtilitiesManager.shieldPacks,
-      this.shield
+      this.shield,
+      this.soundManager
     );
 
     this.checkBossHeal = false;
     this.timeHealth = 1;
 
-    // this.input.keyboard.on("keydown-ENTER", this.goToNextLevel, this);
+    this.musicButton = this.add.image(config.width - 60, 30, "sound_texture");
+    this.musicButton.setInteractive();
+
+    this.musicButton.on(
+      "pointerdown",
+      function () {
+        this.music.soundOn = !this.music.soundOn;
+        this.music.musicOn = !this.music.musicOn;
+
+        this.updateAudio();
+      },
+      this
+    );
   }
 
   update() {
@@ -281,6 +306,20 @@ class BossScreen extends Phaser.Scene {
 
     this.bossProcess();
 
+  }
+
+  updateAudio() {
+    if (this.music.musicOn === false && this.music.soundOn === false) {
+      this.musicButton.setTexture("mute_texture");
+      this.sys.game.globals.bgMusic.stop();
+      this.music.bgMusicPlaying = false;
+    } else if (this.music.musicOn === true && this.music.soundOn === true) {
+      this.musicButton.setTexture("sound_texture");
+      if (this.music.bgMusicPlaying === false) {
+        this.sys.game.globals.bgMusic.play();
+        this.music.bgMusicPlaying = true;
+      }
+    }
   }
 
   gameOver() {
