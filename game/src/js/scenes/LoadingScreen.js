@@ -170,7 +170,6 @@ class LoadingScreen extends Phaser.Scene {
       },
     });
 
-
     // Load the setting button
     this.load.spritesheet({
       key: "sound_texture",
@@ -360,15 +359,15 @@ class LoadingScreen extends Phaser.Scene {
         endFrame: 11,
       },
     });
-    this.load.audio('explosionSound', 'assets/audio/DestroyEnemySmall.wav');
-    this.load.audio('shootSound', 'assets/audio/bullet.wav');
-    this.load.audio('main_menu_music', 'assets/audio/backgroundMusic.mp3');
-    this.load.audio('desertMusic', 'assets/audio/playingMusic.mp3');
-    this.load.audio('health', 'assets/audio/health.wav');
-    this.load.audio('shield', 'assets/audio/shield.wav');
-    this.load.audio('forestMusic', 'assets/audio/forest.wav');
-    this.load.audio('riverMusic', 'assets/audio/river.mp3');
-    this.load.audio('warzoneMusic', 'assets/audio/warzone.mp3');
+    this.load.audio("explosionSound", "assets/audio/DestroyEnemySmall.wav");
+    this.load.audio("shootSound", "assets/audio/bullet.wav");
+    this.load.audio("main_menu_music", "assets/audio/backgroundMusic.mp3");
+    this.load.audio("desertMusic", "assets/audio/playingMusic.mp3");
+    this.load.audio("health", "assets/audio/health.wav");
+    this.load.audio("shield", "assets/audio/shield.wav");
+    this.load.audio("forestMusic", "assets/audio/forest.wav");
+    this.load.audio("riverMusic", "assets/audio/river.mp3");
+    this.load.audio("warzoneMusic", "assets/audio/warzone.mp3");
   }
 
   create() {
@@ -739,9 +738,9 @@ class LoadingScreen extends Phaser.Scene {
     // Create loading text
     const loadingText = this.add.text(
       config.width / 2,
-      config.height / 2 - 50,
+      config.height / 2 - 60,
       "LOADING",
-      { fontSize: "32px", fill: "#fff" }
+      { fontFamily: "Pixelify Sans", fontSize: "50px", fill: "#fff" }
     );
     loadingText.setOrigin(0.5);
 
