@@ -111,12 +111,12 @@ class TutorialScreen extends Phaser.Scene {
     this.guiManager = new GuiManager(this);
     this.guiManager.createBackground("background_texture_01");
     this.guiManager.createTutorialText(
-      "Press Space to shoot",
+      "Press SPACE to shoot",
       config.width / 2,
       config.height / 2 - 60
     );
     this.guiManager.createTutorialText(
-      "Press Directions to move",
+      "Use Arrow Keys to move",
       config.width / 2,
       config.height / 2 - 30
     );
@@ -126,8 +126,8 @@ class TutorialScreen extends Phaser.Scene {
       () => {
         this.guiManager.createSimpleText(
           config.width / 2,
-          config.height / 2,
-          "Ready? Press enter to start",
+          config.height / 2 - 60,
+          "Ready? Press ENTER to start",
           "25px",
           "#ffffff",
           0.5
@@ -172,7 +172,7 @@ class TutorialScreen extends Phaser.Scene {
       null,
       this
     );
-   
+
     // Create keyboard inputs
     this.spacebar = this.input.keyboard.addKey(
       Phaser.Input.Keyboard.KeyCodes.SPACE
@@ -214,7 +214,7 @@ class TutorialScreen extends Phaser.Scene {
       enemy.updateHealthBarPosition();
     });
 
-    if (Phaser.Input.Keyboard.JustDown(this.spacebar)) {
+    if (this.spacebar.isDown) {
       this.player.shootBullet(this.selectedPlayerIndex);
     }
 
