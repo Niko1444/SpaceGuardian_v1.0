@@ -5,8 +5,16 @@ import ShieldPack from "../objects/utilities/ShieldPack";
 import Shield from "../objects/utilities/Shield";
 import config from "../config/config";
 import soundManager from "./soundManager";
-class CollideManager{
-  constructor(scene, player, enemies, healthPacks, shieldPacks, shield, soundManager) {
+class CollideManager {
+  constructor(
+    scene,
+    player,
+    enemies,
+    healthPacks,
+    shieldPacks,
+    shield,
+    soundManager
+  ) {
     this.scene = scene;
     this.player = player;
     this.enemies = enemies;
@@ -15,9 +23,6 @@ class CollideManager{
     this.shield = shield;
     this.shieldActive = false;
     this.soundManager = soundManager;
-    
-
-
 
     // Add collision between bullets and enemies
     this.scene.physics.add.overlap(
@@ -27,6 +32,7 @@ class CollideManager{
       null,
       this.scene
     );
+
     // player and enemies
     this.scene.physics.add.overlap(
       this.player,
@@ -124,7 +130,7 @@ class CollideManager{
 
   playerHitEnemy(player, enemy) {
     player.takeDamage(enemy.damage);
-    enemy.takeDamage(0);
+    enemy.takeDamage(player.damage);
   }
 
   playerCollideHealthPack(player, healthPack) {
@@ -140,8 +146,6 @@ class CollideManager{
     this.shield.show();
     this.shieldActive = true;
   }
-
-
 }
 
 export default CollideManager;
