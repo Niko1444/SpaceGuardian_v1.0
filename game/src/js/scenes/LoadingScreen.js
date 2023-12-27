@@ -224,10 +224,10 @@ class LoadingScreen extends Phaser.Scene {
         key: `bullet1_texture`,
         url: `assets/spritesheets/vfx/bullet1.png`,
         frameConfig: {
-          frameWidth: 12,
-          frameHeight: 26,
+          frameWidth: 32,
+          frameHeight: 11,
           startFrame: 0,
-          endFrame: 2,
+          endFrame: 1,
         },
       });
     }
@@ -289,10 +289,10 @@ class LoadingScreen extends Phaser.Scene {
         key: `bullet6_texture`,
         url: `assets/spritesheets/vfx/bullet6.png`,
         frameConfig: {
-          frameWidth: 24,
-          frameHeight: 12,
+          frameWidth: 15,
+          frameHeight: 25,
           startFrame: 0,
-          endFrame: 1,
+          endFrame: 2,
         },
       });
     }
@@ -315,10 +315,10 @@ class LoadingScreen extends Phaser.Scene {
         key: `bullet8_texture`,
         url: `assets/spritesheets/vfx/bullet8.png`,
         frameConfig: {
-          frameWidth: 36,
-          frameHeight: 34,
+          frameWidth: 30,
+          frameHeight: 30,
           startFrame: 0,
-          endFrame: 2,
+          endFrame: 5,
         },
       });
     }
@@ -329,9 +329,9 @@ class LoadingScreen extends Phaser.Scene {
         url: `assets/spritesheets/vfx/bullet9.png`,
         frameConfig: {
           frameWidth: 20,
-          frameHeight: 59,
+          frameHeight: 30,
           startFrame: 0,
-          endFrame: 2,
+          endFrame: 3,
         },
       });
     }
@@ -412,7 +412,7 @@ class LoadingScreen extends Phaser.Scene {
           `bullet${this.selectedPlayerIndex}_texture`,
           {
             start: 0,
-            end: 2,
+            end: 1,
           }
         ),
         frameRate: 12,
@@ -484,7 +484,7 @@ class LoadingScreen extends Phaser.Scene {
           `bullet${this.selectedPlayerIndex}_texture`,
           {
             start: 0,
-            end: 1,
+            end: 2,
           }
         ),
         frameRate: 12,
@@ -514,10 +514,10 @@ class LoadingScreen extends Phaser.Scene {
           `bullet${this.selectedPlayerIndex}_texture`,
           {
             start: 0,
-            end: 2,
+            end: 5,
           }
         ),
-        frameRate: 12,
+        frameRate: 30,
         repeat: -1,
       });
     }
