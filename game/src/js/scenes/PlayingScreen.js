@@ -277,7 +277,7 @@ class PlayingScreen extends Phaser.Scene {
     );
 
     this.time.delayedCall(
-      51000,
+      53000,
       () => {
         this.goToNextLevel();
       },
