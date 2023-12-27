@@ -237,8 +237,8 @@ class PlayingScreen extends Phaser.Scene {
     this.time.addEvent({
       delay: 21000,
       callback: () => {
-        this.projectileManager.callEnemyBullet();
-        this.projectileManager.callChaseBullet();
+        this.projectileManager.callEnemyBulletLv1();
+        this.projectileManager.callChaseBulletLv1();
       },
       callbackScope: this,
     });
@@ -470,9 +470,15 @@ class PlayingScreen extends Phaser.Scene {
         // Spawn a wave of bugs after the "Final Wave" message disappears
         this.finalWaveBugs = this.enemyManager.spawnCircleOfBugsLv1(
           config.width / 2,
-          config.height / 2,
-          200,
+          config.height / 2-300,
+          250,
           14
+        );
+        this.finalWaveBugs = this.enemyManager.spawnCircleOfBugsLv1(
+          config.width / 2,
+          config.height / 2-300,
+          100,
+          8
         );
       },
       null,

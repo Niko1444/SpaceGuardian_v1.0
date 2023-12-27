@@ -29,21 +29,23 @@ class ProjectileManager {
     });
   }
 
-  callEnemyBullet() {
+  callEnemyBulletLv1() {
     this.scene.time.addEvent({
       delay: 1000, // 1000 milliseconds = 1 second
       callback: () => {
         this.scene.bug3_1.shootBullet(this.scene, this.scene.bug3_1);
+        this.scene.bug3_2.shootBullet(this.scene, this.scene.bug3_2);
       },
       loop: true, // This makes the event repeat indefinitely
     });
   }
 
-  callChaseBullet() {
+  callChaseBulletLv1() {
     this.scene.time.addEvent({
       delay: 3000, // 1000 milliseconds = 1 second
       callback: () => {
-        this.scene.bug3_2.shootChaseBullet(this.scene, this.scene.bug3_2);
+        this.scene.bug3_3.shootChaseBullet(this.scene, this.scene.bug3_3);
+        this.scene.bug3_4.shootChaseBullet(this.scene, this.scene.bug3_4);
       },
       loop: true, // This makes the event repeat indefinitely
     });

@@ -138,10 +138,6 @@ class EnemyManager {
       scene
     );
   }
-
-  // FOR LEVEL 2
-  
-
 }
 
 export default EnemyManager;
