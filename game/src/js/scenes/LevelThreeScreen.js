@@ -220,6 +220,7 @@ class LevelThreeScreen extends Phaser.Scene {
     );
 
     this.UtilitiesManager = new UtilitiesManager(this);
+    this.soundManager = new soundManager(this);
     // Add a delayed event to spawn utilities after a delay
     this.time.addEvent({
       delay: 5000,
@@ -259,7 +260,8 @@ class LevelThreeScreen extends Phaser.Scene {
       this.enemyManager.enemies,
       this.UtilitiesManager.healthPacks,
       this.UtilitiesManager.shieldPacks,
-      this.shield
+      this.shield,
+      this.soundManager
     );
 
     this.time.delayedCall(
@@ -268,6 +270,22 @@ class LevelThreeScreen extends Phaser.Scene {
         this.goToNextLevel();
       },
       null,
+      this
+    );
+
+    this.input.keyboard.on("keydown-ENTER", this.goToNextLevel, this);
+
+    this.musicButton = this.add.image(config.width - 60, 30, "sound_texture");
+    this.musicButton.setInteractive();
+
+    this.musicButton.on(
+      "pointerdown",
+      function () {
+        this.music.soundOn = !this.music.soundOn;
+        this.music.musicOn = !this.music.musicOn;
+
+        this.updateAudio();
+      },
       this
     );
   }
@@ -315,6 +333,20 @@ class LevelThreeScreen extends Phaser.Scene {
       },
       callbackScope: this,
     });
+  }
+
+  updateAudio() {
+    if (this.music.musicOn === false && this.music.soundOn === false) {
+      this.musicButton.setTexture("mute_texture");
+      this.sys.game.globals.bgMusic.stop();
+      this.music.bgMusicPlaying = false;
+    } else if (this.music.musicOn === true && this.music.soundOn === true) {
+      this.musicButton.setTexture("sound_texture");
+      if (this.music.bgMusicPlaying === false) {
+        this.sys.game.globals.bgMusic.play();
+        this.music.bgMusicPlaying = true;
+      }
+    }
   }
 
   gameOver() {
