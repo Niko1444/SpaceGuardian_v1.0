@@ -1,9 +1,6 @@
 <h1 align="center">SPACE GUARDIAN</h1>
 
 <p align="center"><i>Space Guardian by Fly Team, an exciting shoot-em-up game.</i></p>
-
-<br>
-
 <p align="center"><i>Loved the game? Star the repository to show your support!</i></p>
 
 ## Overview
