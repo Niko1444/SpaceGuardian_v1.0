@@ -11,18 +11,21 @@ import LevelThreeScreen from "../scenes/LevelThreeScreen.js";
 import Leaderboard from "../scenes/Leaderboard.js";
 import BossScreen from "../scenes/BossScreen.js";
 
-const rem =
-  (parseFloat(getComputedStyle(document.documentElement).fontSize) * 62.5) /
-  100;
+const gameWidth = 600;
+const gameHeight = 950;
 
-const gameWidth = 60 * rem;
-const gameHeight = 95 * rem;
+// const gameWidth = window.innerWidth;
+// const gameHeight = window.innerHeight;
 
 const config = {
   type: Phaser.AUTO,
   pauseGame: false,
   width: gameWidth,
   height: gameHeight,
+  scale: {
+    mode: Phaser.Scale.FIT,
+    autoCenter: Phaser.Scale.CENTER_BOTH,
+  },
   backgroundColor: 0x000000,
   scene: [
     TitleScreen,

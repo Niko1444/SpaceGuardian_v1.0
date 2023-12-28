@@ -78,6 +78,7 @@ class TitleScreen extends Phaser.Scene {
       }
     );
     spaceText.setOrigin(0.5);
+    spaceText.setShadow(3, 3, "#F27CA4", 2, false, true);
 
     // Create "GUARDIAN" text with each letter in a different color
     const guardianText = this.add.text(
@@ -92,6 +93,7 @@ class TitleScreen extends Phaser.Scene {
       }
     );
     guardianText.setOrigin(0.5);
+    guardianText.setShadow(3, 3, "#F27CA4", 2, false, true);
 
     // Create "LOGO" image
     // Add text input field for player name

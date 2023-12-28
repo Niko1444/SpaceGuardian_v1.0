@@ -6,18 +6,20 @@
 
 body {
   margin: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   background-color: #000;
 }
 
-#playerNameInput {
-  bottom: 250px;
+#game-container {
   position: absolute;
+  width: 100%;
+  height: 100%;
 }
 
 #playerNameInput {
+  position: absolute;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%);
   background-color: black;
   color: white;
   padding: 5px;

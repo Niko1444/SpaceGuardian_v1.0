@@ -7,6 +7,10 @@ class Leaderboard extends Phaser.Scene {
     super("leaderboard");
   }
 
+  // Preload another image for the background
+
+  preload() {}
+
   create() {
     this.add.image(0, 0, "background").setOrigin(0, 0);
 
