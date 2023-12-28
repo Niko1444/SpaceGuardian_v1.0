@@ -4,11 +4,8 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
-    "firebase": "^10.7.1",
     "http-server": "^14.1.1",
-    "phaser": "^3.70.0",
-    "phaser3-rex-plugins": "^1.60.8",
-    "regenerator-runtime": "^0.14.1"
+    "phaser": "^3.70.0"
   },
   "scripts": {
     "build": "webpack --config webpack.config.js"

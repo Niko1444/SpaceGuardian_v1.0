@@ -44,6 +44,7 @@ class TitleScreen extends Phaser.Scene {
   }
 
   create() {
+    // Create Music
     this.music = this.sys.game.globals.music;
     if (this.music.musicOn === true && this.music.bgMusicPlaying === false) {
       this.bgMusic = this.sound.add("main_menu_music", {
@@ -93,11 +94,17 @@ class TitleScreen extends Phaser.Scene {
     guardianText.setOrigin(0.5);
 
     // Create "LOGO" image
+    // Add text input field for player name
+    const playerNameInput = this.add.dom(
+      config.width / 2,
+      config.height / 2,
+      "input",
+      "width: 300px; padding: 10px; text-align: center; font-size: 24px;"
+    );
+    playerNameInput.createFromCache("playerNameInput");
     const bottomLeftImage = this.add.image(27, config.height - 20, "logo");
-    bottomLeftImage.setOrigin(0, 1); // Set the origin to the bottom left
-
-    // Optionally, you can set the scale of the image
-    bottomLeftImage.setScale(0.32); // Adjust the scale as needed
+    bottomLeftImage.setOrigin(0, 1);
+    bottomLeftImage.setScale(0.32);
 
     // Tween animation for the rainbow effect on "GUARDIAN"
     this.tweens.add({
@@ -135,6 +142,8 @@ class TitleScreen extends Phaser.Scene {
       "button_play"
     );
     this.button_play.setInteractive();
+
+    // Play Button Functionality
     this.button_play.on("pointerdown", () => {
       this.scene.start("choosePlayer");
     });
@@ -145,7 +154,5 @@ class TitleScreen extends Phaser.Scene {
       this.button_play.setTexture("button_play");
     });
   }
-
-  update() {}
 }
 export default TitleScreen;

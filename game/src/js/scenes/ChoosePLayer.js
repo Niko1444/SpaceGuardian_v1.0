@@ -41,7 +41,7 @@ class ChoosePLayer extends Phaser.Scene {
     const chooseText = this.add.text(
       config.width / 2,
       config.height / 4 - 130,
-      "Choose your player",
+      "CHOOSE YOUR SHIP!",
       {
         fontFamily: "Pixelify Sans",
         fontSize: "40px",
@@ -105,6 +105,8 @@ class ChoosePLayer extends Phaser.Scene {
 
     // Optionally, you can set the scale of the image
     bottomLeftImage.setScale(0.32); // Adjust the scale as needed
+
+    this.hideTextInput();
   }
 
   update() {
@@ -185,6 +187,11 @@ class ChoosePLayer extends Phaser.Scene {
         return 9;
       }
     }
+  }
+
+  hideTextInput() {
+    const playerNameInput = document.getElementById("playerNameInput");
+    playerNameInput.style.display = "none";
   }
 }
 
