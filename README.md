@@ -1,6 +1,7 @@
 <h1 align="center">SPACE GUARDIAN</h1>
 
 <p align="center"><i>Space Guardian by Fly Team, an exciting shoot-em-up game.</i></p>
+
 <p align="center"><i>Loved the game? Star the repository to show your support!</i></p>
 
 ## Overview
@@ -15,6 +16,12 @@ Welcome to Space Guardian, an engaging shoot-em-up game created by Your Team Nam
 
 ## How to Play
 
-Head to this link:
-<a url='space-guardian-v1-0.vercel.app'> </a>
+Head to this link: space-guardian-v1-0.vercel.app
 
+## LICENSE
+
+MIT License. More in LICENSE file
+
+## Credits
+
+Niko1444 (Phat), meomun1 (Luong), GSYNDRA (Giang), tienluan02 (Luan)
