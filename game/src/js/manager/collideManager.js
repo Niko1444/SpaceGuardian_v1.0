@@ -118,9 +118,7 @@ class CollideManager {
 
   bulletHitEnemy(enemy, bullet) {
     bullet.destroy();
-    // enemy.takeDamage(bullet.damage);
-    // temporary
-    enemy.takeDamage(100);
+    enemy.takeDamage(bullet.damage);
   }
 
   bulletHitPlayer(player, enemyBullet) {

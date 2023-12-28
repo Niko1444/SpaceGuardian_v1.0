@@ -97,17 +97,17 @@ class UpgradeScreen extends Phaser.Scene {
   getUpgradeText(upgradeType) {
     switch (upgradeType) {
       case "upgrade1":
-        return "Hard As Rock (+200 HP)";
+        return "Hard As Rock (+HP)";
       case "upgrade2":
-        return "Wormhole Engine (+100 SPD)";
+        return "Wormhole Engine (+Speed)";
       case "upgrade3":
-        return "Sharp Eye Bullseye (+10 DMG)";
+        return "Sharp Eye Bullseye (+Damage)";
       case "upgrade4":
         return "Stained Warrior (UNKNOWN)";
       case "upgrade5":
         return "Energy Fluid (+Lifesteal)";
       case "upgrade6":
-        return "Bullet Barrage (+1 Bullet)";
+        return "Bullet Barrage (+Bullet)";
       case "upgrade7":
         return "Ratatata (+Fire Rate)";
       case "upgrade8":
@@ -124,7 +124,7 @@ class UpgradeScreen extends Phaser.Scene {
     switch (choice) {
       case "upgrade1":
         player.maxHealth += 200;
-        player.health += 200;
+        player.getHealed(200);
         break;
 
       case "upgrade2":
@@ -137,7 +137,7 @@ class UpgradeScreen extends Phaser.Scene {
 
       case "upgrade4":
         player.takeDamage(player.health * 0.9);
-        player.bulletDamage += 100;
+        player.bulletDamage += 80;
         player.bulletSize *= 1.5;
         break;
 
@@ -150,11 +150,11 @@ class UpgradeScreen extends Phaser.Scene {
         break;
 
       case "upgrade7":
-        player.fireRate -= 100;
+        player.fireRate -= 200;
         break;
 
       case "upgrade8":
-        player.bulletSpeed += 100;
+        player.bulletSpeed += 200;
         break;
     }
 
