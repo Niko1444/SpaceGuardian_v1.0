@@ -11,8 +11,11 @@ import LevelThreeScreen from "../scenes/LevelThreeScreen.js";
 import Leaderboard from "../scenes/Leaderboard.js";
 import BossScreen from "../scenes/BossScreen.js";
 
-const gameWidth = window.innerWidth * 0.8;
-const gameHeight = window.innerHeight * 0.8;
+const gameWidth = 600;
+const gameHeight = 950;
+
+// const gameWidth = window.innerWidth;
+// const gameHeight = window.innerHeight;
 
 const config = {
   type: Phaser.AUTO,
