@@ -15,22 +15,16 @@ class EnemyBullet extends Entity {
       posY = enemy.y + y;
     }
 
-    super(
-      scene,
-      posX,
-      posY,
-      "bullet_texture",
-      "bullet",
-      1
-    );
+    super(scene, posX, posY, "bullet_texture", "bullet", 1);
     scene.add.existing(this);
     scene.physics.world.enableBody(this);
     scene.enemyProjectiles.add(this);
+
     this.damage = 100;
     this.setDepth(1);
 
     if (rotation !== null && angle !== null) {
-      this.initialBulletForBoss(rotation,angle);
+      this.initialBulletForBoss(rotation, angle);
     } else {
       this.initializeVelocity();
     }
@@ -39,20 +33,29 @@ class EnemyBullet extends Entity {
   initialBulletForBoss(rotation, angle) {
     // Convert angle from radians to degrees
     this.angle = angle * (180 / Math.PI) + 90;
-    
+
     let direction = rotation;
-    this.body.velocity.set(direction.x * gameSettings.bulletSpeed/1.5, direction.y * gameSettings.bulletSpeed/1.5);
+    this.body.velocity.set(
+      (direction.x * gameSettings.bulletSpeed) / 1.5,
+      (direction.y * gameSettings.bulletSpeed) / 1.5
+    );
   }
 
   initializeVelocity() {
     // Calculate the direction vector from enemy to player
-    let direction = new Phaser.Math.Vector2(this.scene.player.x - this.x, this.scene.player.y - this.y);
+    let direction = new Phaser.Math.Vector2(
+      this.scene.player.x - this.x,
+      this.scene.player.y - this.y
+    );
 
     // Normalize the direction vector (convert it to a vector of length 1)
     direction.normalize();
 
     // Set the velocity of the bullet
-    this.body.velocity.set(direction.x * gameSettings.bulletSpeed/2, direction.y * gameSettings.bulletSpeed/2);
+    this.body.velocity.set(
+      (direction.x * gameSettings.bulletSpeed) / 2,
+      (direction.y * gameSettings.bulletSpeed) / 2
+    );
 
     // Calculate the angle in radians from the direction vector
     let angle = Math.atan2(direction.y, direction.x);
@@ -61,11 +64,9 @@ class EnemyBullet extends Entity {
     let pi = Math.PI;
 
     this.angle = Phaser.Math.RadToDeg(angle) + 90;
-
   }
 
   update() {
-
     if (this.y < 20 || !this.active) {
       this.destroy();
     }

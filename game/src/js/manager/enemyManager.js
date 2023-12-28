@@ -91,17 +91,16 @@ class EnemyManager {
       const x = rowX + i * (50 + gapSize);
       const y = -20;
 
-      const newEnemy = this.spawnSingleEnemy(1,x, y, health);
+      const newEnemy = this.spawnSingleEnemy(1, x, y, health);
       enemies.push(newEnemy);
     }
 
     return enemies;
   }
 
-
   // FOR TUTORIAL SCREEN
   addEnemyTutorial() {
-    this.spawnSingleEnemy(1,config.width/2, -20, 30);
+    this.spawnSingleEnemy(1, config.width / 2, -20, 300);
   }
 
   // FOR LEVEL 1
@@ -132,7 +131,7 @@ class EnemyManager {
     scene.time.delayedCall(
       delay,
       () => {
-        const enemyRow = scene.enemyManager.spawnEnemyRow(30, 8, 40, 30);
+        const enemyRow = scene.enemyManager.spawnEnemyRow(30, 8, 40, 300);
       },
       null,
       scene

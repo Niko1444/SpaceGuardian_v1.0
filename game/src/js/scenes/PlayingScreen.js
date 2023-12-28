@@ -146,17 +146,17 @@ class PlayingScreen extends Phaser.Scene {
       21000,
       () => {
         // shoot straight bullet
-        this.bug3_1 = new Bug3(this, config.width - 20, -20, 30);
-        this.bug3_2 = new Bug3(this, 20, -20, 30);
+        this.bug3_1 = new Bug3(this, config.width - 20, -20, 300);
+        this.bug3_2 = new Bug3(this, 20, -20, 300);
 
         // shoot following bullet
-        this.bug3_3 = new Bug3(this, 70, -20, 30);
-        this.bug3_4 = new Bug3(this, config.width - 70, -20, 30);
+        this.bug3_3 = new Bug3(this, 70, -20, 500);
+        this.bug3_4 = new Bug3(this, config.width - 70, -20, 500);
 
         // chasing enemies
-        this.bug5_1 = new Bug5(this, config.width / 2, -20, 30);
-        this.bug5_2 = new Bug5(this, config.width / 2 - 50, -20, 30);
-        this.bug5_3 = new Bug5(this, config.width / 2 + 50, -20, 30);
+        this.bug5_1 = new Bug5(this, config.width / 2, -20, 200);
+        this.bug5_2 = new Bug5(this, config.width / 2 - 50, -20, 200);
+        this.bug5_3 = new Bug5(this, config.width / 2 + 50, -20, 200);
       },
       null,
       this
@@ -227,10 +227,11 @@ class PlayingScreen extends Phaser.Scene {
     this.UtilitiesManager = new UtilitiesManager(this);
     this.soundManager = new soundManager(this);
 
+    // Spawn the Health Packs and Shield Packs
     this.time.addEvent({
-      delay: 5000,
+      delay: 20000,
       callback: () => {
-        this.UtilitiesManager.addUtilitiesForPlayingScreen(2, 2);
+        this.UtilitiesManager.addUtilitiesForPlayingScreen(1, 0);
         this.collideManager1 = new CollideManager(
           this,
           this.player,
@@ -243,6 +244,24 @@ class PlayingScreen extends Phaser.Scene {
       },
       callbackScope: this,
     });
+
+    this.time.addEvent({
+      delay: 30000,
+      callback: () => {
+        this.UtilitiesManager.addUtilitiesForPlayingScreen(0, 1);
+        this.collideManager1 = new CollideManager(
+          this,
+          this.player,
+          this.enemyManager.enemies,
+          this.UtilitiesManager.healthPacks,
+          this.UtilitiesManager.shieldPacks,
+          this.shield,
+          this.soundManager
+        );
+      },
+      callbackScope: this,
+    });
+
     // this.buttonManager = new buttonManager(this);
 
     this.projectileManager = new ProjectileManager(this);
