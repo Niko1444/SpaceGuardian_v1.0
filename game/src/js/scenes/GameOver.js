@@ -20,6 +20,11 @@ class GameOver extends Phaser.Scene {
 
     // Define the "T" key to back to the title screen
     this.keyboardManager.titleScreen();
+
+    // Define the "L" key to show the leaderboard
+    this.keyboardManager.showLeaderboard();
+
+    //
   }
 }
 export default GameOver;

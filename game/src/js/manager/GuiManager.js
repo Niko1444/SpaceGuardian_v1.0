@@ -61,7 +61,7 @@ class GuiManager {
   createGameOverGui() {
     this.createSimpleText(
       config.width / 2,
-      config.height / 2 - 50,
+      config.height / 2 - 60,
       "Game Over",
       "32px",
       "#fff",
@@ -81,6 +81,15 @@ class GuiManager {
       config.width / 2,
       config.height / 2 + 30,
       "Press T back to title",
+      "24px",
+      "#fff",
+      0.5
+    );
+
+    this.createSimpleText(
+      config.width / 2,
+      config.height / 2 + 60,
+      "Press L to Leaderboard",
       "24px",
       "#fff",
       0.5
