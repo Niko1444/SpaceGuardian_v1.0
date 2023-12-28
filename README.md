@@ -1,5 +1,3 @@
-<h1 align="center">SPACE GUARDIAN</h1>
-
 ![Space Guardian Screenshot](/game/src/assets/images/space_guardian_screenshot.png)
 
 <p align="center"><i>Space Guardian by Fly Team, an exciting shoot-em-up game.</i></p>
