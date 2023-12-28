@@ -3,7 +3,7 @@ var gameSettings = {
   playerBulletDamage: 100,
   playerLifesteal: 0,
   playerBulletSpeed: 400,
-  playerScore: 400,
+  playerScore: 0,
   playerNumberOfBullets: 1,
   playerFireRate: 700,
   playerBulletSize: 1.2,

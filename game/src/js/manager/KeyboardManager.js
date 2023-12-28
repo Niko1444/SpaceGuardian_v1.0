@@ -16,6 +16,7 @@ class KeyboardManager {
       P: Phaser.Input.Keyboard.KeyCodes.P,
       T: Phaser.Input.Keyboard.KeyCodes.T,
       R: Phaser.Input.Keyboard.KeyCodes.R,
+      L: Phaser.Input.Keyboard.KeyCodes.L,
       // Add more keys as needed
     });
   }
@@ -55,6 +56,13 @@ class KeyboardManager {
       this.scene.scene.start("playGame");
       this.scene.scene.stop("gameOver");
       gameSettings.playerScore = 0;
+    });
+  }
+
+  showLeaderboard() {
+    this.keys.L.on("down", () => {
+      this.scene.scene.start("leaderboard");
+      this.scene.scene.stop("gameOver");
     });
   }
 }

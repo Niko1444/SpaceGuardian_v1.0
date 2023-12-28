@@ -343,7 +343,7 @@ class BossScreen extends Phaser.Scene {
     ) {
       this.boss.bossBound();
       if (this.timeHealth === 0) {
-        this.callMini;
+        this.callMini();
       }
     }
 
