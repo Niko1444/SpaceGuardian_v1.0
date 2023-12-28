@@ -61,7 +61,6 @@ class Boss extends Entity {
   }
 
   moveToCenter() {
-
     if (this.checkCenter < 150) {
       let direction = new Phaser.Math.Vector2(
         config.width / 2 - this.x,
@@ -77,8 +76,7 @@ class Boss extends Entity {
         (direction.y * gameSettings.enemySpeed) / 2
       );
       this.checkCenter++;
-    }
-    else {
+    } else {
       this.body.velocity.y = 0;
       this.body.velocity.x = 0;
       this.checkCenter++;
@@ -110,8 +108,7 @@ class Boss extends Entity {
       if (this.y > config.height - 150 && this.body.velocity.y > 0) {
         this.body.velocity.y = -yVel;
       }
-    }
-    else {
+    } else {
       let xVel = 0.25 * gameSettings.enemySpeed;
       let yVel = 0.25 * gameSettings.enemySpeed;
       this.checkCenter++;
@@ -138,30 +135,42 @@ class Boss extends Entity {
           this.checkCenter = 0;
         }
       }
-      
     }
-
   }
 
   shootEightWay(scene, enemy) {
     if (this.health > 0) {
       let randomAngle = Math.random() * 2 * Math.PI;
 
-      for (let i = randomAngle; i <= 2 * Math.PI + randomAngle; i = i + Math.PI / 4) {
+      for (
+        let i = randomAngle;
+        i <= 2 * Math.PI + randomAngle;
+        i = i + Math.PI / 4
+      ) {
         let angle = i;
         let rotation = {
           x: Math.cos(angle),
-          y: Math.sin(angle)
+          y: Math.sin(angle),
         };
-        const bossBulletLeft = new EnemyBullet(scene, enemy, -110, 0, rotation, angle)
-        const enemyBulletRight = new EnemyBullet(scene, enemy, 110, 0, rotation, angle)
+        const bossBulletLeft = new EnemyBullet(
+          scene,
+          enemy,
+          -110,
+          0,
+          rotation,
+          angle
+        );
+        const enemyBulletRight = new EnemyBullet(
+          scene,
+          enemy,
+          110,
+          0,
+          rotation,
+          angle
+        );
       }
     }
   }
-
-
-
-
 }
 
 export default Boss;

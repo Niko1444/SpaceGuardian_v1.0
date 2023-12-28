@@ -83,7 +83,7 @@ class Bug3 extends Entity {
   explode(canDestroy) {
     super.explode(canDestroy);
     this.scene.player.getHeal(this.scene.player.lifestealRate);
-    this.scene.upgradeManager.updateScore(10);
+    this.scene.upgradeManager.updateScore(100);
   }
 }
 

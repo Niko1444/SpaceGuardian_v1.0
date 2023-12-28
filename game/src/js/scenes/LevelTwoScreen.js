@@ -1,5 +1,6 @@
 import Phaser from "phaser";
 import config from "../config/config";
+import GameSettings from "../config/gameSettings.js";
 import Bullet from "../objects/projectiles/Bullet";
 import Player from "../objects/players/Player";
 import Shield from "../objects/utilities/Shield";
