@@ -1,6 +1,6 @@
 import Phaser from "phaser";
 import config from "../config/config";
-import gameSettings from "../config/gameSettings";
+import GameSettings from "../config/gameSettings";
 class UpgradeScreen extends Phaser.Scene {
   constructor() {
     super("upgradeScreen");
@@ -128,35 +128,45 @@ class UpgradeScreen extends Phaser.Scene {
         break;
 
       case "upgrade2":
-        player.speed += 50;
+        GameSettings.playerSpeed += 50;
+        player.speed = GameSettings.playerSpeed;
         break;
 
       case "upgrade3":
-        player.bulletDamage += 100;
+        GameSettings.playerBulletDamage += 100;
+        player.bulletDamage = GameSettings.playerBulletDamage;
         break;
 
       case "upgrade4":
         player.takeDamage(player.health * 0.9);
-        player.bulletDamage += 80;
-        player.bulletSize *= 1.5;
+        GameSettings.playerBulletDamage += 80;
+        GameSettings.playerBulletSize *= 1.5;
+        player.bulletDamage = GameSettings.playerBulletDamage;
+        player.bulletSize = GameSettings.playerBulletSize;
         break;
 
       case "upgrade5":
-        player.lifestealRate += 50;
+        GameSettings.playerLifesteal += 50;
+        player.lifestealRate = GameSettings.playerLifesteal;
         break;
 
       case "upgrade6":
-        player.numberOfBullets += 1;
+        GameSettings.playerNumberOfBullets += 1;
+        player.numberOfBullets = GameSettings.playerNumberOfBullets;
         break;
 
       case "upgrade7":
-        player.fireRate -= 200;
+        GameSettings.playerFireRate -= 150;
+        player.fireRate = GameSettings.playerFireRate;
         break;
 
       case "upgrade8":
-        player.bulletSpeed += 200;
+        GameSettings.playerBulletSpeed += 150;
+        player.bulletSpeed = GameSettings.playerBulletSpeed;
         break;
     }
+
+    console.log(GameSettings);
 
     // Close the upgrade scene and resume the parent scene
     this.scene.stop();

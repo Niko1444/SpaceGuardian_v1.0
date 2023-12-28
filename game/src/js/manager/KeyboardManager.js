@@ -1,6 +1,7 @@
 import Phaser from "phaser";
 import PauseScreen from "../scenes/PauseScreen";
 import config from "../config/config";
+import gameSettings from "../config/gameSettings";
 
 class KeyboardManager {
   constructor(scene) {
@@ -45,6 +46,7 @@ class KeyboardManager {
       this.scene.scene.start("bootGame");
       this.scene.scene.stop("playGame");
       this.scene.scene.stop("pauseScreen");
+      gameSettings.playerScore = 0;
     });
   }
 
@@ -52,6 +54,7 @@ class KeyboardManager {
     this.keys.R.on("down", () => {
       this.scene.scene.start("playGame");
       this.scene.scene.stop("gameOver");
+      gameSettings.playerScore = 0;
     });
   }
 }
