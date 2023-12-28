@@ -10,12 +10,19 @@ module.exports = {
   // Path and filename of your result bundle.
   externals: {
     phaser: "Phaser",
+    firebase: "firebase",
   },
   // Webpack will bundle all JavaScript into this file
   output: {
     path: path.resolve(__dirname, "dist"),
     publicPath: "",
     filename: "bundle.js",
+  },
+
+  resolve: {
+    alias: {
+      firebase: path.resolve(__dirname, "node_modules/firebase"),
+    },
   },
 
   // Default mode for Webpack is production.

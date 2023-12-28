@@ -49,7 +49,6 @@ class PlayingScreen extends Phaser.Scene {
   }
 
   create() {
-    //------------------------
     if (
       !(this.anims && this.anims.exists && this.anims.exists("player_anim"))
     ) {

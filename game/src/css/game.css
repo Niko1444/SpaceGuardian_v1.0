@@ -12,12 +12,12 @@ body {
   background-color: #000;
 }
 
-#input-form {
+#playerNameInput {
   bottom: 250px;
   position: absolute;
 }
 
-#input-form input {
+#playerNameInput {
   background-color: black;
   color: white;
   padding: 5px;
