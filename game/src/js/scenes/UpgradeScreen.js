@@ -147,7 +147,9 @@ class UpgradeScreen extends Phaser.Scene {
 
       case "upgrade5":
         GameSettings.playerLifesteal += 0.1;
-        player.lifestealRate = GameSettings.playerLifesteal * (player.bulletDamage) / player.numberOfBullets;
+        player.lifestealRate =
+          (GameSettings.playerLifesteal * player.bulletDamage) /
+          player.numberOfBullets;
         break;
 
       case "upgrade6":
@@ -156,7 +158,10 @@ class UpgradeScreen extends Phaser.Scene {
         break;
 
       case "upgrade7":
-        GameSettings.playerFireRate -= this.increaseValue(GameSettings.playerFireRate, 10000);
+        GameSettings.playerFireRate -= this.increaseValue(
+          GameSettings.playerFireRate,
+          10000
+        );
         player.fireRate = GameSettings.playerFireRate;
         break;
 
@@ -172,7 +177,7 @@ class UpgradeScreen extends Phaser.Scene {
   }
 
   increaseValue(current, base) {
-    return Math.log2(current + base)*3.5 ;
+    return Math.log2(current + base) * 3.5;
   }
 }
 

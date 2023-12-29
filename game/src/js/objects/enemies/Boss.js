@@ -88,7 +88,10 @@ class Boss extends Entity {
 
   bossBound() {
     // If the boss is about to move out o{f the scene bounds, set a new random velocity
-    if (this.health < 550 && this.health > 400) {
+    if (
+      this.health < this.maxHealth * 0.5 &&
+      this.health > this.maxHealth * 0.4
+    ) {
       let xVel = 0.75 * gameSettings.enemySpeed;
       let yVel = 0.75 * gameSettings.enemySpeed;
 
