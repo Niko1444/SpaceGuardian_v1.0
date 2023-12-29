@@ -92,9 +92,12 @@ class Player extends Entity {
         6: [0, -25, -50, -50, -25, 0], // Pattern for 6 bullets
       };
 
+      const bulletSizeScale =
+        this.bulletSize / gameSettings.playerDefaultBulletSize;
+
       for (let i = 0; i < totalBullets; i++) {
-        const offsetX = patternsX[totalBullets][i] || 0; // Use the defined pattern or default to 0
-        const offsetY = patternsY[totalBullets][i] || 0; // Use the defined pattern or default to 0
+        const offsetX = (patternsX[totalBullets][i] || 0) * bulletSizeScale; // Apply scaling to X offset
+        const offsetY = (patternsY[totalBullets][i] || 0) * bulletSizeScale; // Apply scaling to Y offset
 
         const bullet = new Bullet(this.scene, number);
         bullet.damage = this.bulletDamage;
