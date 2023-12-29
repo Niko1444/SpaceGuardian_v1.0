@@ -8,7 +8,11 @@ class GameOver extends Phaser.Scene {
   constructor() {
     super("gameOver");
   }
-
+  
+  init(data) {
+    this.callingScene = data.key;
+  }
+  
   create() {
     // Add a game over message
     this.keyboardManager = new KeyboardManager(this);
