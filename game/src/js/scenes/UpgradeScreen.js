@@ -156,7 +156,16 @@ class UpgradeScreen extends Phaser.Scene {
         break;
 
       case "upgrade7":
-        GameSettings.playerFireRate -= 150;
+        if (GameSettings.playerFireRate < 200) {
+          GameSettings.playerFireRate += 100;
+          break;
+        }
+
+        if (GameSettings.playerFireRate > 200) {
+          GameSettings.playerFireRate += 50;
+          break;
+        }
+
         player.fireRate = GameSettings.playerFireRate;
         break;
 
@@ -165,8 +174,6 @@ class UpgradeScreen extends Phaser.Scene {
         player.bulletSpeed = GameSettings.playerBulletSpeed;
         break;
     }
-
-    console.log(GameSettings);
 
     // Close the upgrade scene and resume the parent scene
     this.scene.stop();
