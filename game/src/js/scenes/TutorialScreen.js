@@ -123,9 +123,27 @@ class TutorialScreen extends Phaser.Scene {
       config.width / 2,
       config.height / 2 - 30
     );
+    
+    this.time.delayedCall(
+      6000,
+      () => {
+        this.guiManager.createTutorialText(
+          "Press P to pause the game",
+          config.width / 2,
+          config.height / 2 - 60
+        );
+        this.guiManager.createTutorialText(
+          "500 points = 1 Upgrade",
+          config.width / 2,
+          config.height / 2 - 30
+        );
+      },
+      null,
+      this
+    );
 
     this.time.delayedCall(
-      8000,
+      10000,
       () => {
         this.guiManager.createSimpleText(
           config.width / 2,

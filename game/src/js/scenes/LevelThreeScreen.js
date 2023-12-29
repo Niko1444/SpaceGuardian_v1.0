@@ -152,16 +152,53 @@ class LevelThreeScreen extends Phaser.Scene {
       this
     );
 
+    this.time.delayedCall(
+      20000,
+      () => {
+        this.enemyManager.spawnBugRain(20, 4000, 200);
+      },
+      null,
+      this
+    );
+
+    this.time.delayedCall(
+      26000,
+      () => {
+        this.enemyManager.spawnBugRainLeftToRight(20, 4000, 200);
+      },
+      null,
+      this
+    )
+
+    this.time.delayedCall(
+      32000,
+      () => {
+        this.enemyManager.spawnBugRainRightToLeft(20, 4000, 200);
+      },
+      null,
+      this
+    )
+
+    this.time.delayedCall(
+      35000,
+      () => {
+        this.enemyManager.spawnBugRainBottomToTop(20, 4000, 200);
+      },
+      null,
+      this
+    )
+
     // Create text for level 3
     this.createText("LEVEL 3", config.width / 2, config.height / 2 - 60, 2000);
 
     this.time.delayedCall(
-      15000,
+      16000,
       () => {
         this.createText(
           "Try your best to survive!",
           config.width / 2,
-          config.height / 2 - 60
+          config.height / 2 - 60,
+          2000
         );
       },
       null,
@@ -200,8 +237,18 @@ class LevelThreeScreen extends Phaser.Scene {
       null,
       this
     );
-    this.time.delayedCall(9000, () => this.enemyManager.spawnEnemyRowWithDelay(this, 0), null, this);
-    this.time.delayedCall(11000, () => this.enemyManager.spawnEnemyRowWithDelay(this, 0), null, this);
+    this.time.delayedCall(
+      9000,
+      () => this.enemyManager.spawnEnemyRowWithDelay(this, 0),
+      null,
+      this
+    );
+    this.time.delayedCall(
+      11000,
+      () => this.enemyManager.spawnEnemyRowWithDelay(this, 0),
+      null,
+      this
+    );
 
     this.time.delayedCall(
       18000,
@@ -242,8 +289,6 @@ class LevelThreeScreen extends Phaser.Scene {
     this.projectileManager.createPlayerBullet();
     this.projectileManager.createEnemyBullet();
     this.projectileManager.createChaseBullet();
-    // this.projectileManager.callEnemyBullet();
-    // this.projectileManager.callChaseBullet();
 
     // Create keyboard inputs
     this.spacebar = this.input.keyboard.addKey(
@@ -264,7 +309,7 @@ class LevelThreeScreen extends Phaser.Scene {
     );
 
     this.time.delayedCall(
-      35000,
+      47000,
       () => {
         this.goToNextLevel();
       },
