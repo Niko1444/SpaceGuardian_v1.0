@@ -220,7 +220,7 @@ class LevelTwoScreen extends Phaser.Scene {
 
     // FINAL WAVE
     this.time.delayedCall(
-      25000,
+      22000,
       () => {
         this.startFinalWave();
       },
@@ -253,7 +253,7 @@ class LevelTwoScreen extends Phaser.Scene {
     this.projectileManager.createEnemyBullet();
     this.projectileManager.createChaseBullet();
     this.time.addEvent({
-      delay: 28000,
+      delay: 25000,
       callback: () => {
         this.projectileManager.callEnemyBulletLv2();
       },
@@ -305,6 +305,7 @@ class LevelTwoScreen extends Phaser.Scene {
 
     // Score System
     this.upgradeManager = new UpgradeManager(this, this.callingScene);
+    
   }
 
   update() {
@@ -338,7 +339,7 @@ class LevelTwoScreen extends Phaser.Scene {
     this.shield.updatePosition(this.player);
 
     this.time.addEvent({
-      delay: 28000,
+      delay: 25000,
       callback: () => {
         this.bug3_1.rotateToPlayer(this.player);
         this.bug3_2.rotateToPlayer(this.player);
@@ -377,10 +378,14 @@ class LevelTwoScreen extends Phaser.Scene {
     }
   }
 
+  shutdownPlayer(){
+    this.events.once("shutdown", this.shutdown, this);
+  }
+
   gameOver() {
     this.events.once("shutdown", this.shutdown, this);
     this.scene.stop("upgradeScreen");
-    this.scene.start("gameOver");
+    this.scene.start("gameOver", { key: this.callingScene });
   }
 
   shutdown() {
@@ -485,7 +490,7 @@ class LevelTwoScreen extends Phaser.Scene {
 
         // Spawn a wave of bugs after the "Final Wave" message disappears
         // shoot straight bullet
-        this.bug3_1 = new Bug3(this, config.width/2, -20, 1000, 3);
+        this.bug3_1 = new Bug3(this, config.width/2, -20, 3000, 3);
         this.enemyManager.addEnemyForOnce(this.bug3_1);
 
         const angles = [0, Math.PI / 2, Math.PI, (3 * Math.PI) / 2];

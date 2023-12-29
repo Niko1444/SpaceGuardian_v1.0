@@ -29,87 +29,11 @@ class TutorialScreen extends Phaser.Scene {
   }
 
   preload() {
-    // Load Player Spritesheet
-    this.load.spritesheet({
-      key: `player_texture_${this.selectedPlayerIndex}`,
-      url: `assets/spritesheets/players/planes_0${this.selectedPlayerIndex}A.png`,
-      frameConfig: {
-        frameWidth: 96,
-        frameHeight: 96,
-        startFrame: 0,
-        endFrame: 19,
-      },
-    });
-
     this.load.image("pause", "assets/spritesheets/vfx/pause.png");
   }
 
   create() {
     // Create player animations
-    this.anims.create({
-      key: "player_anim",
-      frames: this.anims.generateFrameNumbers(
-        `player_texture_${this.selectedPlayerIndex}`,
-        {
-          start: 0,
-          end: 3,
-        }
-      ),
-      frameRate: 30,
-      repeat: -1,
-    });
-
-    this.anims.create({
-      key: "player_anim_left",
-      frames: this.anims.generateFrameNumbers(
-        `player_texture_${this.selectedPlayerIndex}`,
-        {
-          start: 4,
-          end: 7,
-        }
-      ),
-      frameRate: 30,
-      repeat: -1,
-    });
-
-    this.anims.create({
-      key: "player_anim_left_diagonal",
-      frames: this.anims.generateFrameNumbers(
-        `player_texture_${this.selectedPlayerIndex}`,
-        {
-          start: 8,
-          end: 11,
-        }
-      ),
-      frameRate: 30,
-      repeat: -1,
-    });
-
-    this.anims.create({
-      key: "player_anim_right",
-      frames: this.anims.generateFrameNumbers(
-        `player_texture_${this.selectedPlayerIndex}`,
-        {
-          start: 12,
-          end: 15,
-        }
-      ),
-      frameRate: 30,
-      repeat: -1,
-    });
-
-    this.anims.create({
-      key: "player_anim_right_diagonal",
-      frames: this.anims.generateFrameNumbers(
-        `player_texture_${this.selectedPlayerIndex}`,
-        {
-          start: 16,
-          end: 19,
-        }
-      ),
-      frameRate: 30,
-      repeat: -1,
-    });
 
     this.guiManager = new GuiManager(this);
     this.guiManager.createBackground("background_texture_01");
@@ -149,7 +73,7 @@ class TutorialScreen extends Phaser.Scene {
       "pointerdown",
       function () {
         this.scene.pause();
-        this.scene.launch("pauseScreen");
+        this.scene.launch("pauseScreen", {key : this.callingScene});
       },
       this
     );
@@ -214,11 +138,14 @@ class TutorialScreen extends Phaser.Scene {
     this.upgradeManager = new UpgradeManager(this, this.callingScene);
 
     this.input.keyboard.on("keydown-ENTER", this.startGame, this);
+
+    
   }
 
   update() {
     // Pause the game
     this.keyboardManager.pauseGame();
+    this.keyboardManager.titleScreen();
 
     // Move the background
     this.background.tilePositionY -= BACKGROUND_SCROLL_SPEED;
@@ -246,17 +173,61 @@ class TutorialScreen extends Phaser.Scene {
     }
   }
 
+  shutdown() {
+    // Remove entire texture along with all animations
+    this.textures.remove(`player_texture_${this.selectedPlayerIndex}`);
+
+    // Check if the animation exists before trying to remove it
+    if (this.anims && this.anims.exists && this.anims.exists("player_anim")) {
+      this.anims.remove("player_anim");
+    }
+    if (
+      this.anims &&
+      this.anims.exists &&
+      this.anims.exists("player_anim_left")
+    ) {
+      this.anims.remove("player_anim_left");
+    }
+    if (
+      this.anims &&
+      this.anims.exists &&
+      this.anims.exists("player_anim_left_diagonal")
+    ) {
+      this.anims.remove("player_anim_left_diagonal");
+    }
+    if (
+      this.anims &&
+      this.anims.exists &&
+      this.anims.exists("player_anim_right")
+    ) {
+      this.anims.remove("player_anim_right");
+    }
+    if (
+      this.anims &&
+      this.anims.exists &&
+      this.anims.exists("player_anim_right_diagonal")
+    ) {
+      this.anims.remove("player_anim_right_diagonal");
+    }
+  }
+
   startGame() {
     this.scene.stop("upgradeScreen");
-
+  
     this.time.delayedCall(1000, () => {
+      this.scene.stop();
       this.scene.start("playGame", { number: this.selectedPlayerIndex });
     });
   }
 
   gameOver() {
-    this.scene.start("gameOver");
+    this.scene.start("gameOver", { key: this.callingScene });
     this.scene.stop("upgradeScreen");
+    this.scene.stop();
+    this.events.once("shutdown", this.shutdown, this);
+  }
+
+  shutdownPlayer(){
     this.events.once("shutdown", this.shutdown, this);
   }
 }

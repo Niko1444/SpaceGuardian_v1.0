@@ -11,6 +11,10 @@ class PauseScreen extends Phaser.Scene {
     this.load.image("resume", "assets/spritesheets/vfx/resume.png");
   }
 
+  init(data){
+    this.callingScene = data.key;
+  }
+
   create() {
     this.keyboardManager = new KeyboardManager(this);
     this.guiManager = new GuiManager(this);
@@ -24,7 +28,7 @@ class PauseScreen extends Phaser.Scene {
       "pointerdown",
       function () {
         this.scene.stop();
-        this.scene.resume(this.scene.callingScene);
+        this.scene.resume(this.callingScene);
       },
       this
     );
@@ -51,6 +55,7 @@ class PauseScreen extends Phaser.Scene {
     this.keyboardManager.titleScreen();
   }
   update() {}
+
   updateAudio() {
     if (this.music.musicOn === false && this.music.soundOn === false) {
       this.musicButton.setTexture("mute_texture");

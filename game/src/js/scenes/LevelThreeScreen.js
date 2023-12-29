@@ -290,6 +290,7 @@ class LevelThreeScreen extends Phaser.Scene {
 
     // Score System
     this.upgradeManager = new UpgradeManager(this, this.callingScene);
+    
   }
 
   update() {
@@ -351,10 +352,14 @@ class LevelThreeScreen extends Phaser.Scene {
     }
   }
 
+  shutdownPlayer(){
+    this.events.once("shutdown", this.shutdown, this);
+  }
+
   gameOver() {
     this.events.once("shutdown", this.shutdown, this);
     this.scene.stop("upgradeScreen");
-    this.scene.start("gameOver");
+    this.scene.start("gameOver", { key: this.callingScene });
   }
 
   shutdown() {

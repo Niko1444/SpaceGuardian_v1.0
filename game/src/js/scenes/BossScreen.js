@@ -130,6 +130,7 @@ class BossScreen extends Phaser.Scene {
     // }
 
     this.boss = new Boss(this, config.width / 2, 0, 100000);
+    this.boss = new Boss(this, config.width / 2, 0, 100000);
     this.boss.play("boss_move_anim");
 
     this.firstMini = new MiniBot(this, config.width / 5, -96, 10000);
@@ -300,12 +301,9 @@ class BossScreen extends Phaser.Scene {
     }
 
     this.shield.updatePosition(this.player);
-
     this.bug3_1.rotateToPlayer(this.player);
     this.bug3_2.rotateToPlayer(this.player);
-
     this.bug5.chasePlayer(this.player);
-
     this.bossProcess();
   }
 
@@ -326,7 +324,7 @@ class BossScreen extends Phaser.Scene {
   gameOver() {
     this.events.once("shutdown", this.shutdown, this);
     this.scene.stop("upgradeScreen");
-    this.scene.start("gameOver");
+    this.scene.start("gameOver", { key: this.callingScene });
   }
 
   enemyExploded() {

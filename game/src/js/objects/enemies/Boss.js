@@ -13,7 +13,7 @@ class Boss extends Entity {
     this.maxHealth = health;
     this.hpBarWidth = 200;
     this.hpBarHeight = 10;
-    this.damage = 5;
+    this.damage = 100;
     this.setInteractiveEntity();
 
     this.isDestroyed = false;

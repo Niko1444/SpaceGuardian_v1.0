@@ -28,7 +28,7 @@ class KeyboardManager {
       config.pauseGame = !config.pauseGame;
 
       if (config.pauseGame == true) {
-        this.scene.scene.launch("pauseScreen");
+        this.scene.scene.launch("pauseScreen", {key : this.scene.callingScene});
         this.scene.scene.pause();
       }
     }
@@ -37,7 +37,7 @@ class KeyboardManager {
   unpauseGame() {
     this.keys.P.on("down", () => {
       config.pauseGame = false;
-      this.scene.scene.resume("playGame");
+      this.scene.scene.resume(this.scene.callingScene);
       this.scene.scene.stop();
     });
   }
@@ -45,7 +45,9 @@ class KeyboardManager {
   titleScreen() {
     this.keys.T.on("down", () => {
       this.scene.scene.start("bootGame");
-      this.scene.scene.stop("playGame");
+      let otherScene = this.scene.scene.get(this.scene.callingScene);
+      otherScene.shutdownPlayer()
+      this.scene.scene.stop(this.scene.callingScene);
       this.scene.scene.stop("pauseScreen");
       gameSettings.playerScore = 0;
     });
@@ -53,7 +55,7 @@ class KeyboardManager {
 
   restartGame() {
     this.keys.R.on("down", () => {
-      this.scene.scene.start("playGame");
+      this.scene.scene.start(this.scene.callingScene);
       this.scene.scene.stop("gameOver");
       gameSettings.playerScore = 0;
     });

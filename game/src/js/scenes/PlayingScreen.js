@@ -163,7 +163,7 @@ class PlayingScreen extends Phaser.Scene {
     );
 
     // Create text for level 1
-    this.createText("LEVEL 1", config.width / 2, config.height / 2 - 60);
+    this.createText("LEVEL 1", config.width / 2, config.height / 2 - 60, 2000);
 
     // Spawn the Shield
     this.shield = new Shield(this, this.player);
@@ -216,7 +216,7 @@ class PlayingScreen extends Phaser.Scene {
 
     // FINAL WAVE
     this.time.delayedCall(
-      40000,
+      45000,
       () => {
         this.startFinalWave();
       },
@@ -296,7 +296,7 @@ class PlayingScreen extends Phaser.Scene {
     );
 
     this.time.delayedCall(
-      53000,
+      58000,
       () => {
         this.goToNextLevel();
       },
@@ -314,7 +314,7 @@ class PlayingScreen extends Phaser.Scene {
       "pointerdown",
       function () {
         this.scene.pause();
-        this.scene.launch("pauseScreen");
+        this.scene.launch("pauseScreen", {key : "playGame"});
       },
       this
     );
@@ -332,6 +332,8 @@ class PlayingScreen extends Phaser.Scene {
       },
       this
     );
+
+    
   }
 
   update() {
@@ -406,10 +408,15 @@ class PlayingScreen extends Phaser.Scene {
     }
   }
 
+  shutdownPlayer(){
+    this.events.once("shutdown", this.shutdown, this);
+  }
+
   gameOver() {
     this.events.once("shutdown", this.shutdown, this);
+    this.scene.stop();
     this.scene.stop("upgradeScreen");
-    this.scene.start("gameOver");
+    this.scene.start("gameOver", { key: this.callingScene });
   }
 
   shutdown() {
@@ -450,7 +457,7 @@ class PlayingScreen extends Phaser.Scene {
     }
   }
 
-  createText(key, x, y) {
+  createText(key, x, y, time) {
     const Level1Text = this.add
       .text(x, y, key, {
         fontFamily: "Pixelify Sans",
@@ -460,7 +467,7 @@ class PlayingScreen extends Phaser.Scene {
       .setOrigin(0.5);
 
     this.time.delayedCall(
-      2000,
+      time,
       () => {
         Level1Text.destroy();
       },
@@ -473,12 +480,14 @@ class PlayingScreen extends Phaser.Scene {
     this.createText(
       "LEVEL COMPLETED",
       config.width / 2,
-      config.height / 2 - 60
+      config.height / 2 - 60,
+      5000
     );
     this.createText(
       "Press Enter to continue",
       config.width / 2,
-      config.height / 2 - 30
+      config.height / 2 - 30,
+      5000
     );
 
     // Check for Enter key press continuously in the update loop
@@ -489,6 +498,7 @@ class PlayingScreen extends Phaser.Scene {
     this.scene.stop("upgradeScreen");
 
     this.time.delayedCall(1000, () => {
+      this.scene.stop();
       this.scene.start("playLevelTwo", { number: this.selectedPlayerIndex });
     });
 
