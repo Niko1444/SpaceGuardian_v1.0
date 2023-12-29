@@ -96,17 +96,13 @@ class TitleScreen extends Phaser.Scene {
     guardianText.setShadow(3, 3, "#F27CA4", 2, false, true);
 
     // Create "LOGO" image
-    // Add text input field for player name
-    const playerNameInput = this.add.dom(
-      config.width / 2,
-      config.height / 2,
-      "input",
-      "width: 300px; padding: 10px; text-align: center; font-size: 24px;"
+    const bottomLeftImage = this.add.image(
+      (config.width / 10) * 8.5,
+      (config.height / 10) * 9.78,
+      "logo"
     );
-    playerNameInput.createFromCache("playerNameInput");
-    const bottomLeftImage = this.add.image(27, config.height - 20, "logo");
     bottomLeftImage.setOrigin(0, 1);
-    bottomLeftImage.setScale(0.32);
+    bottomLeftImage.setScale(0.3);
 
     // Tween animation for the rainbow effect on "GUARDIAN"
     this.tweens.add({
@@ -137,24 +133,22 @@ class TitleScreen extends Phaser.Scene {
       "button_hover",
       "choosePlayer"
     );
-
-    this.button_play = this.add.sprite(
-      config.width / 2,
-      config.height / 2 + 60,
-      "button_play"
-    );
     this.button_play.setInteractive();
 
-    // Play Button Functionality
+    // Event listeners for the play button
     this.button_play.on("pointerdown", () => {
       this.scene.start("choosePlayer");
     });
+
     this.button_play.on("pointerover", () => {
       this.button_play.setTexture("button_hover");
     });
+
     this.button_play.on("pointerout", () => {
       this.button_play.setTexture("button_play");
     });
+
+    // Create
   }
 }
 export default TitleScreen;
