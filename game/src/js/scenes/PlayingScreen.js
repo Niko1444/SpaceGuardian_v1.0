@@ -146,12 +146,12 @@ class PlayingScreen extends Phaser.Scene {
       21000,
       () => {
         // shoot straight bullet
-        this.bug3_1 = new Bug3(this, config.width - 20, -20, 300);
-        this.bug3_2 = new Bug3(this, 20, -20, 300);
+        this.bug3_1 = new Bug3(this, config.width - 20, -20, 300, 1);
+        this.bug3_2 = new Bug3(this, 20, -20, 300, 1);
 
         // shoot following bullet
-        this.bug3_3 = new Bug3(this, 70, -20, 500);
-        this.bug3_4 = new Bug3(this, config.width - 70, -20, 500);
+        this.bug3_3 = new Bug3(this, 70, -20, 500, 1);
+        this.bug3_4 = new Bug3(this, config.width - 70, -20, 500, 1);
 
         // chasing enemies
         this.bug5_1 = new Bug5(this, config.width / 2, -20, 200);

@@ -6,7 +6,7 @@ import config from "../../config/config";
 import Phaser from "phaser";
 import ChasingBullet from "../projectiles/ChasingBullet";
 class Bug3 extends Entity {
-  constructor(scene, x, y, health, scale) {
+  constructor(scene, x, y, health, scale = 1) {
     super(scene, x, y, "bug3_texture", health);
 
     this.setScale(scale);
