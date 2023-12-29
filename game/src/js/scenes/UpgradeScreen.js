@@ -124,7 +124,7 @@ class UpgradeScreen extends Phaser.Scene {
     switch (choice) {
       case "upgrade1":
         player.maxHealth += 200;
-        player.getHealed(200);
+        player.getHeal(200);
         break;
 
       case "upgrade2":
