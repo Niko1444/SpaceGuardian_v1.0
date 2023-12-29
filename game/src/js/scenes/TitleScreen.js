@@ -22,7 +22,7 @@ class TitleScreen extends Phaser.Scene {
 
     this.load.spritesheet({
       key: "button_play",
-      url: "assets/gui/button.png",
+      url: "assets/gui/button_play.png",
       frameConfig: {
         frameWidth: 93,
         frameHeight: 28,
@@ -32,13 +32,35 @@ class TitleScreen extends Phaser.Scene {
     });
 
     this.load.spritesheet({
-      key: "button_hover",
-      url: "assets/gui/button_hover.png",
+      key: "button_play_hover",
+      url: "assets/gui/button_play_hover.png",
       frameConfig: {
         frameWidth: 93,
         frameHeight: 28,
         startFrame: 2,
         endFrame: 2,
+      },
+    });
+
+    this.load.spritesheet({
+      key: "button_tutorial",
+      url: "assets/gui/button_play.png",
+      frameConfig: {
+        frameWidth: 93,
+        frameHeight: 28,
+        startFrame: 4,
+        endFrame: 4,
+      },
+    });
+
+    this.load.spritesheet({
+      key: "button_tutorial_hover",
+      url: "assets/gui/button_play_hover.png",
+      frameConfig: {
+        frameWidth: 93,
+        frameHeight: 28,
+        startFrame: 4,
+        endFrame: 4,
       },
     });
   }
@@ -130,7 +152,7 @@ class TitleScreen extends Phaser.Scene {
       config.width / 2,
       config.height / 2 + 60,
       "button_play",
-      "button_hover",
+      "button_play_hover",
       "choosePlayer"
     );
     this.button_play.setInteractive();
@@ -141,14 +163,41 @@ class TitleScreen extends Phaser.Scene {
     });
 
     this.button_play.on("pointerover", () => {
-      this.button_play.setTexture("button_hover");
+      this.button_play.setTexture("button_play_hover");
     });
 
     this.button_play.on("pointerout", () => {
       this.button_play.setTexture("button_play");
     });
 
-    // Create
+    // Event listener for Enter key
+    this.input.keyboard.on("keydown-ENTER", () => {
+      this.scene.start("choosePlayer");
+    });
+
+    // Create Tutorial Button
+    this.button_tutorial = new Button(
+      this,
+      config.width / 2,
+      config.height / 2 + 100,
+      "button_tutorial",
+      "button_tutorial_hover",
+      "choosePlayer"
+    );
+    this.button_tutorial.setInteractive();
+
+    // Event listeners for the tutorial button
+    this.button_tutorial.on("pointerdown", () => {
+      this.scene.start("choosePlayer");
+    });
+
+    this.button_tutorial.on("pointerover", () => {
+      this.button_tutorial.setTexture("button_tutorial_hover");
+    });
+
+    this.button_tutorial.on("pointerout", () => {
+      this.button_tutorial.setTexture("button_tutorial");
+    });
   }
 }
 export default TitleScreen;
