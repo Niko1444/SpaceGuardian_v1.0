@@ -3,12 +3,15 @@ import Phaser from "phaser";
 import Button from "../objects/Button";
 
 class buttonManager {
-    
   constructor(scene) {
     this.scene = scene;
-    
-    this.button = this.scene.add.sprite(config.width -20, 30, "settingButton_texture");
-    
+
+    this.button = this.scene.add.sprite(
+      config.width - 20,
+      30,
+      "settingButton_texture"
+    );
+
     this.button.setInteractive();
 
     this.button.on("pointerup", () => {
@@ -24,21 +27,14 @@ class buttonManager {
         this.resume();
       }
     });
-   
+
     this.button.on("pointerover", () => {
       this.button.setTexture("settingHover_texture");
     });
     this.button.on("pointerout", () => {
       this.button.setTexture("settingButton_texture");
     });
-
-
-   
-    
-    
   }
-
-
 
   toggleGamePause() {
     config.pauseGame = !config.pauseGame;
@@ -68,9 +64,6 @@ class buttonManager {
     // Code for animating the button to show as "pause"
   }
 
-
   // }
-  
-
 }
 export default buttonManager;

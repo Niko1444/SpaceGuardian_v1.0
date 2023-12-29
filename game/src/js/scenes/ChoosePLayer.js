@@ -100,11 +100,14 @@ class ChoosePLayer extends Phaser.Scene {
     );
 
     // Create "LOGO" image
-    const bottomLeftImage = this.add.image(27, config.height - 20, "logo");
-    bottomLeftImage.setOrigin(0, 1); // Set the origin to the bottom left
-
-    // Optionally, you can set the scale of the image
-    bottomLeftImage.setScale(0.32); // Adjust the scale as needed
+    // Create "LOGO" image
+    const bottomLeftImage = this.add.image(
+      (config.width / 10) * 8.5,
+      (config.height / 10) * 9.78,
+      "logo"
+    );
+    bottomLeftImage.setOrigin(0, 1);
+    bottomLeftImage.setScale(0.3);
 
     this.hideTextInput();
   }

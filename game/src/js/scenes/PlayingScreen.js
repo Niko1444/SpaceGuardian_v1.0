@@ -314,7 +314,6 @@ class PlayingScreen extends Phaser.Scene {
       "pointerdown",
       function () {
         this.scene.pause();
-        // if()
         this.scene.launch("pauseScreen");
       },
       this
