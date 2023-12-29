@@ -9,7 +9,6 @@ import KeyboardManager from "../manager/KeyboardManager";
 import PlayerManager from "../manager/playerManager";
 import CollideManager from "../manager/collideManager";
 import HPBar from "../objects/ui/HPBar";
-import Bug1 from "../objects/enemies/Bug1";
 import Bug3 from "../objects/enemies/Bug3";
 import Bug5 from "../objects/enemies/Bug5";
 import GuiManager from "../manager/GuiManager.js";
@@ -141,19 +140,27 @@ class LevelTwoScreen extends Phaser.Scene {
       13000,
       () => {
         // chasing enemies
-        this.bug5_1 = new Bug5(this, config.width / 2 + 20, -20, 400);
-        this.bug5_2 = new Bug5(this, config.width / 2 - 100, -20, 400);
-        this.bug5_3 = new Bug5(this, config.width / 2 + 100, -20, 400);
-        this.bug5_4 = new Bug5(this, config.width / 2 - 20, -20, 400);
-        this.bug5_5 = new Bug5(this, config.width / 2 - 150, -20, 400);
-        this.bug5_6 = new Bug5(this, config.width / 2 + 150, -20, 400);
+        this.bug5_1 = new Bug5(this, 30, -20, 200);
+        this.bug5_2 = new Bug5(this, 120, -20, 200);
+        this.bug5_3 = new Bug5(this, 210, -20, 200);
+        this.bug5_4 = new Bug5(this, 300, -20, 200);
+        this.bug5_5 = new Bug5(this, 390, -20, 200);
+        this.bug5_6 = new Bug5(this, 480, -20, 200);
+        this.bug5_7 = new Bug5(this, 570, -20, 200);
+        this.bug5_1.play("bug5_anim");
+        this.bug5_2.play("bug5_anim");
+        this.bug5_3.play("bug5_anim");
+        this.bug5_4.play("bug5_anim");
+        this.bug5_5.play("bug5_anim");
+        this.bug5_6.play("bug5_anim");
+        this.bug5_7.play("bug5_anim");
       },
       null,
       this
     );
 
     // Create text for level 2
-    this.createText("LEVEL 2", config.width / 2, config.height / 2 - 60);
+    this.createText("LEVEL 2", config.width / 2, config.height / 2 - 60, 2000);
 
     // Spawn the Shield
     this.shield = new Shield(this, this.player);
@@ -203,7 +210,9 @@ class LevelTwoScreen extends Phaser.Scene {
         this.enemyManager.addEnemyForOnce(this.bug5_2);
         this.enemyManager.addEnemyForOnce(this.bug5_3);
         this.enemyManager.addEnemyForOnce(this.bug5_4);
+        this.enemyManager.addEnemyForOnce(this.bug5_5);
         this.enemyManager.addEnemyForOnce(this.bug5_6);
+        this.enemyManager.addEnemyForOnce(this.bug5_7);
       },
       null,
       this
@@ -244,17 +253,9 @@ class LevelTwoScreen extends Phaser.Scene {
     this.projectileManager.createEnemyBullet();
     this.projectileManager.createChaseBullet();
     this.time.addEvent({
-      delay: 27000,
+      delay: 28000,
       callback: () => {
-        this.projectileManager.callEnemyBullet();
-        this.projectileManager.callChaseBullet(this, this.bug4_1);
-        this.projectileManager.callChaseBullet(this, this.bug4_2);
-        this.projectileManager.callChaseBullet(this, this.bug4_3);
-        this.projectileManager.callChaseBullet(this, this.bug4_4);
-        this.projectileManager.callChaseBullet(this, this.bug4_5);
-        this.projectileManager.callChaseBullet(this, this.bug4_6);
-        this.projectileManager.callChaseBullet(this, this.bug4_7);
-        this.projectileManager.callChaseBullet(this, this.bug4_8);
+        this.projectileManager.callEnemyBulletLv2();
       },
       callbackScope: this,
     });
@@ -278,7 +279,7 @@ class LevelTwoScreen extends Phaser.Scene {
     );
 
     this.time.delayedCall(
-      40000,
+    46000,
       () => {
         this.goToNextLevel();
       },
@@ -343,25 +344,6 @@ class LevelTwoScreen extends Phaser.Scene {
         this.bug3_2.rotateToPlayer(this.player);
         this.bug3_3.rotateToPlayer(this.player);
         this.bug3_4.rotateToPlayer(this.player);
-        this.bug3_5.rotateToPlayer(this.player);
-        this.bug3_6.rotateToPlayer(this.player);
-        this.bug3_7.rotateToPlayer(this.player);
-        this.bug3_8.rotateToPlayer(this.player);
-      },
-      callbackScope: this,
-    });
-
-    this.time.addEvent({
-      delay: 30000,
-      callback: () => {
-        this.bug4_6.rotateToPlayer(this.player);
-        this.bug4_7.rotateToPlayer(this.player);
-        this.bug4_8.rotateToPlayer(this.player);
-        this.bug4_1.rotateToPlayer(this.player);
-        this.bug4_2.rotateToPlayer(this.player);
-        this.bug4_3.rotateToPlayer(this.player);
-        this.bug4_4.rotateToPlayer(this.player);
-        this.bug4_5.rotateToPlayer(this.player);
       },
       callbackScope: this,
     });
@@ -375,6 +357,7 @@ class LevelTwoScreen extends Phaser.Scene {
         this.bug5_4.chasePlayer(this.player);
         this.bug5_5.chasePlayer(this.player);
         this.bug5_6.chasePlayer(this.player);
+        this.bug5_7.chasePlayer(this.player);
       },
       callbackScope: this,
     });
@@ -438,7 +421,7 @@ class LevelTwoScreen extends Phaser.Scene {
     }
   }
 
-  createText(key, x, y) {
+  createText(key, x, y, time) {
     const Level2Text = this.add
       .text(x, y, key, {
         fontFamily: "Pixelify Sans",
@@ -448,7 +431,7 @@ class LevelTwoScreen extends Phaser.Scene {
       .setOrigin(0.5);
 
     this.time.delayedCall(
-      2000,
+      time,
       () => {
         Level2Text.destroy();
       },
@@ -461,12 +444,14 @@ class LevelTwoScreen extends Phaser.Scene {
     this.createText(
       "LEVEL COMPLETED",
       config.width / 2,
-      config.height / 2 - 60
+      config.height / 2 - 60,
+      5000
     );
     this.createText(
       "Press Enter to continue",
       config.width / 2,
-      config.height / 2 - 30
+      config.height / 2 - 30,
+      5000
     );
 
     // Check for Enter key press continuously in the update loop
@@ -487,6 +472,7 @@ class LevelTwoScreen extends Phaser.Scene {
     // Display "Final Wave" text for 2 seconds
     const finalWaveText = this.add
       .text(config.width / 2, config.height / 2, "Final Wave", {
+        fontFamily: "Pixelify Sans",
         fontSize: "32px",
         fill: "#ffffff",
       })
@@ -499,42 +485,18 @@ class LevelTwoScreen extends Phaser.Scene {
 
         // Spawn a wave of bugs after the "Final Wave" message disappears
         // shoot straight bullet
-        this.bug3_1 = new Bug3(this, 30, -20, 30);
-        this.bug3_2 = new Bug3(this, 120, -20, 30);
-        this.bug3_3 = new Bug3(this, 210, -20, 30);
-        this.bug3_4 = new Bug3(this, 300, -20, 30);
-        this.bug3_5 = new Bug3(this, 390, -20, 30);
-        this.bug3_6 = new Bug3(this, 480, -20, 30);
-        this.bug3_7 = new Bug3(this, 570, -20, 30);
-        this.bug3_8 = new Bug3(this, 660, -20, 30);
-
-        // shoot following bullet
-        this.bug4_6 = new Bug3(this, 30, -20, 30);
-        this.bug4_7 = new Bug3(this, 120, -20, 30);
-        this.bug4_8 = new Bug3(this, 210, -20, 30);
-        this.bug4_1 = new Bug3(this, 300, -20, 30);
-        this.bug4_2 = new Bug3(this, 390, -20, 30);
-        this.bug4_3 = new Bug3(this, 480, -20, 30);
-        this.bug4_4 = new Bug3(this, 570, -20, 30);
-        this.bug4_5 = new Bug3(this, 660, -20, 30);
-
+        this.bug3_1 = new Bug3(this, config.width/2, -20, 1000, 3);
         this.enemyManager.addEnemyForOnce(this.bug3_1);
+
+        const angles = [0, Math.PI / 2, Math.PI, (3 * Math.PI) / 2];
+
+        this.bug3_2 = new Bug3(this, config.width/2 + 200*Math.cos(angles[0]), -20 + 200*Math.sin(angles[0]), 400, 1);
+        this.bug3_3 = new Bug3(this, config.width/2 + 200*Math.cos(angles[1]), -20 + 200*Math.sin(angles[1]), 400, 1);
+        this.bug3_4 = new Bug3(this, config.width/2 + 200*Math.cos(angles[2]), -20 + 200*Math.sin(angles[2]), 400, 1);
+        
         this.enemyManager.addEnemyForOnce(this.bug3_2);
         this.enemyManager.addEnemyForOnce(this.bug3_3);
         this.enemyManager.addEnemyForOnce(this.bug3_4);
-        this.enemyManager.addEnemyForOnce(this.bug3_5);
-        this.enemyManager.addEnemyForOnce(this.bug3_6);
-        this.enemyManager.addEnemyForOnce(this.bug3_7);
-        this.enemyManager.addEnemyForOnce(this.bug3_8);
-
-        this.enemyManager.addEnemyForOnce(this.bug4_1);
-        this.enemyManager.addEnemyForOnce(this.bug4_2);
-        this.enemyManager.addEnemyForOnce(this.bug4_3);
-        this.enemyManager.addEnemyForOnce(this.bug4_4);
-        this.enemyManager.addEnemyForOnce(this.bug4_5);
-        this.enemyManager.addEnemyForOnce(this.bug4_6);
-        this.enemyManager.addEnemyForOnce(this.bug4_7);
-        this.enemyManager.addEnemyForOnce(this.bug4_8);
       },
       null,
       this

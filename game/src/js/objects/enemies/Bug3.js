@@ -6,8 +6,11 @@ import config from "../../config/config";
 import Phaser from "phaser";
 import ChasingBullet from "../projectiles/ChasingBullet";
 class Bug3 extends Entity {
-  constructor(scene, x, y, health) {
+  constructor(scene, x, y, health, scale) {
     super(scene, x, y, "bug3_texture", health);
+
+    this.setScale(scale);
+
     this.body.velocity.y = gameSettings.enemySpeed;
     this.health = health;
     this.maxHealth = health;
@@ -16,17 +19,22 @@ class Bug3 extends Entity {
     this.damage = 100;
     this.setInteractiveEntity();
 
+    const scaledHpBarWidth = this.hpBarWidth * scale;
+    const scaledHpBarHeight = this.hpBarHeight * scale;
+
     this.hpBar = new HPBar(
       scene,
       this.x,
-      this.y,
-      this.hpBarWidth,
-      this.hpBarHeight,
+      this.y - scaledHpBarHeight - 5,
+      scaledHpBarWidth,
+      scaledHpBarHeight,
       this.health,
       this.maxHealth
     );
+
     this.scene.add.existing(this.hpBar);
-  }
+}
+
 
   rotateToPlayer(player) {
     if (this.health > 0) {

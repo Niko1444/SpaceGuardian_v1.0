@@ -56,20 +56,20 @@ class EnemyManager {
     this.enemies.push(enemy);
   }
 
-  spawnSingleEnemy(type, x, y, health) {
+  spawnSingleEnemy(type, x, y, health, scale = 1) {
     let newEnemy;
 
     switch (type) {
       case 1:
-        newEnemy = new Bug1(this.scene, x, y, health);
+        newEnemy = new Bug1(this.scene, x, y, health, scale);
         newEnemy.play("bug1_anim");
         break;
       case 3:
-        newEnemy = new Bug3(this.scene, x, y, health);
+        newEnemy = new Bug3(this.scene, x, y, health, scale);
         newEnemy.play("bug3_anim");
         break;
       case 5:
-        newEnemy = new Bug5(this.scene, x, y, health);
+        newEnemy = new Bug5(this.scene, x, y, health, scale);
         newEnemy.play("bug5_anim");
         break;
       // Add more cases for other enemy types if needed

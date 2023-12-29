@@ -40,6 +40,19 @@ class ProjectileManager {
     });
   }
 
+  callEnemyBulletLv2() {
+    this.scene.time.addEvent({
+      delay: 500, // 1000 milliseconds = 1 second
+      callback: () => {
+        this.scene.bug3_1.shootBullet(this.scene, this.scene.bug3_1);
+        this.scene.bug3_2.shootBullet(this.scene, this.scene.bug3_2);
+        this.scene.bug3_3.shootBullet(this.scene, this.scene.bug3_3);
+        this.scene.bug3_4.shootBullet(this.scene, this.scene.bug3_4);
+      },
+      loop: true, // This makes the event repeat indefinitely
+    });
+  }
+
   callChaseBulletLv1() {
     this.scene.time.addEvent({
       delay: 3000, // 1000 milliseconds = 1 second
@@ -50,6 +63,8 @@ class ProjectileManager {
       loop: true, // This makes the event repeat indefinitely
     });
   }
+
+
 
   callEnemyBulletBoss() {
     this.scene.time.addEvent({

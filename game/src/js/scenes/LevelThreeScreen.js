@@ -153,7 +153,7 @@ class LevelThreeScreen extends Phaser.Scene {
     );
 
     // Create text for level 3
-    this.createText("LEVEL 3", config.width / 2, config.height / 2 - 60);
+    this.createText("LEVEL 3", config.width / 2, config.height / 2 - 60, 2000);
 
     this.time.delayedCall(
       15000,
@@ -200,8 +200,8 @@ class LevelThreeScreen extends Phaser.Scene {
       null,
       this
     );
-    // this.time.delayedCall(9000, () => this.enemyManager.spawnEnemyRowWithDelay(this, 0), null, this);
-    // this.time.delayedCall(11000, () => this.enemyManager.spawnEnemyRowWithDelay(this, 0), null, this);
+    this.time.delayedCall(9000, () => this.enemyManager.spawnEnemyRowWithDelay(this, 0), null, this);
+    this.time.delayedCall(11000, () => this.enemyManager.spawnEnemyRowWithDelay(this, 0), null, this);
 
     this.time.delayedCall(
       18000,
@@ -395,16 +395,17 @@ class LevelThreeScreen extends Phaser.Scene {
     }
   }
 
-  createText(key, x, y) {
+  createText(key, x, y, time) {
     const Level1Text = this.add
       .text(x, y, key, {
+        fontFamily: "Pixelify Sans",
         fontSize: "32px",
         fill: "#ffffff",
       })
       .setOrigin(0.5);
 
     this.time.delayedCall(
-      2000,
+      time,
       () => {
         Level1Text.destroy();
       },
@@ -417,12 +418,14 @@ class LevelThreeScreen extends Phaser.Scene {
     this.createText(
       "LEVEL COMPLETED",
       config.width / 2,
-      config.height / 2 - 60
+      config.height / 2 - 60,
+      5000
     );
     this.createText(
       "Press Enter to continue",
       config.width / 2,
-      config.height / 2 - 30
+      config.height / 2 - 30,
+      5000
     );
 
     // Check for Enter key press continuously in the update loop
