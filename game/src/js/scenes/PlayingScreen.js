@@ -163,7 +163,7 @@ class PlayingScreen extends Phaser.Scene {
     );
 
     // Create text for level 1
-    this.createText("LEVEL 1", config.width / 2, config.height / 2 - 60);
+    this.createText("LEVEL 1", config.width / 2, config.height / 2 - 60, 2000);
 
     // Spawn the Shield
     this.shield = new Shield(this, this.player);
@@ -216,7 +216,7 @@ class PlayingScreen extends Phaser.Scene {
 
     // FINAL WAVE
     this.time.delayedCall(
-      40000,
+      45000,
       () => {
         this.startFinalWave();
       },
@@ -296,7 +296,7 @@ class PlayingScreen extends Phaser.Scene {
     );
 
     this.time.delayedCall(
-      53000,
+      58000,
       () => {
         this.goToNextLevel();
       },
@@ -450,7 +450,7 @@ class PlayingScreen extends Phaser.Scene {
     }
   }
 
-  createText(key, x, y) {
+  createText(key, x, y, time) {
     const Level1Text = this.add
       .text(x, y, key, {
         fontFamily: "Pixelify Sans",
@@ -460,7 +460,7 @@ class PlayingScreen extends Phaser.Scene {
       .setOrigin(0.5);
 
     this.time.delayedCall(
-      2000,
+      time,
       () => {
         Level1Text.destroy();
       },
@@ -473,12 +473,14 @@ class PlayingScreen extends Phaser.Scene {
     this.createText(
       "LEVEL COMPLETED",
       config.width / 2,
-      config.height / 2 - 60
+      config.height / 2 - 60,
+      5000
     );
     this.createText(
       "Press Enter to continue",
       config.width / 2,
-      config.height / 2 - 30
+      config.height / 2 - 30,
+      5000
     );
 
     // Check for Enter key press continuously in the update loop
