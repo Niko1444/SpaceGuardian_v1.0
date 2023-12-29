@@ -40,6 +40,8 @@ class TutorialScreen extends Phaser.Scene {
         endFrame: 19,
       },
     });
+
+    this.load.image("pause", "assets/spritesheets/vfx/pause.png");
   }
 
   create() {
@@ -135,6 +137,20 @@ class TutorialScreen extends Phaser.Scene {
         );
       },
       null,
+      this
+    );
+
+    // create pause button
+    this.pic = this.add.image(config.width - 20, 30, "pause");
+    // this.button = this.scene.add.sprite(60, 30, 'pause');
+    this.pic.setInteractive();
+
+    this.pic.on(
+      "pointerdown",
+      function () {
+        this.scene.pause();
+        this.scene.launch("pauseScreen");
+      },
       this
     );
 

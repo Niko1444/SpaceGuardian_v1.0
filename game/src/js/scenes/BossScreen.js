@@ -129,7 +129,7 @@ class BossScreen extends Phaser.Scene {
     });
     // }
 
-    this.boss = new Boss(this, config.width / 2, 0, 1000);
+    this.boss = new Boss(this, config.width / 2, 0, 10000);
     this.boss.play("boss_move_anim");
 
     this.firstMini = new MiniBot(this, config.width / 5, -96, 100);
@@ -286,7 +286,7 @@ class BossScreen extends Phaser.Scene {
       enemy.updateHealthBarPosition();
     });
 
-    if (Phaser.Input.Keyboard.JustDown(this.spacebar)) {
+    if (this.spacebar.isDown) {
       this.player.shootBullet(this.selectedPlayerIndex);
     }
 
@@ -352,16 +352,19 @@ class BossScreen extends Phaser.Scene {
       this.callMini();
     }
 
-    if (this.checkBossHeal === true && this.boss.health < 350) {
+    if (
+      this.checkBossHeal === true &&
+      this.boss.health < this.boss.health * 0.3
+    ) {
       this.healthBoss();
       this.boss.updateHealthBarValue(this.boss.health, this.boss.maxHealth);
-      if (this.boss.health >= 350) {
+      if (this.boss.health >= this.boss.health * 0.5) {
         this.checkBossHeal = false;
       }
     }
 
     if (
-      this.boss.health < 200 &&
+      this.boss.health < this.boss.health * 0.2 &&
       this.checkBossHeal === false &&
       this.timeHealth === 1
     ) {
@@ -369,7 +372,7 @@ class BossScreen extends Phaser.Scene {
       this.timeHealth = 0;
     }
 
-    if (this.boss.health < 150) {
+    if (this.boss.health < this.boss.health * 0.15) {
       this.boss.shootBullet(this, this.boss);
     }
   }
