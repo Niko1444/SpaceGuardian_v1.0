@@ -44,11 +44,12 @@ class ChoosePLayer extends Phaser.Scene {
       "CHOOSE YOUR SHIP!",
       {
         fontFamily: "Pixelify Sans",
-        fontSize: "40px",
+        fontSize: "50px",
         color: "#F3F8FF", // Set the color for "SPACE"
         align: "center",
       }
     );
+    chooseText.setShadow(2, 2, "#F27CA4", 2, false, true);
     chooseText.setOrigin(0.5);
 
     let count = 1;
