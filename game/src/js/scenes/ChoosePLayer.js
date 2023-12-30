@@ -13,6 +13,8 @@ class ChoosePLayer extends Phaser.Scene {
       "assets/images/backgrounds/purple/nebula_3.png"
     );
 
+    this.load.image("under_player_hover", "assets/gui/under_player_hover.png");
+
     for (let i = 1; i <= 9; i++) {
       this.load.spritesheet({
         key: `player_texture_${i}`,
@@ -59,7 +61,8 @@ class ChoosePLayer extends Phaser.Scene {
       "under_player_hover"
     );
     this.under_player.setOrigin(0.5);
-    this.under_player.setScale(5);
+    this.under_player.setScale(2.2);
+    this.under_player.setAlpha(0.9);
 
     for (let i = 1; i <= 3; i++) {
       for (let j = 1; j <= 3; j++) {
