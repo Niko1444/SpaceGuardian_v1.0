@@ -396,10 +396,14 @@ class LevelThreeScreen extends Phaser.Scene {
     }
   }
 
+  shutdownPlayer() {
+    this.events.once("shutdown", this.shutdown, this);
+  }
+
   gameOver() {
     this.events.once("shutdown", this.shutdown, this);
     this.scene.stop("upgradeScreen");
-    this.scene.start("gameOver");
+    this.scene.start("gameOver", { key: this.callingScene });
   }
 
   shutdown() {
@@ -445,7 +449,7 @@ class LevelThreeScreen extends Phaser.Scene {
       .text(x, y, key, {
         fontFamily: "Pixelify Sans",
         fontSize: "32px",
-        fill: "#ffffff",
+        fill: "#FFFB73",
       })
       .setOrigin(0.5);
 

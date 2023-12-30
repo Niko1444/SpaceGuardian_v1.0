@@ -110,30 +110,6 @@ class LoadingScreen extends Phaser.Scene {
       },
     });
 
-    // // Load the Pause button
-    // this.load.spritesheet({
-    //   key: "pause_texture",
-    //   url: "assets/spritesheets/vfx/pause.png",
-    //   frameConfig: {
-    //     frameWidth: 36,
-    //     frameHeight: 36,
-    //     startFrame: 0,
-    //     endFrame: 0,
-    //   },
-    // });
-
-    // // Load the resume button
-    // this.load.spritesheet({
-    //   key: "resume_texture",
-    //   url: "assets/spritesheets/vfx/resume.png",
-    //   frameConfig: {
-    //     frameWidth: 36,
-    //     frameHeight: 36,
-    //     startFrame: 0,
-    //     endFrame: 0,
-    //   },
-    // });
-
     // Load the Pause display button
     this.load.spritesheet({
       key: "pauseDis_texture",
@@ -372,37 +348,7 @@ class LoadingScreen extends Phaser.Scene {
 
   create() {
     // Create health pack animations
-    this.anims.create({
-      key: "healthPack_anim",
-      frames: this.anims.generateFrameNumbers("healthPack_texture", {
-        start: 0,
-        end: 4,
-      }),
-      frameRate: 20,
-      repeat: -1,
-    });
 
-    // Create shield pack animations
-    this.anims.create({
-      key: "shieldPack_anim",
-      frames: this.anims.generateFrameNumbers("shieldPack_texture", {
-        start: 0,
-        end: 4,
-      }),
-      frameRate: 20,
-      repeat: -1,
-    });
-
-    // Create shield animations
-    this.anims.create({
-      key: "shield_anim",
-      frames: this.anims.generateFrameNumbers("shield_texture", {
-        start: 0,
-        end: 5,
-      }),
-      frameRate: 20,
-      repeat: -1,
-    });
 
     // Create first bullet animations
     if (this.selectedPlayerIndex == 1) {
@@ -711,28 +657,6 @@ class LoadingScreen extends Phaser.Scene {
       frameRate: 60,
       repeat: 0,
       hideOnComplete: true,
-    });
-
-    // Create pauseButton animations
-    this.anims.create({
-      key: "pauseButton_anim",
-      frames: this.anims.generateFrameNumbers("pauseButton_texture", {
-        start: 2,
-        end: 3,
-      }),
-      frameRate: 60,
-      repeat: 0,
-    });
-
-    // Create resumeButton animations
-    this.anims.create({
-      key: "resumeButton_anim",
-      frames: this.anims.generateFrameNumbers("pauseButton_texture", {
-        start: 3,
-        end: 4,
-      }),
-      frameRate: 60,
-      repeat: 0,
     });
 
     // Create loading text

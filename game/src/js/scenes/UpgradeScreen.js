@@ -140,14 +140,16 @@ class UpgradeScreen extends Phaser.Scene {
       case "upgrade4":
         player.takeDamage(player.health * 0.9);
         GameSettings.playerBulletDamage += 80;
-        GameSettings.playerBulletSize *= 1.5;
+        GameSettings.playerBulletSize *= 1.1;
         player.bulletDamage = GameSettings.playerBulletDamage;
         player.bulletSize = GameSettings.playerBulletSize;
         break;
 
       case "upgrade5":
-        GameSettings.playerLifesteal += 50;
-        player.lifestealRate = GameSettings.playerLifesteal;
+        GameSettings.playerLifesteal += 0.1;
+        player.lifestealRate =
+          (GameSettings.playerLifesteal * player.bulletDamage) /
+          player.numberOfBullets;
         break;
 
       case "upgrade6":
@@ -156,21 +158,15 @@ class UpgradeScreen extends Phaser.Scene {
         break;
 
       case "upgrade7":
-        if (GameSettings.playerFireRate < 200) {
-          GameSettings.playerFireRate += 100;
-          break;
-        }
-
-        if (GameSettings.playerFireRate > 200) {
-          GameSettings.playerFireRate += 50;
-          break;
-        }
-
+        GameSettings.playerFireRate -= this.increaseValue(
+          GameSettings.playerFireRate,
+          10000
+        );
         player.fireRate = GameSettings.playerFireRate;
         break;
 
       case "upgrade8":
-        GameSettings.playerBulletSpeed += 150;
+        GameSettings.playerBulletSpeed += 100;
         player.bulletSpeed = GameSettings.playerBulletSpeed;
         break;
     }
@@ -178,6 +174,14 @@ class UpgradeScreen extends Phaser.Scene {
     // Close the upgrade scene and resume the parent scene
     this.scene.stop();
     this.scene.resume(callingScene);
+  }
+
+  increaseValue(current, base) {
+    return Math.log2(current + base) * 3.5;
+  }
+
+  stop() {
+    this.scene.stop();
   }
 }
 

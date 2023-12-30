@@ -129,18 +129,19 @@ class BossScreen extends Phaser.Scene {
     });
     // }
 
-    this.boss = new Boss(this, config.width / 2, 0, 10000);
+    this.boss = new Boss(this, config.width / 2, 0, 100000);
+    this.boss = new Boss(this, config.width / 2, 0, 100000);
     this.boss.play("boss_move_anim");
 
-    this.firstMini = new MiniBot(this, config.width / 5, -96, 100);
-    this.secondMini = new MiniBot(this, (config.width * 4) / 5, -96, 100);
+    this.firstMini = new MiniBot(this, config.width / 5, -96, 10000);
+    this.secondMini = new MiniBot(this, (config.width * 4) / 5, -96, 10000);
 
     this.player = new Player(
       this,
       config.width / 2,
       config.height - 100,
       `player_texture_${this.selectedPlayerIndex}`,
-      1000
+      10000
     );
     this.player.play("player_anim");
 
@@ -253,6 +254,7 @@ class BossScreen extends Phaser.Scene {
       this.soundManager
     );
 
+    this.bossDefeated = false;
     this.checkBossHeal = false;
     this.timeHealth = 1;
 
@@ -264,7 +266,6 @@ class BossScreen extends Phaser.Scene {
       function () {
         this.music.soundOn = !this.music.soundOn;
         this.music.musicOn = !this.music.musicOn;
-
         this.updateAudio();
       },
       this
@@ -300,11 +301,25 @@ class BossScreen extends Phaser.Scene {
     }
 
     this.shield.updatePosition(this.player);
-
     this.bug3_1.rotateToPlayer(this.player);
     this.bug3_2.rotateToPlayer(this.player);
-
     this.bug5.chasePlayer(this.player);
+
+    if (this.boss.health <= 0) {
+      // Destroy all spawned enemies
+      this.enemyManager.enemies.forEach((enemy) => {
+        enemy.takeDamage(100000);
+      });
+
+      this.time.delayedCall(
+        200,
+        () => {
+          this.scene.start("leaderboard");
+        },
+        null,
+        this
+      );
+    }
 
     this.bossProcess();
   }
@@ -326,7 +341,7 @@ class BossScreen extends Phaser.Scene {
   gameOver() {
     this.events.once("shutdown", this.shutdown, this);
     this.scene.stop("upgradeScreen");
-    this.scene.start("gameOver");
+    this.scene.start("gameOver", { key: this.callingScene });
   }
 
   enemyExploded() {
@@ -334,12 +349,16 @@ class BossScreen extends Phaser.Scene {
   }
 
   bossProcess() {
-    if (this.boss.health < 800 && this.boss.health > 550) {
+    if (
+      this.boss.health < this.boss.maxHealth * 0.8 &&
+      this.boss.health > this.boss.maxHealth * 0.55
+    ) {
       this.boss.moveToCenter();
     }
 
     if (
-      (this.boss.health < 550 && this.boss.health > 350) ||
+      (this.boss.health < this.boss.maxHealth * 0.55 &&
+        this.boss.health > this.boss.maxHealth * 0.35) ||
       this.checkBossHeal === true
     ) {
       this.boss.bossBound();
@@ -348,24 +367,27 @@ class BossScreen extends Phaser.Scene {
       }
     }
 
-    if (this.boss.health < 350 || this.checkBossHeal === true) {
+    if (
+      this.boss.health < this.boss.maxHealth * 0.35 ||
+      this.checkBossHeal === true
+    ) {
       this.boss.moveToCenter();
       this.callMini();
     }
 
     if (
       this.checkBossHeal === true &&
-      this.boss.health < this.boss.health * 0.3
+      this.boss.health < this.boss.maxHealth * 0.35
     ) {
       this.healthBoss();
       this.boss.updateHealthBarValue(this.boss.health, this.boss.maxHealth);
-      if (this.boss.health >= this.boss.health * 0.5) {
+      if (this.boss.health >= this.boss.maxHealth * 0.35) {
         this.checkBossHeal = false;
       }
     }
 
     if (
-      this.boss.health < this.boss.health * 0.2 &&
+      this.boss.health < this.boss.maxHealth * 0.2 &&
       this.checkBossHeal === false &&
       this.timeHealth === 1
     ) {
@@ -373,7 +395,7 @@ class BossScreen extends Phaser.Scene {
       this.timeHealth = 0;
     }
 
-    if (this.boss.health < this.boss.health * 0.15) {
+    if (this.boss.health < this.boss.maxHealth * 0.15) {
       this.boss.shootBullet(this, this.boss);
     }
 
@@ -393,8 +415,8 @@ class BossScreen extends Phaser.Scene {
   }
 
   healthBoss() {
-    if (this.boss.health < 350) {
-      this.boss.health += 2;
+    if (this.boss.health < this.boss.maxHealth * 0.35) {
+      this.boss.health += this.boss.maxHealth * 0.02;
     }
   }
 
@@ -439,8 +461,9 @@ class BossScreen extends Phaser.Scene {
   createText() {
     const Level1Text = this.add
       .text(config.width / 2, config.height / 2, "Boss", {
-        fontSize: "32px",
-        fill: "#ffffff",
+        fontFamily: "Pixelify Sans",
+        fontSize: "64px",
+        fill: "#FFFB73",
       })
       .setOrigin(0.5);
 

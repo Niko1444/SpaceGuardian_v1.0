@@ -93,11 +93,11 @@ class Player extends Entity {
       };
 
       const bulletSizeScale =
-        this.bulletSize / gameSettings.playerDefaultBulletSize;
+        (this.bulletSize / gameSettings.playerDefaultBulletSize) * 0.8;
 
       for (let i = 0; i < totalBullets; i++) {
-        const offsetX = (patternsX[totalBullets][i] || 0) * bulletSizeScale; // Apply scaling to X offset
-        const offsetY = (patternsY[totalBullets][i] || 0) * bulletSizeScale; // Apply scaling to Y offset
+        const offsetX = (patternsX[totalBullets][i] || 0) * bulletSizeScale;
+        const offsetY = (patternsY[totalBullets][i] || 0) * bulletSizeScale;
 
         const bullet = new Bullet(this.scene, number);
         bullet.damage = this.bulletDamage;

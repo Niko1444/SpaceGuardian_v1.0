@@ -13,7 +13,7 @@ class Boss extends Entity {
     this.maxHealth = health;
     this.hpBarWidth = 200;
     this.hpBarHeight = 10;
-    this.damage = 5;
+    this.damage = 100;
     this.setInteractiveEntity();
 
     this.isDestroyed = false;
@@ -51,7 +51,7 @@ class Boss extends Entity {
 
   explode(canDestroy) {
     super.explode(canDestroy);
-    this.scene.upgradeManager.updateScore(10);
+    this.scene.upgradeManager.updateScore(1234);
   }
 
   shootBullet(scene, enemy) {
@@ -88,7 +88,10 @@ class Boss extends Entity {
 
   bossBound() {
     // If the boss is about to move out o{f the scene bounds, set a new random velocity
-    if (this.health < 550 && this.health > 400) {
+    if (
+      this.health < this.maxHealth * 0.5 &&
+      this.health > this.maxHealth * 0.4
+    ) {
       let xVel = 0.75 * gameSettings.enemySpeed;
       let yVel = 0.75 * gameSettings.enemySpeed;
 
