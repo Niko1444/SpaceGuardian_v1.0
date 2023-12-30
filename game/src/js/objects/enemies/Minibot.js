@@ -78,7 +78,7 @@ class MiniBot extends Entity {
   }
   explode(canDestroy) {
     super.explode(canDestroy);
-    this.scene.upgradeManager.updateScore(500);
+    this.scene.UpgradeManager.updateScore(500);
   }
 
   shootBullet(scene, enemy) {

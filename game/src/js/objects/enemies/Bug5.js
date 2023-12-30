@@ -25,14 +25,14 @@ class Bug5 extends Entity {
     this.hpBar = new HPBar(
       scene,
       this.x,
-      this.y - scaledHpBarHeight - 5, 
+      this.y - scaledHpBarHeight - 5,
       scaledHpBarWidth,
       scaledHpBarHeight,
       this.health,
       this.maxHealth
     );
     this.scene.add.existing(this.hpBar);
-}
+  }
 
   setVelocityY(velocity) {
     super.setVelocityY(velocity);
@@ -76,7 +76,7 @@ class Bug5 extends Entity {
   explode(canDestroy) {
     super.explode(canDestroy);
     this.scene.player.getHeal(this.scene.player.lifestealRate);
-    this.scene.upgradeManager.updateScore(100);
+    this.scene.UpgradeManager.updateScore(100);
   }
 }
 

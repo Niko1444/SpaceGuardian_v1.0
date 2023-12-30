@@ -301,7 +301,7 @@ class LevelTwoScreen extends Phaser.Scene {
     );
 
     // Score System
-    this.upgradeManager = new UpgradeManager(this, this.callingScene);
+    this.UpgradeManager = new UpgradeManager(this, this.callingScene);
   }
 
   update() {

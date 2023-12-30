@@ -33,8 +33,7 @@ class Bug3 extends Entity {
     );
 
     this.scene.add.existing(this.hpBar);
-}
-
+  }
 
   rotateToPlayer(player) {
     if (this.health > 0) {
@@ -91,7 +90,7 @@ class Bug3 extends Entity {
   explode(canDestroy) {
     super.explode(canDestroy);
     this.scene.player.getHeal(this.scene.player.lifestealRate);
-    this.scene.upgradeManager.updateScore(100);
+    this.scene.UpgradeManager.updateScore(100);
   }
 }
 

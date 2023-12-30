@@ -30,7 +30,7 @@ class Bug1 extends Entity {
       this.maxHealth
     );
     this.scene.add.existing(this.hpBar);
-}
+  }
 
   setVelocityY(velocity) {
     super.setVelocityY(velocity);
@@ -51,7 +51,7 @@ class Bug1 extends Entity {
   explode(canDestroy) {
     super.explode(canDestroy);
     this.scene.player.getHeal(this.scene.player.lifestealRate);
-    this.scene.upgradeManager.updateScore(100);
+    this.scene.UpgradeManager.updateScore(100);
   }
 }
 
