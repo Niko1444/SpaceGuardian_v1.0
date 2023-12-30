@@ -8,6 +8,18 @@ module.exports = {
   // Path to your entry point. From this file Webpack will begin its work
   entry: "/game.js",
 
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: {
+          loader: "babel-loader",
+        },
+      },
+    ],
+  },
+
   // Path and filename of your result bundle.
   externals: {
     phaser: "Phaser",
