@@ -4,7 +4,7 @@ import Player from "../objects/players/Player";
 import Shield from "../objects/utilities/Shield";
 import EnemyManager from "../manager/EnemyManager.js";
 import KeyboardManager from "../manager/KeyboardManager";
-import PlayerManager from "../manager/playerManager";
+import PlayerManager from "../manager/PlayerManager.js";
 import CollideManager from "../manager/CollideManager.js";
 import Bug1 from "../objects/enemies/Bug1";
 import Bug3 from "../objects/enemies/Bug3";
@@ -168,7 +168,7 @@ class PlayingScreen extends Phaser.Scene {
     this.keyboardManager = new KeyboardManager(this);
     // Score System
     this.upgradeManager = new UpgradeManager(this, this.callingScene);
-    this.playerManager = new PlayerManager(
+    this.PlayerManager = new PlayerManager(
       this,
       this.player,
       this.selectedPlayerIndex
@@ -341,7 +341,7 @@ class PlayingScreen extends Phaser.Scene {
     this.background.tilePositionY -= BACKGROUND_SCROLL_SPEED;
 
     // Move the player and enemies
-    this.playerManager.movePlayer();
+    this.PlayerManager.movePlayer();
 
     this.EnemyManager.moveEnemies();
     this.EnemyManager.enemies.forEach((enemy) => {

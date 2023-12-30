@@ -4,7 +4,7 @@ import Player from "../objects/players/Player";
 import Shield from "../objects/utilities/Shield";
 import EnemyManager from "../manager/EnemyManager.js";
 import KeyboardManager from "../manager/KeyboardManager";
-import PlayerManager from "../manager/playerManager";
+import PlayerManager from "../manager/PlayerManager.js";
 import CollideManager from "../manager/CollideManager.js";
 import GuiManager from "../manager/GuiManager";
 import UtilitiesManager from "../manager/UtilitiesManager";
@@ -108,7 +108,7 @@ class TutorialScreen extends Phaser.Scene {
     this.keyboardManager = new KeyboardManager(this);
 
     // Player
-    this.playerManager = new PlayerManager(
+    this.PlayerManager = new PlayerManager(
       this,
       this.player,
       this.selectedPlayerIndex
@@ -161,7 +161,7 @@ class TutorialScreen extends Phaser.Scene {
     this.background.tilePositionY -= BACKGROUND_SCROLL_SPEED;
 
     // Move the player and enemies
-    this.playerManager.movePlayer();
+    this.PlayerManager.movePlayer();
 
     this.EnemyManager.moveEnemies();
     this.EnemyManager.enemies.forEach((enemy) => {

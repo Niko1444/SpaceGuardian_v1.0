@@ -4,7 +4,7 @@ import Player from "../objects/players/Player.js";
 import Shield from "../objects/utilities/Shield.js";
 import EnemyManager from "../manager/EnemyManager.js";
 import KeyboardManager from "../manager/KeyboardManager.js";
-import PlayerManager from "../manager/playerManager.js";
+import PlayerManager from "../manager/PlayerManager.js";
 import CollideManager from "../manager/CollideManager.js";
 import Bug3 from "../objects/enemies/Bug3.js";
 import Bug5 from "../objects/enemies/Bug5.js";
