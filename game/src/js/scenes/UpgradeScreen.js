@@ -21,7 +21,6 @@ class UpgradeScreen extends Phaser.Scene {
   create(data) {
     // Get the calling scene name
     this.callbackSceneName = data.callingScene;
-    console.log("callbackSceneName: " + this.callbackSceneName);
 
     this.cameras.main.setAlpha(0.9);
 

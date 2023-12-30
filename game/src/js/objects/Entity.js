@@ -21,10 +21,6 @@ class Entity extends Phaser.GameObjects.Sprite {
     // scene.load.audio('explosionSound', 'assets/audio/explosion.mp3');
   }
 
-  updateHealthBarValue(health, maxHealth) {
-    this.hpBar.setValue(this.health, this.maxHealth);
-  }
-
   updateHealthBarPosition() {
     if (this.hpBarWidth < 30) {
       this.hpBar.x = this.x - this.hpBarWidth / 2;
@@ -33,6 +29,10 @@ class Entity extends Phaser.GameObjects.Sprite {
       this.hpBar.x = this.x - this.hpBarWidth / 2;
       this.hpBar.y = this.y + 120;
     }
+  }
+
+  updateHealthBarValue(health, maxHealth) {
+    this.hpBar.setValue(this.health, this.maxHealth);
   }
 
   explode(canDestroy) {
@@ -93,14 +93,19 @@ class Entity extends Phaser.GameObjects.Sprite {
   takeDamage(damage) {
     if (!this.getData("isDead")) {
       this.health -= damage;
-
       new DamageNumber(this.scene, this.x, this.y, damage);
 
-      this.updateHealthBarValue();
+      // Check if the entity has a health bar before updating it
+      if (this.updateHealthBarValue) {
+        this.updateHealthBarValue();
+      }
 
       if (this.health <= 0) {
         this.explode(true);
-        this.hpBar.destroy();
+        // Check if the entity has a health bar before destroying it
+        if (this.hpBar) {
+          this.hpBar.destroy();
+        }
       }
     }
   }

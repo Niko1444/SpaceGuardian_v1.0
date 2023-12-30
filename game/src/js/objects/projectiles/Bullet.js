@@ -19,6 +19,7 @@ class Bullet extends Entity {
     this.damage = scene.player.bulletDamage;
 
     this.bulletSize = scene.player.bulletSize;
+
     this.setScale(this.bulletSize);
 
     this.setDepth(0);

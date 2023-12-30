@@ -101,7 +101,7 @@ class CollideManager {
     }
   }
 
-  bulletHitEnemy(bullet, enemy) {
+  bulletHitEnemy(enemy, bullet) {
     bullet.destroy();
     enemy.takeDamage(bullet.damage);
   }

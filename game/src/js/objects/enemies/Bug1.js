@@ -43,6 +43,7 @@ class Bug1 extends Entity {
   setInteractiveEntity() {
     super.setInteractiveEntity();
   }
+
   set0health() {
     this.health = 0;
     this.updateHealthBarValue();

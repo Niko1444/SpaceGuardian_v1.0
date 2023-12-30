@@ -34,11 +34,11 @@ class UtilitiesManager {
     }
     for (let j = 0; j < numShield; j++) {
       const randomPos = this.generateRandomPosition();
-      const HealthPack = new HealthPack(this.scene, randomPos.x, randomPos.y);
-      HealthPack.play("HealthPack_anim");
+      const healthPack = new HealthPack(this.scene, randomPos.x, randomPos.y);
+      healthPack.play("healthPack_anim");
       // const shieldPack3 = new ShieldPack(this.scene, config.width / 2, 30);
       // shieldPack3.play("shieldPack_anim");
-      this.addHealthPack(HealthPack);
+      this.addHealthPack(healthPack);
     }
   }
 

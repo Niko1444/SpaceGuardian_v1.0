@@ -4,12 +4,18 @@ class HPBar2 extends Phaser.GameObjects.Container {
     super(scene, x, y);
 
     // Create the health bar background
-    this.backgroundBar = scene.add.image(0, 0, 'healthBar_texture');
+    this.backgroundBar = scene.add.image(0, 0, "healthBar_texture");
     this.backgroundBar.setOrigin(0);
     this.add(this.backgroundBar);
 
     // Create the health bar (filled with red)
-    this.foregroundBar = scene.add.rectangle(41, 9, width - 46, height - 19, 0xff0000);
+    this.foregroundBar = scene.add.rectangle(
+      41,
+      9,
+      width - 46,
+      height - 19,
+      0xff0000
+    );
     this.foregroundBar.setOrigin(0);
     this.add(this.foregroundBar);
 
