@@ -459,7 +459,7 @@ class BossScreen extends Phaser.Scene {
       .text(config.width / 2, config.height / 2, "Boss", {
         fontFamily: "Pixelify Sans",
         fontSize: "64px",
-        fill: "#ffffff",
+        fill: "#FFFB73",
       })
       .setOrigin(0.5);
 

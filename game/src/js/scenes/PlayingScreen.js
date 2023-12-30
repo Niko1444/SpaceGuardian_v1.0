@@ -314,7 +314,7 @@ class PlayingScreen extends Phaser.Scene {
       "pointerdown",
       function () {
         this.scene.pause();
-        this.scene.launch("pauseScreen", {key : "playGame"});
+        this.scene.launch("pauseScreen", { key: "playGame" });
       },
       this
     );
@@ -332,8 +332,6 @@ class PlayingScreen extends Phaser.Scene {
       },
       this
     );
-
-    
   }
 
   update() {
@@ -408,7 +406,7 @@ class PlayingScreen extends Phaser.Scene {
     }
   }
 
-  shutdownPlayer(){
+  shutdownPlayer() {
     this.events.once("shutdown", this.shutdown, this);
   }
 
@@ -462,7 +460,7 @@ class PlayingScreen extends Phaser.Scene {
       .text(x, y, key, {
         fontFamily: "Pixelify Sans",
         fontSize: "32px",
-        fill: "#ffffff",
+        fill: "#FFFB73",
       })
       .setOrigin(0.5);
 
@@ -511,7 +509,7 @@ class PlayingScreen extends Phaser.Scene {
       .text(config.width / 2, config.height / 2, "Final Wave", {
         fontFamily: "Pixelify Sans",
         fontSize: "32px",
-        fill: "#ffffff",
+        fill: "#FFFB73",
       })
       .setOrigin(0.5);
 

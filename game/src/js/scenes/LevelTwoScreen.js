@@ -279,7 +279,7 @@ class LevelTwoScreen extends Phaser.Scene {
     );
 
     this.time.delayedCall(
-    46000,
+      46000,
       () => {
         this.goToNextLevel();
       },
@@ -305,7 +305,6 @@ class LevelTwoScreen extends Phaser.Scene {
 
     // Score System
     this.upgradeManager = new UpgradeManager(this, this.callingScene);
-    
   }
 
   update() {
@@ -378,7 +377,7 @@ class LevelTwoScreen extends Phaser.Scene {
     }
   }
 
-  shutdownPlayer(){
+  shutdownPlayer() {
     this.events.once("shutdown", this.shutdown, this);
   }
 
@@ -431,7 +430,7 @@ class LevelTwoScreen extends Phaser.Scene {
       .text(x, y, key, {
         fontFamily: "Pixelify Sans",
         fontSize: "32px",
-        fill: "#ffffff",
+        fill: "#FFFB73",
       })
       .setOrigin(0.5);
 
@@ -479,7 +478,7 @@ class LevelTwoScreen extends Phaser.Scene {
       .text(config.width / 2, config.height / 2, "Final Wave", {
         fontFamily: "Pixelify Sans",
         fontSize: "32px",
-        fill: "#ffffff",
+        fill: "#FFFB73",
       })
       .setOrigin(0.5);
 
@@ -490,15 +489,33 @@ class LevelTwoScreen extends Phaser.Scene {
 
         // Spawn a wave of bugs after the "Final Wave" message disappears
         // shoot straight bullet
-        this.bug3_1 = new Bug3(this, config.width/2, -20, 3000, 3);
+        this.bug3_1 = new Bug3(this, config.width / 2, -20, 3000, 3);
         this.enemyManager.addEnemyForOnce(this.bug3_1);
 
         const angles = [0, Math.PI / 2, Math.PI, (3 * Math.PI) / 2];
 
-        this.bug3_2 = new Bug3(this, config.width/2 + 200*Math.cos(angles[0]), -20 + 200*Math.sin(angles[0]), 400, 1);
-        this.bug3_3 = new Bug3(this, config.width/2 + 200*Math.cos(angles[1]), -20 + 200*Math.sin(angles[1]), 400, 1);
-        this.bug3_4 = new Bug3(this, config.width/2 + 200*Math.cos(angles[2]), -20 + 200*Math.sin(angles[2]), 400, 1);
-        
+        this.bug3_2 = new Bug3(
+          this,
+          config.width / 2 + 200 * Math.cos(angles[0]),
+          -20 + 200 * Math.sin(angles[0]),
+          400,
+          1
+        );
+        this.bug3_3 = new Bug3(
+          this,
+          config.width / 2 + 200 * Math.cos(angles[1]),
+          -20 + 200 * Math.sin(angles[1]),
+          400,
+          1
+        );
+        this.bug3_4 = new Bug3(
+          this,
+          config.width / 2 + 200 * Math.cos(angles[2]),
+          -20 + 200 * Math.sin(angles[2]),
+          400,
+          1
+        );
+
         this.enemyManager.addEnemyForOnce(this.bug3_2);
         this.enemyManager.addEnemyForOnce(this.bug3_3);
         this.enemyManager.addEnemyForOnce(this.bug3_4);

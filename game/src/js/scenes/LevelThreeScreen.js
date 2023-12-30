@@ -200,8 +200,18 @@ class LevelThreeScreen extends Phaser.Scene {
       null,
       this
     );
-    this.time.delayedCall(9000, () => this.enemyManager.spawnEnemyRowWithDelay(this, 0), null, this);
-    this.time.delayedCall(11000, () => this.enemyManager.spawnEnemyRowWithDelay(this, 0), null, this);
+    this.time.delayedCall(
+      9000,
+      () => this.enemyManager.spawnEnemyRowWithDelay(this, 0),
+      null,
+      this
+    );
+    this.time.delayedCall(
+      11000,
+      () => this.enemyManager.spawnEnemyRowWithDelay(this, 0),
+      null,
+      this
+    );
 
     this.time.delayedCall(
       18000,
@@ -290,7 +300,6 @@ class LevelThreeScreen extends Phaser.Scene {
 
     // Score System
     this.upgradeManager = new UpgradeManager(this, this.callingScene);
-    
   }
 
   update() {
@@ -352,7 +361,7 @@ class LevelThreeScreen extends Phaser.Scene {
     }
   }
 
-  shutdownPlayer(){
+  shutdownPlayer() {
     this.events.once("shutdown", this.shutdown, this);
   }
 
@@ -405,7 +414,7 @@ class LevelThreeScreen extends Phaser.Scene {
       .text(x, y, key, {
         fontFamily: "Pixelify Sans",
         fontSize: "32px",
-        fill: "#ffffff",
+        fill: "#FFFB73",
       })
       .setOrigin(0.5);
 
