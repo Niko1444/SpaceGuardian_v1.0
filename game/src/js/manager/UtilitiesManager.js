@@ -1,10 +1,10 @@
 import Phaser from "phaser";
-import HealthPack from "../objects/utilities/healthPack";
+import HealthPack from "../objects/utilities/HealthPack";
 import ShieldPack from "../objects/utilities/ShieldPack";
 class UtilitiesManager {
   constructor(scene) {
     this.scene = scene;
-    this.healthPacks = [];
+    this.HealthPacks = [];
     this.shieldPacks = [];
     this.delayTime = 3000; // Set your desired delay time in milliseconds
     this.timeElapsed = 0;
@@ -34,16 +34,16 @@ class UtilitiesManager {
     }
     for (let j = 0; j < numShield; j++) {
       const randomPos = this.generateRandomPosition();
-      const healthPack = new HealthPack(this.scene, randomPos.x, randomPos.y);
-      healthPack.play("healthPack_anim");
+      const HealthPack = new HealthPack(this.scene, randomPos.x, randomPos.y);
+      HealthPack.play("HealthPack_anim");
       // const shieldPack3 = new ShieldPack(this.scene, config.width / 2, 30);
       // shieldPack3.play("shieldPack_anim");
-      this.addHealthPack(healthPack);
+      this.addHealthPack(HealthPack);
     }
   }
 
   addHealthPack(HealthPack) {
-    this.healthPacks.push(HealthPack);
+    this.HealthPacks.push(HealthPack);
     // ... other code for managing respawn delays, etc.
   }
 

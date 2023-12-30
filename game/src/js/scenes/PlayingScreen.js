@@ -231,7 +231,7 @@ class PlayingScreen extends Phaser.Scene {
           this,
           this.player,
           this.EnemyManager.enemies,
-          this.UtilitiesManager.healthPacks,
+          this.UtilitiesManager.HealthPacks,
           this.UtilitiesManager.shieldPacks,
           this.shield,
           this.soundManager
@@ -248,7 +248,7 @@ class PlayingScreen extends Phaser.Scene {
           this,
           this.player,
           this.EnemyManager.enemies,
-          this.UtilitiesManager.healthPacks,
+          this.UtilitiesManager.HealthPacks,
           this.UtilitiesManager.shieldPacks,
           this.shield,
           this.soundManager
@@ -282,7 +282,7 @@ class PlayingScreen extends Phaser.Scene {
       this,
       this.player,
       this.EnemyManager.enemies,
-      this.UtilitiesManager.healthPacks,
+      this.UtilitiesManager.HealthPacks,
       this.UtilitiesManager.shieldPacks,
       this.shield,
       this.soundManager

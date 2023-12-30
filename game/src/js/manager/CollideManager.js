@@ -71,10 +71,10 @@ class CollideManager {
     );
 
     // Add collision between player and health packs
-    this.healthPacks.forEach((healthPack) => {
+    this.healthPacks.forEach((HealthPack) => {
       this.scene.physics.add.overlap(
         this.player,
-        healthPack,
+        HealthPack,
         this.playerCollideHealthPack,
         null,
         this.scene
