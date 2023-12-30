@@ -1,7 +1,7 @@
 import Phaser, { Create } from "phaser";
 import config from "../config/config.js";
 
-class ChoosePLayer extends Phaser.Scene {
+class ChoosePlayer extends Phaser.Scene {
   constructor() {
     super("choosePlayer");
   }
@@ -201,4 +201,4 @@ class ChoosePLayer extends Phaser.Scene {
   }
 }
 
-export default ChoosePLayer;
+export default ChoosePlayer;

@@ -3,7 +3,7 @@ import LoadingScreen from "../scenes/LoadingScreen.js";
 import PlayingScreen from "../scenes/PlayingScreen.js";
 import GameOver from "../scenes/GameOver.js";
 import PauseScreen from "../scenes/PauseScreen.js";
-import ChoosePLayer from "../scenes/ChoosePLayer.js";
+import ChoosePlayer from "../scenes/ChoosePlayer.js";
 import UpgradeScreen from "../scenes/UpgradeScreen.js";
 import TutorialScreen from "../scenes/TutorialScreen.js";
 import LevelTwoScreen from "../scenes/LevelTwoScreen.js";
@@ -32,7 +32,7 @@ const config = {
     TitleScreen,
     LoadingScreen,
     PlayingScreen,
-    ChoosePLayer,
+    ChoosePlayer,
     TutorialScreen,
     LevelTwoScreen,
     LevelThreeScreen,
