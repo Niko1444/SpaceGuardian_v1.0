@@ -1,5 +1,4 @@
 const path = require("path");
-const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = (env, argv) => {
@@ -27,7 +26,7 @@ module.exports = (env, argv) => {
 
     output: {
       path: path.resolve(__dirname, "dist"),
-      publicPath: "",
+      publicPath: "", // Use an empty string to make relative paths work
       filename: isProduction ? "bundle.[contenthash].min.js" : "bundle.js",
     },
 
@@ -40,10 +39,9 @@ module.exports = (env, argv) => {
     mode: isProduction ? "production" : "development",
 
     plugins: [
-      new CleanWebpackPlugin(),
       new HtmlWebpackPlugin({
         template: "index.html", // Adjust the path to your HTML template
-        filename: "index.html",
+        filename: "index.html", // Output the HTML file to the dist folder
         // Other configuration options for HtmlWebpackPlugin
       }),
       // Add other plugins as needed
