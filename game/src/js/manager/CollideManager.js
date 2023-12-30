@@ -1,10 +1,3 @@
-import Phaser from "phaser";
-import UtilitiesManager from "./UtilitiesManager";
-import HealthPack from "../objects/utilities/healthPack";
-import ShieldPack from "../objects/utilities/ShieldPack";
-import Shield from "../objects/utilities/Shield";
-import config from "../config/config";
-import soundManager from "./soundManager";
 class CollideManager {
   constructor(
     scene,

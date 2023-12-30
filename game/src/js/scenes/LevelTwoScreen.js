@@ -1,14 +1,11 @@
 import Phaser from "phaser";
 import config from "../config/config";
-import GameSettings from "../config/gameSettings.js";
-import Bullet from "../objects/projectiles/Bullet";
 import Player from "../objects/players/Player";
 import Shield from "../objects/utilities/Shield";
 import EnemyManager from "../manager/EnemyManager.js";
 import KeyboardManager from "../manager/KeyboardManager";
 import PlayerManager from "../manager/playerManager";
-import CollideManager from "../manager/collideManager";
-import HPBar from "../objects/ui/HPBar";
+import CollideManager from "../manager/CollideManager.js";
 import Bug3 from "../objects/enemies/Bug3";
 import Bug5 from "../objects/enemies/Bug5";
 import GuiManager from "../manager/GuiManager.js";
@@ -175,22 +172,22 @@ class LevelTwoScreen extends Phaser.Scene {
       this.selectedPlayerIndex
     );
 
-    this.enemyManager = new EnemyManager(this);
+    this.EnemyManager = new EnemyManager(this);
     this.time.delayedCall(
       3000,
-      () => this.enemyManager.spawnEnemyRowWithDelay(this, 0),
+      () => this.EnemyManager.spawnEnemyRowWithDelay(this, 0),
       null,
       this
     );
     this.time.delayedCall(
       5000,
-      () => this.enemyManager.spawnEnemyRowWithDelay(this, 0),
+      () => this.EnemyManager.spawnEnemyRowWithDelay(this, 0),
       null,
       this
     );
     this.time.delayedCall(
       7000,
-      () => this.enemyManager.spawnEnemyRowWithDelay(this, 0),
+      () => this.EnemyManager.spawnEnemyRowWithDelay(this, 0),
       null,
       this
     );
@@ -198,21 +195,21 @@ class LevelTwoScreen extends Phaser.Scene {
     this.time.delayedCall(
       13000,
       () => {
-        this.collideManager2 = new CollideManager(
+        this.CollideManager2 = new CollideManager(
           this,
           this.player,
-          this.enemyManager.enemies,
+          this.EnemyManager.enemies,
           this.UtilitiesManager.healthPacks,
           this.UtilitiesManager.shieldPacks,
           this.shield
         );
-        this.enemyManager.addEnemyForOnce(this.bug5_1);
-        this.enemyManager.addEnemyForOnce(this.bug5_2);
-        this.enemyManager.addEnemyForOnce(this.bug5_3);
-        this.enemyManager.addEnemyForOnce(this.bug5_4);
-        this.enemyManager.addEnemyForOnce(this.bug5_5);
-        this.enemyManager.addEnemyForOnce(this.bug5_6);
-        this.enemyManager.addEnemyForOnce(this.bug5_7);
+        this.EnemyManager.addEnemyForOnce(this.bug5_1);
+        this.EnemyManager.addEnemyForOnce(this.bug5_2);
+        this.EnemyManager.addEnemyForOnce(this.bug5_3);
+        this.EnemyManager.addEnemyForOnce(this.bug5_4);
+        this.EnemyManager.addEnemyForOnce(this.bug5_5);
+        this.EnemyManager.addEnemyForOnce(this.bug5_6);
+        this.EnemyManager.addEnemyForOnce(this.bug5_7);
       },
       null,
       this
@@ -235,10 +232,10 @@ class LevelTwoScreen extends Phaser.Scene {
       delay: 5000,
       callback: () => {
         this.UtilitiesManager.addUtilitiesForPlayingScreen(3, 4);
-        this.collideManager1 = new CollideManager(
+        this.CollideManager1 = new CollideManager(
           this,
           this.player,
-          this.enemyManager.enemies,
+          this.EnemyManager.enemies,
           this.UtilitiesManager.healthPacks,
           this.UtilitiesManager.shieldPacks,
           this.shield
@@ -268,10 +265,10 @@ class LevelTwoScreen extends Phaser.Scene {
       Phaser.Input.Keyboard.KeyCodes.ENTER
     );
 
-    this.collideManager = new CollideManager(
+    this.CollideManager = new CollideManager(
       this,
       this.player,
-      this.enemyManager.enemies,
+      this.EnemyManager.enemies,
       this.UtilitiesManager.healthPacks,
       this.UtilitiesManager.shieldPacks,
       this.shield,
@@ -317,8 +314,8 @@ class LevelTwoScreen extends Phaser.Scene {
     // Move the player and enemies
     this.playerManager.movePlayer();
 
-    this.enemyManager.moveEnemies();
-    this.enemyManager.enemies.forEach((enemy) => {
+    this.EnemyManager.moveEnemies();
+    this.EnemyManager.enemies.forEach((enemy) => {
       enemy.updateHealthBarPosition();
     });
 
@@ -489,7 +486,7 @@ class LevelTwoScreen extends Phaser.Scene {
         // Spawn a wave of bugs after the "Final Wave" message disappears
         // shoot straight bullet
         this.bug3_1 = new Bug3(this, config.width / 2, -20, 3000, 3);
-        this.enemyManager.addEnemyForOnce(this.bug3_1);
+        this.EnemyManager.addEnemyForOnce(this.bug3_1);
 
         const angles = [0, Math.PI / 2, Math.PI, (3 * Math.PI) / 2];
 
@@ -515,9 +512,9 @@ class LevelTwoScreen extends Phaser.Scene {
           1
         );
 
-        this.enemyManager.addEnemyForOnce(this.bug3_2);
-        this.enemyManager.addEnemyForOnce(this.bug3_3);
-        this.enemyManager.addEnemyForOnce(this.bug3_4);
+        this.EnemyManager.addEnemyForOnce(this.bug3_2);
+        this.EnemyManager.addEnemyForOnce(this.bug3_3);
+        this.EnemyManager.addEnemyForOnce(this.bug3_4);
       },
       null,
       this

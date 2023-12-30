@@ -1,7 +1,3 @@
-import Phaser from "phaser";
-import config from "../config/config";
-import GameSettings from "../config/gameSettings";
-import UpgradeScreen from "../scenes/UpgradeScreen";
 import gameSettings from "../config/gameSettings";
 
 class UpgradeManager {

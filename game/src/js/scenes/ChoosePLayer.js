@@ -1,6 +1,5 @@
 import Phaser, { Create } from "phaser";
 import config from "../config/config.js";
-import GuiManager from "../manager/GuiManager.js";
 
 class ChoosePLayer extends Phaser.Scene {
   constructor() {

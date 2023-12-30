@@ -1,13 +1,11 @@
 import Phaser from "phaser";
 import config from "../config/config";
-import Bullet from "../objects/projectiles/Bullet";
 import Player from "../objects/players/Player";
 import Shield from "../objects/utilities/Shield";
 import EnemyManager from "../manager/EnemyManager.js";
 import KeyboardManager from "../manager/KeyboardManager";
 import PlayerManager from "../manager/playerManager";
-import CollideManager from "../manager/collideManager";
-import HPBar from "../objects/ui/HPBar";
+import CollideManager from "../manager/CollideManager.js";
 import Bug3 from "../objects/enemies/Bug3";
 import Bug5 from "../objects/enemies/Bug5";
 import GuiManager from "../manager/GuiManager.js";
@@ -155,7 +153,7 @@ class LevelThreeScreen extends Phaser.Scene {
     this.time.delayedCall(
       20000,
       () => {
-        this.enemyManager.spawnBugRain(20, 4000, 200);
+        this.EnemyManager.spawnBugRain(20, 4000, 200);
       },
       null,
       this
@@ -164,7 +162,7 @@ class LevelThreeScreen extends Phaser.Scene {
     this.time.delayedCall(
       26000,
       () => {
-        this.enemyManager.spawnBugRainLeftToRight(20, 4000, 200);
+        this.EnemyManager.spawnBugRainLeftToRight(20, 4000, 200);
       },
       null,
       this
@@ -173,7 +171,7 @@ class LevelThreeScreen extends Phaser.Scene {
     this.time.delayedCall(
       32000,
       () => {
-        this.enemyManager.spawnBugRainRightToLeft(20, 4000, 200);
+        this.EnemyManager.spawnBugRainRightToLeft(20, 4000, 200);
       },
       null,
       this
@@ -182,7 +180,7 @@ class LevelThreeScreen extends Phaser.Scene {
     this.time.delayedCall(
       35000,
       () => {
-        this.enemyManager.spawnBugRainBottomToTop(20, 4000, 200);
+        this.EnemyManager.spawnBugRainBottomToTop(20, 4000, 200);
       },
       null,
       this
@@ -218,34 +216,34 @@ class LevelThreeScreen extends Phaser.Scene {
       this.selectedPlayerIndex
     );
 
-    this.enemyManager = new EnemyManager(this);
+    this.EnemyManager = new EnemyManager(this);
     this.time.delayedCall(
       3000,
-      () => this.enemyManager.spawnEnemyRowWithDelay(this, 0),
+      () => this.EnemyManager.spawnEnemyRowWithDelay(this, 0),
       null,
       this
     );
     this.time.delayedCall(
       5000,
-      () => this.enemyManager.spawnEnemyRowWithDelay(this, 0),
+      () => this.EnemyManager.spawnEnemyRowWithDelay(this, 0),
       null,
       this
     );
     this.time.delayedCall(
       7000,
-      () => this.enemyManager.spawnEnemyRowWithDelay(this, 0),
+      () => this.EnemyManager.spawnEnemyRowWithDelay(this, 0),
       null,
       this
     );
     this.time.delayedCall(
       9000,
-      () => this.enemyManager.spawnEnemyRowWithDelay(this, 0),
+      () => this.EnemyManager.spawnEnemyRowWithDelay(this, 0),
       null,
       this
     );
     this.time.delayedCall(
       11000,
-      () => this.enemyManager.spawnEnemyRowWithDelay(this, 0),
+      () => this.EnemyManager.spawnEnemyRowWithDelay(this, 0),
       null,
       this
     );
@@ -253,13 +251,13 @@ class LevelThreeScreen extends Phaser.Scene {
     this.time.delayedCall(
       18000,
       () => {
-        this.enemyManager.addEnemyForOnce(this.bug5_1);
-        this.enemyManager.addEnemyForOnce(this.bug5_2);
-        this.enemyManager.addEnemyForOnce(this.bug5_3);
-        this.enemyManager.addEnemyForOnce(this.bug5_4);
-        this.enemyManager.addEnemyForOnce(this.bug5_5);
-        this.enemyManager.addEnemyForOnce(this.bug5_6);
-        this.enemyManager.addEnemyForOnce(this.bug5_7);
+        this.EnemyManager.addEnemyForOnce(this.bug5_1);
+        this.EnemyManager.addEnemyForOnce(this.bug5_2);
+        this.EnemyManager.addEnemyForOnce(this.bug5_3);
+        this.EnemyManager.addEnemyForOnce(this.bug5_4);
+        this.EnemyManager.addEnemyForOnce(this.bug5_5);
+        this.EnemyManager.addEnemyForOnce(this.bug5_6);
+        this.EnemyManager.addEnemyForOnce(this.bug5_7);
       },
       null,
       this
@@ -272,10 +270,10 @@ class LevelThreeScreen extends Phaser.Scene {
       delay: 5000,
       callback: () => {
         this.UtilitiesManager.addUtilitiesForPlayingScreen(3, 4);
-        this.collideManager1 = new CollideManager(
+        this.CollideManager1 = new CollideManager(
           this,
           this.player,
-          this.enemyManager.enemies,
+          this.EnemyManager.enemies,
           this.UtilitiesManager.healthPacks,
           this.UtilitiesManager.shieldPacks,
           this.shield
@@ -298,10 +296,10 @@ class LevelThreeScreen extends Phaser.Scene {
       Phaser.Input.Keyboard.KeyCodes.ENTER
     );
 
-    this.collideManager = new CollideManager(
+    this.CollideManager = new CollideManager(
       this,
       this.player,
-      this.enemyManager.enemies,
+      this.EnemyManager.enemies,
       this.UtilitiesManager.healthPacks,
       this.UtilitiesManager.shieldPacks,
       this.shield,
@@ -347,8 +345,8 @@ class LevelThreeScreen extends Phaser.Scene {
     // Move the player and enemies
     this.playerManager.movePlayer();
 
-    this.enemyManager.moveEnemies();
-    this.enemyManager.enemies.forEach((enemy) => {
+    this.EnemyManager.moveEnemies();
+    this.EnemyManager.enemies.forEach((enemy) => {
       enemy.updateHealthBarPosition();
     });
 

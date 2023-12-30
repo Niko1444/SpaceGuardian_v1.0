@@ -1,15 +1,11 @@
 import Phaser from "phaser";
-import gameSettings from "../config/gameSettings.js";
 import config from "../config/config.js";
-import Bullet from "../objects/projectiles/Bullet.js";
 import Player from "../objects/players/Player.js";
 import Shield from "../objects/utilities/Shield.js";
 import EnemyManager from "../manager/EnemyManager.js";
 import KeyboardManager from "../manager/KeyboardManager.js";
 import PlayerManager from "../manager/playerManager.js";
-import CollideManager from "../manager/collideManager.js";
-import HPBar from "../objects/ui/HPBar.js";
-import Bug1 from "../objects/enemies/Bug1.js";
+import CollideManager from "../manager/CollideManager.js";
 import Bug3 from "../objects/enemies/Bug3.js";
 import Bug5 from "../objects/enemies/Bug5.js";
 import GuiManager from "../manager/GuiManager.js";
@@ -170,13 +166,13 @@ class BossScreen extends Phaser.Scene {
       this.selectedPlayerIndex
     );
 
-    this.enemyManager = new EnemyManager(this);
-    this.enemyManager.addEnemy(this.bug3_1);
-    this.enemyManager.addEnemy(this.bug3_2);
-    this.enemyManager.addEnemy(this.bug5);
-    this.enemyManager.addEnemy(this.boss);
-    this.enemyManager.addEnemy(this.firstMini);
-    this.enemyManager.addEnemy(this.secondMini);
+    this.EnemyManager = new EnemyManager(this);
+    this.EnemyManager.addEnemy(this.bug3_1);
+    this.EnemyManager.addEnemy(this.bug3_2);
+    this.EnemyManager.addEnemy(this.bug5);
+    this.EnemyManager.addEnemy(this.boss);
+    this.EnemyManager.addEnemy(this.firstMini);
+    this.EnemyManager.addEnemy(this.secondMini);
 
     // spawn the enemies
     if (this.boss.health < 800) {
@@ -190,7 +186,7 @@ class BossScreen extends Phaser.Scene {
       );
     }
 
-    // this.enemyManager.spawnCircleOfBugsLv1(
+    // this.EnemyManager.spawnCircleOfBugsLv1(
     //   config.width / 2,
     //   config.height / 2,
     //   150,
@@ -219,10 +215,10 @@ class BossScreen extends Phaser.Scene {
       callback: () => {
         this.UtilitiesManager.addUtilitiesForPlayingScreen(3, 4);
 
-        this.collideManager1 = new CollideManager(
+        this.CollideManager1 = new CollideManager(
           this,
           this.player,
-          this.enemyManager.enemies,
+          this.EnemyManager.enemies,
           this.UtilitiesManager.healthPacks,
           this.UtilitiesManager.shieldPacks,
           this.shield
@@ -244,10 +240,10 @@ class BossScreen extends Phaser.Scene {
       Phaser.Input.Keyboard.KeyCodes.SPACE
     );
 
-    this.collideManager = new CollideManager(
+    this.CollideManager = new CollideManager(
       this,
       this.player,
-      this.enemyManager.enemies,
+      this.EnemyManager.enemies,
       this.UtilitiesManager.healthPacks,
       this.UtilitiesManager.shieldPacks,
       this.shield,
@@ -282,8 +278,8 @@ class BossScreen extends Phaser.Scene {
     // Move the player and enemies
     this.playerManager.movePlayer();
 
-    this.enemyManager.moveEnemies();
-    this.enemyManager.enemies.forEach((enemy) => {
+    this.EnemyManager.moveEnemies();
+    this.EnemyManager.enemies.forEach((enemy) => {
       enemy.updateHealthBarPosition();
     });
 
@@ -306,7 +302,7 @@ class BossScreen extends Phaser.Scene {
 
     if (this.boss.health <= 0) {
       // Destroy all spawned enemies
-      this.enemyManager.enemies.forEach((enemy) => {
+      this.EnemyManager.enemies.forEach((enemy) => {
         enemy.takeDamage(100000);
       });
 
@@ -344,7 +340,7 @@ class BossScreen extends Phaser.Scene {
   }
 
   enemyExploded() {
-    this.enemyManager.enemyExploded();
+    this.EnemyManager.enemyExploded();
   }
 
   bossProcess() {
@@ -399,7 +395,7 @@ class BossScreen extends Phaser.Scene {
     }
 
     if (this.boss.health <= 0) {
-      this.enemyManager.createFirework(this.boss.x, this.boss.y);
+      this.EnemyManager.createFirework(this.boss.x, this.boss.y);
     }
   }
 

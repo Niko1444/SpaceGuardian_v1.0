@@ -40,8 +40,8 @@ const config = {
     PauseScreen,
     UpgradeScreen,
     GameOver,
+    CreditsScene,
     Leaderboard,
-    CreditsScene
   ],
   pixelArt: true,
   physics: {

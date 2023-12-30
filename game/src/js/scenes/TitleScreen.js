@@ -1,7 +1,6 @@
 import Phaser from "phaser";
 import config from "../config/config.js";
 import Button from "../objects/Button.js";
-import GuiManager from "../manager/GuiManager.js";
 import Music from "../mode/Music.js";
 class TitleScreen extends Phaser.Scene {
   constructor() {

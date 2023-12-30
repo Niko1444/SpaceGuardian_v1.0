@@ -1,5 +1,4 @@
 import Phaser from "phaser";
-import config from "../config/config";
 import HealthPack from "../objects/utilities/healthPack";
 import ShieldPack from "../objects/utilities/ShieldPack";
 class UtilitiesManager {

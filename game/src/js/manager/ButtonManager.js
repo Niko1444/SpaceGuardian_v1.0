@@ -1,6 +1,4 @@
 import config from "../config/config";
-import Phaser from "phaser";
-import Button from "../objects/Button";
 
 class ButtonManager {
   constructor(scene) {

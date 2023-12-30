@@ -129,7 +129,7 @@ class EnemyManager {
     scene.time.delayedCall(
       delay,
       () => {
-        const enemyRow = scene.enemyManager.spawnEnemyRow(30, 8, 40, 300);
+        const enemyRow = scene.EnemyManager.spawnEnemyRow(30, 8, 40, 300);
       },
       null,
       scene

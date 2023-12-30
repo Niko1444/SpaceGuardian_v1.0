@@ -1,20 +1,14 @@
 import Phaser from "phaser";
-import gameSettings from "../config/gameSettings";
 import config from "../config/config";
-import Bullet from "../objects/projectiles/Bullet";
 import Player from "../objects/players/Player";
 import Shield from "../objects/utilities/Shield";
 import EnemyManager from "../manager/EnemyManager.js";
 import KeyboardManager from "../manager/KeyboardManager";
 import PlayerManager from "../manager/playerManager";
-import CollideManager from "../manager/collideManager";
-import HPBar from "../objects/ui/HPBar";
+import CollideManager from "../manager/CollideManager.js";
 import GuiManager from "../manager/GuiManager";
 import UtilitiesManager from "../manager/UtilitiesManager";
 import ProjectileManager from "../manager/ProjectileManager";
-import HealthPack from "../objects/utilities/healthPack";
-import ShieldPack from "../objects/utilities/ShieldPack";
-import EnemyBullet from "../objects/projectiles/EnemyBullet";
 import UpgradeManager from "../manager/UpgradeManager";
 
 const BACKGROUND_SCROLL_SPEED = 0.5;
@@ -122,11 +116,11 @@ class TutorialScreen extends Phaser.Scene {
     // Utilities
     this.UtilitiesManager = new UtilitiesManager(this);
     // Enemy
-    this.enemyManager = new EnemyManager(this);
+    this.EnemyManager = new EnemyManager(this);
     this.time.delayedCall(
       3000,
       () => {
-        this.enemyManager.addEnemyTutorial();
+        this.EnemyManager.addEnemyTutorial();
       },
       null,
       this
@@ -143,10 +137,10 @@ class TutorialScreen extends Phaser.Scene {
     this.projectileManager.createEnemyBullet();
     this.projectileManager.createChaseBullet();
 
-    this.collideManager = new CollideManager(
+    this.CollideManager = new CollideManager(
       this,
       this.player,
-      this.enemyManager.enemies,
+      this.EnemyManager.enemies,
       this.UtilitiesManager.healthPacks,
       this.UtilitiesManager.shieldPacks,
       this.shield
@@ -169,8 +163,8 @@ class TutorialScreen extends Phaser.Scene {
     // Move the player and enemies
     this.playerManager.movePlayer();
 
-    this.enemyManager.moveEnemies();
-    this.enemyManager.enemies.forEach((enemy) => {
+    this.EnemyManager.moveEnemies();
+    this.EnemyManager.enemies.forEach((enemy) => {
       enemy.updateHealthBarPosition();
     });
 

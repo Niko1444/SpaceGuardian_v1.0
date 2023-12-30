@@ -1,7 +1,3 @@
-import Phaser from "phaser";
-import gameSettings from "../config/gameSettings";
-import config from "../config/config";
-
 class PlayerManager {
   constructor(scene, player, selectedPlayerIndex) {
     this.scene = scene;
