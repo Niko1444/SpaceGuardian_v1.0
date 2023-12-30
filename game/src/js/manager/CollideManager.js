@@ -23,33 +23,25 @@ class CollideManager {
       this.enemies,
       this.bulletHitEnemy,
       null,
-      this.scene
-    );
-
-    // player and enemies
-    this.scene.physics.add.overlap(
-      this.player,
-      this.enemies,
-      this.playerHitEnemy,
-      null,
       this
     );
 
     // Add collision between player having shield and enemies
     this.scene.physics.add.overlap(
-      this.shield, // Assuming the shield is a property of the player
+      this.shield,
       this.enemies,
       this.shieldCollideEnemy,
       null,
-      this.scene
+      this
     );
+
     // Add collision between player having shield and bullet
     this.scene.physics.add.overlap(
       this.scene.enemyProjectiles,
-      this.shield, // Assuming the shield is a property of the player
+      this.shield,
       this.shieldCollideBullet,
       null,
-      this.scene
+      this
     );
 
     // Add collision between enemy bullets and player
@@ -58,7 +50,7 @@ class CollideManager {
       this.player,
       this.bulletHitPlayer,
       null,
-      this.scene
+      this
     );
 
     // Add collision between player and enemies
@@ -71,13 +63,13 @@ class CollideManager {
     );
 
     // Add collision between player and health packs
-    this.healthPacks.forEach((HealthPack) => {
+    this.healthPacks.forEach((healthPack) => {
       this.scene.physics.add.overlap(
         this.player,
-        HealthPack,
+        healthPack,
         this.playerCollideHealthPack,
         null,
-        this.scene
+        this
       );
     });
 
@@ -88,19 +80,19 @@ class CollideManager {
         shieldPack,
         this.playerCollideShieldPack,
         null,
-        this.scene
+        this
       );
     });
   }
 
-  shieldCollideEnemy(shield, enemy, player) {
+  shieldCollideEnemy(shield, enemy) {
     if (this.shieldActive) {
       enemy.takeDamage(100);
-      // enemy.play("explosion_anim");
       shield.hide();
       this.shieldActive = false;
     }
   }
+
   shieldCollideBullet(shield, enemyBullet) {
     if (this.shieldActive) {
       enemyBullet.destroy();
@@ -109,7 +101,7 @@ class CollideManager {
     }
   }
 
-  bulletHitEnemy(enemy, bullet) {
+  bulletHitEnemy(bullet, enemy) {
     bullet.destroy();
     enemy.takeDamage(bullet.damage);
   }

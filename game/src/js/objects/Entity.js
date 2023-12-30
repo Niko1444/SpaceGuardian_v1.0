@@ -93,6 +93,7 @@ class Entity extends Phaser.GameObjects.Sprite {
   takeDamage(damage) {
     if (!this.getData("isDead")) {
       this.health -= damage;
+
       new DamageNumber(this.scene, this.x, this.y, damage);
 
       this.updateHealthBarValue();
