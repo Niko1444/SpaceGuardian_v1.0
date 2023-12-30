@@ -4,7 +4,7 @@ import config from "../config/config";
 import Bullet from "../objects/projectiles/Bullet";
 import Player from "../objects/players/Player";
 import Shield from "../objects/utilities/Shield";
-import EnemyManager from "../manager/enemyManager";
+import EnemyManager from "../manager/EnemyManager.js";
 import KeyboardManager from "../manager/KeyboardManager";
 import PlayerManager from "../manager/playerManager";
 import CollideManager from "../manager/collideManager";
@@ -47,7 +47,7 @@ class TutorialScreen extends Phaser.Scene {
       config.width / 2,
       config.height / 2 - 30
     );
-    
+
     this.time.delayedCall(
       6000,
       () => {
@@ -91,7 +91,7 @@ class TutorialScreen extends Phaser.Scene {
       "pointerdown",
       function () {
         this.scene.pause();
-        this.scene.launch("pauseScreen", {key : this.callingScene});
+        this.scene.launch("pauseScreen", { key: this.callingScene });
       },
       this
     );
@@ -156,8 +156,6 @@ class TutorialScreen extends Phaser.Scene {
     this.upgradeManager = new UpgradeManager(this, this.callingScene);
 
     this.input.keyboard.on("keydown-ENTER", this.startGame, this);
-
-    
   }
 
   update() {
@@ -231,7 +229,7 @@ class TutorialScreen extends Phaser.Scene {
 
   startGame() {
     this.scene.stop("upgradeScreen");
-  
+
     this.time.delayedCall(1000, () => {
       this.scene.stop();
       this.scene.start("playGame", { number: this.selectedPlayerIndex });
@@ -245,7 +243,7 @@ class TutorialScreen extends Phaser.Scene {
     this.events.once("shutdown", this.shutdown, this);
   }
 
-  shutdownPlayer(){
+  shutdownPlayer() {
     this.events.once("shutdown", this.shutdown, this);
   }
 }

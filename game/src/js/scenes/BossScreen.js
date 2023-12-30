@@ -4,7 +4,7 @@ import config from "../config/config.js";
 import Bullet from "../objects/projectiles/Bullet.js";
 import Player from "../objects/players/Player.js";
 import Shield from "../objects/utilities/Shield.js";
-import EnemyManager from "../manager/enemyManager.js";
+import EnemyManager from "../manager/EnemyManager.js";
 import KeyboardManager from "../manager/KeyboardManager.js";
 import PlayerManager from "../manager/playerManager.js";
 import CollideManager from "../manager/collideManager.js";
@@ -14,7 +14,7 @@ import Bug3 from "../objects/enemies/Bug3.js";
 import Bug5 from "../objects/enemies/Bug5.js";
 import GuiManager from "../manager/GuiManager.js";
 import UtilitiesManager from "../manager/UtilitiesManager.js";
-import buttonManager from "../manager/buttonManager.js";
+import ButtonManager from "../manager/ButtonManager.js";
 import ProjectileManager from "../manager/ProjectileManager.js";
 import UpgradeManager from "../manager/UpgradeManager.js";
 import Boss from "../objects/enemies/Boss.js";
@@ -27,7 +27,7 @@ class BossScreen extends Phaser.Scene {
     super("bossGame");
     this.callingScene = "bossGame";
     this.spawnedEnemies = [];
-    this.buttonManager = null;
+    this.ButtonManager = null;
   }
 
   init(data) {
@@ -230,7 +230,7 @@ class BossScreen extends Phaser.Scene {
       },
       callbackScope: this,
     });
-    this.buttonManager = new buttonManager(this);
+    this.ButtonManager = new ButtonManager(this);
 
     this.projectileManager = new ProjectileManager(this);
     this.projectileManager.createPlayerBullet();
@@ -273,7 +273,6 @@ class BossScreen extends Phaser.Scene {
   }
 
   update() {
-    // this.buttonManager.update();
     // Pause the game
     this.keyboardManager.pauseGame();
 

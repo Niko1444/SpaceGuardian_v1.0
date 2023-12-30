@@ -4,7 +4,7 @@ import GameSettings from "../config/gameSettings.js";
 import Bullet from "../objects/projectiles/Bullet";
 import Player from "../objects/players/Player";
 import Shield from "../objects/utilities/Shield";
-import EnemyManager from "../manager/enemyManager";
+import EnemyManager from "../manager/EnemyManager.js";
 import KeyboardManager from "../manager/KeyboardManager";
 import PlayerManager from "../manager/playerManager";
 import CollideManager from "../manager/collideManager";
@@ -13,7 +13,7 @@ import Bug3 from "../objects/enemies/Bug3";
 import Bug5 from "../objects/enemies/Bug5";
 import GuiManager from "../manager/GuiManager.js";
 import UtilitiesManager from "../manager/UtilitiesManager";
-import buttonManager from "../manager/buttonManager";
+import ButtonManager from "../manager/ButtonManager.js";
 import ProjectileManager from "../manager/ProjectileManager";
 import UpgradeManager from "../manager/UpgradeManager.js";
 import soundManager from "../manager/soundManager.js";
@@ -23,7 +23,7 @@ class LevelTwoScreen extends Phaser.Scene {
   constructor() {
     super("playLevelTwo");
     this.callingScene = "playLevelTwo";
-    this.buttonManager = null;
+    this.ButtonManager = null;
   }
 
   init(data) {
@@ -246,7 +246,7 @@ class LevelTwoScreen extends Phaser.Scene {
       },
       callbackScope: this,
     });
-    this.buttonManager = new buttonManager(this);
+    this.ButtonManager = new ButtonManager(this);
 
     this.projectileManager = new ProjectileManager(this);
     this.projectileManager.createPlayerBullet();
@@ -308,7 +308,6 @@ class LevelTwoScreen extends Phaser.Scene {
   }
 
   update() {
-    // this.buttonManager.update();
     // Pause the game
     this.keyboardManager.pauseGame();
 

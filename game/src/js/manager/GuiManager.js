@@ -1,10 +1,7 @@
-import Phaser from "phaser";
 import config from "../config/config";
 import PlayingScreen from "../scenes/PlayingScreen";
 import PauseScreen from "../scenes/PauseScreen";
 import GameOver from "../scenes/GameOver";
-import LoadingScreen from "../scenes/LoadingScreen";
-import TutorialScreen from "../scenes/TutorialScreen";
 
 class GuiManager {
   constructor(scene) {

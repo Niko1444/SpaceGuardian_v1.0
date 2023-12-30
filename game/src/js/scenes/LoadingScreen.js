@@ -349,7 +349,6 @@ class LoadingScreen extends Phaser.Scene {
   create() {
     // Create health pack animations
 
-
     // Create first bullet animations
     if (this.selectedPlayerIndex == 1) {
       this.anims.create({
@@ -670,7 +669,7 @@ class LoadingScreen extends Phaser.Scene {
 
     this.time.delayedCall(1000, () => {
       let value = this.selectedPlayerIndex;
-      this.scene.start("CreditsScene", { number: value });
+      this.scene.start("playGame", { number: value });
     });
   }
 }

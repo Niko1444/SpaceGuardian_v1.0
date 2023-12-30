@@ -4,6 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
+    "clean-webpack-plugin": "^4.0.0",
     "http-server": "^14.1.1",
     "phaser": "^3.70.0"
   },

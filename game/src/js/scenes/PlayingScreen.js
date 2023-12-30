@@ -3,7 +3,7 @@ import config from "../config/config";
 import Bullet from "../objects/projectiles/Bullet";
 import Player from "../objects/players/Player";
 import Shield from "../objects/utilities/Shield";
-import EnemyManager from "../manager/enemyManager";
+import EnemyManager from "../manager/EnemyManager.js";
 import KeyboardManager from "../manager/KeyboardManager";
 import PlayerManager from "../manager/playerManager";
 import CollideManager from "../manager/collideManager";
@@ -13,7 +13,6 @@ import Bug3 from "../objects/enemies/Bug3";
 import Bug5 from "../objects/enemies/Bug5";
 import GuiManager from "../manager/GuiManager.js";
 import UtilitiesManager from "../manager/UtilitiesManager";
-import buttonManager from "../manager/buttonManager";
 import ProjectileManager from "../manager/ProjectileManager";
 import UpgradeManager from "../manager/UpgradeManager.js";
 import Music from "../mode/Music.js";
@@ -23,7 +22,6 @@ class PlayingScreen extends Phaser.Scene {
   constructor() {
     super("playGame");
     this.callingScene = "playGame";
-    this.buttonManager = null;
     this.pic;
   }
 
@@ -261,8 +259,6 @@ class PlayingScreen extends Phaser.Scene {
       },
       callbackScope: this,
     });
-
-    // this.buttonManager = new buttonManager(this);
 
     this.projectileManager = new ProjectileManager(this);
     this.projectileManager.createPlayerBullet();
