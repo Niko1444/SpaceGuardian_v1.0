@@ -398,6 +398,10 @@ class BossScreen extends Phaser.Scene {
     if (this.boss.health < this.boss.maxHealth * 0.15) {
       this.boss.shootBullet(this, this.boss);
     }
+
+    if (this.boss.health <= 0) {
+      this.enemyManager.createFirework(this.boss.x, this.boss.y);
+    }
   }
 
   callMini() {

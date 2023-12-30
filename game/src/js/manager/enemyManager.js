@@ -137,6 +137,154 @@ class EnemyManager {
       scene
     );
   }
+
+  // FOR LEVEL 3
+  spawnBugRain(numBugs, speed, spawnInterval) {
+    let count = 0;
+    const spawn = () => {
+      if (count >= numBugs) {
+        clearInterval(intervalId); // Stop spawning new bugs
+        return;
+      }
+  
+      const x = Phaser.Math.Between(0, config.width);
+      const y = -20;
+  
+      // Create a new bug
+      const newBug = new Bug1(this.scene, x, y, 400);
+      newBug.play("bug1_anim");
+      this.addEnemyForOnce(newBug);
+  
+      this.scene.tweens.add({
+        targets: newBug,
+        y: config.height + 20,
+        duration: speed,
+        ease: "Linear",
+      });
+  
+      count++;
+    };
+  
+    const intervalId = setInterval(spawn, spawnInterval);
+  }
+
+  spawnBugRainRightToLeft(numBugs, speed, spawnInterval) {
+    let count = 0;
+    const spawn = () => {
+      if (count >= numBugs) {
+        clearInterval(intervalId); // Stop spawning new bugs
+        return;
+      }
+  
+      const x = config.width + 20; // Start the bug off the right edge of the screen
+      const y = Phaser.Math.Between(0, config.height/3);
+  
+      // Create a new bug
+      const newBug = new Bug1(this.scene, x, y, 300);
+      newBug.play("bug1_anim");
+      newBug.angle = 45;
+      this.addEnemyForOnce(newBug);
+  
+      // Add a tween to move the bug to the left
+      this.scene.tweens.add({
+        targets: newBug,
+        x: -20, // Move the bug beyond the left edge of the screen
+        duration: speed,
+        ease: "Linear",
+      });
+  
+      count++;
+    };
+  
+    const intervalId = setInterval(spawn, spawnInterval);
+  }
+  
+  spawnBugRainLeftToRight(numBugs, speed, spawnInterval) {
+    let count = 0;
+    const spawn = () => {
+      if (count >= numBugs) {
+        clearInterval(intervalId); // Stop spawning new bugs
+        return;
+      }
+  
+      const x = -20;
+      const y = Phaser.Math.Between(0, config.height/3);
+  
+      // Create a new bug
+      const newBug = new Bug1(this.scene, x, y, 300);
+      newBug.play("bug1_anim");
+      newBug.angle = -45;
+      this.addEnemyForOnce(newBug);
+  
+      // Add a tween to move the bug to the right
+      this.scene.tweens.add({
+        targets: newBug,
+        x: config.width + 20, // Move the bug beyond the right edge of the screen
+        duration: speed,
+        ease: "Linear",
+      });
+  
+      count++;
+    };
+  
+    const intervalId = setInterval(spawn, spawnInterval);
+  }
+
+  spawnBugRainBottomToTop(numBugs, speed, spawnInterval) {
+    let count = 0;
+    const spawn = () => {
+      if (count >= numBugs) {
+        clearInterval(intervalId); // Stop spawning new bugs
+        return;
+      }
+  
+      const x = Phaser.Math.Between(0, config.width);
+      const y = config.height + 20; // Start the bug off the bottom edge of the screen
+  
+      // Create a new bug
+      const newBug = new Bug1(this.scene, x, y, 300);
+      newBug.play("bug1_anim");
+      newBug.angle = -180; // Make the bug face upwards
+      this.addEnemyForOnce(newBug);
+  
+      // Add a tween to move the bug to the top
+      this.scene.tweens.add({
+        targets: newBug,
+        y: -20, // Move the bug beyond the top edge of the screen
+        duration: speed,
+        ease: "Linear",
+        onComplete: () => {
+          newBug.angle = 0;
+        }
+      });
+  
+      count++;
+    };
+  
+    const intervalId = setInterval(spawn, spawnInterval);
+  }
+
+  // FOR BOSS
+  spawnParticle(x, y) {
+    let particle = this.scene.add.circle(x, y, 5, 0xffffff); // Create a white circle as a particle
+  
+    this.scene.tweens.add({
+      targets: particle,
+      x: Phaser.Math.Between(x - 100, x + 100), // Random end x within 100 pixels of the start x
+      y: Phaser.Math.Between(y - 100, y + 100), // Random end y within 100 pixels of the start y
+      alpha: 0, // Fade out
+      scale: 0, // Shrink
+      duration: 1000, // Duration of 1 second
+      ease: 'Cubic.easeIn', // Slow start
+      onComplete: () => particle.destroy() // Destroy the particle at the end of the tween
+    });
+  }
+
+  createFirework(x, y) {
+    for (let i = 0; i < 50; i++) { // Create 50 particles
+      this.spawnParticle(x, y);
+    }
+  }
 }
 
 export default EnemyManager;

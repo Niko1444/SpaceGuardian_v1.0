@@ -10,6 +10,7 @@ import LevelTwoScreen from "../scenes/LevelTwoScreen.js";
 import LevelThreeScreen from "../scenes/LevelThreeScreen.js";
 import Leaderboard from "../scenes/Leaderboard.js";
 import BossScreen from "../scenes/BossScreen.js";
+import CreditsScene from "../scenes/CreditScreen.js";
 
 const gameWidth = 600;
 const gameHeight = 950;
@@ -40,6 +41,7 @@ const config = {
     UpgradeScreen,
     GameOver,
     Leaderboard,
+    CreditsScene
   ],
   pixelArt: true,
   physics: {
