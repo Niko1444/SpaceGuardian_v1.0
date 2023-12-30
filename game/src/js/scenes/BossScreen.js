@@ -254,6 +254,7 @@ class BossScreen extends Phaser.Scene {
       this.soundManager
     );
 
+    this.bossDefeated = false;
     this.checkBossHeal = false;
     this.timeHealth = 1;
 
@@ -265,7 +266,6 @@ class BossScreen extends Phaser.Scene {
       function () {
         this.music.soundOn = !this.music.soundOn;
         this.music.musicOn = !this.music.musicOn;
-
         this.updateAudio();
       },
       this
@@ -304,6 +304,23 @@ class BossScreen extends Phaser.Scene {
     this.bug3_1.rotateToPlayer(this.player);
     this.bug3_2.rotateToPlayer(this.player);
     this.bug5.chasePlayer(this.player);
+
+    if (this.boss.health <= 0) {
+      // Destroy all spawned enemies
+      this.enemyManager.enemies.forEach((enemy) => {
+        enemy.takeDamage(100000);
+      });
+
+      this.time.delayedCall(
+        200,
+        () => {
+          this.scene.start("leaderboard");
+        },
+        null,
+        this
+      );
+    }
+
     this.bossProcess();
   }
 
@@ -440,7 +457,8 @@ class BossScreen extends Phaser.Scene {
   createText() {
     const Level1Text = this.add
       .text(config.width / 2, config.height / 2, "Boss", {
-        fontSize: "32px",
+        fontFamily: "Pixelify Sans",
+        fontSize: "64px",
         fill: "#ffffff",
       })
       .setOrigin(0.5);

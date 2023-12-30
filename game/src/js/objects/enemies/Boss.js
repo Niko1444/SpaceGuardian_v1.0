@@ -51,7 +51,7 @@ class Boss extends Entity {
 
   explode(canDestroy) {
     super.explode(canDestroy);
-    this.scene.upgradeManager.updateScore(10);
+    this.scene.upgradeManager.updateScore(1234);
   }
 
   shootBullet(scene, enemy) {

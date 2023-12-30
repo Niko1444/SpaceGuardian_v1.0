@@ -179,6 +179,10 @@ class UpgradeScreen extends Phaser.Scene {
   increaseValue(current, base) {
     return Math.log2(current + base) * 3.5;
   }
+
+  stop() {
+    this.scene.stop();
+  }
 }
 
 export default UpgradeScreen;

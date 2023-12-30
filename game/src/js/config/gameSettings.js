@@ -1,6 +1,6 @@
 var gameSettings = {
   playerSpeed: 250,
-  playerBulletDamage: 100,
+  playerBulletDamage: 100000,
   playerLifesteal: 0,
   playerBulletSpeed: 400,
   playerScore: 0,
