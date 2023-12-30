@@ -263,6 +263,28 @@ class EnemyManager {
   
     const intervalId = setInterval(spawn, spawnInterval);
   }
+
+  // FOR BOSS
+  spawnParticle(x, y) {
+    let particle = this.scene.add.circle(x, y, 5, 0xffffff); // Create a white circle as a particle
+  
+    this.scene.tweens.add({
+      targets: particle,
+      x: Phaser.Math.Between(x - 100, x + 100), // Random end x within 100 pixels of the start x
+      y: Phaser.Math.Between(y - 100, y + 100), // Random end y within 100 pixels of the start y
+      alpha: 0, // Fade out
+      scale: 0, // Shrink
+      duration: 1000, // Duration of 1 second
+      ease: 'Cubic.easeIn', // Slow start
+      onComplete: () => particle.destroy() // Destroy the particle at the end of the tween
+    });
+  }
+
+  createFirework(x, y) {
+    for (let i = 0; i < 50; i++) { // Create 50 particles
+      this.spawnParticle(x, y);
+    }
+  }
 }
 
 export default EnemyManager;
