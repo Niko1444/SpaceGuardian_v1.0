@@ -13,7 +13,7 @@ import UtilitiesManager from "../manager/UtilitiesManager";
 import ButtonManager from "../manager/ButtonManager.js";
 import ProjectileManager from "../manager/ProjectileManager";
 import UpgradeManager from "../manager/UpgradeManager.js";
-import soundManager from "../manager/soundManager.js";
+import SoundManager from "../manager/SoundManager.js";
 
 const BACKGROUND_SCROLL_SPEED = 0.5;
 class LevelTwoScreen extends Phaser.Scene {
@@ -226,7 +226,7 @@ class LevelTwoScreen extends Phaser.Scene {
     );
 
     this.UtilitiesManager = new UtilitiesManager(this);
-    this.soundManager = new soundManager(this);
+    this.SoundManager = new SoundManager(this);
     // Add a delayed event to spawn utilities after a delay
     this.time.addEvent({
       delay: 5000,
@@ -272,7 +272,7 @@ class LevelTwoScreen extends Phaser.Scene {
       this.UtilitiesManager.HealthPacks,
       this.UtilitiesManager.shieldPacks,
       this.shield,
-      this.soundManager
+      this.SoundManager
     );
 
     this.time.delayedCall(

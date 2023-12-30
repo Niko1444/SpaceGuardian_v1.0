@@ -1,5 +1,5 @@
 import Phaser from "phaser";
-class soundManager extends Phaser.GameObjects.Sprite {
+class SoundManager extends Phaser.GameObjects.Sprite {
   constructor(scene) {
     super(scene);
     this.scene = scene;
@@ -54,4 +54,4 @@ class soundManager extends Phaser.GameObjects.Sprite {
   // You can add other audio management functions as needed
 }
 
-export default soundManager;
+export default SoundManager;

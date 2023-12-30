@@ -13,7 +13,7 @@ import GuiManager from "../manager/GuiManager.js";
 import UtilitiesManager from "../manager/UtilitiesManager";
 import ProjectileManager from "../manager/ProjectileManager";
 import UpgradeManager from "../manager/UpgradeManager.js";
-import soundManager from "../manager/soundManager.js";
+import SoundManager from "../manager/SoundManager.js";
 const BACKGROUND_SCROLL_SPEED = 0.5;
 class PlayingScreen extends Phaser.Scene {
   constructor() {
@@ -220,7 +220,7 @@ class PlayingScreen extends Phaser.Scene {
     );
 
     this.UtilitiesManager = new UtilitiesManager(this);
-    this.soundManager = new soundManager(this);
+    this.SoundManager = new SoundManager(this);
 
     // Spawn the Health Packs and Shield Packs
     this.time.addEvent({
@@ -234,7 +234,7 @@ class PlayingScreen extends Phaser.Scene {
           this.UtilitiesManager.HealthPacks,
           this.UtilitiesManager.shieldPacks,
           this.shield,
-          this.soundManager
+          this.SoundManager
         );
       },
       callbackScope: this,
@@ -251,7 +251,7 @@ class PlayingScreen extends Phaser.Scene {
           this.UtilitiesManager.HealthPacks,
           this.UtilitiesManager.shieldPacks,
           this.shield,
-          this.soundManager
+          this.SoundManager
         );
       },
       callbackScope: this,
@@ -285,7 +285,7 @@ class PlayingScreen extends Phaser.Scene {
       this.UtilitiesManager.HealthPacks,
       this.UtilitiesManager.shieldPacks,
       this.shield,
-      this.soundManager
+      this.SoundManager
     );
 
     this.time.delayedCall(

@@ -15,7 +15,7 @@ import ProjectileManager from "../manager/ProjectileManager.js";
 import UpgradeManager from "../manager/UpgradeManager.js";
 import Boss from "../objects/enemies/Boss.js";
 import MiniBot from "../objects/enemies/Minibot.js";
-import soundManager from "../manager/soundManager.js";
+import SoundManager from "../manager/SoundManager.js";
 
 const BACKGROUND_SCROLL_SPEED = 0.5;
 class BossScreen extends Phaser.Scene {
@@ -208,7 +208,7 @@ class BossScreen extends Phaser.Scene {
     // );
 
     this.UtilitiesManager = new UtilitiesManager(this);
-    this.soundManager = new soundManager(this);
+    this.SoundManager = new SoundManager(this);
     // Add a delayed event to spawn utilities after a delay
     this.time.addEvent({
       delay: 5000,
@@ -247,7 +247,7 @@ class BossScreen extends Phaser.Scene {
       this.UtilitiesManager.healthPacks,
       this.UtilitiesManager.shieldPacks,
       this.shield,
-      this.soundManager
+      this.SoundManager
     );
 
     this.bossDefeated = false;

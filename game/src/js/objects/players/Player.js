@@ -1,9 +1,8 @@
 import Entity from "../Entity";
 import Bullet from "../projectiles/Bullet";
 import gameSettings from "../../config/gameSettings";
-import HPBar from "../ui/HPBar";
 import HPBar2 from "../ui/HPBar2";
-import soundManager from "../../manager/soundManager";
+import SoundManager from "../../manager/SoundManager";
 class Player extends Entity {
   constructor(scene, x, y, key, health) {
     super(scene, x, y, key, health);
@@ -27,7 +26,7 @@ class Player extends Entity {
     this.numberOfBullets = gameSettings.playerNumberOfBullets;
     this.bulletSpeed = gameSettings.playerBulletSpeed;
 
-    this.soundManager = new soundManager(scene);
+    this.SoundManager = new SoundManager(scene);
 
     this.hpBar = new HPBar2(
       scene,
@@ -106,7 +105,7 @@ class Player extends Entity {
 
         bullet.play(`bullet${number}_anim`);
       }
-      this.soundManager.playBulletSound();
+      this.SoundManager.playBulletSound();
     }
   }
 
