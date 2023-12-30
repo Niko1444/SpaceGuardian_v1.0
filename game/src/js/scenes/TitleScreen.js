@@ -63,6 +63,28 @@ class TitleScreen extends Phaser.Scene {
         endFrame: 4,
       },
     });
+
+    this.load.spritesheet({
+      key: "button_credit",
+      url: "assets/gui/button_play.png",
+      frameConfig: {
+        frameWidth: 93,
+        frameHeight: 28,
+        startFrame: 1,
+        endFrame: 1,
+      },
+    });
+
+    this.load.spritesheet({
+      key: "button_credit_hover",
+      url: "assets/gui/button_play_hover.png",
+      frameConfig: {
+        frameWidth: 93,
+        frameHeight: 28,
+        startFrame: 1,
+        endFrame: 1,
+      },
+    });
   }
 
   create() {
@@ -186,6 +208,16 @@ class TitleScreen extends Phaser.Scene {
     );
     this.button_tutorial.setInteractive();
 
+    // Create Credit Button
+    this.button_credit = new Button(
+      this,
+      config.width / 2,
+      config.height / 2 + 140,
+      "button_credit",
+      "button_credit_hover",
+      "choosePlayer"
+    );
+
     // Event listeners for the tutorial button
     this.button_tutorial.on("pointerdown", () => {
       this.scene.start("choosePlayer");
@@ -197,6 +229,10 @@ class TitleScreen extends Phaser.Scene {
 
     this.button_tutorial.on("pointerout", () => {
       this.button_tutorial.setTexture("button_tutorial");
+    });
+
+    this.button_credit.on("pointerdown", () => {
+      this.button_credit.setTexture("button_credit_hover");
     });
   }
 }
