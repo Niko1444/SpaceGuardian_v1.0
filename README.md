@@ -23,17 +23,17 @@ Click here and enjoy the game --> <a href="https://space-guardian.vercel.app/" t
 7. [Installation](#installation)
 8. [References](#references)
 
-## Introduction <a name="introduction"></a> :smile:
+## Introduction <a name="introduction"></a>
 
-### Group Name: Fly Team :star_struck:
+### Group Name: Fly Team :rocket:
 
 ### Our team member
 
 | Index | Name                    |     ID      |               Email                | Github account |
 | :---- | :---------------------- | :---------: | :--------------------------------: | :------------- |
 | 1     | Lê Tiến Phát            | ITITIU21273 |     letienphat.ltp@icloud.com      | Niko1444       |
-| 2     | Nguyễn Minh Lương       |             |                    @gmail.com      | meomun1        |
-| 3     | Nguyễn Hoàng Giang      |             |                    @gmail.com      | tienluan03     |
+| 2     | Nguyễn Minh Lương       |             |         maluong1504@gmail.com      | meomun1        |
+| 3     | Nguyễn Hoàng Giang      |             |     nguyentienluan3@gmail.com      | tienluan02     |
 | 4     | Nguyễn Tiến Luân        |             |                    @gmail.com      | GSYNDRA        |
 
 ### Tasks and Contribution
@@ -47,11 +47,11 @@ Click here and enjoy the game --> <a href="https://space-guardian.vercel.app/" t
 
 | Name        | Tasks                                                                          |
 | :---------- | :----------------------------------------------------------------------------- |
-| Hoàng Luân  | Overall Framework, Ghostpiece func, Mobile, Set Difficulty func, Miscellaneous |
-| Quang Trí   | Readme, Holdpiece func, Sound Effect, Miscellaneous                            |
-| Thiên Phúc  | Score Board, Class Diagram, Algorithm (Sort), Miscellaneous                    |
-| Ngọc Nhân   | Undo func, Class Diagram, Miscellaneous                                        |
-| All members | Report, PowerPoint, Front-end                                                  |
+| Tiến Phát   |                                                                                |
+| Minh Lương  |                                                                                |
+| Hoàng Giang |                                                                                |
+| Tiến Luân   |                                                                                |
+| All members | Bugs fixing, Report and Presention Materials                                   |
 
 ### Environment :computer:
 
@@ -77,41 +77,36 @@ Design Pattern:
 **Main Feature:**
 
 - Play, Restart, Pause
-- Generate piece
-- Sound
+- Spawning Enemies
+- Controlling the Player
 - Play field
+- Sound
 
 **Extra feature:**
 
-- Undo state
-- Hold piece
-- Next piece
-- Ghost piece
-- Score board
-- Game Speed, Level, Set Difficulty
-- UI (Responsive)
-- Mobile Support (Ipad only)
+- Choosing Player 
+- Leaderboard Ranking (Real-time-update for multiplayer)
+- GUI 
+- Mobile Support
 
 **Future feature:**
 
-- User Score Database
-- Change color or theme by user
-- User ranking
-- Optimize for mobile user
-- More Game Animation
+- More upgrades, more types of enemy
+- Special skills for each "Player"
 
 ## Challenges <a name="challenges"></a> ✴️
 
-- Most of the team members are not familiar with Web environment
-- Problems with the IDE, Canvas
+- First time developing in the web environment for most of the members
+- Problems with the bundler (webpack), compiler (babel)
+- ES6 syntax sometimes confusing and strict in casing
 - Problems when applying Data Structures and Algorithms in project
-- And some other smaller issues...
+- And some other minor issues...
 
 ### What we have learned :pencil:
 
-Soft skills: works in GitHub, Google docs, Google slides,...  
-Main skills: Debugs, Team work  
-Knowledge: HTML, CSS, JavaScript, Data Structures, Algorithms, UI design, Thesis report, Git and Github Usage
+Soft skills: Teamworking, Communicating
+Developing skills: Debugging, Deploying
+Knowledge: HTML, CSS, JavaScript, Phaser Framework, Webpack bundler, Babel compiler, Web Deploying, Data Structures and Algorithms, UI design, Thesis report, Git and Github Usage
 
 ## UML Class Diagram <a name="uml"></a> 📄
 
