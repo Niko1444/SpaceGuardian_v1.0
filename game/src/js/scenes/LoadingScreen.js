@@ -103,7 +103,7 @@ class LoadingScreen extends Phaser.Scene {
       key: "healthBar_texture",
       url: "assets/spritesheets/vfx/healthBar.png",
       frameConfig: {
-        frameWidth: 200,
+        frameWidth: 300,
         frameHeight: 41,
         startFrame: 0,
         endFrame: 0,
@@ -338,12 +338,14 @@ class LoadingScreen extends Phaser.Scene {
     this.load.audio("explosionSound", "assets/audio/DestroyEnemySmall.wav");
     this.load.audio("shootSound", "assets/audio/bullet.wav");
     this.load.audio("main_menu_music", "assets/audio/backgroundMusic.mp3");
-    this.load.audio("desertMusic", "assets/audio/playingMusic.mp3");
     this.load.audio("health", "assets/audio/health.wav");
     this.load.audio("shield", "assets/audio/shield.wav");
-    this.load.audio("forestMusic", "assets/audio/forest.wav");
-    this.load.audio("riverMusic", "assets/audio/river.mp3");
-    this.load.audio("warzoneMusic", "assets/audio/warzone.mp3");
+    this.load.audio("bossMusic", "assets/audio/boss.mp3");
+    // this.load.audio("forestMusic", "assets/audio/forest.wav");
+    // this.load.audio("riverMusic", "assets/audio/river.mp3");
+    // this.load.audio("warzoneMusic", "assets/audio/warzone.mp3");
+    // this.load.audio("desertMusic", "assets/audio/playingMusic.mp3");
+
   }
 
   create() {
