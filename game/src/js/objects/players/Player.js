@@ -134,6 +134,18 @@ class Player extends Entity {
     gameSettings.savePlayerBulletSize = this.bulletSize;
   }
 
+
+  // restartBegin(){
+  //   this.speed = gameSettings.savePlayerSpeed ;
+  //   this.bulletDamage = gameSettings.savePlayerBulletDamage;
+  //   this.lifestealRate = gameSettings.savePlayerLifesteal; 
+  //   this.bulletSpeed = gameSettings.savePlayerBulletSpeed;
+  //   gameSettings.playerScore = gameSettings.savePlayerScore;
+  //   this.numberOfBullets = gameSettings.savePlayerNumberOfBullets;
+  //   this.fireRate = gameSettings.savePlayerFireRate;
+  //   this.bulletSize = gameSettings.savePlayerDefaultBulletSize;
+  // }
+
   restartToTile(){
     gameSettings.savePlayerSpeed = 250;
     gameSettings.savePlayerBulletDamage = 100;
@@ -142,8 +154,8 @@ class Player extends Entity {
     gameSettings.savePlayerScore = 0;
     gameSettings.savePlayerNumberOfBullets = 1;
     gameSettings.savePlayerFireRate = 700;
-    gameSettings.savePlayerDefaultBulletSize = 0;
-    gameSettings.savePlayerBulletSize = 0;
+    gameSettings.savePlayerDefaultBulletSize = 1.2;
+    gameSettings.savePlayerBulletSize = 1.2;
     this.restartGameSettings();
   }
 

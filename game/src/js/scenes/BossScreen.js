@@ -123,11 +123,11 @@ class BossScreen extends Phaser.Scene {
     });
     // }
 
-    this.boss = new Boss(this, config.width / 2, 0, 2000);
+    this.boss = new Boss(this, config.width / 2, 0, 100000);
     this.boss.play("boss_move_anim");
 
-    this.firstMini = new MiniBot(this, config.width / 5, -96, 100);
-    this.secondMini = new MiniBot(this, (config.width * 4) / 5, -96, 100);
+    this.firstMini = new MiniBot(this, config.width / 5, -96, 10000);
+    this.secondMini = new MiniBot(this, (config.width * 4) / 5, -96, 10000);
 
     this.player = new Player(
       this,
@@ -414,7 +414,7 @@ class BossScreen extends Phaser.Scene {
     }
 
     if (this.boss.health < this.boss.maxHealth * 0.15) {
-      this.boss.shootBullet(this, this.boss);
+      this.boss.shootBulletCircle(this, this.boss);
     }
 
     if (this.boss.health <= 0) {
