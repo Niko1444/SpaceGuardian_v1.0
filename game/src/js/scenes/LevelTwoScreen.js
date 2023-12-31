@@ -121,6 +121,7 @@ class LevelTwoScreen extends Phaser.Scene {
       1000
     );
     this.player.play("player_anim");
+    this.player.restartGameSettings();
 
     // Spawn the Enemies
     this.time.delayedCall(
@@ -471,6 +472,7 @@ class LevelTwoScreen extends Phaser.Scene {
 
   handleEnterKey() {
     this.scene.stop("upgradeScreen");
+    this.player.savePlayer();
 
     this.time.delayedCall(1000, () => {
       this.scene.start("playLevelThree", { number: this.selectedPlayerIndex });
