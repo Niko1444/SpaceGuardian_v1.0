@@ -124,7 +124,6 @@ class BossScreen extends Phaser.Scene {
     // }
 
     this.boss = new Boss(this, config.width / 2, 0, 100000);
-    this.boss = new Boss(this, config.width / 2, 0, 100000);
     this.boss.play("boss_move_anim");
 
     this.firstMini = new MiniBot(this, config.width / 5, -96, 10000);
