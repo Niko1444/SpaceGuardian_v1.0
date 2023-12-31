@@ -27,6 +27,9 @@ class TutorialScreen extends Phaser.Scene {
   }
 
   create() {
+    // global music
+    this.music = this.sys.game.globals.music;
+
     // Create player animations
 
     this.guiManager = new GuiManager(this);
@@ -75,6 +78,9 @@ class TutorialScreen extends Phaser.Scene {
       null,
       this
     );
+    // Create managers
+    this.keyboardManager = new KeyboardManager(this, this.music);
+    this.keyboardManager.MuteGame();
 
     // create pause button
     this.pic = this.add.image(config.width - 20, 30, "pause");
@@ -150,9 +156,44 @@ class TutorialScreen extends Phaser.Scene {
     this.UpgradeManager = new UpgradeManager(this, this.callingScene);
 
     this.input.keyboard.on("keydown-ENTER", this.startGame, this);
+
+     // create pause button
+     this.pic = this.add.image(config.width - 20, 30, "pause");
+     // this.button = this.scene.add.sprite(60, 30, 'pause');
+     this.pic.setInteractive();
+ 
+     this.pic.on(
+       "pointerdown",
+       function () {
+         this.scene.pause();
+         this.scene.launch("pauseScreen", { key: "playGame" });
+       },
+       this
+     );
+ 
+     this.musicButton = this.add.image(config.width - 60, 30, "sound_texture");
+     this.musicButton.setInteractive();
+ 
+     this.musicButton.on(
+       "pointerdown",
+       function () {
+         this.music.soundOn = !this.music.soundOn;
+         this.music.musicOn = !this.music.musicOn;
+ 
+         this.updateAudio();
+       },
+       this
+     );
+
   }
 
   update() {
+     // update for mute and sound button
+     if (this.music.musicOn === false && this.music.soundOn === false) {
+      this.musicButton = this.add.image(config.width - 60, 30, "mute_texture");
+    } else if (this.music.musicOn === true && this.music.soundOn === true) {
+      this.musicButton = this.add.image(config.width - 60, 30, "sound_texture");
+    }
     // Pause the game
     this.keyboardManager.pauseGame();
     this.keyboardManager.titleScreen();
@@ -181,6 +222,21 @@ class TutorialScreen extends Phaser.Scene {
     if (this.player.health <= 0) {
       this.gameOver();
     }
+  }
+
+  updateAudio() {
+    if (this.music.musicOn === false && this.music.soundOn === false) {
+      this.musicButton.setTexture('mute_texture');
+      this.sys.game.globals.bgMusic.pause();
+      this.music.bgMusicPlaying = false;
+    } else if(this.music.musicOn === true && this.music.soundOn === true) {
+      this.musicButton.setTexture('sound_texture');
+      if (this.music.bgMusicPlaying === false) {
+        this.sys.game.globals.bgMusic.resume();
+        this.music.bgMusicPlaying = true;
+      }
+    }
+  
   }
 
   shutdown() {

@@ -53,6 +53,15 @@ class GuiManager {
       "#fff",
       0.5
     );
+
+    this.createSimpleText(
+      config.width / 2,
+      config.height / 2 + 60,
+      "Press M to Mute",
+      "24px",
+      "#fff",
+      0.5
+    );
   }
 
   createGameOverGui() {

@@ -30,8 +30,8 @@ class Player extends Entity {
 
     this.hpBar = new HPBar2(
       scene,
-      scene.sys.game.config.width - 400,
-      scene.sys.game.config.height - 40,
+      scene.sys.game.config.width - 450,
+      scene.sys.game.config.height - 60,
       200,
       41,
       this.health,
