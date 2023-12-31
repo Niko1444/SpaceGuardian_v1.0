@@ -124,7 +124,6 @@ class BossScreen extends Phaser.Scene {
     // }
 
     this.boss = new Boss(this, config.width / 2, 0, 100000);
-    this.boss = new Boss(this, config.width / 2, 0, 100000);
     this.boss.play("boss_move_anim");
 
     this.firstMini = new MiniBot(this, config.width / 5, -96, 10000);
@@ -138,6 +137,7 @@ class BossScreen extends Phaser.Scene {
       10000
     );
     this.player.play("player_anim");
+    this.player.restartGameSettings();
 
     // Spawn the Enemies
     this.bug3_1 = new Bug3(this, 50, 0, 30);
@@ -322,7 +322,9 @@ class BossScreen extends Phaser.Scene {
     if (this.boss.health <= 0) {
       // Destroy all spawned enemies
       this.EnemyManager.enemies.forEach((enemy) => {
-        enemy.takeDamage(100000);
+        if(enemy.health > 0){
+          enemy.takeDamage(100000);
+        }
       });
 
       this.time.delayedCall(
@@ -352,6 +354,10 @@ class BossScreen extends Phaser.Scene {
     }
   }
 
+  shutdownPlayer() {
+    this.events.once("shutdown", this.shutdown, this);
+  }
+
   gameOver() {
     this.events.once("shutdown", this.shutdown, this);
     this.scene.stop("upgradeScreen");
@@ -372,8 +378,7 @@ class BossScreen extends Phaser.Scene {
 
     if (
       (this.boss.health < this.boss.maxHealth * 0.55 &&
-        this.boss.health > this.boss.maxHealth * 0.35) ||
-      this.checkBossHeal === true
+        this.boss.health >= this.boss.maxHealth * 0.35)
     ) {
       this.boss.bossBound();
       if (this.timeHealth === 0) {
@@ -382,8 +387,7 @@ class BossScreen extends Phaser.Scene {
     }
 
     if (
-      this.boss.health < this.boss.maxHealth * 0.35 ||
-      this.checkBossHeal === true
+      this.boss.health < this.boss.maxHealth * 0.35 
     ) {
       this.boss.moveToCenter();
       this.callMini();
@@ -410,7 +414,7 @@ class BossScreen extends Phaser.Scene {
     }
 
     if (this.boss.health < this.boss.maxHealth * 0.15) {
-      this.boss.shootBullet(this, this.boss);
+      this.boss.shootBulletCircle(this, this.boss);
     }
 
     if (this.boss.health <= 0) {
