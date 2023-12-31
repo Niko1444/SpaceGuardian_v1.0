@@ -10,7 +10,6 @@ import Bug3 from "../objects/enemies/Bug3.js";
 import Bug5 from "../objects/enemies/Bug5.js";
 import GuiManager from "../manager/GuiManager.js";
 import UtilitiesManager from "../manager/UtilitiesManager.js";
-import ButtonManager from "../manager/ButtonManager.js";
 import ProjectileManager from "../manager/ProjectileManager.js";
 import UpgradeManager from "../manager/UpgradeManager.js";
 import Boss from "../objects/enemies/Boss.js";
@@ -23,7 +22,6 @@ class BossScreen extends Phaser.Scene {
     super("bossGame");
     this.callingScene = "bossGame";
     this.spawnedEnemies = [];
-    this.ButtonManager = null;
   }
 
   init(data) {
@@ -51,7 +49,7 @@ class BossScreen extends Phaser.Scene {
     this.music = this.sys.game.globals.music;
     if (this.music.musicOn === true) {
       this.sys.game.globals.bgMusic.stop();
-      this.bgMusic = this.sound.add("desertMusic", { volume: 0.6, loop: true });
+      this.bgMusic = this.sound.add("bossMusic", { volume: 0.3, loop: true });
       this.bgMusic.play();
       this.music.bgMusicPlaying = true;
       this.sys.game.globals.bgMusic = this.bgMusic;
@@ -157,7 +155,8 @@ class BossScreen extends Phaser.Scene {
     this.shield.play("shield_anim");
 
     // Create managers
-    this.keyboardManager = new KeyboardManager(this);
+    this.keyboardManager = new KeyboardManager(this, this.music);
+    this.keyboardManager.MuteGame();
     // Score System
     this.UpgradeManager = new UpgradeManager(this, this.callingScene);
     this.playerManager = new PlayerManager(
@@ -219,14 +218,14 @@ class BossScreen extends Phaser.Scene {
           this,
           this.player,
           this.EnemyManager.enemies,
-          this.UtilitiesManager.healthPacks,
+          this.UtilitiesManager.HealthPacks,
           this.UtilitiesManager.shieldPacks,
-          this.shield
+          this.shield,
+          this.SoundManager
         );
       },
       callbackScope: this,
     });
-    this.ButtonManager = new ButtonManager(this);
 
     this.projectileManager = new ProjectileManager(this);
     this.projectileManager.createPlayerBullet();
@@ -254,6 +253,19 @@ class BossScreen extends Phaser.Scene {
     this.checkBossHeal = false;
     this.timeHealth = 1;
 
+    // create pause button
+    this.pic = this.add.image(config.width - 20, 30, "pause");
+    this.pic.setInteractive();
+
+    this.pic.on(
+      "pointerdown",
+      function () {
+        this.scene.pause();
+        this.scene.launch("pauseScreen", { key: "bossGame" });
+      },
+      this
+    );
+
     this.musicButton = this.add.image(config.width - 60, 30, "sound_texture");
     this.musicButton.setInteractive();
 
@@ -262,6 +274,7 @@ class BossScreen extends Phaser.Scene {
       function () {
         this.music.soundOn = !this.music.soundOn;
         this.music.musicOn = !this.music.musicOn;
+
         this.updateAudio();
       },
       this
@@ -269,6 +282,12 @@ class BossScreen extends Phaser.Scene {
   }
 
   update() {
+    // update for mute and sound button
+    if (this.music.musicOn === false && this.music.soundOn === false) {
+      this.musicButton = this.add.image(config.width - 60, 30, "mute_texture");
+    } else if (this.music.musicOn === true && this.music.soundOn === true) {
+      this.musicButton = this.add.image(config.width - 60, 30, "sound_texture");
+    }
     // Pause the game
     this.keyboardManager.pauseGame();
 
@@ -322,12 +341,12 @@ class BossScreen extends Phaser.Scene {
   updateAudio() {
     if (this.music.musicOn === false && this.music.soundOn === false) {
       this.musicButton.setTexture("mute_texture");
-      this.sys.game.globals.bgMusic.stop();
+      this.sys.game.globals.bgMusic.pause();
       this.music.bgMusicPlaying = false;
     } else if (this.music.musicOn === true && this.music.soundOn === true) {
       this.musicButton.setTexture("sound_texture");
       if (this.music.bgMusicPlaying === false) {
-        this.sys.game.globals.bgMusic.play();
+        this.sys.game.globals.bgMusic.resume();
         this.music.bgMusicPlaying = true;
       }
     }

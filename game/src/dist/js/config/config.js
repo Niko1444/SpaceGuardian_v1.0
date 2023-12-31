@@ -11,6 +11,7 @@ import LevelThreeScreen from "../scenes/LevelThreeScreen.js";
 import Leaderboard from "../scenes/Leaderboard.js";
 import BossScreen from "../scenes/BossScreen.js";
 import CreditsScene from "../scenes/CreditScreen.js";
+import VictoryScreen from "../scenes/VictoryScreen.js";
 
 const gameWidth = 600;
 const gameHeight = 950;
@@ -42,6 +43,7 @@ const config = {
     GameOver,
     CreditsScene,
     Leaderboard,
+    VictoryScreen,
   ],
   pixelArt: true,
   physics: {

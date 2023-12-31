@@ -3,8 +3,10 @@ import config from "../config/config";
 import gameSettings from "../config/gameSettings";
 
 class KeyboardManager {
-  constructor(scene) {
+  constructor(scene, music) {
     this.scene = scene;
+    this.music = music;
+
 
     // Create A,W,S,D key
     this.cursorKeys = scene.input.keyboard.createCursorKeys();
@@ -16,8 +18,25 @@ class KeyboardManager {
       T: Phaser.Input.Keyboard.KeyCodes.T,
       R: Phaser.Input.Keyboard.KeyCodes.R,
       L: Phaser.Input.Keyboard.KeyCodes.L,
+      M: Phaser.Input.Keyboard.KeyCodes.M,
       // Add more keys as needed
     });
+  }
+
+  MuteGame(){
+    this.keys.M.on("down", () => {
+      this.scene.music.soundOn = !this.scene.music.soundOn;
+      this.scene.music.musicOn = !this.scene.music.musicOn;
+      if (this.scene.music.musicOn === false && this.scene.music.soundOn === false) {
+        this.scene.sys.game.globals.bgMusic.pause();
+        this.scene.music.bgMusicPlaying = false;
+      } else if (this.scene.music.musicOn === true && this.scene.music.soundOn === true){
+        if (this.music.bgMusicPlaying === false) {
+          this.scene.sys.game.globals.bgMusic.resume();
+          this.scene.music.bgMusicPlaying = true;
+      }
+    }
+    },this);
   }
 
   pauseGame() {
@@ -51,6 +70,7 @@ class KeyboardManager {
       this.scene.scene.stop(this.scene.callingScene);
       this.scene.scene.stop("pauseScreen");
       gameSettings.playerScore = 0;
+      this.scene.sys.game.globals.bgMusic.stop();
     });
   }
 

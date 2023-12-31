@@ -10,7 +10,6 @@ import Bug3 from "../objects/enemies/Bug3";
 import Bug5 from "../objects/enemies/Bug5";
 import GuiManager from "../manager/GuiManager.js";
 import UtilitiesManager from "../manager/UtilitiesManager";
-import ButtonManager from "../manager/ButtonManager.js";
 import ProjectileManager from "../manager/ProjectileManager";
 import UpgradeManager from "../manager/UpgradeManager.js";
 import SoundManager from "../manager/SoundManager.js";
@@ -20,7 +19,6 @@ class LevelThreeScreen extends Phaser.Scene {
   constructor() {
     super("playLevelThree");
     this.callingScene = "playLevelThree";
-    this.ButtonManager = null;
   }
 
   init(data) {
@@ -46,14 +44,6 @@ class LevelThreeScreen extends Phaser.Scene {
     this.guiManager.createBackground("background_texture_02");
 
     this.music = this.sys.game.globals.music;
-    if (this.music.musicOn === true) {
-      this.sys.game.globals.bgMusic.stop();
-      this.bgMusic = this.sound.add("desertMusic", { volume: 0.6, loop: true });
-      this.bgMusic.play();
-      this.music.bgMusicPlaying = true;
-      this.sys.game.globals.bgMusic = this.bgMusic;
-      this.sys.game.globals.bgMusic.play();
-    }
 
     if (
       !(this.anims && this.anims.exists && this.anims.exists("player_anim"))
@@ -208,8 +198,9 @@ class LevelThreeScreen extends Phaser.Scene {
     this.shield.play("shield_anim");
 
     // Create managers
-    this.keyboardManager = new KeyboardManager(this);
-
+    this.keyboardManager = new KeyboardManager(this, this.music);
+    this.keyboardManager.MuteGame();
+    
     this.PlayerManager = new PlayerManager(
       this,
       this.player,
@@ -276,12 +267,12 @@ class LevelThreeScreen extends Phaser.Scene {
           this.EnemyManager.enemies,
           this.UtilitiesManager.HealthPacks,
           this.UtilitiesManager.shieldPacks,
-          this.shield
+          this.shield,
+          this.SoundManager
         );
       },
       callbackScope: this,
     });
-    this.ButtonManager = new ButtonManager(this);
 
     this.projectileManager = new ProjectileManager(this);
     this.projectileManager.createPlayerBullet();
@@ -317,6 +308,19 @@ class LevelThreeScreen extends Phaser.Scene {
 
     this.input.keyboard.on("keydown-ENTER", this.goToNextLevel, this);
 
+    // create pause button
+    this.pic = this.add.image(config.width - 20, 30, "pause");
+    this.pic.setInteractive();
+
+    this.pic.on(
+      "pointerdown",
+      function () {
+        this.scene.pause();
+        this.scene.launch("pauseScreen", { key: "playLevelThree" });
+      },
+      this
+    );
+
     this.musicButton = this.add.image(config.width - 60, 30, "sound_texture");
     this.musicButton.setInteractive();
 
@@ -336,6 +340,12 @@ class LevelThreeScreen extends Phaser.Scene {
   }
 
   update() {
+    // update for mute and sound button
+    if (this.music.musicOn === false && this.music.soundOn === false) {
+      this.musicButton = this.add.image(config.width - 60, 30, "mute_texture");
+    } else if (this.music.musicOn === true && this.music.soundOn === true) {
+      this.musicButton = this.add.image(config.width - 60, 30, "sound_texture");
+    }
     // Pause the game
     this.keyboardManager.pauseGame();
 
@@ -381,16 +391,17 @@ class LevelThreeScreen extends Phaser.Scene {
 
   updateAudio() {
     if (this.music.musicOn === false && this.music.soundOn === false) {
-      this.musicButton.setTexture("mute_texture");
-      this.sys.game.globals.bgMusic.stop();
+      this.musicButton.setTexture('mute_texture');
+      this.sys.game.globals.bgMusic.pause();
       this.music.bgMusicPlaying = false;
-    } else if (this.music.musicOn === true && this.music.soundOn === true) {
-      this.musicButton.setTexture("sound_texture");
+    } else if(this.music.musicOn === true && this.music.soundOn === true) {
+      this.musicButton.setTexture('sound_texture');
       if (this.music.bgMusicPlaying === false) {
-        this.sys.game.globals.bgMusic.play();
+        this.sys.game.globals.bgMusic.resume();
         this.music.bgMusicPlaying = true;
       }
     }
+  
   }
 
   shutdownPlayer() {
