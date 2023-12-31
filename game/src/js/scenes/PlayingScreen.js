@@ -119,7 +119,6 @@ class PlayingScreen extends Phaser.Scene {
     this.guiManager.createBackground("background_texture_01");
     // Add sound for playing screen
     this.music = this.sys.game.globals.music;
-    
 
     this.player = new Player(
       this,
@@ -238,8 +237,25 @@ class PlayingScreen extends Phaser.Scene {
     this.time.addEvent({
       delay: 30000,
       callback: () => {
-        this.UtilitiesManager.addUtilitiesForPlayingScreen(0, 1);
+        this.UtilitiesManager.addUtilitiesForPlayingScreen(0, 2);
         this.CollideManager1 = new CollideManager(
+          this,
+          this.player,
+          this.EnemyManager.enemies,
+          this.UtilitiesManager.HealthPacks,
+          this.UtilitiesManager.shieldPacks,
+          this.shield,
+          this.SoundManager
+        );
+      },
+      callbackScope: this,
+    });
+
+    this.time.addEvent({
+      delay: 40000,
+      callback: () => {
+        this.UtilitiesManager.addUtilitiesForPlayingScreen(1, 0);
+        this.CollideManager3 = new CollideManager(
           this,
           this.player,
           this.EnemyManager.enemies,
@@ -382,17 +398,16 @@ class PlayingScreen extends Phaser.Scene {
 
   updateAudio() {
     if (this.music.musicOn === false && this.music.soundOn === false) {
-      this.musicButton.setTexture('mute_texture');
+      this.musicButton.setTexture("mute_texture");
       this.sys.game.globals.bgMusic.pause();
       this.music.bgMusicPlaying = false;
-    } else if(this.music.musicOn === true && this.music.soundOn === true) {
-      this.musicButton.setTexture('sound_texture');
+    } else if (this.music.musicOn === true && this.music.soundOn === true) {
+      this.musicButton.setTexture("sound_texture");
       if (this.music.bgMusicPlaying === false) {
         this.sys.game.globals.bgMusic.resume();
         this.music.bgMusicPlaying = true;
       }
     }
-  
   }
 
   shutdownPlayer() {

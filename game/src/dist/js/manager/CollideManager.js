@@ -118,14 +118,14 @@ class CollideManager {
 
   playerCollideHealthPack(player, healthPack) {
     this.soundManager.playHealthSound();
-    const healthAmount = 500; // Set the amount of health to increase
+    const healthAmount = 400;
     player.getHeal(healthAmount);
     healthPack.destroy();
   }
 
   playerCollideShieldPack(player, shieldPack) {
     this.soundManager.playShieldSound();
-    shieldPack.destroy(); // Destroy the shield pack after collision
+    shieldPack.destroy();
     this.shield.show();
     this.shieldActive = true;
   }

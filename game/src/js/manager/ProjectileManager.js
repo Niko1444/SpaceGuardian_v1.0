@@ -44,7 +44,7 @@ class ProjectileManager {
     this.scene.time.addEvent({
       delay: 500, // 1000 milliseconds = 1 second
       callback: () => {
-        this.scene.bug3_1.shootBullet(this.scene, this.scene.bug3_1);
+        this.scene.miniBoss.shootBullet(this.scene, this.scene.miniBoss);
         this.scene.bug3_2.shootBullet(this.scene, this.scene.bug3_2);
         this.scene.bug3_3.shootBullet(this.scene, this.scene.bug3_3);
         this.scene.bug3_4.shootBullet(this.scene, this.scene.bug3_4);
@@ -63,8 +63,6 @@ class ProjectileManager {
       loop: true, // This makes the event repeat indefinitely
     });
   }
-
-
 
   callEnemyBulletBoss() {
     this.scene.time.addEvent({

@@ -345,7 +345,6 @@ class LoadingScreen extends Phaser.Scene {
     // this.load.audio("riverMusic", "assets/audio/river.mp3");
     // this.load.audio("warzoneMusic", "assets/audio/warzone.mp3");
     // this.load.audio("desertMusic", "assets/audio/playingMusic.mp3");
-
   }
 
   create() {
@@ -671,7 +670,7 @@ class LoadingScreen extends Phaser.Scene {
 
     this.time.delayedCall(1000, () => {
       let value = this.selectedPlayerIndex;
-      this.scene.start("playGame", { number: value });
+      this.scene.start("playTutorial", { number: value });
     });
   }
 }

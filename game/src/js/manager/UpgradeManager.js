@@ -25,8 +25,8 @@ class UpgradeManager {
 
     this.displayScore();
 
-    if (gameSettings.playerScore % 500 == 0 && this.scene.player.health != 0) {
-      this.rewardEach500Score(this.callingScene);
+    if (gameSettings.playerScore % 1000 == 0 && this.scene.player.health != 0) {
+      this.rewardEach1000Score(this.callingScene);
     }
   }
 
@@ -35,7 +35,7 @@ class UpgradeManager {
     this.scoreText.setDepth(3);
   }
 
-  rewardEach500Score(callingScene) {
+  rewardEach1000Score(callingScene) {
     // Pause the current scene
     this.scene.scene.pause();
     // Launch upgradeScreen and pass the sceneName as part of the data

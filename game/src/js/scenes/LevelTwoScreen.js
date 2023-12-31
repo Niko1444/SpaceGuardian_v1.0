@@ -112,7 +112,7 @@ class LevelTwoScreen extends Phaser.Scene {
     this.guiManager.createBackground("background_texture");
 
     this.music = this.sys.game.globals.music;
-  
+
     this.player = new Player(
       this,
       config.width / 2,
@@ -127,13 +127,13 @@ class LevelTwoScreen extends Phaser.Scene {
       13000,
       () => {
         // chasing enemies
-        this.bug5_1 = new Bug5(this, 30, -20, 200);
-        this.bug5_2 = new Bug5(this, 120, -20, 200);
-        this.bug5_3 = new Bug5(this, 210, -20, 200);
-        this.bug5_4 = new Bug5(this, 300, -20, 200);
-        this.bug5_5 = new Bug5(this, 390, -20, 200);
-        this.bug5_6 = new Bug5(this, 480, -20, 200);
-        this.bug5_7 = new Bug5(this, 570, -20, 200);
+        this.bug5_1 = new Bug5(this, 30, -20, 1000);
+        this.bug5_2 = new Bug5(this, 120, -20, 1000);
+        this.bug5_3 = new Bug5(this, 210, -20, 1000);
+        this.bug5_4 = new Bug5(this, 300, -20, 1000);
+        this.bug5_5 = new Bug5(this, 390, -20, 1000);
+        this.bug5_6 = new Bug5(this, 480, -20, 1000);
+        this.bug5_7 = new Bug5(this, 570, -20, 1000);
         this.bug5_1.play("bug5_anim");
         this.bug5_2.play("bug5_anim");
         this.bug5_3.play("bug5_anim");
@@ -166,19 +166,19 @@ class LevelTwoScreen extends Phaser.Scene {
     this.EnemyManager = new EnemyManager(this);
     this.time.delayedCall(
       3000,
-      () => this.EnemyManager.spawnEnemyRowWithDelay(this, 0),
+      () => this.EnemyManager.spawnEnemyRowWithDelay(this, 0, 800),
       null,
       this
     );
     this.time.delayedCall(
       5000,
-      () => this.EnemyManager.spawnEnemyRowWithDelay(this, 0),
+      () => this.EnemyManager.spawnEnemyRowWithDelay(this, 0, 800),
       null,
       this
     );
     this.time.delayedCall(
       7000,
-      () => this.EnemyManager.spawnEnemyRowWithDelay(this, 0),
+      () => this.EnemyManager.spawnEnemyRowWithDelay(this, 0, 800),
       null,
       this
     );
@@ -221,9 +221,9 @@ class LevelTwoScreen extends Phaser.Scene {
     this.SoundManager = new SoundManager(this);
     // Add a delayed event to spawn utilities after a delay
     this.time.addEvent({
-      delay: 5000,
+      delay: 15000,
       callback: () => {
-        this.UtilitiesManager.addUtilitiesForPlayingScreen(3, 4);
+        this.UtilitiesManager.addUtilitiesForPlayingScreen(2, 2);
         this.CollideManager1 = new CollideManager(
           this,
           this.player,
@@ -232,7 +232,6 @@ class LevelTwoScreen extends Phaser.Scene {
           this.UtilitiesManager.shieldPacks,
           this.shield,
           this.SoundManager
-
         );
       },
       callbackScope: this,
@@ -269,7 +268,7 @@ class LevelTwoScreen extends Phaser.Scene {
     );
 
     this.time.delayedCall(
-      46000,
+      52000,
       () => {
         this.goToNextLevel();
       },
@@ -348,7 +347,7 @@ class LevelTwoScreen extends Phaser.Scene {
     this.time.addEvent({
       delay: 25000,
       callback: () => {
-        this.bug3_1.rotateToPlayer(this.player);
+        this.miniBoss.rotateToPlayer(this.player);
         this.bug3_2.rotateToPlayer(this.player);
         this.bug3_3.rotateToPlayer(this.player);
         this.bug3_4.rotateToPlayer(this.player);
@@ -373,17 +372,16 @@ class LevelTwoScreen extends Phaser.Scene {
 
   updateAudio() {
     if (this.music.musicOn === false && this.music.soundOn === false) {
-      this.musicButton.setTexture('mute_texture');
+      this.musicButton.setTexture("mute_texture");
       this.sys.game.globals.bgMusic.pause();
       this.music.bgMusicPlaying = false;
-    } else if(this.music.musicOn === true && this.music.soundOn === true) {
-      this.musicButton.setTexture('sound_texture');
+    } else if (this.music.musicOn === true && this.music.soundOn === true) {
+      this.musicButton.setTexture("sound_texture");
       if (this.music.bgMusicPlaying === false) {
         this.sys.game.globals.bgMusic.resume();
         this.music.bgMusicPlaying = true;
       }
     }
-  
   }
 
   shutdownPlayer() {
@@ -498,8 +496,8 @@ class LevelTwoScreen extends Phaser.Scene {
 
         // Spawn a wave of bugs after the "Final Wave" message disappears
         // shoot straight bullet
-        this.bug3_1 = new Bug3(this, config.width / 2, -20, 3000, 3);
-        this.EnemyManager.addEnemyForOnce(this.bug3_1);
+        this.miniBoss = new Bug3(this, config.width / 2, -20, 6000, 3);
+        this.EnemyManager.addEnemyForOnce(this.miniBoss);
 
         const angles = [0, Math.PI / 2, Math.PI, (3 * Math.PI) / 2];
 
@@ -507,22 +505,24 @@ class LevelTwoScreen extends Phaser.Scene {
           this,
           config.width / 2 + 200 * Math.cos(angles[0]),
           -20 + 200 * Math.sin(angles[0]),
-          400,
-          1
+          3000,
+          1.5
         );
+
         this.bug3_3 = new Bug3(
           this,
           config.width / 2 + 200 * Math.cos(angles[1]),
           -20 + 200 * Math.sin(angles[1]),
-          400,
-          1
+          3000,
+          1.5
         );
+
         this.bug3_4 = new Bug3(
           this,
           config.width / 2 + 200 * Math.cos(angles[2]),
           -20 + 200 * Math.sin(angles[2]),
-          400,
-          1
+          3000,
+          1.5
         );
 
         this.EnemyManager.addEnemyForOnce(this.bug3_2);

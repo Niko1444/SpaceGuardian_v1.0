@@ -128,13 +128,13 @@ class LevelThreeScreen extends Phaser.Scene {
       18000,
       () => {
         // chasing enemies
-        this.bug5_1 = new Bug5(this, 30, -20, 600);
-        this.bug5_2 = new Bug5(this, 120, -20, 600);
-        this.bug5_3 = new Bug5(this, 210, -20, 600);
-        this.bug5_4 = new Bug5(this, 300, -20, 600);
-        this.bug5_5 = new Bug5(this, 390, -20, 600);
-        this.bug5_6 = new Bug5(this, 480, -20, 600);
-        this.bug5_7 = new Bug5(this, 570, -20, 600);
+        this.bug5_1 = new Bug5(this, 30, -20, 900);
+        this.bug5_2 = new Bug5(this, 120, -20, 900);
+        this.bug5_3 = new Bug5(this, 210, -20, 900);
+        this.bug5_4 = new Bug5(this, 300, -20, 900);
+        this.bug5_5 = new Bug5(this, 390, -20, 900);
+        this.bug5_6 = new Bug5(this, 480, -20, 900);
+        this.bug5_7 = new Bug5(this, 570, -20, 900);
       },
       null,
       this
@@ -200,7 +200,7 @@ class LevelThreeScreen extends Phaser.Scene {
     // Create managers
     this.keyboardManager = new KeyboardManager(this, this.music);
     this.keyboardManager.MuteGame();
-    
+
     this.PlayerManager = new PlayerManager(
       this,
       this.player,
@@ -260,7 +260,7 @@ class LevelThreeScreen extends Phaser.Scene {
     this.time.addEvent({
       delay: 5000,
       callback: () => {
-        this.UtilitiesManager.addUtilitiesForPlayingScreen(3, 4);
+        this.UtilitiesManager.addUtilitiesForPlayingScreen(6, 6);
         this.CollideManager1 = new CollideManager(
           this,
           this.player,
@@ -377,13 +377,13 @@ class LevelThreeScreen extends Phaser.Scene {
     this.time.addEvent({
       delay: 18000,
       callback: () => {
-        this.bug5_1.chasePlayer(this.player, 200);
-        this.bug5_2.chasePlayer(this.player, 240);
-        this.bug5_3.chasePlayer(this.player, 280);
-        this.bug5_4.chasePlayer(this.player, 300);
-        this.bug5_5.chasePlayer(this.player, 320);
-        this.bug5_6.chasePlayer(this.player, 350);
-        this.bug5_7.chasePlayer(this.player, 400);
+        this.bug5_1.chasePlayer(this.player, 600);
+        this.bug5_2.chasePlayer(this.player, 600);
+        this.bug5_3.chasePlayer(this.player, 600);
+        this.bug5_4.chasePlayer(this.player, 600);
+        this.bug5_5.chasePlayer(this.player, 600);
+        this.bug5_6.chasePlayer(this.player, 600);
+        this.bug5_7.chasePlayer(this.player, 600);
       },
       callbackScope: this,
     });
@@ -391,17 +391,16 @@ class LevelThreeScreen extends Phaser.Scene {
 
   updateAudio() {
     if (this.music.musicOn === false && this.music.soundOn === false) {
-      this.musicButton.setTexture('mute_texture');
+      this.musicButton.setTexture("mute_texture");
       this.sys.game.globals.bgMusic.pause();
       this.music.bgMusicPlaying = false;
-    } else if(this.music.musicOn === true && this.music.soundOn === true) {
-      this.musicButton.setTexture('sound_texture');
+    } else if (this.music.musicOn === true && this.music.soundOn === true) {
+      this.musicButton.setTexture("sound_texture");
       if (this.music.bgMusicPlaying === false) {
         this.sys.game.globals.bgMusic.resume();
         this.music.bgMusicPlaying = true;
       }
     }
-  
   }
 
   shutdownPlayer() {
