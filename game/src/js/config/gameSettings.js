@@ -9,6 +9,16 @@ var gameSettings = {
   playerDefaultBulletSize: 1.2,
   playerBulletSize: 1.2,
 
+  savePlayerSpeed: 250,
+  savePlayerBulletDamage: 100,
+  savePlayerLifesteal: 0,
+  savePlayerBulletSpeed: 400,
+  savePlayerScore: 0,
+  savePlayerNumberOfBullets: 1,
+  savePlayerFireRate: 700,
+  savePlayerDefaultBulletSize: 1.2,
+  savePlayerBulletSize: 1.2,
+
   enemySpeed: 200,
   bulletSpeed: 400,
   healthPackSpeed: 100,
