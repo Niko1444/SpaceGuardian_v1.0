@@ -127,13 +127,13 @@ class LevelTwoScreen extends Phaser.Scene {
       13000,
       () => {
         // chasing enemies
-        this.bug5_1 = new Bug5(this, 30, -20, 1000);
-        this.bug5_2 = new Bug5(this, 120, -20, 1000);
-        this.bug5_3 = new Bug5(this, 210, -20, 1000);
-        this.bug5_4 = new Bug5(this, 300, -20, 1000);
-        this.bug5_5 = new Bug5(this, 390, -20, 1000);
-        this.bug5_6 = new Bug5(this, 480, -20, 1000);
-        this.bug5_7 = new Bug5(this, 570, -20, 1000);
+        this.bug5_1 = new Bug5(this, 30, -20, 500);
+        this.bug5_2 = new Bug5(this, 120, -20, 500);
+        this.bug5_3 = new Bug5(this, 210, -20, 500);
+        this.bug5_4 = new Bug5(this, 300, -20, 500);
+        this.bug5_5 = new Bug5(this, 390, -20, 500);
+        this.bug5_6 = new Bug5(this, 480, -20, 500);
+        this.bug5_7 = new Bug5(this, 570, -20, 500);
         this.bug5_1.play("bug5_anim");
         this.bug5_2.play("bug5_anim");
         this.bug5_3.play("bug5_anim");
