@@ -123,11 +123,11 @@ class BossScreen extends Phaser.Scene {
     });
     // }
 
-    this.boss = new Boss(this, config.width / 2, 0, 100000);
+    this.boss = new Boss(this, config.width / 2, 0, 2000);
     this.boss.play("boss_move_anim");
 
-    this.firstMini = new MiniBot(this, config.width / 5, -96, 10000);
-    this.secondMini = new MiniBot(this, (config.width * 4) / 5, -96, 10000);
+    this.firstMini = new MiniBot(this, config.width / 5, -96, 100);
+    this.secondMini = new MiniBot(this, (config.width * 4) / 5, -96, 100);
 
     this.player = new Player(
       this,
@@ -137,6 +137,7 @@ class BossScreen extends Phaser.Scene {
       10000
     );
     this.player.play("player_anim");
+    this.player.restartGameSettings();
 
     // Spawn the Enemies
     this.bug3_1 = new Bug3(this, 50, 0, 30);
@@ -321,7 +322,9 @@ class BossScreen extends Phaser.Scene {
     if (this.boss.health <= 0) {
       // Destroy all spawned enemies
       this.EnemyManager.enemies.forEach((enemy) => {
-        enemy.takeDamage(100000);
+        if(enemy.health > 0){
+          enemy.takeDamage(100000);
+        }
       });
 
       this.time.delayedCall(
@@ -375,8 +378,7 @@ class BossScreen extends Phaser.Scene {
 
     if (
       (this.boss.health < this.boss.maxHealth * 0.55 &&
-        this.boss.health > this.boss.maxHealth * 0.35) ||
-      this.checkBossHeal === true
+        this.boss.health >= this.boss.maxHealth * 0.35)
     ) {
       this.boss.bossBound();
       if (this.timeHealth === 0) {
@@ -385,8 +387,7 @@ class BossScreen extends Phaser.Scene {
     }
 
     if (
-      this.boss.health < this.boss.maxHealth * 0.35 ||
-      this.checkBossHeal === true
+      this.boss.health < this.boss.maxHealth * 0.35 
     ) {
       this.boss.moveToCenter();
       this.callMini();
