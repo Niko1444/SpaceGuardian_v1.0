@@ -22,17 +22,25 @@ class Entity extends Phaser.GameObjects.Sprite {
   }
 
   updateHealthBarPosition() {
+    this.hpBar.x = this.x - this.hpBarWidth / 2;
     if (this.hpBarWidth < 30) {
-      this.hpBar.x = this.x - this.hpBarWidth / 2;
       this.hpBar.y = this.y + 30;
     } else {
-      this.hpBar.x = this.x - this.hpBarWidth / 2;
       this.hpBar.y = this.y + 120;
+    }
+
+    if( this.y >= config.height + 199 || this.y < -199){
+      this.hpBar.destroy();
     }
   }
 
   updateHealthBarValue(health, maxHealth) {
-    this.hpBar.setValue(this.health, this.maxHealth);
+    if(this.health <0){
+      this.hpBar.destroy();
+    }
+    else{
+      this.hpBar.setValue(this.health, this.maxHealth);
+    }
   }
 
   explode(canDestroy) {
@@ -109,6 +117,8 @@ class Entity extends Phaser.GameObjects.Sprite {
       }
     }
   }
+
+
 }
 
 export default Entity;
