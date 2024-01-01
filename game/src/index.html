@@ -19,11 +19,11 @@
     <input type="text" id="playerNameInput" class="delayed-enable" placeholder="Your name soldier.">
 
     <script>
+        // Delay transition for the input field
         document.addEventListener('DOMContentLoaded', () => {
-            // Add a class to enable the transition after a delay
             setTimeout(() => {
                 document.getElementById('playerNameInput').classList.remove('delayed-enable');
-            }, 2000); // Adjust the delay duration as needed
+            }, 2000);
         });
     </script>
 </body>

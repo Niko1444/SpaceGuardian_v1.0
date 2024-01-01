@@ -13,6 +13,7 @@ import UtilitiesManager from "../manager/UtilitiesManager";
 import ProjectileManager from "../manager/ProjectileManager";
 import UpgradeManager from "../manager/UpgradeManager.js";
 import SoundManager from "../manager/SoundManager.js";
+import MobileManager from "../manager/MobileManager";
 
 const BACKGROUND_SCROLL_SPEED = 0.5;
 class LevelThreeScreen extends Phaser.Scene {
@@ -201,6 +202,7 @@ class LevelThreeScreen extends Phaser.Scene {
 
     // Create managers
     this.keyboardManager = new KeyboardManager(this, this.music);
+    this.mobileManager = new MobileManager(this);
     this.keyboardManager.MuteGame();
 
     this.PlayerManager = new PlayerManager(
@@ -496,10 +498,13 @@ class LevelThreeScreen extends Phaser.Scene {
     this.time.delayedCall(1000, () => {
       this.cameras.main.fadeOut(1000, 0, 0, 0);
 
-      this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, (cam, effect) => {
-        this.scene.stop();
-        this.scene.start("bossGame", { number: this.selectedPlayerIndex });
-      })
+      this.cameras.main.once(
+        Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE,
+        (cam, effect) => {
+          this.scene.stop();
+          this.scene.start("bossGame", { number: this.selectedPlayerIndex });
+        }
+      );
     });
 
     this.input.keyboard.off("keydown-ENTER", this.handleEnterKey, this);

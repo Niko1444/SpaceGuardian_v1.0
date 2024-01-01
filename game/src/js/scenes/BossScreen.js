@@ -15,6 +15,7 @@ import UpgradeManager from "../manager/UpgradeManager.js";
 import Boss from "../objects/enemies/Boss.js";
 import MiniBot from "../objects/enemies/Minibot.js";
 import SoundManager from "../manager/SoundManager.js";
+import MobileManager from "../manager/MobileManager.js";
 
 const BACKGROUND_SCROLL_SPEED = 0.5;
 class BossScreen extends Phaser.Scene {
@@ -156,6 +157,7 @@ class BossScreen extends Phaser.Scene {
 
     // Create managers
     this.keyboardManager = new KeyboardManager(this, this.music);
+    this.mobileManager = new MobileManager(this);
     this.keyboardManager.MuteGame();
     // Score System
     this.UpgradeManager = new UpgradeManager(this, this.callingScene);
@@ -322,7 +324,7 @@ class BossScreen extends Phaser.Scene {
     if (this.boss.health <= 0) {
       // Destroy all spawned enemies
       this.EnemyManager.enemies.forEach((enemy) => {
-        if(enemy.health > 0){
+        if (enemy.health > 0) {
           enemy.takeDamage(100000);
         }
       });
@@ -377,8 +379,8 @@ class BossScreen extends Phaser.Scene {
     }
 
     if (
-      (this.boss.health < this.boss.maxHealth * 0.55 &&
-        this.boss.health >= this.boss.maxHealth * 0.35)
+      this.boss.health < this.boss.maxHealth * 0.55 &&
+      this.boss.health >= this.boss.maxHealth * 0.35
     ) {
       this.boss.bossBound();
       if (this.timeHealth === 0) {
@@ -386,9 +388,7 @@ class BossScreen extends Phaser.Scene {
       }
     }
 
-    if (
-      this.boss.health < this.boss.maxHealth * 0.35 
-    ) {
+    if (this.boss.health < this.boss.maxHealth * 0.35) {
       this.boss.moveToCenter();
       this.callMini();
     }

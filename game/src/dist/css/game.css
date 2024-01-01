@@ -25,9 +25,17 @@ body {
   box-shadow: none;
   outline: none;
   border-radius: 5px;
+
+  /* Initial styles for transition */
+  opacity: 1;
+  transition: opacity 1s ease-in-out;
 }
 
 #playerNameInput:focus {
   outline: none;
   box-shadow: none;
+}
+
+#playerNameInput.delayed-enable {
+  opacity: 0;
 }

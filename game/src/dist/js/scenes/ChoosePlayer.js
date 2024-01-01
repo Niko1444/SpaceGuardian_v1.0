@@ -29,6 +29,8 @@ class ChoosePlayer extends Phaser.Scene {
   }
 
   create() {
+    this.cameras.main.fadeIn(1500);
+
     this.background = this.add.tileSprite(
       0,
       0,
