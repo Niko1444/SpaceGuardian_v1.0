@@ -39,6 +39,7 @@ class LevelThreeScreen extends Phaser.Scene {
   }
 
   create() {
+    this.cameras.main.fadeIn(1000, 0, 0, 0);
     // Creat GUI for PlayingScreen ( Changes in BG except Player and Enemy )
     this.guiManager = new GuiManager(this);
     this.guiManager.createBackground("background_texture_02");
@@ -492,9 +493,13 @@ class LevelThreeScreen extends Phaser.Scene {
   handleEnterKey() {
     this.scene.stop("upgradeScreen");
     this.player.savePlayer();
-
     this.time.delayedCall(1000, () => {
-      this.scene.start("bossGame", { number: this.selectedPlayerIndex });
+      this.cameras.main.fadeOut(1000, 0, 0, 0);
+
+      this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, (cam, effect) => {
+        this.scene.stop();
+        this.scene.start("bossGame", { number: this.selectedPlayerIndex });
+      })
     });
 
     this.input.keyboard.off("keydown-ENTER", this.handleEnterKey, this);

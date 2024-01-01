@@ -26,6 +26,8 @@ class LevelTwoScreen extends Phaser.Scene {
   }
 
   preload() {
+
+
     this.load.spritesheet({
       key: `player_texture_${this.selectedPlayerIndex}`,
       url: `assets/spritesheets/players/planes_0${this.selectedPlayerIndex}A.png`,
@@ -39,6 +41,8 @@ class LevelTwoScreen extends Phaser.Scene {
   }
 
   create() {
+    this.cameras.main.fadeIn(1000, 0, 0, 0);
+
     if (
       !(this.anims && this.anims.exists && this.anims.exists("player_anim"))
     ) {
@@ -107,6 +111,7 @@ class LevelTwoScreen extends Phaser.Scene {
         repeat: -1,
       });
     }
+
     // Creat GUI for PlayingScreen ( Changes in BG except Player and Enemy )
     this.guiManager = new GuiManager(this);
     this.guiManager.createBackground("background_texture");
@@ -311,6 +316,7 @@ class LevelTwoScreen extends Phaser.Scene {
   }
 
   update() {
+
     // update for mute and sound button
     if (this.music.musicOn === false && this.music.soundOn === false) {
       this.musicButton = this.add.image(config.width - 60, 30, "mute_texture");
@@ -473,9 +479,13 @@ class LevelTwoScreen extends Phaser.Scene {
   handleEnterKey() {
     this.scene.stop("upgradeScreen");
     this.player.savePlayer();
-
     this.time.delayedCall(1000, () => {
-      this.scene.start("playLevelThree", { number: this.selectedPlayerIndex });
+      this.cameras.main.fadeOut(1000, 0, 0, 0);
+
+      this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, (cam, effect) => {
+        this.scene.stop();
+        this.scene.start("playLevelThree", { number: this.selectedPlayerIndex });
+      })
     });
 
     this.input.keyboard.off("keydown-ENTER", this.handleEnterKey, this);
