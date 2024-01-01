@@ -96,7 +96,7 @@ class UpgradeScreen extends Phaser.Scene {
   getUpgradeText(upgradeType) {
     switch (upgradeType) {
       case "upgrade1":
-        return "Hard As Rock (+HP 1 Level)";
+        return "Hard As Rock (+MaxHP and HEAL)";
       case "upgrade2":
         return "Wormhole Engine (+Speed)";
       case "upgrade3":
@@ -122,8 +122,10 @@ class UpgradeScreen extends Phaser.Scene {
 
     switch (choice) {
       case "upgrade1":
-        player.maxHealth += 500;
-        player.getHeal(500);
+        GameSettings.playerMaxHealth += 300;
+        player.maxHealth = GameSettings.playerMaxHealth;
+        player.health = GameSettings.playerMaxHealth;
+        player.updateHealthBarValue();
         break;
 
       case "upgrade2":

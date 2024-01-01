@@ -61,6 +61,18 @@ class ChoosePlayer extends Phaser.Scene {
       (config.height * 2) / 4 + 12,
       "under_player_hover"
     );
+
+    // Set up a tween for blinking effect
+    this.tweens.add({
+      targets: this.under_player,
+      alpha: 0.1, // Change the alpha value for blinking effect
+      duration: 500, // Duration of each tween (in milliseconds)
+      ease: "Linear",
+      repeat: -1, // -1 means repeat indefinitely
+      yoyo: true, // Yoyo makes the tween reverse (fade in and out)
+    });
+
+    this.under_player.setVisible(false);
     this.under_player.setOrigin(0.5);
     this.under_player.setScale(2.2);
     this.under_player.setAlpha(0.9);
@@ -78,14 +90,25 @@ class ChoosePlayer extends Phaser.Scene {
         playerImage.setInteractive();
         count = count + 1;
 
-        playerImage.on("pointerover", () => {
-          this.under_player.x = playerImage.x;
-          this.under_player.y = playerImage.y + 12;
-        });
-
         playerImage.on("pointerdown", () => {
-          // Call a function to handle player selection
-          this.enterPlayer();
+          if (!this.playerSelected) {
+            // If a player is not selected yet, update the under_player position
+            this.under_player.x = playerImage.x;
+            this.under_player.y = playerImage.y + 12;
+            this.playerSelected = true;
+            this.selectedPlayerIndex = count;
+            this.under_player.setVisible(true);
+
+            // Delay a bit then start the game
+            this.time.delayedCall(
+              1500,
+              () => {
+                this.enterPlayer();
+              },
+              null,
+              this
+            );
+          }
         });
       }
     }
