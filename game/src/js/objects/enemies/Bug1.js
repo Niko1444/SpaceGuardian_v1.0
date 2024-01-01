@@ -1,6 +1,7 @@
 import Entity from "../Entity";
 import gameSettings from "../../config/gameSettings";
 import HPBar from "../ui/HPBar";
+import config from "../../config/config";
 
 class Bug1 extends Entity {
   constructor(scene, x, y, health, scale = 1) {
@@ -52,8 +53,11 @@ class Bug1 extends Entity {
   explode(canDestroy) {
     super.explode(canDestroy);
     this.scene.player.getHeal(this.scene.player.lifestealRate);
+    // if(this.y < config.height){
     this.scene.UpgradeManager.updateScore(100);
+    // }
   }
+
 }
 
 export default Bug1;

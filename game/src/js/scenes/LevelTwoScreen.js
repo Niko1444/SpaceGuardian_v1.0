@@ -332,10 +332,12 @@ class LevelTwoScreen extends Phaser.Scene {
     // Move the player and enemies
     this.PlayerManager.movePlayer();
 
-    this.EnemyManager.moveEnemies();
+    // this.EnemyManager.moveEnemies(); Dont need at the moment 
     this.EnemyManager.enemies.forEach((enemy) => {
       enemy.updateHealthBarPosition();
     });
+
+    this.EnemyManager.destroyEnemyMoveOutOfScreen();
 
     if (this.spacebar.isDown) {
       this.player.shootBullet(this.selectedPlayerIndex);
