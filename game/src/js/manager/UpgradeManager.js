@@ -25,9 +25,22 @@ class UpgradeManager {
 
     this.displayScore();
 
-    if (gameSettings.playerScore % 1000 == 0 && this.scene.player.health != 0) {
-      this.rewardEach1000Score(this.callingScene);
+    const playerUpgradeThreshold = this.countScoreByThreshhold(
+      gameSettings.playerUpgradeThreshold
+    );
+    console.log(playerUpgradeThreshold);
+
+    if (
+      gameSettings.playerScore ===
+      this.countScoreByThreshhold(gameSettings.playerUpgradeThreshold)
+    ) {
+      this.rewardByScore(this.callingScene);
+      gameSettings.playerUpgradeThreshold += 100;
     }
+  }
+
+  countScoreByThreshhold(threshhold) {
+    return threshhold ** 2 / 200 + threshhold / 2 - 300;
   }
 
   displayScore() {
@@ -35,7 +48,7 @@ class UpgradeManager {
     this.scoreText.setDepth(3);
   }
 
-  rewardEach1000Score(callingScene) {
+  rewardByScore(callingScene) {
     // Pause the current scene
     this.scene.scene.pause();
     // Launch upgradeScreen and pass the sceneName as part of the data
