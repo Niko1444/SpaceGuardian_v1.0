@@ -88,7 +88,13 @@ class TitleScreen extends Phaser.Scene {
 
   create() {
     // Create a black rectangle that covers the whole game
-    let blackCover = this.add.rectangle(0, 0, config.width, config.height, 0x000000);
+    let blackCover = this.add.rectangle(
+      0,
+      0,
+      config.width,
+      config.height,
+      0x000000
+    );
     blackCover.setOrigin(0, 0);
     blackCover.setDepth(100); // Make sure the rectangle is above all other game objects
 
@@ -99,7 +105,7 @@ class TitleScreen extends Phaser.Scene {
       duration: 2500,
       onComplete: function () {
         blackCover.destroy(); // Remove the rectangle from the scene when the tween completes
-      }
+      },
     });
 
     // Create Music
@@ -197,7 +203,7 @@ class TitleScreen extends Phaser.Scene {
     // Event listeners for the play button
     this.button_play.on("pointerdown", () => {
       this.cameras.main.fadeOut(1500, false, () => {
-        this.scene.start('choosePlayer');
+        this.scene.start("choosePlayer");
       });
     });
 
@@ -238,7 +244,7 @@ class TitleScreen extends Phaser.Scene {
     // Event listeners for the tutorial button
     this.button_tutorial.on("pointerdown", () => {
       this.cameras.main.fadeOut(1500, false, () => {
-        this.scene.start('choosePlayer');
+        this.scene.start("choosePlayer");
       });
     });
 
