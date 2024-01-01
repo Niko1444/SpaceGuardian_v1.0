@@ -135,6 +135,11 @@ class Player extends Entity {
     gameSettings.savePlayerDefaultBulletSize =
       gameSettings.playerDefaultBulletSize;
     gameSettings.savePlayerBulletSize = this.bulletSize;
+    gameSettings.savePlayerMaxHealth = gameSettings.playerMaxHealth;
+    gameSettings.savePlayerUpgradeThreshold =
+      gameSettings.playerUpgradeThreshold;
+    gameSettings.savePlayerUpgradeIncrement =
+      gameSettings.playerUpgradeIncrement;
   }
 
   // restartBegin(){

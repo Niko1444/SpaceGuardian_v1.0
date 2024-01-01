@@ -11,6 +11,7 @@ import UtilitiesManager from "../manager/UtilitiesManager";
 import ProjectileManager from "../manager/ProjectileManager";
 import UpgradeManager from "../manager/UpgradeManager";
 import MobileManager from "../manager/MobileManager";
+import gameSettings from "../config/gameSettings.js";
 
 const BACKGROUND_SCROLL_SPEED = 0.5;
 class TutorialScreen extends Phaser.Scene {
@@ -103,7 +104,7 @@ class TutorialScreen extends Phaser.Scene {
       config.width / 2,
       config.height - 100,
       `player_texture_${this.selectedPlayerIndex}`,
-      1000
+      gameSettings.playerMaxHealth
     );
     this.player.play("player_anim");
     this.player.restartToTile();
