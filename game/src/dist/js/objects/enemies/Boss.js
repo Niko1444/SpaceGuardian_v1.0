@@ -8,12 +8,14 @@ import Phaser from "phaser";
 class Boss extends Entity {
   constructor(scene, x, y, health) {
     super(scene, x, y, "boss_texture", health);
-    this.body.velocity.y = 1.5 * gameSettings.enemySpeed;
+    this.body.velocity.y = 2 * gameSettings.enemySpeed;
     this.health = health;
     this.maxHealth = health;
     this.hpBarWidth = 200;
     this.hpBarHeight = 10;
     this.damage = 100;
+    this.shootAngle = 0;
+    this.shootRotation = 0;
     this.setInteractiveEntity();
 
     this.isDestroyed = false;
@@ -30,6 +32,7 @@ class Boss extends Entity {
       this.maxHealth
     );
     this.scene.add.existing(this.hpBar);
+
   }
 
   setVelocityY(velocity) {
@@ -60,6 +63,45 @@ class Boss extends Entity {
     }
   }
 
+  shootBulletCircle(scene, enemy) {
+    if (this.health > 0) {
+      this.shootRotationOne = {
+        x: Math.cos(this.shootAngle),
+        y: Math.sin(this.shootAngle),
+      }
+
+      this.shootRotationTwo = {
+        x: Math.cos(this.shootAngle + Math.PI / 2),
+        y: Math.sin(this.shootAngle + Math.PI / 2),
+      }
+
+      this.shootRotationThree = {
+        x: Math.cos(this.shootAngle + Math.PI),
+        y: Math.sin(this.shootAngle + Math.PI),
+      }
+
+      this.shootRotationFour = {
+        x: Math.cos(this.shootAngle + 3 * Math.PI / 2),
+        y: Math.sin(this.shootAngle + 3 * Math.PI / 2),
+      }
+
+      const bossBulletOne = new EnemyBullet(scene, enemy, 1, 1, this.shootRotationOne, this.shootAngle);
+
+      const bossBulletTwo = new EnemyBullet(scene, enemy, 1, 1, this.shootRotationTwo, this.shootAngle + Math.PI / 2);
+
+      const bossBulletThree = new EnemyBullet(scene, enemy, 1, 1, this.shootRotationThree, this.shootAngle + Math.PI);
+
+      const bossBulletFour = new EnemyBullet(scene, enemy, 1, 1, this.shootRotationFour, this.shootAngle + 3 * Math.PI / 2);
+
+      this.shootAngle += Math.PI / 180;
+
+      if(this.shootAngle === Math.PI){
+        this.shootAngle = 0;
+      }
+    }
+  }
+
+
   moveToCenter() {
     if (this.checkCenter < 150) {
       let direction = new Phaser.Math.Vector2(
@@ -80,7 +122,7 @@ class Boss extends Entity {
       this.body.velocity.y = 0;
       this.body.velocity.x = 0;
       this.checkCenter++;
-      if (this.checkCenter % 60 == 0) {
+      if (this.checkCenter % 45 == 0) {
         this.shootEightWay(this.scene, this);
       }
     }
@@ -89,43 +131,43 @@ class Boss extends Entity {
   bossBound() {
     // If the boss is about to move out o{f the scene bounds, set a new random velocity
     if (
-      this.health < this.maxHealth * 0.5 &&
+      this.health < this.maxHealth * 0.55 &&
       this.health > this.maxHealth * 0.4
     ) {
-      let xVel = 0.75 * gameSettings.enemySpeed;
-      let yVel = 0.75 * gameSettings.enemySpeed;
+      let xVel = gameSettings.enemySpeed;
+      let yVel = gameSettings.enemySpeed;
 
       if (this.body.velocity.x === 0) {
         this.body.velocity.x = xVel;
         this.body.velocity.y = -yVel;
       }
-      if (this.x < 150 && this.body.velocity.x <= 0) {
+      if (this.x < 150 && this.body.velocity.x < 0) {
         this.body.velocity.x = xVel;
       }
-      if (this.x > config.width - 150 && this.body.velocity.x >= 0) {
-        this.body.velocity.x = -gameSettings.enemySpeed;
+      if (this.x > config.width - 150 && this.body.velocity.x > 0) {
+        this.body.velocity.x = -xVel;
       }
-      if (this.y < 150 && this.body.velocity.y <= 0) {
+      if (this.y < 150 && this.body.velocity.y < 0) {
         this.body.velocity.y = yVel;
       }
       if (this.y > config.height - 150 && this.body.velocity.y > 0) {
         this.body.velocity.y = -yVel;
       }
     } else {
-      let xVel = 0.25 * gameSettings.enemySpeed;
-      let yVel = 0.25 * gameSettings.enemySpeed;
+      let xVel = 0.5 * gameSettings.enemySpeed;
+      let yVel = 0.5 * gameSettings.enemySpeed;
       this.checkCenter++;
 
       if (this.body.velocity.x === 0) {
         this.body.velocity.x = xVel;
       }
-      if (this.x < 150 && this.body.velocity.x <= 0) {
+      if (this.x < 150 && this.body.velocity.x < 0) {
         this.body.velocity.x = xVel;
       }
-      if (this.x > config.width - 150 && this.body.velocity.x >= 0) {
+      if (this.x > config.width - 150 && this.body.velocity.x > 0) {
         this.body.velocity.x = -xVel;
       }
-      if (this.y < 150 && this.body.velocity.y <= 0) {
+      if (this.y < 150 && this.body.velocity.y < 0) {
         this.body.velocity.y = yVel;
       }
       if (this.y > config.height - 150 && this.body.velocity.y > 0) {
@@ -133,7 +175,7 @@ class Boss extends Entity {
       }
 
       if (this.health > 0) {
-        if (this.checkCenter % 60 == 0) {
+        if (this.checkCenter % 45 == 0) {
           this.shootEightWay(this.scene, this);
           this.checkCenter = 0;
         }
@@ -174,6 +216,8 @@ class Boss extends Entity {
       }
     }
   }
+
 }
+
 
 export default Boss;

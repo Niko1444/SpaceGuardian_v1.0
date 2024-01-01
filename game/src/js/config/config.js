@@ -46,11 +46,26 @@ const config = {
     VictoryScreen,
   ],
   pixelArt: true,
+  input: {
+    keyboard: true,
+    mouse: true,
+    touch: true,
+    activePointers: 2,
+  },
   physics: {
     default: "arcade",
     arcade: {
       debug: false,
     },
+  },
+  plugins: {
+    scene: [
+      {
+        key: "InputPlugin",
+        plugin: Phaser.Input.InputPlugin,
+        mapping: "input",
+      },
+    ],
   },
 };
 

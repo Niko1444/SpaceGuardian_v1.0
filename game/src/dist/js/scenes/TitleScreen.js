@@ -87,6 +87,27 @@ class TitleScreen extends Phaser.Scene {
   }
 
   create() {
+    // Create a black rectangle that covers the whole game
+    let blackCover = this.add.rectangle(
+      0,
+      0,
+      config.width,
+      config.height,
+      0x000000
+    );
+    blackCover.setOrigin(0, 0);
+    blackCover.setDepth(100); // Make sure the rectangle is above all other game objects
+
+    // Create a tween that fades out the black rectangle over 3 seconds
+    this.tweens.add({
+      targets: blackCover,
+      alpha: 0,
+      duration: 2500,
+      onComplete: function () {
+        blackCover.destroy(); // Remove the rectangle from the scene when the tween completes
+      },
+    });
+
     // Create Music
     this.music = this.sys.game.globals.music;
     // && this.music.bgMusicPlaying === false
@@ -181,7 +202,9 @@ class TitleScreen extends Phaser.Scene {
 
     // Event listeners for the play button
     this.button_play.on("pointerdown", () => {
-      this.scene.start("choosePlayer");
+      this.cameras.main.fadeOut(1500, false, () => {
+        this.scene.start("choosePlayer");
+      });
     });
 
     this.button_play.on("pointerover", () => {
@@ -220,7 +243,9 @@ class TitleScreen extends Phaser.Scene {
 
     // Event listeners for the tutorial button
     this.button_tutorial.on("pointerdown", () => {
-      this.scene.start("choosePlayer");
+      this.cameras.main.fadeOut(1500, false, () => {
+        this.scene.start("choosePlayer");
+      });
     });
 
     this.button_tutorial.on("pointerover", () => {

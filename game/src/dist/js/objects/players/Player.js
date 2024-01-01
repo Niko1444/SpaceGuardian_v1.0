@@ -3,28 +3,29 @@ import Bullet from "../projectiles/Bullet";
 import gameSettings from "../../config/gameSettings";
 import HPBar2 from "../ui/HPBar2";
 import SoundManager from "../../manager/SoundManager";
+
 class Player extends Entity {
   constructor(scene, x, y, key, health) {
     super(scene, x, y, key, health);
-    this.body.velocity.y = gameSettings.playerSpeed;
+    this.body.velocity.y = gameSettings.savePlayerSpeed;
     this.health = health;
     this.maxHealth = health;
     this.damage = 300;
-    this.bulletDamage = gameSettings.playerBulletDamage;
-    this.speed = gameSettings.playerSpeed;
+    this.bulletDamage = gameSettings.savePlayerBulletDamage;
+    this.speed = gameSettings.savePlayerSpeed;
 
     this.shield = null;
     this.setInteractiveEntity();
     this.setPhysics(scene);
     this.body.setSize(48, 48);
     this.body.velocity.y = this.speed;
-    this.bulletSize = gameSettings.playerBulletSize;
+    this.bulletSize = gameSettings.savePlayerBulletSize;
 
-    this.fireRate = gameSettings.playerFireRate; // default 700
+    this.fireRate = gameSettings.savePlayerFireRate; // default 700
     this.lastShootTime = 0;
-    this.lifestealRate = gameSettings.playerLifesteal;
-    this.numberOfBullets = gameSettings.playerNumberOfBullets;
-    this.bulletSpeed = gameSettings.playerBulletSpeed;
+    this.lifestealRate = gameSettings.savePlayerLifesteal;
+    this.numberOfBullets = gameSettings.savePlayerNumberOfBullets;
+    this.bulletSpeed = gameSettings.savePlayerBulletSpeed;
 
     this.SoundManager = new SoundManager(scene);
 
@@ -60,7 +61,8 @@ class Player extends Entity {
   }
 
   setInteractiveEntity() {
-    super.setInteractiveEntity();
+    this.setInteractive({ draggable: true });
+    this.scene.input.setDraggable(this);
   }
 
   shootBullet(number) {
@@ -92,7 +94,7 @@ class Player extends Entity {
       };
 
       const bulletSizeScale =
-        (this.bulletSize / gameSettings.playerDefaultBulletSize) * 0.8;
+        (this.bulletSize / gameSettings.savePlayerDefaultBulletSize) * 0.8;
 
       for (let i = 0; i < totalBullets; i++) {
         const offsetX = (patternsX[totalBullets][i] || 0) * bulletSizeScale;
@@ -120,6 +122,56 @@ class Player extends Entity {
       this.health += heal;
     }
     this.updateHealthBarValue();
+  }
+
+  savePlayer() {
+    gameSettings.savePlayerSpeed = this.speed;
+    gameSettings.savePlayerBulletDamage = this.bulletDamage;
+    gameSettings.savePlayerLifesteal = this.lifestealRate;
+    gameSettings.savePlayerBulletSpeed = this.bulletSpeed;
+    gameSettings.savePlayerScore = gameSettings.playerScore;
+    gameSettings.savePlayerNumberOfBullets = this.numberOfBullets;
+    gameSettings.savePlayerFireRate = this.fireRate;
+    gameSettings.savePlayerDefaultBulletSize =
+      gameSettings.playerDefaultBulletSize;
+    gameSettings.savePlayerBulletSize = this.bulletSize;
+  }
+
+  // restartBegin(){
+  //   this.speed = gameSettings.savePlayerSpeed ;
+  //   this.bulletDamage = gameSettings.savePlayerBulletDamage;
+  //   this.lifestealRate = gameSettings.savePlayerLifesteal;
+  //   this.bulletSpeed = gameSettings.savePlayerBulletSpeed;
+  //   gameSettings.playerScore = gameSettings.savePlayerScore;
+  //   this.numberOfBullets = gameSettings.savePlayerNumberOfBullets;
+  //   this.fireRate = gameSettings.savePlayerFireRate;
+  //   this.bulletSize = gameSettings.savePlayerDefaultBulletSize;
+  // }
+
+  restartToTile() {
+    gameSettings.savePlayerSpeed = 250;
+    gameSettings.savePlayerBulletDamage = 100;
+    gameSettings.savePlayerLifesteal = 0;
+    gameSettings.savePlayerBulletSpeed = 400;
+    gameSettings.savePlayerScore = 0;
+    gameSettings.savePlayerNumberOfBullets = 1;
+    gameSettings.savePlayerFireRate = 700;
+    gameSettings.savePlayerDefaultBulletSize = 1.2;
+    gameSettings.savePlayerBulletSize = 1.2;
+    this.restartGameSettings();
+  }
+
+  restartGameSettings() {
+    gameSettings.playerSpeed = gameSettings.savePlayerSpeed;
+    gameSettings.playerBulletDamage = gameSettings.savePlayerBulletDamage;
+    gameSettings.playerLifesteal = gameSettings.savePlayerLifesteal;
+    gameSettings.playerBulletSpeed = gameSettings.savePlayerBulletSpeed;
+    gameSettings.playerScore = gameSettings.savePlayerScore;
+    gameSettings.playerNumberOfBullets = gameSettings.savePlayerNumberOfBullets;
+    gameSettings.playerFireRate = gameSettings.savePlayerFireRate;
+    gameSettings.playerDefaultBulletSize =
+      gameSettings.savePlayerDefaultBulletSize;
+    gameSettings.playerBulletSize = gameSettings.savePlayerBulletSize;
   }
 }
 

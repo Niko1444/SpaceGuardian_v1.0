@@ -3,6 +3,7 @@ import Bullet from "../projectiles/Bullet";
 import gameSettings from "../../config/gameSettings";
 import HPBar2 from "../ui/HPBar2";
 import SoundManager from "../../manager/SoundManager";
+
 class Player extends Entity {
   constructor(scene, x, y, key, health) {
     super(scene, x, y, key, health);
@@ -60,7 +61,8 @@ class Player extends Entity {
   }
 
   setInteractiveEntity() {
-    super.setInteractiveEntity();
+    this.setInteractive({ draggable: true });
+    this.scene.input.setDraggable(this);
   }
 
   shootBullet(number) {
@@ -122,7 +124,7 @@ class Player extends Entity {
     this.updateHealthBarValue();
   }
 
-  savePlayer(){
+  savePlayer() {
     gameSettings.savePlayerSpeed = this.speed;
     gameSettings.savePlayerBulletDamage = this.bulletDamage;
     gameSettings.savePlayerLifesteal = this.lifestealRate;
@@ -130,15 +132,15 @@ class Player extends Entity {
     gameSettings.savePlayerScore = gameSettings.playerScore;
     gameSettings.savePlayerNumberOfBullets = this.numberOfBullets;
     gameSettings.savePlayerFireRate = this.fireRate;
-    gameSettings.savePlayerDefaultBulletSize = gameSettings.playerDefaultBulletSize;
+    gameSettings.savePlayerDefaultBulletSize =
+      gameSettings.playerDefaultBulletSize;
     gameSettings.savePlayerBulletSize = this.bulletSize;
   }
-
 
   // restartBegin(){
   //   this.speed = gameSettings.savePlayerSpeed ;
   //   this.bulletDamage = gameSettings.savePlayerBulletDamage;
-  //   this.lifestealRate = gameSettings.savePlayerLifesteal; 
+  //   this.lifestealRate = gameSettings.savePlayerLifesteal;
   //   this.bulletSpeed = gameSettings.savePlayerBulletSpeed;
   //   gameSettings.playerScore = gameSettings.savePlayerScore;
   //   this.numberOfBullets = gameSettings.savePlayerNumberOfBullets;
@@ -146,7 +148,7 @@ class Player extends Entity {
   //   this.bulletSize = gameSettings.savePlayerDefaultBulletSize;
   // }
 
-  restartToTile(){
+  restartToTile() {
     gameSettings.savePlayerSpeed = 250;
     gameSettings.savePlayerBulletDamage = 100;
     gameSettings.savePlayerLifesteal = 0;
@@ -159,15 +161,16 @@ class Player extends Entity {
     this.restartGameSettings();
   }
 
-  restartGameSettings(){
+  restartGameSettings() {
     gameSettings.playerSpeed = gameSettings.savePlayerSpeed;
     gameSettings.playerBulletDamage = gameSettings.savePlayerBulletDamage;
-    gameSettings.playerLifesteal = gameSettings.savePlayerLifesteal; 
+    gameSettings.playerLifesteal = gameSettings.savePlayerLifesteal;
     gameSettings.playerBulletSpeed = gameSettings.savePlayerBulletSpeed;
     gameSettings.playerScore = gameSettings.savePlayerScore;
     gameSettings.playerNumberOfBullets = gameSettings.savePlayerNumberOfBullets;
     gameSettings.playerFireRate = gameSettings.savePlayerFireRate;
-    gameSettings.playerDefaultBulletSize = gameSettings.savePlayerDefaultBulletSize;
+    gameSettings.playerDefaultBulletSize =
+      gameSettings.savePlayerDefaultBulletSize;
     gameSettings.playerBulletSize = gameSettings.savePlayerBulletSize;
   }
 }

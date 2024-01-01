@@ -13,6 +13,7 @@ import UtilitiesManager from "../manager/UtilitiesManager";
 import ProjectileManager from "../manager/ProjectileManager";
 import UpgradeManager from "../manager/UpgradeManager.js";
 import SoundManager from "../manager/SoundManager.js";
+import MobileManager from "../manager/MobileManager";
 
 const BACKGROUND_SCROLL_SPEED = 0.5;
 class LevelTwoScreen extends Phaser.Scene {
@@ -39,6 +40,8 @@ class LevelTwoScreen extends Phaser.Scene {
   }
 
   create() {
+    this.cameras.main.fadeIn(1000, 0, 0, 0);
+
     if (
       !(this.anims && this.anims.exists && this.anims.exists("player_anim"))
     ) {
@@ -107,6 +110,7 @@ class LevelTwoScreen extends Phaser.Scene {
         repeat: -1,
       });
     }
+
     // Creat GUI for PlayingScreen ( Changes in BG except Player and Enemy )
     this.guiManager = new GuiManager(this);
     this.guiManager.createBackground("background_texture");
@@ -121,6 +125,7 @@ class LevelTwoScreen extends Phaser.Scene {
       1000
     );
     this.player.play("player_anim");
+    this.player.restartGameSettings();
 
     // Spawn the Enemies
     this.time.delayedCall(
@@ -155,6 +160,7 @@ class LevelTwoScreen extends Phaser.Scene {
 
     // Create managers
     this.keyboardManager = new KeyboardManager(this, this.music);
+    this.mobileManager = new MobileManager(this);
     this.keyboardManager.MuteGame();
 
     this.PlayerManager = new PlayerManager(
@@ -471,9 +477,19 @@ class LevelTwoScreen extends Phaser.Scene {
 
   handleEnterKey() {
     this.scene.stop("upgradeScreen");
-
+    this.player.savePlayer();
     this.time.delayedCall(1000, () => {
-      this.scene.start("playLevelThree", { number: this.selectedPlayerIndex });
+      this.cameras.main.fadeOut(1000, 0, 0, 0);
+
+      this.cameras.main.once(
+        Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE,
+        (cam, effect) => {
+          this.scene.stop();
+          this.scene.start("playLevelThree", {
+            number: this.selectedPlayerIndex,
+          });
+        }
+      );
     });
 
     this.input.keyboard.off("keydown-ENTER", this.handleEnterKey, this);

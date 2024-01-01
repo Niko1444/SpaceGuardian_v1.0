@@ -10,6 +10,7 @@ import GuiManager from "../manager/GuiManager";
 import UtilitiesManager from "../manager/UtilitiesManager";
 import ProjectileManager from "../manager/ProjectileManager";
 import UpgradeManager from "../manager/UpgradeManager";
+import MobileManager from "../manager/MobileManager";
 
 const BACKGROUND_SCROLL_SPEED = 0.5;
 class TutorialScreen extends Phaser.Scene {
@@ -105,6 +106,7 @@ class TutorialScreen extends Phaser.Scene {
       1000
     );
     this.player.play("player_anim");
+    this.player.restartToTile();
 
     this.shield = new Shield(this, this.player);
     this.shield.play("shield_anim");
@@ -112,6 +114,10 @@ class TutorialScreen extends Phaser.Scene {
     // Create managers
     // Keyboard
     this.keyboardManager = new KeyboardManager(this);
+
+    // Mobile
+
+    this.mobileManager = new MobileManager(this);
 
     // Player
     this.PlayerManager = new PlayerManager(
@@ -157,39 +163,38 @@ class TutorialScreen extends Phaser.Scene {
 
     this.input.keyboard.on("keydown-ENTER", this.startGame, this);
 
-     // create pause button
-     this.pic = this.add.image(config.width - 20, 30, "pause");
-     // this.button = this.scene.add.sprite(60, 30, 'pause');
-     this.pic.setInteractive();
- 
-     this.pic.on(
-       "pointerdown",
-       function () {
-         this.scene.pause();
-         this.scene.launch("pauseScreen", { key: "playGame" });
-       },
-       this
-     );
- 
-     this.musicButton = this.add.image(config.width - 60, 30, "sound_texture");
-     this.musicButton.setInteractive();
- 
-     this.musicButton.on(
-       "pointerdown",
-       function () {
-         this.music.soundOn = !this.music.soundOn;
-         this.music.musicOn = !this.music.musicOn;
- 
-         this.updateAudio();
-       },
-       this
-     );
+    // create pause button
+    this.pic = this.add.image(config.width - 20, 30, "pause");
+    // this.button = this.scene.add.sprite(60, 30, 'pause');
+    this.pic.setInteractive();
 
+    this.pic.on(
+      "pointerdown",
+      function () {
+        this.scene.pause();
+        this.scene.launch("pauseScreen", { key: "playGame" });
+      },
+      this
+    );
+
+    this.musicButton = this.add.image(config.width - 60, 30, "sound_texture");
+    this.musicButton.setInteractive();
+
+    this.musicButton.on(
+      "pointerdown",
+      function () {
+        this.music.soundOn = !this.music.soundOn;
+        this.music.musicOn = !this.music.musicOn;
+
+        this.updateAudio();
+      },
+      this
+    );
   }
 
   update() {
-     // update for mute and sound button
-     if (this.music.musicOn === false && this.music.soundOn === false) {
+    // update for mute and sound button
+    if (this.music.musicOn === false && this.music.soundOn === false) {
       this.musicButton = this.add.image(config.width - 60, 30, "mute_texture");
     } else if (this.music.musicOn === true && this.music.soundOn === true) {
       this.musicButton = this.add.image(config.width - 60, 30, "sound_texture");
@@ -226,17 +231,16 @@ class TutorialScreen extends Phaser.Scene {
 
   updateAudio() {
     if (this.music.musicOn === false && this.music.soundOn === false) {
-      this.musicButton.setTexture('mute_texture');
+      this.musicButton.setTexture("mute_texture");
       this.sys.game.globals.bgMusic.pause();
       this.music.bgMusicPlaying = false;
-    } else if(this.music.musicOn === true && this.music.soundOn === true) {
-      this.musicButton.setTexture('sound_texture');
+    } else if (this.music.musicOn === true && this.music.soundOn === true) {
+      this.musicButton.setTexture("sound_texture");
       if (this.music.bgMusicPlaying === false) {
         this.sys.game.globals.bgMusic.resume();
         this.music.bgMusicPlaying = true;
       }
     }
-  
   }
 
   shutdown() {
@@ -281,8 +285,15 @@ class TutorialScreen extends Phaser.Scene {
     this.scene.stop("upgradeScreen");
 
     this.time.delayedCall(1000, () => {
-      this.scene.stop();
-      this.scene.start("playGame", { number: this.selectedPlayerIndex });
+      this.cameras.main.fadeOut(1000, 0, 0, 0);
+
+      this.cameras.main.once(
+        Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE,
+        (cam, effect) => {
+          this.scene.stop();
+          this.scene.start("playGame", { number: this.selectedPlayerIndex });
+        }
+      );
     });
   }
 
