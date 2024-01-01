@@ -16,6 +16,7 @@ import Boss from "../objects/enemies/Boss.js";
 import MiniBot from "../objects/enemies/Minibot.js";
 import SoundManager from "../manager/SoundManager.js";
 import MobileManager from "../manager/MobileManager.js";
+import gameSettings from "../config/gameSettings.js";
 
 const BACKGROUND_SCROLL_SPEED = 0.5;
 class BossScreen extends Phaser.Scene {
@@ -135,8 +136,9 @@ class BossScreen extends Phaser.Scene {
       config.width / 2,
       config.height - 100,
       `player_texture_${this.selectedPlayerIndex}`,
-      10000
+      gameSettings.playerMaxHealth
     );
+
     this.player.play("player_anim");
     this.player.restartGameSettings();
 

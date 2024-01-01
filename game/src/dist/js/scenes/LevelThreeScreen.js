@@ -14,6 +14,7 @@ import ProjectileManager from "../manager/ProjectileManager";
 import UpgradeManager from "../manager/UpgradeManager.js";
 import SoundManager from "../manager/SoundManager.js";
 import MobileManager from "../manager/MobileManager";
+import gameSettings from "../config/gameSettings.js";
 
 const BACKGROUND_SCROLL_SPEED = 0.5;
 class LevelThreeScreen extends Phaser.Scene {
@@ -121,8 +122,9 @@ class LevelThreeScreen extends Phaser.Scene {
       config.width / 2,
       config.height - 100,
       `player_texture_${this.selectedPlayerIndex}`,
-      1000
+      gameSettings.playerMaxHealth
     );
+
     this.player.play("player_anim");
     this.player.restartGameSettings();
 

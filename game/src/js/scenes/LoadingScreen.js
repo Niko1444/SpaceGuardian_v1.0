@@ -348,7 +348,7 @@ class LoadingScreen extends Phaser.Scene {
   }
 
   create() {
-    // Create health pack animations
+    this.cameras.main.fadeIn(500, 0, 0, 0);
 
     // Create first bullet animations
     if (this.selectedPlayerIndex == 1) {

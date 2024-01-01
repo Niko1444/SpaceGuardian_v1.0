@@ -8,6 +8,8 @@ var gameSettings = {
   playerFireRate: 700,
   playerDefaultBulletSize: 1.2,
   playerBulletSize: 1.2,
+  playerMaxHealth: 1000,
+  playerUpgradeThreshold: 300,
 
   savePlayerSpeed: 250,
   savePlayerBulletDamage: 100,
@@ -18,6 +20,8 @@ var gameSettings = {
   savePlayerFireRate: 700,
   savePlayerDefaultBulletSize: 1.2,
   savePlayerBulletSize: 1.2,
+  savePlayerMaxHealth: 1000,
+  savePlayerUpgradeThreshold: 500,
 
   enemySpeed: 200,
   bulletSpeed: 400,
