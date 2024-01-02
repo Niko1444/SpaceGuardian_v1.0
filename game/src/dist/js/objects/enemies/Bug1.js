@@ -54,11 +54,10 @@ class Bug1 extends Entity {
   explode(canDestroy) {
     super.explode(canDestroy);
     this.scene.player.getHeal(this.scene.player.lifestealRate);
-    if(this.y < config.height){
+    if (this.y < config.height) {
       this.scene.UpgradeManager.updateScore(100);
     }
   }
-
 }
 
 export default Bug1;

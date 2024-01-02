@@ -42,7 +42,7 @@ class TitleScreen extends Phaser.Scene {
     });
 
     this.load.spritesheet({
-      key: "button_tutorial",
+      key: "button_rank",
       url: "assets/gui/button_play.png",
       frameConfig: {
         frameWidth: 93,
@@ -53,7 +53,7 @@ class TitleScreen extends Phaser.Scene {
     });
 
     this.load.spritesheet({
-      key: "button_tutorial_hover",
+      key: "button_rank_hover",
       url: "assets/gui/button_play_hover.png",
       frameConfig: {
         frameWidth: 93,
@@ -82,6 +82,28 @@ class TitleScreen extends Phaser.Scene {
         frameHeight: 28,
         startFrame: 1,
         endFrame: 1,
+      },
+    });
+
+    this.load.spritesheet({
+      key: "button_exit",
+      url: "assets/gui/button_play.png",
+      frameConfig: {
+        frameWidth: 93,
+        frameHeight: 28,
+        startFrame: 6,
+        endFrame: 6,
+      },
+    });
+
+    this.load.spritesheet({
+      key: "button_exit_hover",
+      url: "assets/gui/button_play_hover.png",
+      frameConfig: {
+        frameWidth: 93,
+        frameHeight: 28,
+        startFrame: 6,
+        endFrame: 6,
       },
     });
   }
@@ -220,45 +242,49 @@ class TitleScreen extends Phaser.Scene {
       this.scene.start("choosePlayer");
     });
 
-    // Create Tutorial Button
-    this.button_tutorial = new Button(
+    // Create rank Button
+    this.button_rank = new Button(
       this,
       config.width / 2,
-      config.height / 2 + 100,
-      "button_tutorial",
-      "button_tutorial_hover",
-      "choosePlayer"
+      config.height / 2 + 110,
+      "button_rank",
+      "button_rank_hover",
+      "leaderboard"
     );
-    this.button_tutorial.setInteractive();
+    this.button_rank.setInteractive();
 
     // Create Credit Button
     this.button_credit = new Button(
       this,
       config.width / 2,
-      config.height / 2 + 140,
+      config.height / 2 + 160,
       "button_credit",
       "button_credit_hover",
-      "choosePlayer"
+      "CreditsScene"
     );
 
-    // Event listeners for the tutorial button
-    this.button_tutorial.on("pointerdown", () => {
-      this.cameras.main.fadeOut(1500, false, () => {
-        this.scene.start("choosePlayer");
-      });
+    this.button_rank.on("pointerover", () => {
+      this.button_rank.setTexture("button_rank_hover");
     });
 
-    this.button_tutorial.on("pointerover", () => {
-      this.button_tutorial.setTexture("button_tutorial_hover");
-    });
-
-    this.button_tutorial.on("pointerout", () => {
-      this.button_tutorial.setTexture("button_tutorial");
+    this.button_rank.on("pointerout", () => {
+      this.button_rank.setTexture("button_rank");
     });
 
     this.button_credit.on("pointerdown", () => {
       this.button_credit.setTexture("button_credit_hover");
     });
+
+    this.button_play.setScale(1.5);
+    this.button_rank.setScale(1.5);
+    this.button_credit.setScale(1.5);
+
+    this.showTextInput();
+  }
+
+  showTextInput() {
+    const playerNameInput = document.getElementById("playerNameInput");
+    playerNameInput.style.display = "block";
   }
 }
 export default TitleScreen;

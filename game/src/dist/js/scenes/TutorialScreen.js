@@ -33,7 +33,6 @@ class TutorialScreen extends Phaser.Scene {
     this.music = this.sys.game.globals.music;
 
     // Create player animations
-
     this.guiManager = new GuiManager(this);
     this.guiManager.createBackground("background_texture_03");
     this.guiManager.createTutorialText(
@@ -108,6 +107,7 @@ class TutorialScreen extends Phaser.Scene {
     );
     this.player.play("player_anim");
     this.player.restartToTile();
+    this.player.selectedPlayer = this.selectedPlayerIndex;
 
     this.shield = new Shield(this, this.player);
     this.shield.play("shield_anim");
@@ -162,7 +162,6 @@ class TutorialScreen extends Phaser.Scene {
 
     // Score System
     this.UpgradeManager = new UpgradeManager(this, this.callingScene);
-
 
     // create pause button
     this.pic = this.add.image(config.width - 20, 30, "pause");

@@ -16,9 +16,6 @@ import VictoryScreen from "../scenes/VictoryScreen.js";
 const gameWidth = 600;
 const gameHeight = 950;
 
-// const gameWidth = window.innerWidth;
-// const gameHeight = window.innerHeight;
-
 const config = {
   type: Phaser.AUTO,
   pauseGame: false,
@@ -50,12 +47,12 @@ const config = {
     keyboard: true,
     mouse: true,
     touch: true,
-    activePointers: 2,
+    activePointers: 3,
   },
   physics: {
     default: "arcade",
     arcade: {
-      debug: false,
+      debug: true,
     },
   },
   plugins: {

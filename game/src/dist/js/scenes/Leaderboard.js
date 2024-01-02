@@ -1,5 +1,6 @@
 import Phaser from "phaser";
 import config from "../config/config";
+import Button from "../objects/Button.js";
 import gameSettings from "../config/gameSettings";
 
 class Leaderboard extends Phaser.Scene {
@@ -86,11 +87,35 @@ class Leaderboard extends Phaser.Scene {
     scoreText.setOrigin(0.5);
     scoreText.setShadow(2, 2, "#FFFB73", 2, true, true);
 
-    const playerName = document.getElementById("playerNameInput").value;
+    // Create Play Button
+    this.button_exit = new Button(
+      this,
+      config.width / 2,
+      config.height / 2 + 270,
+      "button_exit",
+      "button_exit_hover",
+      "bootGame"
+    );
+    this.button_exit.setScale(1.5);
+    this.button_exit.setInteractive();
+
+    // Event listeners for the play button
+    this.button_exit.on("pointerover", () => {
+      this.button_play.setTexture("button_exit_hover");
+    });
+
+    this.button_exit.on("pointerout", () => {
+      this.button_exit.setTexture("button_exit_play");
+    });
+
+    const playerName =
+      document.getElementById("playerNameInput").value || "Player";
     this.submitScore({
       name: playerName,
       score: gameSettings.playerScore,
     });
+
+    this.hideTextInput();
   }
 
   fetchLeaderboard() {
@@ -206,6 +231,11 @@ class Leaderboard extends Phaser.Scene {
   sortLeaderboard(data) {
     // Sort the data by score in descending order
     return data.sort((a, b) => b.score - a.score);
+  }
+
+  hideTextInput() {
+    const playerNameInput = document.getElementById("playerNameInput");
+    playerNameInput.style.display = "none";
   }
 }
 
