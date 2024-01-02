@@ -342,7 +342,7 @@ class BossScreen extends Phaser.Scene {
       });
 
       this.time.delayedCall(
-        200,
+        500,
         () => {
           this.scene.start("leaderboard");
         },
@@ -400,7 +400,7 @@ class BossScreen extends Phaser.Scene {
       }
     }
 
-    if (this.boss.health < this.boss.maxHealth * 0.35) {
+    if ( this.boss.health < this.boss.maxHealth * 0.35 && this.boss.health > 0) {
       this.boss.moveToCenter();
       this.callMini();
     }
@@ -425,7 +425,7 @@ class BossScreen extends Phaser.Scene {
       this.timeHealth = 0;
     }
 
-    if (this.boss.health < this.boss.maxHealth * 0.15) {
+    if (this.boss.health < this.boss.maxHealth * 0.15 && this.boss.health > 0) {
       this.boss.shootBulletCircle(this, this.boss);
     }
 

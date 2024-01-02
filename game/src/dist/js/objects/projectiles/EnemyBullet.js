@@ -36,8 +36,8 @@ class EnemyBullet extends Entity {
 
     let direction = rotation;
     this.body.velocity.set(
-      (direction.x * gameSettings.bulletSpeed) / 1.5,
-      (direction.y * gameSettings.bulletSpeed) / 1.5
+      (direction.x * gameSettings.bulletSpeed) / 3,
+      (direction.y * gameSettings.bulletSpeed) / 3
     );
   }
 

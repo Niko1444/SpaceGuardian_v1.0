@@ -17,6 +17,7 @@ class Boss extends Entity {
     this.shootAngle = 0;
     this.shootRotation = 0;
     this.setInteractiveEntity();
+    this.setActive(true);
 
     this.isDestroyed = false;
 
