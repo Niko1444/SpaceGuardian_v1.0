@@ -18,6 +18,7 @@ class Bug5 extends Entity {
     this.hpBarHeight = 5;
     this.damage = 100;
     this.setInteractiveEntity();
+    this.setActive(true);
 
     const scaledHpBarWidth = this.hpBarWidth * scale;
     const scaledHpBarHeight = this.hpBarHeight * scale;

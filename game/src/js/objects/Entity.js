@@ -29,7 +29,7 @@ class Entity extends Phaser.GameObjects.Sprite {
       this.hpBar.y = this.y + 120;
     }
 
-    if( this.y >= config.height + 199 || this.y < -199){
+    if( this.y >= config.height + 350 || this.y < -350){
       this.hpBar.destroy();
     }
   }

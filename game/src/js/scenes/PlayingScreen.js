@@ -174,18 +174,18 @@ class PlayingScreen extends Phaser.Scene {
     );
 
     this.EnemyManager = new EnemyManager(this);
-    this.time.delayedCall(
-      3000,
-      () => this.EnemyManager.spawnEnemyRowWithDelay(this, 0),
-      null,
-      this
-    );
+
+    this.time.delayedCall(3000, () => {
+      this.EnemyManager.spawnEnemyRowWithDelay(this, 0);
+    }, null, this);
+
     this.time.delayedCall(
       6000,
       () => this.EnemyManager.spawnEnemyRowWithDelay(this, 0),
       null,
       this
     );
+
     this.time.delayedCall(
       12000,
       () => this.EnemyManager.spawnEnemyRowWithDelay(this, 0),
@@ -213,6 +213,15 @@ class PlayingScreen extends Phaser.Scene {
       45000,
       () => {
         this.startFinalWave();
+      },
+      null,
+      this
+    );
+
+    this.time.delayedCall(
+      57000,
+      () => {
+        this.EnemyManager.gameStarted = true;
       },
       null,
       this
@@ -304,15 +313,19 @@ class PlayingScreen extends Phaser.Scene {
       this.SoundManager
     );
 
-    this.time.delayedCall(
-      58000,
-      () => {
-        this.goToNextLevel();
-      },
-      null,
-      this
-    );
-    this.input.keyboard.on("keydown-ENTER", this.goToNextLevel, this);
+    // this.time.delayedCall(
+    //   58000,
+    //   () => {
+    //     this.time.delayedCall(
+    //       1000,
+    //       this.goToNextLevel,
+    //       null,
+    //       this
+    //     );
+    //   },
+    //   null,
+    //   this
+    // );
 
     // create pause button
     this.pic = this.add.image(config.width - 20, 30, "pause");
@@ -380,6 +393,11 @@ class PlayingScreen extends Phaser.Scene {
     }
 
     this.shield.updatePosition(this.player);
+
+    if (this.EnemyManager.checkToFinishLevel()) {
+      this.goToNextLevel();
+      this.EnemyManager.gameStarted = false;
+    }
 
     this.time.addEvent({
       delay: 22000,
@@ -492,15 +510,9 @@ class PlayingScreen extends Phaser.Scene {
       config.height / 2 - 60,
       5000
     );
-    this.createText(
-      "Press Enter to continue",
-      config.width / 2,
-      config.height / 2 - 30,
-      5000
-    );
 
     // Check for Enter key press continuously in the update loop
-    this.input.keyboard.on("keydown-ENTER", this.handleEnterKey, this);
+    this.time.delayedCall(1000, this.handleEnterKey, [], this);
   }
 
   handleEnterKey() {
@@ -519,8 +531,6 @@ class PlayingScreen extends Phaser.Scene {
         }
       );
     });
-
-    this.input.keyboard.off("keydown-ENTER", this.handleEnterKey, this);
   }
 
   startFinalWave() {
