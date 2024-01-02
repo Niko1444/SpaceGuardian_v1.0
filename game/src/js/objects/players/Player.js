@@ -21,7 +21,7 @@ class Player extends Entity {
     this.body.velocity.y = this.speed;
     this.bulletSize = gameSettings.savePlayerBulletSize;
 
-    this.fireRate = gameSettings.savePlayerFireRate; // default 700
+    this.fireRate = gameSettings.savePlayerFireRate;
     this.lastShootTime = 0;
     this.lifestealRate = gameSettings.savePlayerLifesteal;
     this.numberOfBullets = gameSettings.savePlayerNumberOfBullets;
@@ -31,8 +31,8 @@ class Player extends Entity {
 
     this.hpBar = new HPBar2(
       scene,
-      scene.sys.game.config.width - 450,
-      scene.sys.game.config.height - 60,
+      scene.sys.game.config.width - 485,
+      scene.sys.game.config.height - 55,
       200,
       41,
       this.health,
@@ -82,6 +82,10 @@ class Player extends Entity {
         4: [-30, -15, 15, 30], // Pattern for 4 bullets
         5: [-30, -15, 0, 15, 30], // Pattern for 5 bullets
         6: [-45, -30, -15, 15, 30, 45], // Pattern for 6 bullets
+        7: [-45, -30, -15, 0, 15, 30, 45], // Pattern for 7 bullets
+        8: [-45, -30, -15, 0, 15, 30, 45, 60], // Pattern for 8 bullets
+        9: [-45, -30, -15, 0, 15, 30, 45, 60, 75], // Pattern for 9 bullets
+        10: [-45, -30, -15, 0, 15, 30, 45, 60, 75, 90], // Pattern for 10 bullets
       };
 
       const patternsY = {
@@ -91,6 +95,10 @@ class Player extends Entity {
         4: [0, -25, -25, 0], // Pattern for 4 bullets
         5: [0, -25, -50, -25, 0], // Pattern for 5 bullets
         6: [0, -25, -50, -50, -25, 0], // Pattern for 6 bullets
+        7: [0, -25, -50, -75, -50, -25, 0], // Pattern for 7 bullets
+        8: [0, -25, -50, -75, -75, -50, -25, 0], // Pattern for 8 bullets
+        9: [0, -25, -50, -75, -100, -75, -50, -25, 0], // Pattern for 9 bullets
+        10: [0, -25, -50, -75, -100, -100, -75, -50, -25, 0], // Pattern for 10 bullets
       };
 
       const bulletSizeScale =
@@ -141,17 +149,6 @@ class Player extends Entity {
     gameSettings.savePlayerUpgradeIncrement =
       gameSettings.playerUpgradeIncrement;
   }
-
-  // restartBegin(){
-  //   this.speed = gameSettings.savePlayerSpeed ;
-  //   this.bulletDamage = gameSettings.savePlayerBulletDamage;
-  //   this.lifestealRate = gameSettings.savePlayerLifesteal;
-  //   this.bulletSpeed = gameSettings.savePlayerBulletSpeed;
-  //   gameSettings.playerScore = gameSettings.savePlayerScore;
-  //   this.numberOfBullets = gameSettings.savePlayerNumberOfBullets;
-  //   this.fireRate = gameSettings.savePlayerFireRate;
-  //   this.bulletSize = gameSettings.savePlayerDefaultBulletSize;
-  // }
 
   restartToTile() {
     gameSettings.savePlayerSpeed = 250;

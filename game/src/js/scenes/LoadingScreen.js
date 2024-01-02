@@ -21,12 +21,22 @@ class LoadingScreen extends Phaser.Scene {
 
     this.load.image(
       "background_texture_01",
-      "assets/images/backgrounds/green/nebula_2.png"
+      "assets/images/backgrounds/green/nebula_6.png"
     );
 
     this.load.image(
       "background_texture_02",
       "assets/images/backgrounds/blue/nebula_2.png"
+    );
+
+    this.load.image(
+      "background_texture_03",
+      "assets/images/backgrounds/purple/nebula_3.png"
+    );
+
+    this.load.image(
+      "background_texture_04",
+      "assets/images/backgrounds/blue/redbula_1.png"
     );
 
     // Load boss spritesheets
@@ -101,10 +111,10 @@ class LoadingScreen extends Phaser.Scene {
     // Load the HealthBar
     this.load.spritesheet({
       key: "healthBar_texture",
-      url: "assets/spritesheets/vfx/healthBar.png",
+      url: "assets/spritesheets/vfx/healthBar-02.png",
       frameConfig: {
-        frameWidth: 300,
-        frameHeight: 41,
+        frameWidth: 331,
+        frameHeight: 154,
         startFrame: 0,
         endFrame: 0,
       },
@@ -341,10 +351,6 @@ class LoadingScreen extends Phaser.Scene {
     this.load.audio("health", "assets/audio/health.wav");
     this.load.audio("shield", "assets/audio/shield.wav");
     this.load.audio("bossMusic", "assets/audio/boss.mp3");
-    // this.load.audio("forestMusic", "assets/audio/forest.wav");
-    // this.load.audio("riverMusic", "assets/audio/river.mp3");
-    // this.load.audio("warzoneMusic", "assets/audio/warzone.mp3");
-    // this.load.audio("desertMusic", "assets/audio/playingMusic.mp3");
   }
 
   create() {
