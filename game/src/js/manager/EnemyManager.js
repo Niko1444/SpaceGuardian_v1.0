@@ -8,11 +8,9 @@ class EnemyManager {
   constructor(scene) {
     this.scene = scene;
     this.enemies = [];
-    this.enemiesBug1 = [];
-    this.enemiesBug3 = [];
-    this.enemiesBug5 = [];
     this.respawnDelays = []; // Array to store individual respawn delays
     this.lastRespawnTimes = []; // Array to store individual last respawn times
+    this.gameStarted = false;
 
     // Set initial random delays and times for each enemy
     for (let i = 0; i < this.enemies.length; i++) {
@@ -20,6 +18,19 @@ class EnemyManager {
       this.lastRespawnTimes[i] = 0;
     }
   }
+
+  checkToFinishLevel() {
+    // Check if all enemies are inactive
+    const allEnemiesInactive = this.enemies.every(enemy => !enemy.active);
+
+    // If all enemies are inactive and the game has started, return true
+    if (allEnemiesInactive && this.gameStarted) {
+        return true;
+    }
+
+    // Otherwise, return false
+    return false;
+}
 
   destroyEnemyMoveOutOfScreen() {
     let offScreenEnemyIndex = this.enemies.findIndex(enemy => enemy.y >= config.height + 200 || enemy.y < -200);
