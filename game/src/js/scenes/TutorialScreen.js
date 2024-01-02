@@ -35,7 +35,7 @@ class TutorialScreen extends Phaser.Scene {
     // Create player animations
 
     this.guiManager = new GuiManager(this);
-    this.guiManager.createBackground("background_texture_01");
+    this.guiManager.createBackground("background_texture_03");
     this.guiManager.createTutorialText(
       "Press SPACE to shoot",
       config.width / 2,

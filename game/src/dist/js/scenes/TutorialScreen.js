@@ -35,7 +35,7 @@ class TutorialScreen extends Phaser.Scene {
     // Create player animations
 
     this.guiManager = new GuiManager(this);
-    this.guiManager.createBackground("background_texture_01");
+    this.guiManager.createBackground("background_texture_03");
     this.guiManager.createTutorialText(
       "Press SPACE to shoot",
       config.width / 2,
@@ -56,7 +56,7 @@ class TutorialScreen extends Phaser.Scene {
           config.height / 2 - 60
         );
         this.guiManager.createTutorialText(
-          "500 points = 1 Upgrade",
+          "Take down the enemy for upgrade",
           config.width / 2,
           config.height / 2 - 30
         );
@@ -71,7 +71,7 @@ class TutorialScreen extends Phaser.Scene {
         this.guiManager.createSimpleText(
           config.width / 2,
           config.height / 2 - 60,
-          "Ready? Press ENTER to start",
+          "Ready? Let's start",
           "25px",
           "#ffffff",
           0.5
@@ -134,6 +134,7 @@ class TutorialScreen extends Phaser.Scene {
       3000,
       () => {
         this.EnemyManager.addEnemyTutorial();
+        this.EnemyManager.gameStarted = true;
       },
       null,
       this
@@ -162,7 +163,6 @@ class TutorialScreen extends Phaser.Scene {
     // Score System
     this.UpgradeManager = new UpgradeManager(this, this.callingScene);
 
-    this.input.keyboard.on("keydown-ENTER", this.startGame, this);
 
     // create pause button
     this.pic = this.add.image(config.width - 20, 30, "pause");
@@ -210,10 +210,11 @@ class TutorialScreen extends Phaser.Scene {
     // Move the player and enemies
     this.PlayerManager.movePlayer();
 
-    this.EnemyManager.moveEnemies();
     this.EnemyManager.enemies.forEach((enemy) => {
       enemy.updateHealthBarPosition();
     });
+
+    this.EnemyManager.destroyEnemyMoveOutOfScreen();
 
     if (this.spacebar.isDown) {
       this.player.shootBullet(this.selectedPlayerIndex);
@@ -227,6 +228,11 @@ class TutorialScreen extends Phaser.Scene {
 
     if (this.player.health <= 0) {
       this.gameOver();
+    }
+
+    if (this.EnemyManager.checkToFinishLevel()) {
+      this.startGame();
+      this.EnemyManager.gameStarted = false;
     }
   }
 
@@ -285,7 +291,7 @@ class TutorialScreen extends Phaser.Scene {
   startGame() {
     this.scene.stop("upgradeScreen");
 
-    this.time.delayedCall(1000, () => {
+    this.time.delayedCall(3000, () => {
       this.cameras.main.fadeOut(1000, 0, 0, 0);
 
       this.cameras.main.once(

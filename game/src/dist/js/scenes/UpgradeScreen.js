@@ -141,7 +141,7 @@ class UpgradeScreen extends Phaser.Scene {
       case "upgrade4":
         player.takeDamage(player.health * 0.9);
         GameSettings.playerBulletDamage += 100;
-        GameSettings.playerBulletSize *= 1.3;
+        GameSettings.playerBulletSize *= 1.22;
         player.bulletDamage = GameSettings.playerBulletDamage;
         player.bulletSize = GameSettings.playerBulletSize;
         break;

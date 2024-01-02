@@ -8,11 +8,9 @@ class EnemyManager {
   constructor(scene) {
     this.scene = scene;
     this.enemies = [];
-    this.enemiesBug1 = [];
-    this.enemiesBug3 = [];
-    this.enemiesBug5 = [];
     this.respawnDelays = []; // Array to store individual respawn delays
     this.lastRespawnTimes = []; // Array to store individual last respawn times
+    this.gameStarted = false;
 
     // Set initial random delays and times for each enemy
     for (let i = 0; i < this.enemies.length; i++) {
@@ -21,26 +19,49 @@ class EnemyManager {
     }
   }
 
+  checkToFinishLevel() {
+    // Check if all enemies are inactive
+    const allEnemiesInactive = this.enemies.every(enemy => !enemy.active);
+
+    // If all enemies are inactive and the game has started, return true
+    if (allEnemiesInactive && this.gameStarted) {
+        return true;
+    }
+
+    // Otherwise, return false
+    return false;
+}
+
+  destroyEnemyMoveOutOfScreen() {
+    let offScreenEnemyIndex = this.enemies.findIndex(enemy => enemy.y >= config.height + 200 || enemy.y < -200);
+    if (offScreenEnemyIndex !== -1) {
+        // this.enemies[offScreenEnemyIndex].hpBar.destroy();
+        this.enemies[offScreenEnemyIndex].destroy(); // call destroy directly
+        this.enemies.splice(offScreenEnemyIndex, 1); // remove the enemy from the array
+    }
+}
+
   moveEnemies(time) {
     // Move enemies
-    this.enemies.forEach((enemy, index) => {
-      if (enemy.y >= config.height) {
-        const currentTime = this.scene.time.now;
 
-        // Check if enough time has passed for the next respawn for this specific enemy
-        if (
-          currentTime - this.lastRespawnTimes[index] >=
-          this.respawnDelays[index]
-        ) {
-          enemy.y = 0;
-          enemy.x = Phaser.Math.Between(120, config.width - 120);
+    let offScreenEnemy = this.enemies.find(enemy => enemy.y >= config.height);
+    let offScreenEnemyIndex = this.enemies.findIndex(enemy => enemy.y >= config.height);
 
-          // Set a new random delay for the next respawn for this specific enemy
-          this.respawnDelays[index] = Phaser.Math.Between(5000, 7000);
-          this.lastRespawnTimes[index] = currentTime;
-        }
-      }
-    });
+    const currentTime = this.scene.time.now;
+
+    // Check if enough time has passed for the next respawn for this specific enemy
+    if (
+      currentTime - this.lastRespawnTimes[offScreenEnemyIndex] >=
+      this.respawnDelays[offScreenEnemyIndex]
+    ) {
+      offScreenEnemy.y = 0;
+      offScreenEnemy.x = Phaser.Math.Between(120, config.width - 120);
+
+      // Set a new random delay for the next respawn for this specific enemy
+      this.respawnDelays[offScreenEnemyIndex] = Phaser.Math.Between(5000, 7000);
+      this.lastRespawnTimes[offScreenEnemyIndex] = currentTime;
+    }
+
   }
   // this can make the enemies respawn
   addEnemy(enemy) {

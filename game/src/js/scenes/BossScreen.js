@@ -46,7 +46,7 @@ class BossScreen extends Phaser.Scene {
   create() {
     // Creat GUI for PlayingScreen ( Changes in BG except Player and Enemy )
     this.guiManager = new GuiManager(this);
-    this.guiManager.createBackground("background_texture_01");
+    this.guiManager.createBackground("background_texture_04");
 
     this.music = this.sys.game.globals.music;
     if (this.music.musicOn === true) {
@@ -143,12 +143,20 @@ class BossScreen extends Phaser.Scene {
     this.player.restartGameSettings();
 
     // Spawn the Enemies
-    this.bug3_1 = new Bug3(this, 50, 0, 30);
+    this.bug3_1 = new Bug3(this, 50, 0, 2000);
     this.bug3_1.play("bug3_anim");
-    this.bug3_2 = new Bug3(this, config.width - 50, 0, 30);
+    this.bug3_1.setScale(2);
+    this.bug3_2 = new Bug3(this, config.width - 50, 0, 2000);
     this.bug3_2.play("bug3_anim");
-    this.bug5 = new Bug5(this, 300, 0, 30);
+    this.bug3_2.setScale(2);
+
+    this.bug5 = new Bug5(this, 100, 0, 1000);
     this.bug5.play("bug5_anim");
+    this.bug5.setScale(0.6);
+
+    this.bug5_2 = new Bug5(this, 500, 0, 1000);
+    this.bug5_2.play("bug5_anim");
+    this.bug5_2.setScale(0.6);
 
     // Create text for level 1
     this.createText();
@@ -173,6 +181,7 @@ class BossScreen extends Phaser.Scene {
     this.EnemyManager.addEnemy(this.bug3_1);
     this.EnemyManager.addEnemy(this.bug3_2);
     this.EnemyManager.addEnemy(this.bug5);
+    this.EnemyManager.addEnemy(this.bug5_2);
     this.EnemyManager.addEnemy(this.boss);
     this.EnemyManager.addEnemy(this.firstMini);
     this.EnemyManager.addEnemy(this.secondMini);
@@ -322,6 +331,7 @@ class BossScreen extends Phaser.Scene {
     this.bug3_1.rotateToPlayer(this.player);
     this.bug3_2.rotateToPlayer(this.player);
     this.bug5.chasePlayer(this.player);
+    this.bug5_2.chasePlayer(this.player);
 
     if (this.boss.health <= 0) {
       // Destroy all spawned enemies
