@@ -18,6 +18,7 @@ class Player extends Entity {
     this.setInteractiveEntity();
     this.setPhysics(scene);
     this.body.setSize(48, 48);
+    this.setDepth(3);
     this.body.velocity.y = this.speed;
     this.bulletSize = gameSettings.savePlayerBulletSize;
 

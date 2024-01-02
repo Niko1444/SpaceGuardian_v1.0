@@ -28,13 +28,18 @@ class UpgradeManager {
     const playerUpgradeThreshold = this.countScoreByThreshhold(
       gameSettings.playerUpgradeThreshold
     );
-    console.log(playerUpgradeThreshold);
 
     if (
       gameSettings.playerScore ===
       this.countScoreByThreshhold(gameSettings.playerUpgradeThreshold)
     ) {
+      if (this.scene.mobileManager.isMobile == true) {
+        this.scene.mobileManager.isMobile = false;
+      }
       this.rewardByScore(this.callingScene);
+      if (this.scene.sys.game.device.os.desktop == true) {
+        this.scene.mobileManager.isMobile = true;
+      }
       gameSettings.playerUpgradeThreshold += 100;
     }
   }

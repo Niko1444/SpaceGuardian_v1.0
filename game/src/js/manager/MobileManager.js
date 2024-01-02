@@ -3,16 +3,23 @@ import Phaser from "phaser";
 class MobileManager {
   constructor(scene) {
     this.scene = scene;
-    this.createDraggablePlayer();
+
+    this.isMobile = !this.scene.sys.game.device.os.desktop;
+
+    if (this.isMobile) {
+      this.createDraggablePlayer();
+    }
   }
 
   createDraggablePlayer() {
-    this.scene.input.on("drag", (pointer, gameObject, dragX, dragY) => {
-      gameObject.x = dragX;
-      gameObject.y = dragY;
+    this.scene.input.on("drag", this.handlePlayerDrag, this);
+  }
 
-      this.scene.player.shootBullet(this.scene.selectedPlayerIndex);
-    });
+  handlePlayerDrag(pointer, gameObject, dragX, dragY) {
+    gameObject.x = dragX;
+    gameObject.y = dragY;
+
+    this.scene.player.shootBullet(this.scene.selectedPlayerIndex);
   }
 }
 

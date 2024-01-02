@@ -204,7 +204,19 @@ class LoadingScreen extends Phaser.Scene {
       },
     });
 
-    // Load first Bullet Spritesheet
+    // Load chase bullet Spritesheet
+    this.load.spritesheet({
+      key: `bulletChase_texture`,
+      url: `assets/spritesheets/vfx/chaseBullet_01.png`,
+      frameConfig: {
+        frameWidth: 24,
+        frameHeight: 24,
+        startFrame: 0,
+        endFrame: 5,
+      },
+    });
+
+    // Load Bullet Spritesheet
     if (this.selectedPlayerIndex == 1) {
       this.load.spritesheet({
         key: `bullet1_texture`,
@@ -552,6 +564,17 @@ class LoadingScreen extends Phaser.Scene {
         }
       ),
       frameRate: 30,
+      repeat: -1,
+    });
+
+    // Create bullet animations
+    this.anims.create({
+      key: "bulletChase_anim",
+      frames: this.anims.generateFrameNumbers("bulletChase_texture", {
+        start: 0,
+        end: 5,
+      }),
+      frameRate: 15,
       repeat: -1,
     });
 
