@@ -22,18 +22,16 @@ class EnemyManager {
   checkToFinishLevel() {
     // Check if all enemies are inactive
     const allEnemiesInactive = this.enemies.every(enemy => !enemy.active);
-
     // If all enemies are inactive and the game has started, return true
     if (allEnemiesInactive && this.gameStarted) {
         return true;
     }
-
     // Otherwise, return false
     return false;
 }
 
   destroyEnemyMoveOutOfScreen() {
-    let offScreenEnemyIndex = this.enemies.findIndex(enemy => enemy.y >= config.height + 200 || enemy.y < -200);
+    let offScreenEnemyIndex = this.enemies.findIndex(enemy => enemy.y >= config.height + 350 || enemy.y < -350);
     if (offScreenEnemyIndex !== -1) {
         // this.enemies[offScreenEnemyIndex].hpBar.destroy();
         this.enemies[offScreenEnemyIndex].destroy(); // call destroy directly
@@ -58,11 +56,13 @@ class EnemyManager {
       offScreenEnemy.x = Phaser.Math.Between(120, config.width - 120);
 
       // Set a new random delay for the next respawn for this specific enemy
-      this.respawnDelays[offScreenEnemyIndex] = Phaser.Math.Between(5000, 7000);
+      this.respawnDelays[offScreenEnemyIndex] = Phaser.Math.Between(2000, 4000);
       this.lastRespawnTimes[offScreenEnemyIndex] = currentTime;
     }
 
   }
+
+
   // this can make the enemies respawn
   addEnemy(enemy) {
     // When adding a new enemy, initialize its random delay and last respawn time

@@ -255,6 +255,14 @@ class LevelThreeScreen extends Phaser.Scene {
         this.EnemyManager.addEnemyForOnce(this.bug5_5);
         this.EnemyManager.addEnemyForOnce(this.bug5_6);
         this.EnemyManager.addEnemyForOnce(this.bug5_7);
+      },
+      null,
+      this
+    );
+
+    this.time.delayedCall(
+      25000,
+      () => {
         this.EnemyManager.gameStarted = true;
       },
       null,

@@ -332,7 +332,7 @@ class BossScreen extends Phaser.Scene {
       });
 
       this.time.delayedCall(
-        200,
+        500,
         () => {
           this.scene.start("leaderboard");
         },
