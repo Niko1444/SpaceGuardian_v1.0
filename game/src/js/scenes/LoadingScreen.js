@@ -111,7 +111,7 @@ class LoadingScreen extends Phaser.Scene {
     // Load the HealthBar
     this.load.spritesheet({
       key: "healthBar_texture",
-      url: "assets/spritesheets/vfx/healthBar-02.png",
+      url: "assets/spritesheets/vfx/healthBar_01.png",
       frameConfig: {
         frameWidth: 331,
         frameHeight: 154,
