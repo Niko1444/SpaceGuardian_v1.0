@@ -134,6 +134,7 @@ class PlayingScreen extends Phaser.Scene {
 
     this.player.play("player_anim");
     this.player.restartGameSettings();
+    this.player.selectedPlayer = this.selectedPlayerIndex;
 
     // Spawn the Enemies
     this.time.delayedCall(
@@ -174,6 +175,7 @@ class PlayingScreen extends Phaser.Scene {
       this.player,
       this.selectedPlayerIndex
     );
+    
 
     this.EnemyManager = new EnemyManager(this);
 

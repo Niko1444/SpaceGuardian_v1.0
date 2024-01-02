@@ -141,6 +141,7 @@ class BossScreen extends Phaser.Scene {
 
     this.player.play("player_anim");
     this.player.restartGameSettings();
+    this.player.selectedPlayer = this.selectedPlayerIndex;
 
     // Spawn the Enemies
     this.bug3_1 = new Bug3(this, 50, 0, 2000);

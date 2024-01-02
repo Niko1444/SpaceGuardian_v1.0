@@ -27,6 +27,7 @@ class Player extends Entity {
     this.lifestealRate = gameSettings.savePlayerLifesteal;
     this.numberOfBullets = gameSettings.savePlayerNumberOfBullets;
     this.bulletSpeed = gameSettings.savePlayerBulletSpeed;
+    this.selectedPlayer = 0;
 
     this.SoundManager = new SoundManager(scene);
 
@@ -64,6 +65,21 @@ class Player extends Entity {
   setInteractiveEntity() {
     this.setInteractive({ draggable: true });
     this.scene.input.setDraggable(this);
+  
+    this.on('drag', function (pointer, dragX, dragY) {
+      this.x = dragX;
+      this.y = dragY;
+  
+      this.shootBullet(this.selectedPlayer);
+    });
+  
+    this.on('dragend', function (pointer) {
+      // You can add code here to execute when the drag ends.
+    });
+  
+    this.scene.input.on('pointerup', function (pointer) {
+      this.scene.input.setDragState(this, 0);
+    }, this);
   }
 
   shootBullet(number) {

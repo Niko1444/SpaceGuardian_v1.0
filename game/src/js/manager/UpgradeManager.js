@@ -54,6 +54,7 @@ class UpgradeManager {
   }
 
   rewardByScore(callingScene) {
+    this.scene.input.setDragState(this.scene.player, 0);
     // Pause the current scene
     this.scene.scene.pause();
     // Launch upgradeScreen and pass the sceneName as part of the data

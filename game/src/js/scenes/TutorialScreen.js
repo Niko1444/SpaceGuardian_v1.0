@@ -107,6 +107,7 @@ class TutorialScreen extends Phaser.Scene {
     );
     this.player.play("player_anim");
     this.player.restartToTile();
+    this.player.selectedPlayer = this.selectedPlayerIndex;
 
     this.shield = new Shield(this, this.player);
     this.shield.play("shield_anim");

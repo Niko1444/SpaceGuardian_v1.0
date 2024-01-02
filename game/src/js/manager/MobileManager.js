@@ -16,8 +16,8 @@ class MobileManager {
   }
 
   handlePlayerDrag(pointer, gameObject, dragX, dragY) {
-    gameObject.x = dragX;
-    gameObject.y = dragY;
+    this.scene.player.x = dragX;
+    this.scene.player.y = dragY;
 
     this.scene.player.shootBullet(this.scene.selectedPlayerIndex);
   }
