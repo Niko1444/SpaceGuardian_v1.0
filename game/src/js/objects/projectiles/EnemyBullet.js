@@ -23,6 +23,8 @@ class EnemyBullet extends Entity {
     this.damage = 100;
     this.setDepth(1);
 
+    this.body.setSize(16, 16, true);
+
     if (rotation !== null && angle !== null) {
       this.initialBulletForBoss(rotation, angle);
     } else {

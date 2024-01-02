@@ -177,9 +177,14 @@ class PlayingScreen extends Phaser.Scene {
 
     this.EnemyManager = new EnemyManager(this);
 
-    this.time.delayedCall(3000, () => {
-      this.EnemyManager.spawnEnemyRowWithDelay(this, 0);
-    }, null, this);
+    this.time.delayedCall(
+      3000,
+      () => {
+        this.EnemyManager.spawnEnemyRowWithDelay(this, 0);
+      },
+      null,
+      this
+    );
 
     this.time.delayedCall(
       6000,
@@ -374,7 +379,7 @@ class PlayingScreen extends Phaser.Scene {
     // Move the player and enemies
     this.PlayerManager.movePlayer();
 
-    // this.EnemyManager.moveEnemies(); Dont need 
+    // this.EnemyManager.moveEnemies(); Dont need
     this.EnemyManager.enemies.forEach((enemy) => {
       enemy.updateHealthBarPosition();
     });
