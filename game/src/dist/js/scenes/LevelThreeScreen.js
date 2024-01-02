@@ -255,6 +255,7 @@ class LevelThreeScreen extends Phaser.Scene {
         this.EnemyManager.addEnemyForOnce(this.bug5_5);
         this.EnemyManager.addEnemyForOnce(this.bug5_6);
         this.EnemyManager.addEnemyForOnce(this.bug5_7);
+        this.EnemyManager.gameStarted = true;
       },
       null,
       this
@@ -303,16 +304,6 @@ class LevelThreeScreen extends Phaser.Scene {
       this.SoundManager
     );
 
-    this.time.delayedCall(
-      47000,
-      () => {
-        this.goToNextLevel();
-      },
-      null,
-      this
-    );
-
-    this.input.keyboard.on("keydown-ENTER", this.goToNextLevel, this);
 
     // create pause button
     this.pic = this.add.image(config.width - 20, 30, "pause");
@@ -361,10 +352,12 @@ class LevelThreeScreen extends Phaser.Scene {
     // Move the player and enemies
     this.PlayerManager.movePlayer();
 
-    this.EnemyManager.moveEnemies();
+    // this.EnemyManager.moveEnemies();
     this.EnemyManager.enemies.forEach((enemy) => {
       enemy.updateHealthBarPosition();
     });
+
+    this.EnemyManager.destroyEnemyMoveOutOfScreen();
 
     if (this.spacebar.isDown) {
       this.player.shootBullet(this.selectedPlayerIndex);
@@ -379,6 +372,11 @@ class LevelThreeScreen extends Phaser.Scene {
     }
 
     this.shield.updatePosition(this.player);
+
+    if (this.EnemyManager.checkToFinishLevel()) {
+      this.goToNextLevel();
+      this.EnemyManager.gameStarted = false;
+    }
 
     this.time.addEvent({
       delay: 18000,
@@ -483,15 +481,9 @@ class LevelThreeScreen extends Phaser.Scene {
       config.height / 2 - 60,
       5000
     );
-    this.createText(
-      "Press Enter to continue",
-      config.width / 2,
-      config.height / 2 - 30,
-      5000
-    );
 
     // Check for Enter key press continuously in the update loop
-    this.input.keyboard.on("keydown-ENTER", this.handleEnterKey, this);
+    this.time.delayedCall(1000, this.handleEnterKey, [], this);
   }
 
   handleEnterKey() {
@@ -504,12 +496,12 @@ class LevelThreeScreen extends Phaser.Scene {
         Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE,
         (cam, effect) => {
           this.scene.stop();
-          this.scene.start("bossGame", { number: this.selectedPlayerIndex });
+          this.scene.start("bossGame", {
+            number: this.selectedPlayerIndex,
+          });
         }
       );
     });
-
-    this.input.keyboard.off("keydown-ENTER", this.handleEnterKey, this);
   }
 }
 export default LevelThreeScreen;
