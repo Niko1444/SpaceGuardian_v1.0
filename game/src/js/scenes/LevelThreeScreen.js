@@ -261,7 +261,7 @@ class LevelThreeScreen extends Phaser.Scene {
     );
 
     this.time.delayedCall(
-      25000,
+      40000,
       () => {
         this.EnemyManager.gameStarted = true;
       },
