@@ -108,6 +108,9 @@ class ChoosePlayer extends Phaser.Scene {
               null,
               this
             );
+
+            this.playerSelected = false;
+            this.selectedPlayerIndex = 0;
           }
         });
       }
