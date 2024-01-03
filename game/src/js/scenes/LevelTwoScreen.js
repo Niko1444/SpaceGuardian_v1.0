@@ -218,7 +218,7 @@ class LevelTwoScreen extends Phaser.Scene {
 
     // FINAL WAVE
     this.time.delayedCall(
-      22000,
+      25000,
       () => {
         this.startFinalWave();
       },
