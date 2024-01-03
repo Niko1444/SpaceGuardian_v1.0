@@ -83,20 +83,6 @@ class TutorialScreen extends Phaser.Scene {
     this.keyboardManager = new KeyboardManager(this, this.music);
     this.keyboardManager.MuteGame();
 
-    // create pause button
-    this.pic = this.add.image(config.width - 20, 30, "pause");
-    // this.button = this.scene.add.sprite(60, 30, 'pause');
-    this.pic.setInteractive();
-
-    this.pic.on(
-      "pointerdown",
-      function () {
-        this.scene.pause();
-        this.scene.launch("pauseScreen", { key: this.callingScene });
-      },
-      this
-    );
-
     // Spawn the Player
     this.player = new Player(
       this,
@@ -162,20 +148,6 @@ class TutorialScreen extends Phaser.Scene {
 
     // Score System
     this.UpgradeManager = new UpgradeManager(this, this.callingScene);
-
-    // create pause button
-    this.pic = this.add.image(config.width - 20, 30, "pause");
-    // this.button = this.scene.add.sprite(60, 30, 'pause');
-    this.pic.setInteractive();
-
-    this.pic.on(
-      "pointerdown",
-      function () {
-        this.scene.pause();
-        this.scene.launch("pauseScreen", { key: "playGame" });
-      },
-      this
-    );
 
     this.musicButton = this.add.image(config.width - 60, 30, "sound_texture");
     this.musicButton.setInteractive();
