@@ -1,0 +1,26 @@
+@startuml
+
+class Phaser
+class Player
+
+class PlayerManager {
+  - scene: Phaser.Scene
+  - player: Player
+  - cursorKeys: Phaser.Input.Keyboard.CursorKeys
+  - selectedPlayerIndex: int
+  + constructor(scene: Phaser.Scene, player: Player, selectedPlayerIndex: int)
+  + movePlayer(): void
+}
+
+class Player {
+  - speed: number
+  - setVelocityX(velocity: number): void
+  - setVelocityY(velocity: number): void
+  - play(animationKey: string): void
+  - anims: Phaser.Animations.AnimationManager // assuming the type of anims property
+}
+
+Phaser -- PlayerManager
+Player ..> PlayerManager
+
+@enduml

@@ -1,0 +1,22 @@
+@startuml
+
+class UpgradeManager {
+  - scene: Phaser.Scene
+  - callingScene: string
+  - scoreText: Phaser.GameObjects.Text
+
+  + constructor(scene: Phaser.Scene, callingScene: string)
+  + createScoreText(): void
+  + updateScore(score: number): void
+  + countScoreByThreshhold(threshhold: number): number
+  + displayScore(): void
+  + rewardByScore(callingScene: string): void
+}
+
+class Phaser
+class gameSettings
+
+UpgradeManager ..> Phaser
+UpgradeManager -- gameSettings
+
+@enduml

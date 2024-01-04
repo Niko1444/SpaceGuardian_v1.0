@@ -1,0 +1,20 @@
+@startuml
+
+class SoundManager extends Phaser.GameObjects.Sprite {
+  - scene: Phaser.Scene
+
+  + constructor(scene: Phaser.Scene)
+  + loadAudio(): void
+  + playHealthSound(): void
+  + playShieldSound(): void
+  + playBulletSound(): void
+  + playExplosionSound(): void
+  # Other sound functions...
+
+}
+
+class Phaser
+
+SoundManager ..> Phaser
+
+@enduml

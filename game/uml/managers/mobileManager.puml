@@ -1,0 +1,15 @@
+@startuml
+
+class Phaser
+class MobileManager {
+  - scene: Phaser.Scene
+  - isMobile: boolean
+
+  + constructor(scene: Phaser.Scene)
+  + createDraggablePlayer(): void
+  + handlePlayerDrag(pointer: Phaser.Input.Pointer, gameObject: Phaser.GameObjects.GameObject, dragX: number, dragY: number): void
+}
+
+Phaser <.. MobileManager
+
+@enduml

@@ -1,0 +1,19 @@
+@startuml
+
+
+class Phaser {
+  type: Phaser.AUTO
+  pauseGame: false
+  width: gameWidth
+  height: gameHeight
+  scale: Phaser.Scale.FIT
+  autoCenter: Phaser.Scale.CENTER_BOTH
+  backgroundColor: 0x000000
+  pixelArt: true
+  input: Phaser.Input
+  physics: Phaser.Physics
+  plugins: Phaser.Plugins
+}
+
+
+@enduml

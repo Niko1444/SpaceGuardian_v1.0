@@ -1,0 +1,43 @@
+@startuml
+
+class Phaser
+class config
+class gameSettings
+class Music
+class KeyboardManager {
+  - scene: Phaser.Scene
+  - music: Music
+  - cursorKeys: Phaser.Input.Keyboard.CursorKeys
+  - keys: Phaser.Input.Keyboard.Key[]
+
+  + constructor(scene: Phaser.Scene, music: Music)
+  + MuteGame(): void
+  + pauseGame(): void
+  + unpauseGame(): void
+  + titleScreen(): void
+  + restartGame(): void
+  + showLeaderboard(): void
+}
+
+class config {
+  + pauseGame: boolean
+}
+
+class gameSettings {
+  + playerScore: number
+}
+
+class Music {
+  - soundOn: boolean
+  - musicOn: boolean
+  - bgMusicPlaying: boolean
+
+  + bgMusic: Phaser.Sound.BaseSound
+}
+
+Phaser <.. KeyboardManager
+config -- KeyboardManager
+gameSettings -- KeyboardManager
+Music -- KeyboardManager
+
+@enduml

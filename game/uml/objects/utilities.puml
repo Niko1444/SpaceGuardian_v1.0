@@ -1,0 +1,33 @@
+@startuml
+class Entity {
+  - scene: Phaser.Scene
+  {methods}
+  + Entity(scene: Phaser.Scene, x: int, y: int, key: string)
+  + onDestroy(): void
+  + setInteractiveEntity(): void
+}
+
+class HealthPack {
+  {methods}
+  + HealthPack(scene: Phaser.Scene, x: int, y: int)
+  + setRandomVelocity(): void
+}
+
+class Shield {
+  {methods}
+  + Shield(scene: Phaser.Scene, player: Player)
+  + show(): void
+  + hide(): void
+  + updatePosition(player: Player): void
+}
+
+class ShieldPack {
+  {methods}
+  + ShieldPack(scene: Phaser.Scene, x: int, y: int)
+  + setRandomVelocity(): void
+}
+
+Entity <|-- HealthPack : extends
+Entity <|-- Shield : extends
+Entity <|-- ShieldPack : extends
+@enduml

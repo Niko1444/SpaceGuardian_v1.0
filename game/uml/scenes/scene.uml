@@ -1,0 +1,284 @@
+@startuml
+!define ENTITY class
+!define ABSTRACT abstract
+!define INHERITANCE <|-- 
+!define COMPOSITION *--
+
+package "Game" {
+  class PlayingScreen {
+    -callingScene: String
+    -pic: Image
+    -BACKGROUND_SCROLL_SPEED: Float
+    +init(data)
+    +preload()
+    +create()
+    +update()
+    +updateAudio()
+    +shutdownPlayer()
+    +gameOver()
+    +shutdown()
+    +createText(key, x, y, time)
+    +goToNextLevel()
+    +handleEnterKey()
+    +startFinalWave()
+  }
+
+  class Player {
+    - scene: Phaser.Scene
+    - health: number
+    - maxHealth: number
+    - damage: number
+    - bulletDamage: number
+    - speed: number
+    - shield: Shield
+    - bulletSize: number
+    - fireRate: number
+    - lastShootTime: number
+    - lifestealRate: number
+    - numberOfBullets: number
+    - bulletSpeed: number
+    - selectedPlayer: number
+    - SoundManager: SoundManager
+    - hpBar: HPBar2
+    - key: string
+    + constructor(scene: Phaser.Scene, x: number, y: number, key: string, health: number)
+    + setVelocityY(velocity: number): void
+    + setVelocityX(velocity: number): void
+    + explode(canDestroy: boolean): void
+    + setInteractiveEntity(): void
+    + shootBullet(number: number): void
+    + setPhysics(scene: Phaser.Scene): void
+    + getHeal(heal: number): void
+    + savePlayer(): void
+    + restartToTile(): void
+    + restartGameSettings(): void
+  }
+
+  class GuiManager {
+    - scene: Phaser.Scene
+    - loadingSceneStarted: boolean
+    - TutorialText: Phaser.GameObjects.Text
+    + constructor(scene: Phaser.Scene)
+    + createGui(): void
+    + createPlayingGui(backgroundKey: string): void
+    + createPauseGui(): void
+    + createGameOverGui(): void
+    + createTitleGui(): void
+    + createSimpleText(x: number, y: number, key: string, font: string, color: string, origin: number): void
+    + createBackground(key: string): void
+    + createLevelText(x: number, y: number, key: string, font: string, color: string): void
+    + createTutorialText(key: string, x: number, y: number): void
+  }
+
+  class Shield {
+    - scene: Phaser.Scene
+    - player: Player
+    + Shield(scene: Phaser.Scene, player: Player)
+    + show(): void
+    + hide(): void
+    + updatePosition(player: Player): void
+  }
+
+  class Entity {
+    +constructor(scene, x, y, texture, health)
+    +setVelocityX(velocity)
+    +setVelocityY(velocity)
+    +setInteractiveEntity()
+    +set0health()
+    +explode(canDestroy)
+    +onDestroy()
+  }
+
+  class Bug1 {
+    +constructor(scene, x, y, health, scale = 1)
+    +rotateToPlayer(player)
+    +shootBullet(scene, enemy)
+  }
+
+  class Bug3 {
+    +constructor(scene, x, y, health, scale = 1)
+    +rotateToPlayer(player)
+    +shootBullet(scene, enemy)
+    +shootChaseBullet(scene, enemy)
+  }
+
+  class Bug5 {
+    +constructor(scene, x, y, health, scale = 1)
+    +chasePlayer(player, speed = 200)
+  }
+
+  class HPBar {
+    +constructor(scene, x, y, width, height, value, max)
+  }
+
+  class EnemyManager {
+    - scene: Phaser.Scene
+    - enemies: Bug1[] // assuming Bug1 is the base class for other bugs
+    - respawnDelays: int[]
+    - lastRespawnTimes: int[]
+    - gameStarted: boolean
+    + constructor(scene: Phaser.Scene)
+    + checkToFinishLevel(): boolean
+    + destroyEnemyMoveOutOfScreen(): void
+    + moveEnemies(time: number): void
+    + addEnemy(enemy: Bug1): void
+    + addEnemyForOnce(enemy: Bug1): void
+    + spawnSingleEnemy(type: number, x: number, y: number, health: number, scale: number = 1): Bug1
+    + spawnEnemyRow(rowX: number, numRows: number, gapSize: number, health: number): Bug1[]
+    + addEnemyTutorial(): void
+    + spawnCircleOfBugsLv1(centerX: number, centerY: number, radius: number, numBugs: number): void
+    + spawnEnemyRowWithDelay(scene: Phaser.Scene, delay: number, health?: number): void
+    + spawnBugRain(numBugs: number, speed: number, spawnInterval: number): void
+    + spawnBugRainRightToLeft(numBugs: number, speed: number, spawnInterval: number): void
+    + spawnBugRainLeftToRight(numBugs: number, speed: number, spawnInterval: number): void
+    + spawnBugRainBottomToTop(numBugs: number, speed: number, spawnInterval: number): void
+    + spawnParticle(x: number, y: number): void
+    + createFirework(x: number, y: number): void
+  }
+
+  class KeyboardManager {
+    - scene: Phaser.Scene
+    - music: Music
+    - cursorKeys: Phaser.Input.Keyboard.CursorKeys
+    - keys: Phaser.Input.Keyboard.Key[]
+    + constructor(scene: Phaser.Scene, music: Music)
+    + MuteGame(): void
+    + pauseGame(): void
+    + unpauseGame(): void
+    + titleScreen(): void
+    + restartGame(): void
+    + showLeaderboard(): void
+  }
+
+  class CollideManager {
+    - scene: Phaser.Scene
+    - player: Player
+    - enemies: Array<Enemy>
+    - healthPacks: Array<HealthPack>
+    - shieldPacks: Array<ShieldPack>
+    - shield: Shield
+    - shieldActive: boolean
+    - soundManager: SoundManager
+    + constructor(scene: Phaser.Scene, player: Player, enemies: Array<Enemy>, healthPacks: Array<HealthPack>, shieldPacks: Array<ShieldPack>, shield: Shield, soundManager: SoundManager)
+    + shieldCollideEnemy(shield: Shield, enemy: Enemy): void
+    + shieldCollideBullet(shield: Shield, enemyBullet: EnemyBullet): void
+    + bulletHitEnemy(enemy: Enemy, bullet: Bullet): void
+    + bulletHitPlayer(player: Player, enemyBullet: EnemyBullet): void
+    + playerHitEnemy(player: Player, enemy: Enemy): void
+    + playerCollideHealthPack(player: Player, healthPack: HealthPack): void
+    + playerCollideShieldPack(player: Player, shieldPack: ShieldPack): void
+  }
+
+  class UtilitiesManager {
+    - scene: Phaser.Scene
+    - HealthPacks: HealthPack[]
+    - shieldPacks: ShieldPack[]
+    - delayTime: number
+    - timeElapsed: number
+    - shieldPacksSpawned: boolean
+    + constructor(scene: Phaser.Scene)
+    + generateRandomPosition(): {x: number, y: number}
+    + addUtilitiesForPlayingScreen(numHealth: number, numShield: number): void
+    + addHealthPack(HealthPack): void
+    + addShieldPack(ShieldPack): void
+    + update(time: number): void
+  }
+
+  class ProjectileManager {
+    - scene: Phaser.Scene
+    + constructor(scene: Phaser.Scene)
+    + createPlayerBullet(): void
+    + createEnemyBullet(): void
+    + createChaseBullet(): void
+    + callEnemyBulletLv1(): void
+    + callEnemyBulletLv2(): void
+    + callChaseBulletLv1(): void
+    + callEnemyBulletBoss(): void
+    + callChaseBulletBoss(): void
+  }
+
+  class UpgradeManager {
+    - scene: Phaser.Scene
+    - callingScene: string
+    - scoreText: Phaser.GameObjects.Text
+    + constructor(scene: Phaser.Scene, callingScene: string)
+    + createScoreText(): void
+    + updateScore(score: number): void
+    + countScoreByThreshhold(threshhold: number): number
+    + displayScore(): void
+    + rewardByScore(callingScene: string): void
+  }
+
+  class SoundManager extends Phaser.GameObjects.Sprite {
+    - scene: Phaser.Scene
+    + constructor(scene: Phaser.Scene)
+    + loadAudio(): void
+    + playHealthSound(): void
+    + playShieldSound(): void
+    + playBulletSound(): void
+    + playExplosionSound(): void
+    # Other sound functions...
+  }
+
+  class PlayerManager {
+    - scene: Phaser.Scene
+    - player: Player
+    - cursorKeys: Phaser.Input.Keyboard.CursorKeys
+    - selectedPlayerIndex: int
+    + constructor(scene: Phaser.Scene, player: Player, selectedPlayerIndex: int)
+    + movePlayer(): void
+  }
+
+  class MobileManager {
+    - scene: Phaser.Scene
+    - isMobile: boolean
+    + constructor(scene: Phaser.Scene)
+    + createDraggablePlayer(): void
+    + handlePlayerDrag(pointer: Phaser.Input.Pointer, gameObject: Phaser.GameObjects.GameObject, dragX: number, dragY: number): void
+  }
+}
+
+Entity --> HPBar
+Bug1 --> Entity
+Bug3 --> Entity
+Bug5 --> Entity
+PlayingScreen --> GuiManager
+PlayingScreen --> Player
+PlayingScreen --> Shield
+PlayingScreen --> EnemyManager
+PlayingScreen --> KeyboardManager
+PlayingScreen --> PlayerManager
+PlayingScreen --> CollideManager
+PlayingScreen --> Bug1
+PlayingScreen --> Bug3
+PlayingScreen --> Bug5
+PlayingScreen --> UtilitiesManager
+PlayingScreen --> ProjectileManager
+PlayingScreen --> UpgradeManager
+PlayingScreen --> SoundManager
+PlayingScreen --> MobileManager
+
+HPBar -->|uses| Phaser.GameObjects.Graphics
+Shield -->|uses| Phaser.GameObjects.Graphics
+
+EnemyManager -->|uses| Bug1
+CollideManager -->|uses| Player
+CollideManager -->|uses| Enemy
+CollideManager -->|uses| HealthPack
+CollideManager -->|uses| ShieldPack
+UtilitiesManager -->|uses| HealthPack
+UtilitiesManager -->|uses| ShieldPack
+ProjectileManager -->|uses| Player
+UpgradeManager -->|uses| Phaser.GameObjects.Text
+UpgradeManager -->|uses| PlayerManager
+SoundManager -->|uses| Phaser.Sound.BaseSound
+PlayerManager -->|uses| Player
+MobileManager -->|uses| Player
+
+PlayerManager --> KeyboardManager: controls
+MobileManager --> PlayerManager: controls
+ProjectileManager -->|uses| Bullet
+ProjectileManager -->|uses| EnemyBullet
+ProjectileManager -->|uses| ChasingBullet
+
+@enduml

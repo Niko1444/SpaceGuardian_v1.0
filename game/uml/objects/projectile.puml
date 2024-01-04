@@ -1,0 +1,64 @@
+@startuml
+class Entity {
+  - scene: Phaser.Scene
+  - health: int
+  - maxHealth: int
+  - isDead: boolean
+  - hpBarWidth: int
+  - hpBarHeight: int
+  - speed: int
+  - SoundManager: SoundManager
+
+  {methods}
+  + Entity(scene: Phaser.Scene, x: int, y: int, key: string, health: int)
+  + updateHealthBarPosition(): void
+  + updateHealthBarValue(health: int, maxHealth: int): void
+  + explode(canDestroy: boolean): void
+  + setInteractiveEntity(): void
+  + setVelocityY(velocity: int): void
+  + setVelocityX(velocity: int): void
+  + setPhysics(scene: Phaser.Scene): void
+  + takeDamage(damage: int): void
+}
+
+class Bullet {
+  - damage: int
+  - bulletSize: int
+
+  {methods}
+  + Bullet(scene: Phaser.Scene, number: int)
+  + update(): void
+  + destroy(): void
+}
+
+class ChasingBullet {
+  - damage: int
+  - changeUpdateVelocity: boolean
+
+  {methods}
+  + ChasingBullet(scene: Phaser.Scene, enemy: Entity)
+  + initializeVelocity(): void
+  + update(): void
+  + destroy(): void
+}
+
+class EnemyBullet {
+  - damage: int
+
+  {methods}
+  + EnemyBullet(scene: Phaser.Scene, enemy: Entity, x: int, y: int, rotation: Rotation, angle: float)
+  + initialBulletForBoss(rotation: Rotation, angle: float): void
+  + initializeVelocity(): void
+  + update(): void
+  + destroy(): void
+}
+
+class SoundManager {
+  // SoundManager class details
+}
+
+Entity -- SoundManager : contains
+Bullet --|> Entity : extends
+ChasingBullet --|> Entity : extends
+EnemyBullet --|> Entity : extends
+@enduml

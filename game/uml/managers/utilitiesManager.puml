@@ -1,0 +1,28 @@
+@startuml
+
+class Phaser
+class HealthPack
+class ShieldPack
+class UtilitiesManager {
+  - scene: Phaser.Scene
+  - HealthPacks: HealthPack[]
+  - shieldPacks: ShieldPack[]
+  - delayTime: number
+  - timeElapsed: number
+  - shieldPacksSpawned: boolean
+  + constructor(scene: Phaser.Scene)
+  + generateRandomPosition(): {x: number, y: number}
+  + addUtilitiesForPlayingScreen(numHealth: number, numShield: number): void
+  + addHealthPack(HealthPack): void
+  + addShieldPack(ShieldPack): void
+  + update(time: number): void
+}
+
+class HealthPack
+class ShieldPack
+
+Phaser -- UtilitiesManager
+HealthPack -- UtilitiesManager
+ShieldPack -- UtilitiesManager
+
+@enduml

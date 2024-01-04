@@ -1,0 +1,69 @@
+@startuml
+
+class Entity {
+  - scene: Phaser.Scene
+  - health: number
+  - maxHealth: number
+  - hpBarWidth: number
+  - hpBarHeight: number
+  - damage: number
+  - setInteractiveEntity(): void
+  - updateHealthBarPosition(): void
+  - explode(canDestroy: boolean): void
+  - shootBullet(scene: Phaser.Scene, enemy: Entity): void
+}
+
+class HPBar {
+  - scene: Phaser.Scene
+  - foregroundBar: Phaser.GameObjects.Rectangle
+  - backgroundBar: Phaser.GameObjects.Image
+  + constructor(...)
+  + setValue(value: number, max: number): void
+}
+
+class EnemyBullet {
+  - scene: Phaser.Scene
+  + constructor()
+  + initialBulletForBoss(rotation: { x: number, y: number }, angle: number): void
+  + initializeVelocity(): void
+  + update(): void
+  + destroy(): void
+}
+
+class Boss {
+  - shootAngle: number
+  - shootRotationOne: { x: number, y: number }
+  - shootRotationTwo: { x: number, y: number }
+  - shootRotationThree: { x: number, y: number }
+  - shootRotationFour: { x: number, y: number }
+  - checkCenter: number
+  - hpBar: HPBar
+  + constructor(scene: Phaser.Scene, x: number, y: number, health: number)
+  + setVelocityY(velocity: number): void
+  + setVelocityX(velocity: number): void
+  + setInteractiveEntity(): void
+  + set0health(): void
+  + explode(canDestroy: boolean): void
+  + shootBullet(scene: Phaser.Scene, enemy: Entity): void
+  + shootBulletCircle(scene: Phaser.Scene, enemy: Entity): void
+  + moveToCenter(): void
+  + bossBound(): void
+  + shootEightWay(scene: Phaser.Scene, enemy: Entity): void
+}
+
+class Phaser
+class config
+
+Entity <|-- HPBar
+Entity --> Phaser
+
+HPBar --> Phaser
+HPBar --> config
+HPBar -- Boss
+
+EnemyBullet --|> Entity
+
+Boss -- EnemyBullet
+Boss --|> Entity
+
+@enduml
