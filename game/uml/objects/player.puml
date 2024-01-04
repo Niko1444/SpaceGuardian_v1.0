@@ -1,0 +1,119 @@
+@startuml
+
+class Player {
+  - scene: Phaser.Scene
+  - health: number
+  - maxHealth: number
+  - damage: number
+  - bulletDamage: number
+  - speed: number
+  - shield: Shield
+  - bulletSize: number
+  - fireRate: number
+  - lastShootTime: number
+  - lifestealRate: number
+  - numberOfBullets: number
+  - bulletSpeed: number
+  - selectedPlayer: number
+  - SoundManager: SoundManager
+  - hpBar: HPBar2
+  - key: string
+
+  + constructor(scene: Phaser.Scene, x: number, y: number, key: string, health: number)
+  + setVelocityY(velocity: number): void
+  + setVelocityX(velocity: number): void
+  + explode(canDestroy: boolean): void
+  + setInteractiveEntity(): void
+  + shootBullet(number: number): void
+  + setPhysics(scene: Phaser.Scene): void
+  + getHeal(heal: number): void
+  + savePlayer(): void
+  + restartToTile(): void
+  + restartGameSettings(): void
+}
+
+class Entity {
+  - scene: Phaser.Scene
+  - health: number
+  - maxHealth: number
+  - isDead: boolean
+  - hpBarWidth: number
+  - hpBarHeight: number
+  - speed: number
+  - SoundManager: SoundManager
+
+  + constructor(scene: Phaser.Scene, x: number, y: number, key: string, health: number)
+  + updateHealthBarPosition(): void
+  + updateHealthBarValue(health: number, maxHealth: number): void
+  + explode(canDestroy: boolean): void
+  + setInteractiveEntity(): void
+  + setVelocityY(velocity: number): void
+  + setVelocityX(velocity: number): void
+  + setPhysics(scene: Phaser.Scene): void
+  + takeDamage(damage: number): void
+}
+
+class Bullet {
+  - scene: Phaser.Scene
+  - damage: number
+  - bulletSize: number
+
+  + constructor(scene: Phaser.Scene, number: number)
+  + update(): void
+  + destroy(): void
+}
+
+class Shield {
+  - scene: Phaser.Scene
+
+  + constructor(scene: Phaser.Scene, player: Player)
+  + show(): void
+  + hide(): void
+  + updatePosition(player: Player): void
+  + setInteractiveEntity(): void
+}
+
+class HPBar2 extends Phaser.GameObjects.Container {
+  - scene: Phaser.Scene
+  - foregroundBar: Phaser.GameObjects.Rectangle
+  - backgroundBar: Phaser.GameObjects.Image
+
+  + constructor(scene: Phaser.Scene, x: number, y: number, width: number, height: number, value: number, max: number)
+  + setValue(value: number, max: number): void
+}
+
+class SoundManager
+class Phaser
+class DamageNumber
+
+
+Entity --> DamageNumber
+Entity --> SoundManager
+Entity --> Phaser.GameObjects.Sprite
+
+Player --|> Entity
+Player -- Bullet
+Player -- Shield
+Player -- HPBar2
+Player -- SoundManager
+Player ..> Phaser
+
+Bullet --|> Entity
+Bullet --> Phaser
+Bullet -- gameSettings
+
+Shield --|> Entity
+Shield --> Phaser
+Shield -- gameSettings
+Shield -- Player
+
+HPBar2 --> Phaser
+HPBar2 -- config
+
+
+@enduml
+
+
+
+
+

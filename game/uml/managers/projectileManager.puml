@@ -1,0 +1,34 @@
+@startuml
+
+class Phaser
+class Bullet
+class EnemyBullet
+class ChasingBullet
+class config
+class ProjectileManager {
+  - scene: Phaser.Scene
+  + constructor(scene: Phaser.Scene)
+  + createPlayerBullet(): void
+  + createEnemyBullet(): void
+  + createChaseBullet(): void
+  + callEnemyBulletLv1(): void
+  + callEnemyBulletLv2(): void
+  + callChaseBulletLv1(): void
+  + callEnemyBulletBoss(): void
+  + callChaseBulletBoss(): void
+}
+
+class config
+
+Bullet --|> Phaser.Physics
+EnemyBullet --|> Phaser.Physics
+ChasingBullet --|> Phaser.Physics
+
+Scene --|> Phaser
+ProjectileManager -- Phaser.Scene
+ProjectileManager -- Bullet
+ProjectileManager -- EnemyBullet
+ProjectileManager -- ChasingBullet
+ProjectileManager -- config
+
+@enduml

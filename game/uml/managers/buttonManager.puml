@@ -1,0 +1,18 @@
+@startuml
+
+class config
+class Phaser
+class ButtonManager {
+  - scene: Phaser.Scene
+  - button: Phaser.GameObjects.Sprite
+
+  + constructor(scene: Phaser.Scene)
+  + toggleGamePause(): void
+  + pause(): void
+  + resume(): void
+}
+
+config -- ButtonManager
+Phaser <.. ButtonManager
+
+@enduml

@@ -1,0 +1,24 @@
+@startuml
+
+class GuiManager {
+  - scene: Phaser.Scene
+  - loadingSceneStarted: boolean
+  - TutorialText: Phaser.GameObjects.Text
+
+  + constructor(scene: Phaser.Scene)
+  + createGui(): void
+  + createPlayingGui(backgroundKey: string): void
+  + createPauseGui(): void
+  + createGameOverGui(): void
+  + createTitleGui(): void
+  + createSimpleText(x: number, y: number, key: string, font: string, color: string, origin: number): void
+  + createBackground(key: string): void
+  + createLevelText(x: number, y: number, key: string, font: string, color: string): void
+  + createTutorialText(key: string, x: number, y: number): void
+}
+
+class Phaser
+
+GuiManager ..> Phaser
+
+@enduml

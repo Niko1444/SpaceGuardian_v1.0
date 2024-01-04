@@ -1,0 +1,43 @@
+@startuml
+
+class CollideManager {
+  - scene: Phaser.Scene
+  - player: Player
+  - enemies: Array<Enemy>
+  - healthPacks: Array<HealthPack>
+  - shieldPacks: Array<ShieldPack>
+  - shield: Shield
+  - shieldActive: boolean
+  - soundManager: SoundManager
+
+  + constructor(scene: Phaser.Scene, player: Player, enemies: Array<Enemy>, healthPacks: Array<HealthPack>, shieldPacks: Array<ShieldPack>, shield: Shield, soundManager: SoundManager)
+  + shieldCollideEnemy(shield: Shield, enemy: Enemy): void
+  + shieldCollideBullet(shield: Shield, enemyBullet: EnemyBullet): void
+  + bulletHitEnemy(enemy: Enemy, bullet: Bullet): void
+  + bulletHitPlayer(player: Player, enemyBullet: EnemyBullet): void
+  + playerHitEnemy(player: Player, enemy: Enemy): void
+  + playerCollideHealthPack(player: Player, healthPack: HealthPack): void
+  + playerCollideShieldPack(player: Player, shieldPack: ShieldPack): void
+}
+
+class Phaser
+class Player
+class Enemy
+class HealthPack
+class ShieldPack
+class Shield
+class EnemyBullet
+class Bullet
+class SoundManager
+
+CollideManager ..> Phaser
+CollideManager -- Player
+CollideManager -- Enemy
+CollideManager -- HealthPack
+CollideManager -- ShieldPack
+CollideManager -- Shield
+CollideManager -- EnemyBullet
+CollideManager -- Bullet
+CollideManager -- SoundManager
+
+@enduml

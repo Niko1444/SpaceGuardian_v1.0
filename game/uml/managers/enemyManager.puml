@@ -1,0 +1,39 @@
+@startuml
+
+class Phaser
+class config
+class Bug1
+class Bug3
+class Bug5
+class EnemyManager {
+  - scene: Phaser.Scene
+  - enemies: Bug1[] // assuming Bug1 is the base class for other bugs
+  - respawnDelays: int[]
+  - lastRespawnTimes: int[]
+  - gameStarted: boolean
+  + constructor(scene: Phaser.Scene)
+  + checkToFinishLevel(): boolean
+  + destroyEnemyMoveOutOfScreen(): void
+  + moveEnemies(time: number): void
+  + addEnemy(enemy: Bug1): void
+  + addEnemyForOnce(enemy: Bug1): void
+  + spawnSingleEnemy(type: number, x: number, y: number, health: number, scale: number = 1): Bug1
+  + spawnEnemyRow(rowX: number, numRows: number, gapSize: number, health: number): Bug1[]
+  + addEnemyTutorial(): void
+  + spawnCircleOfBugsLv1(centerX: number, centerY: number, radius: number, numBugs: number): void
+  + spawnEnemyRowWithDelay(scene: Phaser.Scene, delay: number, health?: number): void
+  + spawnBugRain(numBugs: number, speed: number, spawnInterval: number): void
+  + spawnBugRainRightToLeft(numBugs: number, speed: number, spawnInterval: number): void
+  + spawnBugRainLeftToRight(numBugs: number, speed: number, spawnInterval: number): void
+  + spawnBugRainBottomToTop(numBugs: number, speed: number, spawnInterval: number): void
+  + spawnParticle(x: number, y: number): void
+  + createFirework(x: number, y: number): void
+}
+
+Phaser -- EnemyManager
+config -- EnemyManager
+Bug1 ..> EnemyManager
+Bug3 ..> EnemyManager
+Bug5 ..> EnemyManager
+
+@enduml

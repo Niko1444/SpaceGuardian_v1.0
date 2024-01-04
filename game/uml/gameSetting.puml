@@ -1,0 +1,33 @@
+@startuml
+
+class GameSettings {
+  + playerSpeed: int = 250
+  + playerBulletDamage: int = 100
+  + playerLifesteal: int = 0
+  + playerBulletSpeed: int = 400
+  + playerScore: int = 0
+  + playerNumberOfBullets: int = 1
+  + playerFireRate: int = 700
+  + playerDefaultBulletSize: float = 1.2
+  + playerBulletSize: float = 1.2
+  + playerMaxHealth: int = 1000
+  + playerUpgradeThreshold: int = 300
+
+  + savePlayerSpeed: int = 250
+  + savePlayerBulletDamage: int = 100
+  + savePlayerLifesteal: int = 0
+  + savePlayerBulletSpeed: int = 400
+  + savePlayerScore: int = 0
+  + savePlayerNumberOfBullets: int = 1
+  + savePlayerFireRate: int = 700
+  + savePlayerDefaultBulletSize: float = 1.2
+  + savePlayerBulletSize: float = 1.2
+  + savePlayerMaxHealth: int = 1000
+  + savePlayerUpgradeThreshold: int = 500
+
+  + enemySpeed: int = 200
+  + bulletSpeed: int = 400
+  + healthPackSpeed: int = 100
+}
+
+@enduml
