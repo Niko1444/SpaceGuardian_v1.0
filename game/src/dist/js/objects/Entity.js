@@ -17,28 +17,24 @@ class Entity extends Phaser.GameObjects.Sprite {
 
     this.scene.physics.world.enableBody(this, 0);
     this.scene.add.existing(this);
-    // this.music = this.sys.game.globals.music;
-    // scene.load.audio('explosionSound', 'assets/audio/explosion.mp3');
   }
 
   updateHealthBarPosition() {
     this.hpBar.x = this.x - this.hpBarWidth / 2;
     if (this.hpBarWidth < 30) {
       this.hpBar.y = this.y + 30;
-    } else if ( this.y >= config.height + 1000 || this.y < -1000){
+    } else if (this.y >= config.height + 1000 || this.y < -1000) {
       this.hpBar.destroy();
       console.log("con co be be ");
-    }
-    else{
+    } else {
       this.hpBar.y = this.y + 120;
     }
   }
 
   updateHealthBarValue(health, maxHealth) {
-    if(this.health <0){
+    if (this.health < 0) {
       this.hpBar.destroy();
-    }
-    else{
+    } else {
       this.hpBar.setValue(this.health, this.maxHealth);
     }
   }
@@ -117,8 +113,6 @@ class Entity extends Phaser.GameObjects.Sprite {
       }
     }
   }
-
-
 }
 
 export default Entity;

@@ -48,17 +48,17 @@ class UpgradeManager {
     return threshhold ** 2 / 200 + threshhold / 2 - 300;
   }
 
-  displayScore() {
-    this.scoreText.setText(`Score: ${gameSettings.playerScore}`);
-    this.scoreText.setDepth(3);
-  }
-
   rewardByScore(callingScene) {
     this.scene.input.setDragState(this.scene.player, 0);
     // Pause the current scene
     this.scene.scene.pause();
     // Launch upgradeScreen and pass the sceneName as part of the data
     this.scene.scene.launch("upgradeScreen", { callingScene: callingScene });
+  }
+
+  displayScore() {
+    this.scoreText.setText(`Score: ${gameSettings.playerScore}`);
+    this.scoreText.setDepth(3);
   }
 }
 

@@ -8,8 +8,8 @@ class EnemyManager {
   constructor(scene) {
     this.scene = scene;
     this.enemies = [];
-    this.respawnDelays = []; // Array to store individual respawn delays
-    this.lastRespawnTimes = []; // Array to store individual last respawn times
+    this.respawnDelays = [];
+    this.lastRespawnTimes = [];
     this.gameStarted = false;
 
     // Set initial random delays and times for each enemy
@@ -21,29 +21,33 @@ class EnemyManager {
 
   checkToFinishLevel() {
     // Check if all enemies are inactive
-    const allEnemiesInactive = this.enemies.every(enemy => !enemy.active);
+    const allEnemiesInactive = this.enemies.every((enemy) => !enemy.active);
     // If all enemies are inactive and the game has started, return true
     if (allEnemiesInactive && this.gameStarted) {
-        return true;
+      return true;
     }
     // Otherwise, return false
     return false;
-}
+  }
 
   destroyEnemyMoveOutOfScreen() {
-    let offScreenEnemyIndex = this.enemies.findIndex(enemy => enemy.y >= config.height + 350 || enemy.y < -350);
+    let offScreenEnemyIndex = this.enemies.findIndex(
+      (enemy) => enemy.y >= config.height + 350 || enemy.y < -350
+    );
     if (offScreenEnemyIndex !== -1) {
-        // this.enemies[offScreenEnemyIndex].hpBar.destroy();
-        this.enemies[offScreenEnemyIndex].destroy(); // call destroy directly
-        this.enemies.splice(offScreenEnemyIndex, 1); // remove the enemy from the array
+      // this.enemies[offScreenEnemyIndex].hpBar.destroy();
+      this.enemies[offScreenEnemyIndex].destroy(); // call destroy directly
+      this.enemies.splice(offScreenEnemyIndex, 1); // remove the enemy from the array
     }
-}
+  }
 
   moveEnemies(time) {
     // Move enemies
 
-    let offScreenEnemy = this.enemies.find(enemy => enemy.y >= config.height);
-    let offScreenEnemyIndex = this.enemies.findIndex(enemy => enemy.y >= config.height);
+    let offScreenEnemy = this.enemies.find((enemy) => enemy.y >= config.height);
+    let offScreenEnemyIndex = this.enemies.findIndex(
+      (enemy) => enemy.y >= config.height
+    );
 
     const currentTime = this.scene.time.now;
 
@@ -59,9 +63,7 @@ class EnemyManager {
       this.respawnDelays[offScreenEnemyIndex] = Phaser.Math.Between(2000, 4000);
       this.lastRespawnTimes[offScreenEnemyIndex] = currentTime;
     }
-
   }
-
 
   // this can make the enemies respawn
   addEnemy(enemy) {

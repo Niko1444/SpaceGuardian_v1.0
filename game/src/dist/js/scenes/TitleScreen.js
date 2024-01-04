@@ -249,7 +249,7 @@ class TitleScreen extends Phaser.Scene {
       config.height / 2 + 110,
       "button_rank",
       "button_rank_hover",
-      "victoryScreen"
+      "leaderboard"
     );
     this.button_rank.setInteractive();
 
