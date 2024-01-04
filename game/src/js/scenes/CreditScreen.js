@@ -7,6 +7,7 @@ class CreditsScene extends Phaser.Scene {
   }
 
   create() {
+    this.music = this.sys.game.globals.music;
     this.cameras.main.setBackgroundColor("#000"); // Set the background color to black
 
     let creditsText = `
@@ -55,6 +56,7 @@ class CreditsScene extends Phaser.Scene {
   }
 
   goToTitleScreen() {
+    this.sys.game.globals.bgMusic.stop();
     this.scene.start("bootGame");
   }
 }

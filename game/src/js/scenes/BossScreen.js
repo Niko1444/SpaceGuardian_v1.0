@@ -345,7 +345,7 @@ class BossScreen extends Phaser.Scene {
       this.time.delayedCall(
         500,
         () => {
-          this.scene.start("leaderboard");
+          this.scene.start("victory");
         },
         null,
         this

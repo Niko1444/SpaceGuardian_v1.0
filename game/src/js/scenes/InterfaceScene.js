@@ -1,4 +1,4 @@
-class InterfaceManager {
+class InterfaceScene {
     constructor(scene) {
       this.scene = scene;
     }
@@ -14,7 +14,7 @@ class InterfaceManager {
     }
   
     goToLeaderboard(delay = 0) {
-      this.transitionToScene("leaderBoard", delay);
+      this.transitionToScene("leaderboard", delay);
     }
   
     goToTitleScreen(delay = 0) {
@@ -22,4 +22,4 @@ class InterfaceManager {
     }
   }
   
-  export default InterfaceManager;
+  export default InterfaceScene;
