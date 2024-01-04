@@ -13,6 +13,8 @@ class Leaderboard extends Phaser.Scene {
   preload() {}
 
   create() {
+    this.music = this.sys.game.globals.music;
+
     this.add.image(0, 0, "background").setOrigin(0, 0);
 
     const theText = this.add.text(
@@ -88,24 +90,27 @@ class Leaderboard extends Phaser.Scene {
     scoreText.setShadow(2, 2, "#FFFB73", 2, true, true);
 
     // Create Play Button
-    this.button_exit = new Button(
-      this,
+   
+    this.button_exit = this.add.image(
       config.width / 2,
       config.height / 2 + 270,
-      "button_exit",
-      "button_exit_hover",
-      "bootGame"
+      "button_exit"
     );
     this.button_exit.setScale(1.5);
     this.button_exit.setInteractive();
 
     // Event listeners for the play button
+    this.button_exit.on("pointerdown", () => {
+      this.sys.game.globals.bgMusic.stop();
+      this.scene.start("bootGame");
+    });
+
     this.button_exit.on("pointerover", () => {
-      this.button_play.setTexture("button_exit_hover");
+      this.button_exit.setTexture("button_exit_hover");
     });
 
     this.button_exit.on("pointerout", () => {
-      this.button_exit.setTexture("button_exit_play");
+      this.button_exit.setTexture("button_exit");
     });
 
     const playerName =

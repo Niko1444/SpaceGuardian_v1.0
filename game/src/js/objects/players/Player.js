@@ -63,23 +63,32 @@ class Player extends Entity {
   }
 
   setInteractiveEntity() {
+    if (this.scene.sys.game.device.os.desktop) {
+      this.setInteractive({ draggable: false });
+      return;
+    }
+
     this.setInteractive({ draggable: true });
     this.scene.input.setDraggable(this);
-  
-    this.on('drag', function (pointer, dragX, dragY) {
+
+    this.on("drag", function (pointer, dragX, dragY) {
       this.x = dragX;
       this.y = dragY;
-  
+
       this.shootBullet(this.selectedPlayer);
     });
-  
-    this.on('dragend', function (pointer) {
+
+    this.on("dragend", function (pointer) {
       // You can add code here to execute when the drag ends.
     });
-  
-    this.scene.input.on('pointerup', function (pointer) {
-      this.scene.input.setDragState(this, 0);
-    }, this);
+
+    this.scene.input.on(
+      "pointerup",
+      function (pointer) {
+        this.scene.input.setDragState(this, 0);
+      },
+      this
+    );
   }
 
   shootBullet(number) {
@@ -163,8 +172,6 @@ class Player extends Entity {
     gameSettings.savePlayerMaxHealth = gameSettings.playerMaxHealth;
     gameSettings.savePlayerUpgradeThreshold =
       gameSettings.playerUpgradeThreshold;
-    gameSettings.savePlayerUpgradeIncrement =
-      gameSettings.playerUpgradeIncrement;
   }
 
   restartToTile() {
@@ -177,6 +184,7 @@ class Player extends Entity {
     gameSettings.savePlayerFireRate = 700;
     gameSettings.savePlayerDefaultBulletSize = 1.2;
     gameSettings.savePlayerBulletSize = 1.2;
+    gameSettings.savePlayerUpgradeThreshold = 300;
     this.restartGameSettings();
   }
 
@@ -191,6 +199,8 @@ class Player extends Entity {
     gameSettings.playerDefaultBulletSize =
       gameSettings.savePlayerDefaultBulletSize;
     gameSettings.playerBulletSize = gameSettings.savePlayerBulletSize;
+    gameSettings.playerUpgradeThreshold =
+      gameSettings.savePlayerUpgradeThreshold;
   }
 }
 

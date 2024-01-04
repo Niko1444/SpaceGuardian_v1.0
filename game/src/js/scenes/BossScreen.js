@@ -345,7 +345,7 @@ class BossScreen extends Phaser.Scene {
       this.time.delayedCall(
         500,
         () => {
-          this.scene.start("victory");
+          this.scene.start("victoryScreen");
         },
         null,
         this
@@ -401,7 +401,7 @@ class BossScreen extends Phaser.Scene {
       }
     }
 
-    if ( this.boss.health < this.boss.maxHealth * 0.35 && this.boss.health > 0) {
+    if (this.boss.health < this.boss.maxHealth * 0.35 && this.boss.health > 0) {
       this.boss.moveToCenter();
       this.callMini();
     }

@@ -2,12 +2,38 @@ import Phaser from "phaser";
 import config from "../config/config";
 import KeyboardManager from "../manager/KeyboardManager";
 import GuiManager from "../manager/GuiManager.js";
+import Button from "../objects/Button.js";
+import gameSettings from "../config/gameSettings.js";
 class PauseScreen extends Phaser.Scene {
   constructor() {
     super("pauseScreen");
   }
   preload() {
     this.load.image("resume", "assets/spritesheets/vfx/resume.png");
+
+    this.load.spritesheet({
+      key: "button_quit_hover",
+      url: "assets/gui/button_play_hover.png",
+      frameConfig: {
+        frameWidth: 93,
+        frameHeight: 28,
+        startFrame: 5,
+        endFrame: 5,
+      },
+    });
+
+    this.load.spritesheet({
+      key: "button_quit",
+      url: "assets/gui/button_play.png",
+      frameConfig: {
+        frameWidth: 93,
+        frameHeight: 28,
+        startFrame: 5,
+        endFrame: 5,
+      },
+    });
+
+
   }
 
   init(data) {
@@ -45,6 +71,28 @@ class PauseScreen extends Phaser.Scene {
       this
     );
 
+    this.buttonQuit = this.add.sprite(config.width / 2, 2 * config.height / 3, "button_quit", 0);
+    this.buttonQuit.setInteractive();
+
+
+    this.buttonQuit.on("pointerdown", () => {
+      this.scene.start("bootGame");
+      let otherScene = this.scene.get(this.callingScene);
+      otherScene.shutdownPlayer();
+      this.scene.stop(this.callingScene);
+      this.scene.stop("pauseScreen");
+      gameSettings.playerScore = 0;
+      this.sys.game.globals.bgMusic.stop();
+    });
+
+    this.buttonQuit.on("pointerover", () => {
+      this.buttonQuit.setTexture("button_quit_hover");
+    });
+
+    this.buttonQuit.on("pointerout", () => {
+      this.buttonQuit.setTexture("button_quit");
+    });
+
     this.keyboardManager.unpauseGame();
     this.keyboardManager.MuteGame();
     this.keyboardManager.titleScreen();
@@ -63,14 +111,14 @@ class PauseScreen extends Phaser.Scene {
       this.musicButton.setTexture('mute_texture');
       this.sys.game.globals.bgMusic.pause();
       this.music.bgMusicPlaying = false;
-    } else if(this.music.musicOn === true && this.music.soundOn === true) {
+    } else if (this.music.musicOn === true && this.music.soundOn === true) {
       this.musicButton.setTexture('sound_texture');
       if (this.music.bgMusicPlaying === false) {
         this.sys.game.globals.bgMusic.resume();
         this.music.bgMusicPlaying = true;
       }
     }
-  
+
   }
 }
 export default PauseScreen;

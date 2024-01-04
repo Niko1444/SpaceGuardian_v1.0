@@ -3,13 +3,11 @@ import config from "../config/config";
 import gameSettings from "../config/gameSettings";
 import Firework from "../objects/Firework";
 
-
-
 const BACKGROUND_SCROLL_SPEED = 0.5;
 
 class VictoryScreen extends Phaser.Scene {
   constructor() {
-    super("victory");
+    super("victoryScreen");
   }
   preload() {
     this.load.spritesheet({
@@ -23,11 +21,13 @@ class VictoryScreen extends Phaser.Scene {
       },
     });
 
-
     this.load.image(
       "background",
       "assets/images/backgrounds/background_title.png"
     );
+
+    this.load.image("logo", "assets/images/logo.png");
+
     this.load.audio("victoryMusic", "assets/audio/victory.mp3");
   }
   create() {
@@ -53,6 +53,15 @@ class VictoryScreen extends Phaser.Scene {
     );
     this.background.setOrigin(0, 0);
 
+    // Create "LOGO" image
+    const bottomLeftImage = this.add.image(
+      (config.width / 10) * 8.5,
+      (config.height / 10) * 9.78,
+      "logo"
+    );
+    bottomLeftImage.setOrigin(0, 1);
+    bottomLeftImage.setScale(0.3);
+
     const victoryText = this.add.text(
       config.width / 2,
       config.height / 2 - 130,
@@ -67,8 +76,23 @@ class VictoryScreen extends Phaser.Scene {
     victoryText.setOrigin(0.5);
     victoryText.setShadow(3, 3, "#F27CA4", 2, false, true);
 
+    // Delay the "to be continued..." text by 1 second
+    const tobeText = this.add.text(
+      config.width / 2,
+      config.height / 2,
+      "to be continued...",
+      {
+        fontFamily: "Pixelify Sans",
+        fontSize: "40px",
+        color: "#F3F8FF", // Set the color for "VICTORY"
+        align: "center",
+      }
+    );
+    tobeText.setOrigin(0.5);
+    tobeText.setShadow(3, 3, "#F27CA4", 2, false, true);
+
     this.tweens.add({
-      targets: victoryText,
+      targets: tobeText,
       duration: 1000, // Adjust the duration as needed
       ease: "Sine.easeInOut",
       repeat: -1,
@@ -109,12 +133,7 @@ class VictoryScreen extends Phaser.Scene {
     this.countdownText.setOrigin(0.5);
     // Start the countdown
     this.updateCountdown();
-    
-    // const firework1 = new Firework(this, 40 , 200).setScale(1); // startX and startY are the starting coordinates of the firework
-    // const firework2 = new Firework(this, 150 , 170).setScale(1.5); // startX and startY are the starting coordinates of the firework
-    // const firework5 = new Firework(this, 300 , 120).setScale(2); // startX and startY are the starting coordinates of the firework
-    // const firework3 = new Firework(this, 450 , 170).setScale(1.5); // startX and startY are the starting coordinates of the firework
-    // const firework4 = new Firework(this, 560 , 200).setScale(1); // startX and startY are the starting coordinates of the firework
+    this.hideTextInput();
   }
   updateCountdown() {
     const remainingTime = this.countdownTimer.repeatCount;
@@ -130,6 +149,11 @@ class VictoryScreen extends Phaser.Scene {
     // Stop the current scene and start the leaderboard scene
     this.scene.stop(this.callingScene);
     this.scene.start("leaderboard");
+  }
+
+  hideTextInput() {
+    const playerNameInput = document.getElementById("playerNameInput");
+    playerNameInput.style.display = "none";
   }
 }
 export default VictoryScreen;
