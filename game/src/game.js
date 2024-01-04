@@ -10,5 +10,4 @@ class Game extends Phaser.Game {
   }
 }
 // Create a new Phaser game instance
-// const game = new Phaser.Game(config);
 const game = new Game(); /* eslint-disable-line */
