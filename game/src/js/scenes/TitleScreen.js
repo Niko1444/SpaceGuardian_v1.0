@@ -133,7 +133,7 @@ class TitleScreen extends Phaser.Scene {
     // Create Music
     this.music = this.sys.game.globals.music;
     // && this.music.bgMusicPlaying === false
-    if (this.music.musicOn === true ) {
+    if (this.music.musicOn === true) {
       this.bgMusic = this.sound.add("main_menu_music", {
         volume: 0.6,
         loop: true,
@@ -249,7 +249,7 @@ class TitleScreen extends Phaser.Scene {
       config.height / 2 + 110,
       "button_rank",
       "button_rank_hover",
-      "leaderboard"
+      "victoryScreen"
     );
     this.button_rank.setInteractive();
 
