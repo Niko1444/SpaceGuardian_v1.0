@@ -90,7 +90,7 @@ class Leaderboard extends Phaser.Scene {
     scoreText.setShadow(2, 2, "#FFFB73", 2, true, true);
 
     // Create Play Button
-   
+
     this.button_exit = this.add.image(
       config.width / 2,
       config.height / 2 + 270,

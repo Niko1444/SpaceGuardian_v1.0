@@ -33,6 +33,7 @@ const config = {
     ChoosePlayer,
     TutorialScreen,
     LevelTwoScreen,
+    NewShipScreen,
     LevelThreeScreen,
     BossScreen,
     PauseScreen,

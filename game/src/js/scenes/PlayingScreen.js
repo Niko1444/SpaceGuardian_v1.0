@@ -175,7 +175,6 @@ class PlayingScreen extends Phaser.Scene {
       this.player,
       this.selectedPlayerIndex
     );
-    
 
     this.EnemyManager = new EnemyManager(this);
 
