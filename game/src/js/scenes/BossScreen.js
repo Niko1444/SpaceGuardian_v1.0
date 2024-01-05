@@ -33,7 +33,7 @@ class BossScreen extends Phaser.Scene {
   preload() {
     this.load.spritesheet({
       key: `player_texture_${this.selectedPlayerIndex}`,
-      url: `assets/spritesheets/players/planes_0${this.selectedPlayerIndex}A.png`,
+      url: `assets/spritesheets/players/planes_0${this.selectedPlayerIndex}B.png`,
       frameConfig: {
         frameWidth: 96,
         frameHeight: 96,

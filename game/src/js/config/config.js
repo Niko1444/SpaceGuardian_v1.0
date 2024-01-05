@@ -12,6 +12,7 @@ import Leaderboard from "../scenes/Leaderboard.js";
 import BossScreen from "../scenes/BossScreen.js";
 import CreditsScene from "../scenes/CreditScreen.js";
 import VictoryScreen from "../scenes/VictoryScreen.js";
+import NewShipScreen from "../scenes/NewShipScreen.js";
 
 const gameWidth = 600;
 const gameHeight = 950;
@@ -33,6 +34,7 @@ const config = {
     ChoosePlayer,
     TutorialScreen,
     LevelTwoScreen,
+    NewShipScreen,
     LevelThreeScreen,
     BossScreen,
     PauseScreen,
