@@ -30,7 +30,7 @@ class LevelThreeScreen extends Phaser.Scene {
   preload() {
     this.load.spritesheet({
       key: `player_texture_${this.selectedPlayerIndex}`,
-      url: `assets/spritesheets/players/planes_0${this.selectedPlayerIndex}A.png`,
+      url: `assets/spritesheets/players/planes_0${this.selectedPlayerIndex}B.png`,
       frameConfig: {
         frameWidth: 96,
         frameHeight: 96,
@@ -312,7 +312,6 @@ class LevelThreeScreen extends Phaser.Scene {
       this.shield,
       this.SoundManager
     );
-
 
     // create pause button
     this.pic = this.add.image(config.width - 20, 30, "pause");

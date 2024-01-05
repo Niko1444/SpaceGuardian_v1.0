@@ -285,7 +285,6 @@ class LevelTwoScreen extends Phaser.Scene {
       this.SoundManager
     );
 
-
     // create pause button
     this.pic = this.add.image(config.width - 20, 30, "pause");
     this.pic.setInteractive();
@@ -333,7 +332,7 @@ class LevelTwoScreen extends Phaser.Scene {
     // Move the player and enemies
     this.PlayerManager.movePlayer();
 
-    // this.EnemyManager.moveEnemies(); Dont need at the moment 
+    // this.EnemyManager.moveEnemies(); Dont need at the moment
     this.EnemyManager.enemies.forEach((enemy) => {
       enemy.updateHealthBarPosition();
     });
@@ -353,9 +352,10 @@ class LevelTwoScreen extends Phaser.Scene {
     }
 
     this.shield.updatePosition(this.player);
-    
+
     if (this.EnemyManager.checkToFinishLevel()) {
       this.goToNextLevel();
+      this.shutdownPlayer();
       this.EnemyManager.gameStarted = false;
     }
 
@@ -488,7 +488,7 @@ class LevelTwoScreen extends Phaser.Scene {
         Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE,
         (cam, effect) => {
           this.scene.stop();
-          this.scene.start("playLevelThree", {
+          this.scene.start("NewShipScreen", {
             number: this.selectedPlayerIndex,
           });
         }
