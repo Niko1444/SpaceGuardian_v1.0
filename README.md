@@ -1,4 +1,4 @@
-![Space Guardian Screenshot](/game/screenshot/logo-screenshot.png | width=300)
+<img src="/game/screenshot/logo-screenshot.png" width="300">
 
 # Space Guardian
 
@@ -111,15 +111,15 @@ Knowledge: HTML, CSS, JavaScript, Phaser Framework, Webpack bundler, Babel compi
 
 #### Title Screen
 
-![image](/game/screenshot/title-screen.png | width=400)
+<img src="/game/screenshot/title-screen.png" width="300">
 
 #### Choosing a Player Screen
 
-![image](/game/screenshot/choosing-screen.png | width=400)
+<img src="/game/screenshot/choosing-screen.png" width="300">
 
 #### Boss Screen
 
-![image](/game/screenshot/boss-screen.png | width=400)
+<img src="/game/screenshot/boss-screen.png" width="300">
 
 ### How to play 🎮
 
@@ -143,7 +143,7 @@ Knowledge: HTML, CSS, JavaScript, Phaser Framework, Webpack bundler, Babel compi
 ### Presentation
 
 Support: Canva
-![image](./screenshot/presentation.png)
+<img src="/game/screenshot/presentation.png" width="300">
 
 Direct: [Link]([https://docs.google.com/presentation/d/1NSvAn6voLTWPU3bcdAyV4bVFJXAI_HLM9rIiVeL4j0k/edit?usp=sharing](https://www.canva.com/design/DAF4_wwA9NE/hDZpLyLLigP6u0JP3R1ATA/edit?utm_content=DAF4_wwA9NE&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton))
 
