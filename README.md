@@ -33,8 +33,8 @@ Click here and enjoy the game --> <a href="https://space-guardian.vercel.app/" t
 | :---- | :---------------------- | :---------: | :--------------------------------: | :------------- |
 | 1     | Lê Tiến Phát            | ITITIU21273 |     letienphat.ltp@icloud.com      | Niko1444       |
 | 2     | Nguyễn Minh Lương       |             |         maluong1504@gmail.com      | meomun1        |
-| 3     | Nguyễn Hoàng Giang      |             |     nguyentienluan3@gmail.com      | tienluan02     |
-| 4     | Nguyễn Tiến Luân        |             |                    @gmail.com      | GSYNDRA        |
+| 3     | Nguyễn Tiến Luân        |             |     nguyentienluan3@gmail.com      | tienluan02     |
+| 4     | Nguyễn Hoàng Giang      |             |     hoangiang272003@gmail.com      | GSYNDRA        |
 
 ### Tasks and Contribution
 
@@ -42,16 +42,16 @@ Click here and enjoy the game --> <a href="https://space-guardian.vercel.app/" t
 | :---- | :----- | :--------------: | :----------: |
 | 1     | Leader |    Tiến Phát     |     25%      |
 | 2     | Member |    Minh Lương    |     25%      |
-| 3     | Member |    Hoàng Giang   |     25%      |
-| 4     | Member |    Tiến Luân     |     25%      |
+| 3     | Member |    Tiến Luân     |     25%      |
+| 4     | Member |    Hoàng Giang   |     25%      |
 
 | Name        | Tasks                                                                          |
 | :---------- | :----------------------------------------------------------------------------- |
-| Tiến Phát   |                                                                                |
-| Minh Lương  |                                                                                |
-| Hoàng Giang |                                                                                |
-| Tiến Luân   |                                                                                |
-| All members | Bugs fixing, Report and Presention Materials                                   |
+| Tiến Phát   |  Set up the environment (JS6, Webpack, Babel), README, Mobile Development, Deploying, Modifying Assets, Leaderboard, Upgrade System, Miscellaneous|
+| Minh Lương  |  Algorithm (for Bullet), Class Diagram, Boss Level Design, Restart/Pause System, Keyboard Input Handling, Optimization, Code Cleaning, Miscellaneous|
+| Hoàng Giang |  Sound and Music System, GUI, Product Testing, Miscellaneous|
+| Tiến Luân   |  Enemy Patterns, Levels Design, Product Testing, Miscellaneous|
+| All members |  Bugs fixing, Report and Presention Materials|
 
 ### Environment :computer:
 
@@ -64,35 +64,34 @@ Language:
 Platform:
 
 ![image](https://img.shields.io/badge/Visual_Studio_Code-0078D4?style=for-the-badge&logo=visual%20studio%20code&logoColor=white)
-![image](https://img.shields.io/badge/WebStorm-000000?style=for-the-badge&logo=WebStorm&logoColor=white)  
 ![image](http://therealsujitk-vercel-badge.vercel.app/?app=therealsujitk-vercel-badge&style=for-the-badge&logo=false)
 
 Design Pattern:
 
-- MVC (Model-View-Controller)
-- Template Method
+- ECS (Entity-Component-System)
+- Singleton
 
 ## Features <a name="features"></a> :star2:
 
 **Main Feature:**
 
-- Play, Restart, Pause
+- Play, Restart, Pause/Unpause
 - Spawning Enemies
 - Controlling the Player
-- Play field
-- Sound
+- Attractive GUI
+- Play field physics
+- Sound and Music
 
 **Extra feature:**
 
-- Choosing Player 
+- Customize Character
 - Leaderboard Ranking (Real-time-update for multiplayer)
-- GUI 
 - Mobile Support
 
 **Future feature:**
 
 - More upgrades, more types of enemy
-- Special skills for each "Player"
+- Special skills for each customize "Player"
 
 ## Challenges <a name="challenges"></a> ✴️
 
@@ -107,10 +106,6 @@ Design Pattern:
 Soft skills: Teamworking, Communicating
 Developing skills: Debugging, Deploying
 Knowledge: HTML, CSS, JavaScript, Phaser Framework, Webpack bundler, Babel compiler, Web Deploying, Data Structures and Algorithms, UI design, Thesis report, Git and Github Usage
-
-## UML Class Diagram <a name="uml"></a> 📄
-
-![image](./screenshot/Class_Diagram_Tetris.png)
 
 ## Demo <a name="demo"></a> 🤖
 
@@ -143,28 +138,24 @@ Knowledge: HTML, CSS, JavaScript, Phaser Framework, Webpack bundler, Babel compi
 
 #### Desktop 🖥️
 
-- Use the ⬅️|➡️ to move left and right
-- Use the ⬆️ to rotate 90° clockwise
-- Use Space to drop down
-- Use C to hold the Piece
-- Use U to undo
-- Use R to restart
+- Use the arrow keys to move the Player
+- Hold SPACE to shoot
+- Press P or click on the Pause button to Pause/Unpause
+- Press M or click on the Mute button to Mute/Unmute
+- Use R to restart the level when pausing
+- Click on the upgrades to choose
 
 #### Mobile 📱
 
-- Swipe Left and Right to move
-- Swipe up or tap to rotate
-- Swipe down to drop piece
-- Press ⏸️ button to interact
-- Press 🎁 button to hold
-- Press 🔄 button to undo
-- Press 🔇 to toggle mute
+- Use touch to drag and move the Player
+- Tap on the upgrades to choose
+- Very much alike with desktop platform
 
 ## PowerPoint and Report <a name="powerPoint"></a> 📖
 
 ### PowerPoint
 
-Support: Google slides
+Support: Canva
 ![image](./screenshot/Tetris_ppt.jpg)
 
 Direct: [Link](https://docs.google.com/presentation/d/1NSvAn6voLTWPU3bcdAyV4bVFJXAI_HLM9rIiVeL4j0k/edit?usp=sharing)
@@ -173,26 +164,27 @@ Direct: [Link](https://docs.google.com/presentation/d/1NSvAn6voLTWPU3bcdAyV4bVFJ
 
 Support: Google docs
 
-Direct: [Link](https://docs.google.com/document/d/1TFwiAUaH60dtllLl4o73U8S-MblfCmTzYT6-PXLCqNY/edit?usp=sharing)
+Direct: [Link](https://docs.google.com/document/d/1aazTGOcykk8UlaFRUSw_BDvL0YKCZqq3AdrShZ2Zx_8/edit?usp=sharing)
 
 ## Installation <a name="installation"></a>
 
 1. Step 1: Access to https://github.com/naulkun7/Tetris-Game
 
 - Download and unzip the file
-- Clone following repository to your local [Tetris-Game_repository](https://github.com/naulkun7/Tetris-Game.git)
+- Clone following repository to your local [Space Guardian_repository](https://github.com/Niko1444/SpaceGuardian_v1.0)
   - VSCode: Copy the repository URL --> Open VSCode --> Ctrl + Shift + P --> Type "gitcl" --> Choose "Git Clone" and paste the URL in
-  - WebStorm: Copy the repository URL --> Open WebStorm --> Choose "Get from VCS" --> Paste the URL on your clipboard to "URL" field --> Press Enter or Clone
 
-2. Step 2: Choose index.html file in source code --> Right click and click "Open with Live Server"
-3. Step 3: Run or modify it as you want
+2. Step 2: Cd to the project files, run build script with your package manager
+3. Step 3: Choose index.html file in source code --> Run it in local hosting
+4. Step 4: Modify the game as you want
 
 ## References <a name="references"></a> :book:
 
 Thanks to the incredibly rich resources that helped us make this project happen
 
-1. Data Structures and Algorithms Lectures (Dr. Tran Thanh Tung)
-2. Data Structures and Algorithms Labs (MSc. Nguyen Quang Phu)
-3. Tetris на JavaScript - CodeDojo: [Link](https://www.youtube.com/playlist?list=PLqHlAwsJRxAMa9HHLRZcHFZyM7SBHqJgt)
-4. Chat.openai.com. Available at: [Link](https://chat.openai.com/)
-5. ERDPlus. Available at: [Link](https://erdplus.com/)
+1. Data Structures and Algorithms Lectures (Prof. Tran Thanh Tung)
+2. Data Structures and Algorithms Labs (Anh Nghia)
+3. Phaser Tutorials - Ansimuz: [Link](https://www.youtube.com/watch?v=frRWKxB9Hm0&list=PLDyH9Tk5ZdFzEu_izyqgPFtHJJXkc79no)
+4. marthas_rescue_shooter_game - MuriloRoque: [Link](https://github.com/MuriloRoque/marthas_rescue_shooter_game)
+5. Chat.openai.com. Available at: [Link](https://chat.openai.com/)
+
