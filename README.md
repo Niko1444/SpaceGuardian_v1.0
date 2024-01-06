@@ -1,4 +1,4 @@
-![Space Guardian Screenshot](/game/src/assets/images/space_guardian_screenshot.png)
+![Space Guardian Screenshot](/game/screenshot/logo-screenshot.png)
 
 # Space Guardian
 
@@ -32,9 +32,9 @@ Click here and enjoy the game --> <a href="https://space-guardian.vercel.app/" t
 | Index | Name                    |     ID      |               Email                | Github account |
 | :---- | :---------------------- | :---------: | :--------------------------------: | :------------- |
 | 1     | Lê Tiến Phát            | ITITIU21273 |     letienphat.ltp@icloud.com      | Niko1444       |
-| 2     | Nguyễn Minh Lương       |             |         maluong1504@gmail.com      | meomun1        |
-| 3     | Nguyễn Tiến Luân        |             |     nguyentienluan3@gmail.com      | tienluan02     |
-| 4     | Nguyễn Hoàng Giang      |             |     hoangiang272003@gmail.com      | GSYNDRA        |
+| 2     | Nguyễn Minh Lương       | ITITIU21240 |         maluong1504@gmail.com      | meomun1        |
+| 3     | Nguyễn Tiến Luân        | ITITIU21014 |     nguyentienluan3@gmail.com      | tienluan02     |
+| 4     | Nguyễn Hoàng Giang      | ITITIU21192 |     hoangiang272003@gmail.com      | GSYNDRA        |
 
 ### Tasks and Contribution
 
@@ -104,35 +104,22 @@ Design Pattern:
 ### What we have learned :pencil:
 
 Soft skills: Teamworking, Communicating
-Developing skills: Debugging, Deploying
-Knowledge: HTML, CSS, JavaScript, Phaser Framework, Webpack bundler, Babel compiler, Web Deploying, Data Structures and Algorithms, UI design, Thesis report, Git and Github Usage
+Developing skills: Debugging, Deploying, Applying DSA and OOP knowledge
+Knowledge: HTML, CSS, JavaScript, Phaser Framework, Webpack bundler, Babel compiler, Web Deploying, Data Structures and Algorithms, UI design, Writing Report, Git and Github Usage
 
 ## Demo <a name="demo"></a> 🤖
 
-#### Start Screen
+#### Title Screen
 
-![image](./screenshot/game/startscreen.png)
+![image](/game/screenshot/title-screen.png)
 
-#### Set Difficulty
+#### Choosing a Player Screen
 
-![image](./screenshot/game/difficult.png)
+![image](/game/screenshot/choosing-screen.png)
 
-#### Play Screen
+#### Boss Screen
 
-![image](./screenshot/game/playing.png)
-![image](./screenshot/game/playing2.png)
-
-#### Pause Screen
-
-![image](./screenshot/game/pause.png)
-
-#### End Screen
-
-![image](./screenshot/game/gameover.png)
-
-#### Mobile
-
-![image](./screenshot/game/mobile.jpg)
+![image](/game/screenshot/boss-screen.png)
 
 ### How to play 🎮
 
@@ -151,14 +138,14 @@ Knowledge: HTML, CSS, JavaScript, Phaser Framework, Webpack bundler, Babel compi
 - Tap on the upgrades to choose
 - Very much alike with desktop platform
 
-## PowerPoint and Report <a name="powerPoint"></a> 📖
+## Presentation and Report <a name="powerPoint"></a> 📖
 
-### PowerPoint
+### Presentation
 
 Support: Canva
 ![image](./screenshot/Tetris_ppt.jpg)
 
-Direct: [Link](https://docs.google.com/presentation/d/1NSvAn6voLTWPU3bcdAyV4bVFJXAI_HLM9rIiVeL4j0k/edit?usp=sharing)
+Direct: [Link]([https://docs.google.com/presentation/d/1NSvAn6voLTWPU3bcdAyV4bVFJXAI_HLM9rIiVeL4j0k/edit?usp=sharing](https://www.canva.com/design/DAF4_wwA9NE/hDZpLyLLigP6u0JP3R1ATA/edit?utm_content=DAF4_wwA9NE&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton))
 
 ### Report
 
@@ -168,10 +155,10 @@ Direct: [Link](https://docs.google.com/document/d/1aazTGOcykk8UlaFRUSw_BDvL0YKCZ
 
 ## Installation <a name="installation"></a>
 
-1. Step 1: Access to https://github.com/naulkun7/Tetris-Game
+1. Step 1: Access to https://github.com/Niko1444/SpaceGuardian_v1.0
 
 - Download and unzip the file
-- Clone following repository to your local [Space Guardian_repository](https://github.com/Niko1444/SpaceGuardian_v1.0)
+- Clone following repository to your local [Space Guardian_Repository](https://github.com/Niko1444/SpaceGuardian_v1.0)
   - VSCode: Copy the repository URL --> Open VSCode --> Ctrl + Shift + P --> Type "gitcl" --> Choose "Git Clone" and paste the URL in
 
 2. Step 2: Cd to the project files, run build script with your package manager
