@@ -1,4 +1,4 @@
-![Space Guardian Screenshot](/game/screenshot/logo-screenshot.png)
+![Space Guardian Screenshot](/game/screenshot/logo-screenshot.png | width=300)
 
 # Space Guardian
 
@@ -111,15 +111,15 @@ Knowledge: HTML, CSS, JavaScript, Phaser Framework, Webpack bundler, Babel compi
 
 #### Title Screen
 
-![image](/game/screenshot/title-screen.png)
+![image](/game/screenshot/title-screen.png | width=400)
 
 #### Choosing a Player Screen
 
-![image](/game/screenshot/choosing-screen.png)
+![image](/game/screenshot/choosing-screen.png | width=400)
 
 #### Boss Screen
 
-![image](/game/screenshot/boss-screen.png)
+![image](/game/screenshot/boss-screen.png | width=400)
 
 ### How to play 🎮
 
@@ -143,7 +143,7 @@ Knowledge: HTML, CSS, JavaScript, Phaser Framework, Webpack bundler, Babel compi
 ### Presentation
 
 Support: Canva
-![image](./screenshot/Tetris_ppt.jpg)
+![image](./screenshot/presentation.png)
 
 Direct: [Link]([https://docs.google.com/presentation/d/1NSvAn6voLTWPU3bcdAyV4bVFJXAI_HLM9rIiVeL4j0k/edit?usp=sharing](https://www.canva.com/design/DAF4_wwA9NE/hDZpLyLLigP6u0JP3R1ATA/edit?utm_content=DAF4_wwA9NE&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton))
 
@@ -167,7 +167,7 @@ Direct: [Link](https://docs.google.com/document/d/1aazTGOcykk8UlaFRUSw_BDvL0YKCZ
 
 ## References <a name="references"></a> :book:
 
-Thanks to the incredibly rich resources that helped us make this project happen
+Thanks to the incredibly rich resources that helped us make this project happens
 
 1. Data Structures and Algorithms Lectures (Prof. Tran Thanh Tung)
 2. Data Structures and Algorithms Labs (Anh Nghia)
