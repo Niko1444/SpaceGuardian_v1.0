@@ -1,6 +1,4 @@
-<img src="/game/screenshot/logo-screenshot.png" width="300">
-
-# Space Guardian
+<img src="/game/screenshot/logo-screenshot.png" width="900">
 
 Click here and enjoy the game --> <a href="https://space-guardian.vercel.app/" target="_blank">Space Guardian</a>
 
@@ -143,7 +141,7 @@ Knowledge: HTML, CSS, JavaScript, Phaser Framework, Webpack bundler, Babel compi
 ### Presentation
 
 Support: Canva
-<img src="/game/screenshot/presentation.png" width="300">
+<img src="/game/screenshot/presentation.png" width="900">
 
 Direct: [Link]([https://docs.google.com/presentation/d/1NSvAn6voLTWPU3bcdAyV4bVFJXAI_HLM9rIiVeL4j0k/edit?usp=sharing](https://www.canva.com/design/DAF4_wwA9NE/hDZpLyLLigP6u0JP3R1ATA/edit?utm_content=DAF4_wwA9NE&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton))
 
