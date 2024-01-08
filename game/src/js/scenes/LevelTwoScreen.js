@@ -353,6 +353,10 @@ class LevelTwoScreen extends Phaser.Scene {
 
     this.shield.updatePosition(this.player);
 
+    if (this.enter.isDown) {
+      this.handleEnterKey();
+    }
+
     if (this.EnemyManager.checkToFinishLevel()) {
       this.goToNextLevel();
       this.shutdownPlayer();
@@ -487,6 +491,7 @@ class LevelTwoScreen extends Phaser.Scene {
       this.cameras.main.once(
         Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE,
         (cam, effect) => {
+          this.shutdownPlayer();
           this.scene.stop();
           this.scene.start("NewShipScreen", {
             number: this.selectedPlayerIndex,

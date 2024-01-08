@@ -381,6 +381,10 @@ class LevelThreeScreen extends Phaser.Scene {
 
     this.shield.updatePosition(this.player);
 
+    if (this.enter.isDown) {
+      this.handleEnterKey();
+    }
+
     if (this.EnemyManager.checkToFinishLevel()) {
       this.goToNextLevel();
       this.EnemyManager.gameStarted = false;

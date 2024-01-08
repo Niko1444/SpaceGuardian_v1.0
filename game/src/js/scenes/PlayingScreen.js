@@ -307,6 +307,7 @@ class PlayingScreen extends Phaser.Scene {
     this.spacebar = this.input.keyboard.addKey(
       Phaser.Input.Keyboard.KeyCodes.SPACE
     );
+
     this.enter = this.input.keyboard.addKey(
       Phaser.Input.Keyboard.KeyCodes.ENTER
     );
@@ -320,20 +321,6 @@ class PlayingScreen extends Phaser.Scene {
       this.shield,
       this.SoundManager
     );
-
-    // this.time.delayedCall(
-    //   58000,
-    //   () => {
-    //     this.time.delayedCall(
-    //       1000,
-    //       this.goToNextLevel,
-    //       null,
-    //       this
-    //     );
-    //   },
-    //   null,
-    //   this
-    // );
 
     // create pause button
     this.pic = this.add.image(config.width - 20, 30, "pause");
@@ -389,7 +376,6 @@ class PlayingScreen extends Phaser.Scene {
 
     if (this.spacebar.isDown) {
       this.player.shootBullet(this.selectedPlayerIndex);
-      // this.scene.sfx.missile.play();
     }
 
     this.projectiles.children.iterate((bullet) => {
@@ -401,6 +387,10 @@ class PlayingScreen extends Phaser.Scene {
     }
 
     this.shield.updatePosition(this.player);
+
+    if (this.enter.isDown) {
+      this.handleEnterKey();
+    }
 
     if (this.EnemyManager.checkToFinishLevel()) {
       this.goToNextLevel();

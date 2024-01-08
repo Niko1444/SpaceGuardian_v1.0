@@ -131,6 +131,10 @@ class TutorialScreen extends Phaser.Scene {
       Phaser.Input.Keyboard.KeyCodes.SPACE
     );
 
+    this.enter = this.input.keyboard.addKey(
+      Phaser.Input.Keyboard.KeyCodes.ENTER
+    );
+
     // Create a group to manage bullets
     this.projectileManager = new ProjectileManager(this);
     this.projectileManager.createPlayerBullet();
@@ -191,6 +195,9 @@ class TutorialScreen extends Phaser.Scene {
       this.player.shootBullet(this.selectedPlayerIndex);
     }
 
+    if (this.enter.isDown) {
+    }
+
     this.projectiles.children.iterate((bullet) => {
       bullet.update();
     });
@@ -199,6 +206,10 @@ class TutorialScreen extends Phaser.Scene {
 
     if (this.player.health <= 0) {
       this.gameOver();
+    }
+
+    if (this.enter.isDown) {
+      this.handleEnterKey();
     }
 
     if (this.EnemyManager.checkToFinishLevel()) {
@@ -284,6 +295,24 @@ class TutorialScreen extends Phaser.Scene {
 
   shutdownPlayer() {
     this.events.once("shutdown", this.shutdown, this);
+  }
+
+  handleEnterKey() {
+    this.scene.stop("upgradeScreen");
+    this.player.savePlayer();
+    this.time.delayedCall(1000, () => {
+      this.cameras.main.fadeOut(1000, 0, 0, 0);
+
+      this.cameras.main.once(
+        Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE,
+        (cam, effect) => {
+          this.scene.stop();
+          this.scene.start("playGame", {
+            number: this.selectedPlayerIndex,
+          });
+        }
+      );
+    });
   }
 }
 export default TutorialScreen;
